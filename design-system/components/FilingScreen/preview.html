@@ -1,0 +1,30 @@
+<!-- @dsCard group="Màn hình mẫu" height=1080 width=390 page -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FilingScreen — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Filing() {
+    var s = React.useState({ cccd: true, cc: true });
+    var set = function (k) { return function (v) { var n = Object.assign({}, s[0]); n[k] = v; s[1](n); }; };
+    return h('div', { className: 'tp-phone' },
+      h(T.AppBar, { variant: 'page', title: 'Nộp đơn khởi kiện', onBack: function () {} }),
+      h('div', { className: 'tp-sheet', style: { display: 'grid', gap: '12px', paddingBottom: '20px' } },
+        h(T.FormSection, { title: 'Người khởi kiện', status: 'done' }),
+        h(T.FormSection, { title: 'Người bị kiện', status: 'done' }),
+        h(T.FormSection, { title: 'Nội dung khởi kiện', status: 'todo', defaultOpen: true },
+          h(T.SelectField, { placeholder: 'Chọn loại vụ việc', required: true }),
+          h(T.SelectField, { placeholder: 'Chọn Tòa án giải quyết', required: true }),
+          h('div', { className: 'tp-sec-sub' }, 'Tài liệu kèm theo'),
+          h(T.OptionItem, { illustration: 'cccd', title: 'Bản sao CCCD', meta: 'Bắt buộc · PDF, JPG', checked: s[0].cccd, onChange: set('cccd'), onInfo: function () {} }),
+          h(T.OptionItem, { illustration: 'chungCu', title: 'Tài liệu, chứng cứ', meta: '3 tệp đã tải lên', checked: s[0].cc, onChange: set('cc'), onInfo: function () {} }),
+          h(T.OptionItem, { illustration: 'uyQuyen', title: 'Giấy ủy quyền', meta: 'Nếu nộp thay', checked: s[0].uq, onChange: set('uq'), onInfo: function () {} }),
+          h(T.OptionItem, { illustration: 'anPhi', title: 'Biên lai tạm ứng án phí', meta: 'Nộp sau khi thụ lý', checked: s[0].ap, onChange: set('ap') }))),
+      h(T.SummaryBar, { total: '300.000 đ', rows: [{ label: 'Tạm ứng án phí (dự kiến)', value: '300.000 đ' }], primaryLabel: 'Gửi đơn', primaryDisabled: true }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Filing));
+</script>
+</body>
+</html>

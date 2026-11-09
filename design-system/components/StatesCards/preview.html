@@ -1,0 +1,52 @@
+<!-- @dsCard group="Trạng thái" height=1960 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>StatesCards — preview</title></head>
+<body>
+<style>
+  .st { max-width: 390px; padding: 12px 16px 16px; box-sizing: border-box; background: var(--surface-page); display: flex; flex-direction: column; gap: 10px; }
+  .st h3 { margin: 12px 0 0; font: 700 15px/20px var(--font-sans); color: var(--ink); }
+  .st h3:first-child { margin-top: 0; }
+  .st-row { display: grid; grid-template-columns: 76px 1fr; gap: 10px; align-items: center; }
+  .st-k { font: 500 11px/14px var(--font-sans); letter-spacing: .6px; text-transform: uppercase; color: var(--ink-subtle); }
+  .st-v { min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .st-v .tp-field, .st-v .tp-select, .st-v .tp-hs, .st-v .tp-upload, .st-v .tp-opt, .st-v .tp-acc, .st-v .tp-nav, .st-v .tp-seg, .st-v .tp-appbar, .st-v .tp-tabs { width: 100%; min-width: 0; box-sizing: border-box; }
+  .st-red { padding: 12px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--brand-950), var(--brand-800)); }
+</style>
+<div id="root" class="st"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Mark(p) {
+    var r = React.useRef(null);
+    React.useEffect(function () { var el = r.current; if (!el) return; (p.sel ? el.querySelectorAll(p.sel) : [el.firstElementChild]).forEach(function (t) { if (t) t.classList.add(p.cls); }); });
+    return h('div', { ref: r, style: { display: 'contents' } }, p.children);
+  }
+  var P = function (el, sel) { return h(Mark, { cls: 'tp-is-pressed', sel: sel }, el); };
+  var F = function (el, sel) { return h(Mark, { cls: 'tp-is-focus', sel: sel }, el); };
+  function Row(k) { return h('div', { className: 'st-row' }, h('span', { className: 'st-k' }, k), h.apply(null, ['div', { className: 'st-v' }].concat([].slice.call(arguments, 1)))); }
+  function Sec(t) { return h('h3', null, t); }
+  var rec = { kind: 'Kiến nghị, phản ánh', title: 'Tiêu đề đơn phản ánh, kiến nghị', code: 'CDVTP-KNTC-20261023-955812', court: 'Tòa án nhân dân khu vực 3 - An Giang', date: 'Ngày gửi 23/10/2026', status: 'Đã gửi - chờ tiếp nhận', statusTone: 'info', onClick: function () {} };
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    Sec('RecordCard, CaseCard'),
+    Row('Mặc định', h(T.RecordCard, rec)),
+    Row('Nhấn', P(h(T.RecordCard, rec), '.tp-hs-hit')),
+    Row('Focus', F(h(T.RecordCard, rec), '.tp-hs-hit')),
+    Row('Đang tải', h(T.RecordCard, { loading: true })),
+    Sec('QuickAction'),
+    Row('Mặc định', h(T.QuickAction, { size: 'md', tone: 'plain', icon: 'calendar', title: 'Lịch của tôi' })),
+    Row('Nhấn', P(h(T.QuickAction, { size: 'md', tone: 'plain', icon: 'calendar', title: 'Lịch của tôi' })), P(h(T.QuickAction, { size: 'md', tone: 'red', icon: 'filePlus', title: 'Nộp đơn' }))),
+    Row('Vô hiệu', h(T.QuickAction, { size: 'md', tone: 'plain', icon: 'calendar', title: 'Lịch của tôi', disabled: true })),
+    Sec('ServiceTile'),
+    Row('Mặc định · Nhấn · Vô hiệu', h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', width: '100%' } },
+      h(T.ServiceTile, { illustration: 'traCuuHoSo', label: 'Tra cứu hồ sơ' }), P(h(T.ServiceTile, { illustration: 'lichXetXu', label: 'Lịch xét xử' })), h(T.ServiceTile, { illustration: 'trichLuc', label: 'Trích lục bản sao', disabled: true }))),
+    Sec('OptionItem'),
+    Row('Mặc định', h(T.OptionItem, { illustration: 'cccd', title: 'Bản sao CCCD', meta: 'Bắt buộc · PDF, JPG' })),
+    Row('Đã chọn', h(T.OptionItem, { illustration: 'cccd', title: 'Bản sao CCCD', meta: 'Bắt buộc · PDF, JPG', checked: true })),
+    Row('Vô hiệu', h(T.OptionItem, { illustration: 'anPhi', title: 'Biên lai tạm ứng án phí', meta: 'Nộp sau khi thụ lý', disabled: true })),
+    Sec('Dòng danh sách'),
+    Row('Nhấn', P(h(T.Accordion, { value: 'kn', defaultOpen: ['g4'], groups: [{ key: 'g3', title: 'Tố cáo hành vi vi phạm pháp luật', meta: '4 thủ tục', items: [] }, { key: 'g4', title: 'Kiến nghị, phản ánh', meta: '1 thủ tục', items: [{ key: 'kn', label: 'Kiến nghị, phản ánh' }] }] }), '.tp-acc-group:first-child .tp-acc-head')),
+    Sec('BottomNav'),
+    Row('Nhấn', P(h(T.BottomNav, { active: 'home', items: [{ key: 'home', icon: 'home', label: 'Trang chủ' }, { key: 'cases', icon: 'folder', label: 'Hồ sơ' }, { key: 'new', icon: 'filePlus', label: 'Nộp đơn', primary: true }, { key: 'notice', icon: 'bell', label: 'Thông báo' }, { key: 'me', icon: 'user', label: 'Cá nhân' }] }), '.tp-nav-item:nth-child(2), .tp-nav-main'))));
+</script>
+</body>
+</html>

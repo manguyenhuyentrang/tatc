@@ -1,0 +1,16 @@
+<!-- @dsCard group="Điều hướng" height=380 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Accordion — preview</title></head>
+<body>
+<div id="root" style="max-width:390px;padding:12px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Demo() {
+    var s = React.useState('kn');
+    return h(T.Accordion, { value: s[0], onSelect: s[1], defaultOpen: ['g4'], groups: [{ key: 'g1', title: 'Trong vụ án, vụ việc của tôi', meta: '3 thủ tục', items: [] }, { key: 'g2', title: 'Khiếu nại hành chính về hoạt động của Tòa án', meta: '8 thủ tục', items: [] }, { key: 'g3', title: 'Tố cáo hành vi vi phạm pháp luật', meta: '4 thủ tục', items: [] }, { key: 'g4', title: 'Kiến nghị, phản ánh', meta: '1 thủ tục', items: [{ key: 'kn', label: 'Kiến nghị, phản ánh' }] }] });
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

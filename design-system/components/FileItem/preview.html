@@ -1,0 +1,16 @@
+<!-- @dsCard group="Nhập liệu" height=330 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FileItem — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  var L = h('ul', { className: 'tp-files' },
+    h(T.FileItem, { name: 'don-da-ky-so.pdf', meta: '[dung lượng]', onRemove: function () {} }),
+    h(T.FileItem, { name: 'Thong_bao.pdf', meta: '[dung lượng] · [đang tải]', status: 'uploading', progress: 60, onRemove: function () {} }),
+    h(T.FileItem, { name: '03-HC.pdf', meta: '[dung lượng]', status: 'error', error: '[Tệp vượt quá 10 MB]', onRemove: function () {} }));
+  ReactDOM.createRoot(document.getElementById('root')).render(L);
+</script>
+</body>
+</html>

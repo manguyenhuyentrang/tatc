@@ -1,0 +1,16 @@
+<!-- @dsCard group="Hồ sơ" height=320 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Timeline — preview</title></head>
+<body>
+<div id="root" style="padding:16px;max-width:390px;background:var(--surface)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(T.Timeline, { steps: [
+    { title: 'Nộp đơn trực tuyến', date: '02/10/2026 · 09:14', state: 'done' },
+    { title: 'Thụ lý vụ án', date: '12/10/2026', description: 'Thông báo thụ lý đã tống đạt điện tử.', state: 'done' },
+    { title: 'Hòa giải', date: 'Dự kiến 05/11/2026', description: 'Phòng hòa giải số 2, trụ sở Tòa án.', state: 'current' },
+    { title: 'Mở phiên tòa sơ thẩm', state: 'upcoming' } ] }));
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!-- @dsCard group="Phản hồi" height=200 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ReminderBanner — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page);display:flex;flex-direction:column;gap:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement, noop = function () {};
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(T.ReminderBanner, { title: 'Bạn chưa hoàn thiện cam kết giao dịch điện tử', actionLabel: 'Xác nhận cam kết ngay', onAction: noop, onClose: noop }), h(T.ReminderBanner, { title: 'Bạn chưa hoàn thiện cam kết giao dịch điện tử', actionLabel: 'Xác nhận cam kết ngay', onAction: noop })));
+</script>
+</body>
+</html>

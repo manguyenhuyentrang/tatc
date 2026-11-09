@@ -1,0 +1,15 @@
+<!-- @dsCard group="Bố cục" height=650 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>StatSummary — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  var fin = { amountLabel: 'Còn phải nộp · 2 khoản', amount: '4.500.000 ₫', subs: [{ label: 'Quá hạn hoặc còn ≤ 3 ngày', value: '1 khoản' }, { label: 'Đã nộp · 1 khoản', value: '300.000 ₫' }] };
+  var rec = { title: 'Tổng quan hồ sơ', stats: [{ value: '06', label: 'Đơn đã nộp' }, { value: '02', label: 'Vụ án tham gia' }, { value: '01', label: 'Vụ việc tham gia' }] };
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.StatSummary, rec), h(T.StatSummary, fin), h(T.StatSummary, Object.assign({ variant: 'plain' }, rec)), h(T.StatSummary, Object.assign({ variant: 'plain' }, fin))));
+</script>
+</body>
+</html>

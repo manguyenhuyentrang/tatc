@@ -1,0 +1,12 @@
+<!-- @dsCard group="Thẻ" height=220 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>TaskRow — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page);display:flex;flex-direction:column;gap:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement, noop = function () {};
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(T.TaskRow, { level: 'qua', icon: 'mail', title: 'Văn bản tống đạt có thời hạn', kind: 'Tống đạt', code: 'DS-2026-0012', due: 'Còn 2 ngày', onClick: noop }), h(T.TaskRow, { level: 'sap', icon: 'filePlus', title: 'Bổ sung tài liệu, chứng cứ', kind: 'Bổ sung hồ sơ', code: 'DS-2026-0018', due: 'Còn 3 ngày', onClick: noop }), h(T.TaskRow, { level: 'an', icon: 'wallet', title: 'Theo dõi tạm ứng án phí', kind: 'Nộp tiền', code: 'DS-2026-0012', due: 'Còn 7 ngày', onClick: noop })));
+</script>
+</body>
+</html>

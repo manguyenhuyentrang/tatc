@@ -1,0 +1,17 @@
+<!-- @dsCard group="Điều hướng" height=370 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>AppBar — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="display:flex;flex-direction:column;gap:12px;max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.AppBar, { logoSrc: '/_blob/44c51576aa6dac39f757a0ed9c3bc8e8', title: 'Cổng Dịch vụ Tư pháp', subtitle: 'Tòa án nhân dân', actions: [{ icon: 'phone', label: 'Hỗ trợ 19006126' }, { icon: 'bell', label: 'Thông báo', dot: true }] }),
+    h(T.AppBar, { logoSrc: '/_blob/44c51576aa6dac39f757a0ed9c3bc8e8', title: 'Cổng dịch vụ tư pháp tòa án', actions: [{ icon: 'bell', label: 'Thông báo' }, { avatar: 'TR', label: 'Tài khoản' }, { icon: 'menu', label: 'Menu điều hướng' }] }),
+    h(T.AppBar, { variant: 'plain', title: 'Nộp đơn khởi kiện', onBack: function () {}, actions: [{ text: 'Lưu nháp' }] }),
+    h(T.AppBar, { variant: 'plain', title: 'Danh sách đơn và tiến trình', onBack: function () {}, actions: [{ icon: 'plus', label: 'Nộp đơn mới' }] }),
+    h(T.AppBar, { variant: 'plain', title: 'Phương thức giao dịch điện tử', onBack: function () {} })));
+</script>
+</body>
+</html>

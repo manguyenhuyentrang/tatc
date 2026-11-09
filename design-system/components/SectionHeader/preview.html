@@ -1,0 +1,14 @@
+<!-- @dsCard group="Bố cục" height=200 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SectionHeader — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px;gap:28px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.SectionHeader, { eyebrow: 'Dịch vụ', title: 'Dịch vụ trực tuyến phổ biến', align: 'center' }),
+    h(T.SectionHeader, { eyebrow: 'Hồ sơ', title: 'Hồ sơ của tôi', action: h(T.LinkArrow, null, 'Tất cả') })));
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!-- @dsCard group="Nhập liệu" height=620 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>TextField — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.TextField, { label: 'Số căn cước hoặc mã số thuế', icon: 'idCard', inputMode: 'numeric', placeholder: 'Nhập số căn cước hoặc mã số thuế' }),
+    h(T.TextField, { label: 'Mật khẩu', icon: 'lock', type: 'password', placeholder: 'Nhập mật khẩu', error: 'Vui lòng nhập mật khẩu.' }),
+    h(T.TextField, { label: 'Số điện thoại liên hệ', required: true, defaultValue: '0000000000', onClear: function () {} }),
+    h(T.TextField, { label: 'Nội dung phản ánh, kiến nghị', required: true, multiline: true, showCount: true, minLength: 50, maxLength: 2000, placeholder: 'Nội dung phản ánh, kiến nghị' })));
+</script>
+</body>
+</html>

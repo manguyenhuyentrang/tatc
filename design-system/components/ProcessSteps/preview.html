@@ -1,0 +1,19 @@
+<!-- @dsCard group="Bố cục" height=850 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ProcessSteps — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:16px;max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  var steps = [
+    { icon: 'lock', title: 'Đăng nhập', description: 'Xác thực bằng VNeID hoặc tài khoản định danh điện tử.' },
+    { icon: 'file', title: 'Nộp đơn', description: 'Soạn và gửi đơn khởi kiện kèm tài liệu, chứng cứ.' },
+    { icon: 'search', title: 'Theo dõi', description: 'Theo dõi tiến trình tiếp nhận, xử lý theo thời gian thực.' },
+    { icon: 'checkCircle', title: 'Hoàn tất', description: 'Nhận kết quả và văn bản tống đạt trực tuyến.' } ];
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.ProcessSteps, { title: 'Bốn bước thực hiện thủ tục trực tuyến', steps: steps }),
+    h(T.ProcessSteps, { variant: 'light', title: 'Bốn bước thực hiện thủ tục trực tuyến', steps: steps })));
+</script>
+</body>
+</html>

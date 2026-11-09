@@ -1,0 +1,15 @@
+<!-- @dsCard group="Danh sách" height=330 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>MailList — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(T.MailList, { items: [
+    { from: 'Tòa án nhân dân khu vực 1 - Hà Nội', time: '28-10-2026 08:15', title: 'Biên bản phiên họp kiểm tra việc giao nộp tài liệu, chứng cứ', deadline: '03-11-2026', remain: 'Còn 4 ngày', unread: true },
+    { from: 'Tòa án nhân dân khu vực 2 - Hà Nội', time: '28-10-2026 07:30', title: 'Thông báo về phiên họp hòa giải', deadline: '28-10-2026', remain: 'Đã quá hạn', tone: 'danger', unread: true, starred: true },
+    { from: 'Tòa án nhân dân thành phố Hà Nội', time: '27-10-2026 16:20', title: 'Giấy xác nhận đã nhận tài liệu, chứng cứ' } ] }));
+</script>
+</body>
+</html>

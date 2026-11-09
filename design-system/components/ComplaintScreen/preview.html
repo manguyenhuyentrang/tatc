@@ -1,0 +1,22 @@
+<!-- @dsCard group="Màn hình mẫu" height=1040 width=390 page -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ComplaintScreen — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function List() {
+    var recs = [['KN-2026-001284', 'Chờ xử lý', 'warning'], ['KN-2026-001190', 'Đang xử lý', 'info'], ['KN-2026-000877', 'Hoàn thành', 'success']];
+    return h('div', { className: 'tp-phone', style: { minHeight: '860px' } },
+      h(T.AppBar, { variant: 'page', title: 'Khiếu nại, tố cáo', onBack: function () {} }),
+      h('div', { className: 'tp-sheet', style: { background: 'transparent', marginTop: '-26px', display: 'grid', gap: '12px' } },
+        h(T.FilterCard, { placeholder: 'Nhập mã đơn, số thụ lý' }, h(T.SelectField, { icon: 'calendar', value: '01/10/2026 – 29/10/2026' }), h(T.SelectField, { value: 'Tất cả trạng thái' })),
+        h(T.Tabs, { variant: 'chip', label: 'Loại đơn', items: [{ key: 'all', label: 'Tất cả', count: 3 }, { key: 'kn', label: 'Khiếu nại' }, { key: 'tc', label: 'Tố cáo' }] }),
+        recs.map(function (r) { return h(T.RecordCard, { key: r[0], codeLabel: 'Mã đơn', code: r[0], title: 'Khiếu nại quyết định trả lại đơn', date: 'Ngày gửi 20/10/2026 05:30', status: r[1], statusTone: r[2], onClick: function () {} }); })),
+      h(T.ChatFab, { style: { position: 'absolute', right: '16px', bottom: '24px' } }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(List));
+</script>
+</body>
+</html>

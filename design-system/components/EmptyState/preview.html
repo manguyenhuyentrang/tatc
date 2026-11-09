@@ -1,0 +1,15 @@
+<!-- @dsCard group="Phản hồi" height=320 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>EmptyState — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.EmptyState, { text: 'Chưa có chứng thư số được khai báo.', actionLabel: 'Khai báo chứng thư số' }),
+    h(T.EmptyState, { icon: 'clock', text: 'Chưa có lịch sử thay đổi.' }),
+    h(T.EmptyState, { icon: 'user', text: 'Chưa có thông tin.' })));
+</script>
+</body>
+</html>

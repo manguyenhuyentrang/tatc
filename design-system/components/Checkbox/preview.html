@@ -1,0 +1,14 @@
+<!-- @dsCard group="Nhập liệu" height=150 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Checkbox — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.Checkbox, { label: 'Có người khác cùng phản ánh, kiến nghị' }),
+    h(T.Checkbox, { label: 'Tôi cam đoan nội dung đơn và tài liệu kèm theo là đúng sự thật, chịu trách nhiệm trước pháp luật.', defaultChecked: true })));
+</script>
+</body>
+</html>

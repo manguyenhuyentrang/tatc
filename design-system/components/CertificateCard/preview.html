@@ -1,0 +1,12 @@
+<!-- @dsCard group="Thẻ" height=260 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>CertificateCard — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page);display:flex;flex-direction:column;gap:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement, noop = function () {};
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(T.CertificateCard, { source: 'Ký số từ xa · VNPT-CA', subject: 'HOÀNG DƯƠNG', issuer: 'VNPT Certification Authority', status: 'Còn hạn', statusTone: 'success', rows: [['Số serial', '5401…A7C2'], ['Hiệu lực', '15/03/2026 – 15/03/2027'], ['Dùng gần nhất', '28/10/2026'], ['Kiểm tra gần nhất', '15/03/2026']], actions: [{ label: 'Kiểm lại', icon: 'swap', onClick: noop }, { label: 'Xóa khỏi danh sách', icon: 'trash', danger: true, onClick: noop }] })));
+</script>
+</body>
+</html>

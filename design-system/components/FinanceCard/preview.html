@@ -1,0 +1,14 @@
+<!-- @dsCard group="Thẻ" height=480 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FinanceCard — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.FinanceCard, { kind: 'Chi phí tố tụng', status: 'Chưa nộp', amount: '1.500.000 ₫', title: 'Chi phí xem xét, thẩm định tại chỗ', code: 'TB-2026-0018', caseCode: 'DS-2026-0018', court: 'Tòa án nhân dân khu vực 1 - Hà Nội', deadline: '29/10/2026', remain: 'Còn 3 ngày', tone: 'warning' }),
+    h(T.FinanceCard, { kind: 'Tạm ứng án phí sơ thẩm', status: 'Chưa nộp', amount: '3.000.000 ₫', title: 'Tạm ứng án phí vụ án dân sự', code: 'TB-2026-0012', caseCode: 'DS-2026-0012', court: 'Tòa án nhân dân khu vực 1 - Hà Nội', deadline: '30/10/2026', remain: 'Còn 4 ngày' })));
+</script>
+</body>
+</html>

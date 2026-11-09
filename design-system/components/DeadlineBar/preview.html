@@ -1,0 +1,12 @@
+<!-- @dsCard group="Trạng thái" height=130 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>DeadlineBar — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page);display:flex;flex-direction:column;gap:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement, noop = function () {};
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(T.DeadlineBar, { label: 'Còn 12 ngày', level: 'an', due: 'Hạn 16/11/2026', value: 18, max: 30 }), h(T.DeadlineBar, { label: 'Quá hạn 2 ngày', level: 'qua', due: 'Hạn 02/11/2026', value: 30, max: 30 })));
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!-- @dsCard group="Điều hướng" height=330 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SheetMenu — preview</title></head>
+<body>
+<div id="root" style="max-width:390px;padding-top:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(T.SheetMenu, { title: 'Chọn loại đơn', items: [{ illustration: 'nopDon', label: 'Đơn khởi kiện dân sự', description: 'Tranh chấp hợp đồng, tài sản, thừa kế' }, { illustration: 'banAn', label: 'Đơn khởi kiện hành chính', description: 'Quyết định, hành vi hành chính' }, { illustration: 'khieuNai', label: 'Đơn khiếu nại, tố cáo' }, { illustration: 'trichLuc', label: 'Đơn xin trích lục bản sao' }] }));
+</script>
+</body>
+</html>

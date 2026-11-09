@@ -1,0 +1,27 @@
+<!-- @dsCard group="Màn hình mẫu" height=1390 width=390 page -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>HomeScreen — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Home() {
+    var tiles = [['nopDon','Nộp đơn khởi kiện'],['traCuuHoSo','Tra cứu hồ sơ',2],['lichXetXu','Lịch xét xử'],['xetXuTrucTuyen','Xét xử trực tuyến'],['tongDat','Văn bản tống đạt',1],['trichLuc','Trích lục bản sao'],['khieuNai','Khiếu nại, tố cáo'],['lichTiepDan','Lịch tiếp dân']];
+    return h('div', { className: 'tp-phone', style: { paddingBottom: '92px' } },
+      h(T.HomeHeader, { logoSrc: '/_blob/44c51576aa6dac39f757a0ed9c3bc8e8', onCalendar: function () {}, greeting: 'Xin chào, Nguyễn Văn A', role: 'Tài khoản cá nhân', canSwitchRole: true, subtitle: 'Định danh điện tử VNeID mức 2', unread: true, searchPlaceholder: 'Tra cứu hồ sơ, số thụ lý…' }),
+      h('div', { className: 'tp-pad', style: { display: 'grid', gap: '16px', paddingTop: '16px' } },
+        h(T.BannerCarousel, { slides: [{ imageSrc: '/_blob/05f666e58e86de6c6d8f4c597ff57d91', eyebrow: 'Tòa án điện tử', title: 'Nộp đơn khởi kiện trực tuyến', description: 'Không cần đến trụ sở Tòa án.', cta: 'Nộp đơn ngay' }, { imageSrc: '/_blob/05f666e58e86de6c6d8f4c597ff57d91', title: 'Xét xử trực tuyến' }, { imageSrc: '/_blob/05f666e58e86de6c6d8f4c597ff57d91', title: 'Tống đạt điện tử' }] }),
+        h('div', { className: 'tp-qa-grid' }, h(T.QuickAction, { tone: 'red', icon: 'filePlus', title: 'Nộp đơn khởi kiện', subtitle: 'Dân sự, hành chính' }), h(T.QuickAction, { tone: 'plain', icon: 'folder', title: 'Hồ sơ của tôi', subtitle: '2 vụ việc đang xử lý' })),
+        h('div', { className: 'tp-qa-grid' }, h(T.QuickAction, { size: 'md', tone: 'plain', icon: 'idCard', title: 'Liên kết VNeID' }), h(T.QuickAction, { size: 'md', tone: 'plain', icon: 'calendar', title: 'Lịch của tôi' })),
+        h(T.SectionHeader, { variant: 'plain', title: 'Dịch vụ khác', action: h(T.LinkArrow, null, 'Tất cả') }),
+        h('div', { className: 'tp-tile-grid tp-tile-grid-illo' }, tiles.map(function (x) { return h(T.ServiceTile, { key: x[1], illustration: x[0], label: x[1], count: x[2] }); })),
+        h(T.SectionHeader, { variant: 'plain', title: 'Tin tức, thông báo', action: h(T.LinkArrow, null, 'Xem thêm') }),
+        h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' } }, h(T.NewsCard, { imageSrc: '/_blob/05f666e58e86de6c6d8f4c597ff57d91', tag: 'Mới', title: 'Hướng dẫn nộp đơn khởi kiện trên ứng dụng', date: '28/10/2026' }), h(T.NewsCard, { imageSrc: '/_blob/05f666e58e86de6c6d8f4c597ff57d91', title: 'Lịch tiếp công dân tháng 11/2026', date: '25/10/2026' }))),
+      h(T.ChatFab, { style: { position: 'absolute', right: '16px', bottom: '84px' } }),
+      h('div', { style: { position: 'absolute', left: 0, right: 0, bottom: 0 } }, h(T.BottomNav, { active: 'home', items: [{ key: 'home', icon: 'home', label: 'Trang chủ' }, { key: 'cases', icon: 'folder', label: 'Hồ sơ' }, { key: 'new', icon: 'filePlus', label: 'Nộp đơn', primary: true }, { key: 'inbox', icon: 'mail', label: 'Hộp thư' }, { key: 'me', icon: 'user', label: 'Cá nhân' }] })));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Home));
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- @dsCard group="Điều hướng" height=800 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>MenuList — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(T.MenuList, { items: [
+    { illustration: 'nopDon', label: 'Khởi kiện dân sự', description: 'Tranh chấp dân sự, hôn nhân, kinh doanh, lao động' }, { illustration: 'hanhChinh', label: 'Khởi kiện hành chính', description: 'Khởi kiện quyết định, hành vi hành chính' },
+    { illustration: 'yeuCau', label: 'Yêu cầu giải quyết việc dân sự', description: 'Các yêu cầu thuộc thẩm quyền Tòa án' }, { illustration: 'phaSan', label: 'Phục hồi, phá sản', description: 'Chọn thủ tục theo tư cách người nộp' } ] }), h(T.MenuList, { groups: [
+    [{ icon: 'user', label: 'Thông tin tài khoản' }, { icon: 'shield', label: 'Cam kết giao dịch điện tử' }, { icon: 'pen', label: 'Quản lý chữ ký số' }, { icon: 'swap', label: 'Thay đổi phương thức giao dịch điện tử' }],
+    [{ icon: 'lock', label: 'Đổi mật khẩu' }, { icon: 'phone', label: 'Đăng ký lại thiết bị' }],
+    [{ icon: 'message', label: 'Câu hỏi thường gặp' }, { icon: 'star', label: 'Đánh giá mức độ hài lòng' }],
+    [{ icon: 'logout', label: 'Đăng xuất', danger: true }] ] })));
+</script>
+</body>
+</html>

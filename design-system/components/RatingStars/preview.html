@@ -1,0 +1,13 @@
+<!-- @dsCard group="Nhập liệu" height=120 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>RatingStars — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Demo() { var s = React.useState(4); return h(T.RatingStars, { label: 'Mức độ hài lòng', required: true, value: s[0], onChange: s[1] }); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

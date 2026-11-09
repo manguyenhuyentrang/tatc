@@ -1,0 +1,14 @@
+<!-- @dsCard group="Bố cục" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ProfileCard — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.ProfileCard, { name: 'Nguyễn Minh An', initials: 'MA', role: 'Công dân', canSwitchRole: true, subtitle: 'Định danh VNeID', onOpen: function () {} }),
+    h(T.ProfileCard, { name: 'Nguyễn Minh An', initials: 'MA', role: 'Công dân', subtitle: 'Định danh VNeID', onOpen: function () {} })));
+</script>
+</body>
+</html>

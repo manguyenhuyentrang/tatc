@@ -1,0 +1,20 @@
+<!-- @dsCard group="Nhập liệu" height=270 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>OptionItem — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Demo() {
+    var s = React.useState({ cccd: true });
+    var set = function (k) { return function (v) { var n = Object.assign({}, s[0]); n[k] = v; s[1](n); }; };
+    return h(React.Fragment, null,
+      h(T.OptionItem, { illustration: 'cccd', title: 'Bản sao CCCD', meta: 'Bắt buộc · PDF, JPG', checked: s[0].cccd, onChange: set('cccd'), onInfo: function () {} }),
+      h(T.OptionItem, { illustration: 'chungCu', title: 'Tài liệu, chứng cứ', meta: 'Tối đa 20 tệp', checked: s[0].cc, onChange: set('cc'), onInfo: function () {} }),
+      h(T.OptionItem, { illustration: 'uyQuyen', title: 'Giấy ủy quyền', meta: 'Nếu nộp thay', checked: s[0].uq, onChange: set('uq') }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

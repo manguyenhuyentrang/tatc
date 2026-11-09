@@ -1,0 +1,12 @@
+<!-- @dsCard group="Thẻ" height=230 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>PlaceCard — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page);display:flex;flex-direction:column;gap:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement, noop = function () {};
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(T.PlaceCard, { kind: 'Trung tâm TGPL nhà nước', title: 'Trung tâm Trợ giúp pháp lý nhà nước TP. Hà Nội', address: '[Địa chỉ theo danh mục điểm TGPL]', tags: ['Hình sự', 'Dân sự', 'Hành chính'], onClick: noop })));
+</script>
+</body>
+</html>

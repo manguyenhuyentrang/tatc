@@ -1,0 +1,15 @@
+<!-- @dsCard group="Thẻ" height=470 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>InfoList — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.InfoList, { items: [{ label: 'Họ tên', value: 'TrangMNH' }, { label: 'Giới tính', value: 'Nam' }] }),
+    h(T.InfoList, { variant: 'rows', items: [{ label: 'Tòa án nhận đơn', value: 'Tòa án nhân dân khu vực 1 - Hà Nội' }, { label: 'Tiêu đề đơn', value: 'Kiến nghị bổ sung hướng dẫn nộp đơn trực tuyến cho người cao tuổi' }, { label: 'Tài liệu kèm theo', value: 'Không có' }] }),
+    h(T.InfoList, { variant: 'kv', items: [{ label: 'Mã hồ sơ', value: 'CDVTP-KNTC-20261030-655159', mono: true }, { label: 'Người đứng đơn', value: '1 người' }, { label: 'Trạng thái', value: h(T.StatusBadge, { tone: 'danger' }, 'Gửi không thành công') }] })));
+</script>
+</body>
+</html>

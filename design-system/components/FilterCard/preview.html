@@ -1,0 +1,12 @@
+<!-- @dsCard group="Nhập liệu" height=290 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FilterCard — preview</title></head>
+<body>
+<div id="root" style="padding:16px;max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(T.FilterCard, { placeholder: 'Nhập mã đơn, số thụ lý' }, h(T.SelectField, { icon: 'calendar', value: '01/10/2026 – 29/10/2026' }), h(T.SelectField, { value: 'Tất cả trạng thái' })));
+</script>
+</body>
+</html>

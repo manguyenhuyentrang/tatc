@@ -1,0 +1,13 @@
+<!-- @dsCard group="Dữ liệu" height=140 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>CaseProgress — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { style: { background: 'var(--surface)', borderRadius: '16px', padding: '14px' } },
+    h(T.CaseProgress, { steps: ['Thụ lý', 'Chuẩn bị xét xử', 'Xét xử', 'Kết thúc'], current: 2 })));
+</script>
+</body>
+</html>

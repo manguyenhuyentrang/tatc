@@ -1,0 +1,15 @@
+<!-- @dsCard group="Bố cục" height=500 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>HomeHeader — preview</title></head>
+<body>
+<div id="root" style="max-width:390px;display:grid;gap:24px;padding-bottom:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  var base = { onCalendar: function () {}, logoSrc: '/_blob/44c51576aa6dac39f757a0ed9c3bc8e8', greeting: 'Xin chào, Nguyễn Văn A', role: 'Tài khoản cá nhân', subtitle: 'Định danh điện tử VNeID mức 2', unread: true, searchPlaceholder: 'Tra cứu hồ sơ, số thụ lý…' };
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.HomeHeader, Object.assign({}, base, { canSwitchRole: true, onRoleClick: function () {} })),
+    h(T.HomeHeader, base)));
+</script>
+</body>
+</html>

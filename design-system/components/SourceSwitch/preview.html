@@ -1,0 +1,12 @@
+<!-- @dsCard group="Điều hướng" height=150 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SourceSwitch — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page);display:flex;flex-direction:column;gap:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement, noop = function () {};
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(T.SourceSwitch, { label: 'Nguồn hệ thống tiếp nhận', value: 'hc', onChange: noop, items: [{ key: 'hc', title: 'Khiếu nại, tố cáo hành chính', system: 'Hệ thống KNTC', meta: '3 hồ sơ', illustration: 'hanhChinh' }, { key: 'tt', title: 'Khiếu nại, tố cáo trong tố tụng', system: 'Hệ thống QLA', tone: 'brand', meta: '3 hồ sơ', illustration: 'banAn' }] })));
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!-- @dsCard group="Hồ sơ" height=120 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>AccountBanner — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page);display:flex;flex-direction:column;gap:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement, noop = function () {};
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(T.AccountBanner, { name: 'Hoàng Dương', initials: 'HD', role: 'Công dân', onRole: noop, verified: 'Định danh VNeID', idValue: '•••• •••• 1234', onOpen: noop })));
+</script>
+</body>
+</html>

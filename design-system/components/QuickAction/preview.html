@@ -1,0 +1,12 @@
+<!-- @dsCard group="Hành động" height=230 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>QuickAction — preview</title></head>
+<body>
+<div id="root" style="padding:16px;max-width:390px;display:grid;gap:12px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h('div', { className: 'tp-qa-grid' }, h(T.QuickAction, { tone: 'red', icon: 'filePlus', title: 'Nộp đơn khởi kiện', subtitle: 'Dân sự, hành chính' }), h(T.QuickAction, { tone: 'plain', icon: 'folder', title: 'Hồ sơ của tôi', subtitle: 'Vụ việc và tiến trình' })), h('div', { className: 'tp-qa-grid' }, h(T.QuickAction, { size: 'md', tone: 'plain', icon: 'idCard', title: 'Liên kết VNeID' }), h(T.QuickAction, { size: 'md', tone: 'plain', icon: 'calendar', title: 'Lịch của tôi' }))));
+</script>
+</body>
+</html>
