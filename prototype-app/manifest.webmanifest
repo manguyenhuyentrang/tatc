@@ -1,0 +1,17 @@
+{
+  "name": "Prototype TATC – Cổng Dịch vụ Tư pháp",
+  "short_name": "TATC",
+  "id": "./",
+  "description": "Bản xem thử ứng dụng Cổng Dịch vụ Tư pháp TATC trên điện thoại.",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#a3131c",
+  "theme_color": "#a3131c",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

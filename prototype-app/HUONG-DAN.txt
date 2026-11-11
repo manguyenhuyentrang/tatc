@@ -1,0 +1,45 @@
+PROTOTYPE TATC – PREVIEW VÀ CÀI PWA QUA MẠNG NỘI BỘ
+
+ĐỊA CHỈ HIỆN TẠI
+- Xem nhanh: http://10.15.73.21:8080/
+- Hướng dẫn cài trên điện thoại: http://10.15.73.21:8080/mobile-setup.html
+- App qua HTTPS: https://10.15.73.21:8443/
+
+1. Chạy lại server sau khi tắt máy
+   - Cách nhanh nhất: bấm đúp start-all.bat để mở cùng lúc 2 cửa sổ server (HTTP 8080 và HTTPS 8443).
+   - Bấm đúp start-server.bat để chạy HTTP cổng 8080 (cần Node.js).
+   - Bấm đúp start-https.bat để chạy HTTPS cổng 8443 (cần Node.js và OpenSSL; Git for Windows đã có OpenSSL).
+   - Giữ hai cửa sổ đang chạy; Ctrl+C để dừng. Hai server đã được chạy ẩn trong phiên cấu hình ban đầu.
+   - Không cần chạy thêm nếu server cổng đó đang hoạt động.
+
+2. Cho điện thoại truy cập
+   - Điện thoại kết nối Wi-Fi có đường mạng tới máy tính; không dùng 4G/5G để truy cập địa chỉ nội bộ.
+   - Firewall HTTPS hiện cho phép Node.js tại 10.15.73.21:8443 từ mạng 10.15.0.0/16.
+   - Nếu cần cấu hình lại: chạy PowerShell dưới quyền quản trị rồi chạy:
+     powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\allow-mobile.ps1
+   - Nếu mạng công ty chặn liên lạc giữa Wi-Fi và máy tính, cần cho phép TCP 8080/8443 trên thiết bị mạng.
+
+3. Cài thành app trên điện thoại
+   - Mở http://10.15.73.21:8080/mobile-setup.html và làm theo hướng dẫn.
+   - Tải preview-ca.crt, cài và tin cậy chứng chỉ TATC Local Preview CA một lần trên điện thoại.
+   - iPhone cần bật tin cậy hoàn toàn tại Cài đặt chung -> Giới thiệu -> Cài đặt tin cậy chứng nhận.
+   - Android cài chứng chỉ CA tại phần Bảo mật trong Cài đặt; tên mục tùy hãng.
+   - Mở https://10.15.73.21:8443/; không được còn cảnh báo chứng chỉ.
+   - iPhone: Safari -> Chia sẻ -> Thêm vào Màn hình chính.
+   - Android: Chrome -> menu ⋮ -> Thêm vào màn hình chính -> Cài đặt.
+   - Chứng chỉ/CA dùng riêng cho preview; không tự cài vào Windows. Khóa riêng nằm trong thư mục tạm tatc-preview-https, ngoài thư mục được server chia sẻ.
+
+4. Cập nhật và sử dụng
+   - Live reload: lưu index.html hoặc tài nguyên prototype trên máy tính, trình duyệt/điện thoại đang mở server sẽ tự tải lại bản mới.
+   - Sau lần đầu bật live reload, tải lại trang đang mở một lần để nhận tính năng. Không dùng đường dẫn file:/// để xem realtime.
+   - Màn hình đang xem được giữ qua địa chỉ URL; nội dung biểu mẫu chưa lưu sẽ được đặt lại khi tải lại.
+   - Nếu điện thoại khóa màn hình hoặc app chạy nền, bản mới được kiểm tra khi mở lại. Khi mất mạng, app giữ bản cache và cập nhật khi có mạng trở lại.
+   - Manifest và service worker đã hỗ trợ chế độ standalone, cache bản đã tải để mở khi mất mạng.
+   - Dữ liệu biểu mẫu là demo, không được lưu như hệ thống thật.
+   - Nếu IP máy tính đổi, chạy lại start-https.bat để tạo chứng chỉ có IP mới; sửa địa chỉ/rule trong allow-mobile.ps1 nếu đổi mạng.
+   - Chứng chỉ server có hạn 90 ngày; chạy lại start-https.bat để gia hạn bằng cùng CA. CA có hạn 1 năm; không xóa thư mục khóa tạm trong thời gian đang dùng.
+
+5. Kết thúc preview
+   - Xóa app và gỡ chứng chỉ TATC Local Preview CA khỏi điện thoại nếu không dùng nữa.
+   - Gỡ rule firewall bằng PowerShell quản trị:
+     Remove-NetFirewallRule -Name 'TATC-Prototype-HTTPS-8443'

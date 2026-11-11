@@ -1,0 +1,16 @@
+<!-- @dsCard group="Thẻ" height=280 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>ServiceCard — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.ServiceCard, { icon: 'file', title: 'Nộp đơn khởi kiện', description: 'Soạn và gửi đơn khởi kiện kèm tài liệu trực tuyến.' }),
+    h(T.ServiceCard, { icon: 'mail', title: 'Văn bản tống đạt', description: 'Nhận văn bản tố tụng trực tuyến, có giá trị pháp lý.' })));
+</script>
+</body>
+</html>

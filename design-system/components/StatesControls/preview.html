@@ -1,0 +1,61 @@
+<!-- @dsCard group="Trạng thái" height=1460 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>StatesControls — preview</title></head>
+<body>
+<style>
+  .st { max-width: 390px; padding: 12px 16px 16px; box-sizing: border-box; background: var(--surface-page); display: flex; flex-direction: column; gap: 10px; }
+  .st h3 { margin: 12px 0 0; font: 700 15px/20px var(--font-sans); color: var(--ink); }
+  .st h3:first-child { margin-top: 0; }
+  .st-row { display: grid; grid-template-columns: 76px 1fr; gap: 10px; align-items: center; }
+  .st-k { font: 500 11px/14px var(--font-sans); letter-spacing: .6px; text-transform: uppercase; color: var(--ink-subtle); }
+  .st-v { min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .st-v .tp-field, .st-v .tp-select, .st-v .tp-hs, .st-v .tp-upload, .st-v .tp-opt, .st-v .tp-acc, .st-v .tp-nav, .st-v .tp-seg, .st-v .tp-appbar, .st-v .tp-tabs { width: 100%; min-width: 0; box-sizing: border-box; }
+  .st-red { padding: 12px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--brand-950), var(--brand-800)); }
+</style>
+<div id="root" class="st"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Mark(p) {
+    var r = React.useRef(null);
+    React.useEffect(function () { var el = r.current; if (!el) return; (p.sel ? el.querySelectorAll(p.sel) : [el.firstElementChild]).forEach(function (t) { if (t) t.classList.add(p.cls); }); });
+    return h('div', { ref: r, style: { display: 'contents' } }, p.children);
+  }
+  var P = function (el, sel) { return h(Mark, { cls: 'tp-is-pressed', sel: sel }, el); };
+  var F = function (el, sel) { return h(Mark, { cls: 'tp-is-focus', sel: sel }, el); };
+  function Row(k) { return h('div', { className: 'st-row' }, h('span', { className: 'st-k' }, k), h.apply(null, ['div', { className: 'st-v' }].concat([].slice.call(arguments, 1)))); }
+  function Sec(t) { return h('h3', null, t); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    Sec('Button – primary'),
+    Row('Mặc định', h(T.Button, null, 'Gửi đơn')),
+    Row('Nhấn', P(h(T.Button, null, 'Gửi đơn'))),
+    Row('Focus', F(h(T.Button, null, 'Gửi đơn'))),
+    Row('Đang tải', h(T.Button, { loading: true }, 'Đang đăng nhập…')),
+    Row('Vô hiệu', h(T.Button, { disabled: true }, 'Gửi đơn')),
+    Sec('Button – secondary, tonal, ghost'),
+    Row('Mặc định', h(T.Button, { variant: 'secondary', size: 'sm' }, 'Xem tất cả'), h(T.Button, { variant: 'tonal', size: 'sm' }, 'Lưu nháp'), h(T.Button, { variant: 'ghost', size: 'sm', icon: 'upload' }, 'Tải tài liệu')),
+    Row('Nhấn', P(h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } }, h(T.Button, { variant: 'secondary', size: 'sm' }, 'Xem tất cả'), h(T.Button, { variant: 'tonal', size: 'sm' }, 'Lưu nháp'), h(T.Button, { variant: 'ghost', size: 'sm', icon: 'upload' }, 'Tải tài liệu')), '.tp-btn')),
+    Row('Vô hiệu', h(T.Button, { variant: 'secondary', size: 'sm', disabled: true }, 'Xem tất cả'), h(T.Button, { variant: 'tonal', size: 'sm', disabled: true }, 'Lưu nháp')),
+    Sec('LinkArrow'),
+    Row('Mặc định', h(T.LinkArrow, null, 'Xem thêm')),
+    Row('Nhấn', P(h(T.LinkArrow, null, 'Xem thêm'))),
+    Row('Focus', F(h(T.LinkArrow, null, 'Xem thêm'))),
+    Row('Vô hiệu', h(T.LinkArrow, { disabled: true }, 'Xem thêm')),
+    Sec('Tabs'),
+    Row('Underline', P(h(T.Tabs, { label: 'Loại đơn', items: [{ key: 'all', label: 'Tất cả', count: 3 }, { key: 'kn', label: 'Khiếu nại' }, { key: 'tc', label: 'Tố cáo', disabled: true }] }), '.tp-tab:nth-child(2)')),
+    Row('Chip', P(h(T.Tabs, { variant: 'chip', label: 'Lọc', items: [{ key: 'all', label: 'Tất cả', count: 3 }, { key: 'kn', label: 'Khiếu nại' }, { key: 'tc', label: 'Tố cáo', disabled: true }] }), '.tp-tab:nth-child(2)')),
+    h('p', { className: 'st-k', style: { margin: 0, textTransform: 'none', letterSpacing: 0 } }, 'Tab 1 đang chọn · tab 2 đang nhấn · tab 3 vô hiệu'),
+    Sec('SegmentedControl'),
+    Row('Nhấn', P(h(T.SegmentedControl, { label: 'Loại đối tượng', options: [{ value: 'canhan', label: 'Cá nhân' }, { value: 'coquan', label: 'Cơ quan, tổ chức' }] }), 'button:nth-child(2)')),
+    Row('Vô hiệu', h(T.SegmentedControl, { label: 'Loại đối tượng', disabled: true, options: [{ value: 'canhan', label: 'Cá nhân' }, { value: 'coquan', label: 'Cơ quan, tổ chức' }] })),
+    Sec('Checkbox'),
+    Row('Mặc định', h(T.Checkbox, { label: 'Có người khác cùng phản ánh, kiến nghị' })),
+    Row('Đã chọn', h(T.Checkbox, { label: 'Có người khác cùng phản ánh, kiến nghị', defaultChecked: true })),
+    Row('Focus', F(h(T.Checkbox, { label: 'Có người khác cùng phản ánh, kiến nghị' }), 'input')),
+    Row('Lỗi', h(T.Checkbox, { label: 'Tôi cam đoan nội dung đơn và tài liệu kèm theo là đúng sự thật.', error: '[Câu lỗi khi chưa đánh dấu cam đoan]' })),
+    Row('Vô hiệu', h(T.Checkbox, { label: 'Có người khác cùng phản ánh, kiến nghị', disabled: true }), h(T.Checkbox, { label: 'Đã chọn', disabled: true, defaultChecked: true }))));
+</script>
+</body>
+</html>

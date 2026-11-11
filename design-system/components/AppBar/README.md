@@ -1,0 +1,6 @@
+Thanh tiêu đề: gradient `brand-950` → `brand-800`, đường vàng `court-gold` 2px ở đáy, tên cổng Roboto 700 chữ hoa.
+
+- Bên dùng cung cấp: `title`, tùy chọn `subtitle` (chữ `on-brand-muted`), `logoSrc` (Quốc huy, chỉ trang chủ), `onBack`, `actions` = `[{icon, label, onClick, dot?}]`, `{text, onClick}` (thao tác chữ, chỉ dùng với `plain`) hoặc `{avatar, label, onClick}` (nút tài khoản: chữ viết tắt trên nền `gold-soft`, chữ `brand-950`), tối đa 3.
+- `variant="page"`: header đỏ của các màn trên thanh điều hướng (Hồ sơ, Hộp thư, Cá nhân): cùng gradient, tiêu đề `title` căn giữa, phần nội dung `tp-sheet` bo góc `radius-xl` đè lên mép dưới.
+- `variant="plain"` (header màn chức năng con, chốt phương án A ngày 30/10/2026): nền `surface`, đường kẻ `border` và `shadow-card` ở đáy, cao 56px. Nút quay lại mũi tên `chevronLeft` 24px màu `ink`; tiêu đề `title` 16/24 700 `ink` căn trái, một dòng, cắt "…" khi dài; thao tác bên phải là chữ `brand-text` 16/24 500 (ví dụ "Lưu nháp") hoặc nút biểu tượng 44px. Nội dung bên dưới bắt đầu ngay trên nền trang, không đè mép. Dùng cho mọi màn con, trừ Trang chủ và các màn trên thanh điều hướng. Luồng nhập nhiều bước đặt "Lưu nháp" ở header; thanh đáy chỉ còn "Quay lại" và "Tiếp theo".
+- `label` của mỗi action là bắt buộc. Chấm thông báo: `court-gold` trên nền đỏ, `court-red` trên nền trắng.

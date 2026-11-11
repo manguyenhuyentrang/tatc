@@ -1,0 +1,16 @@
+<!-- @dsCard group="Nhập liệu" height=280 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>SearchToolbar — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.SearchToolbar, { placeholder: 'Tìm mã vụ án, tên vụ án, mã đơn…', sortLabel: 'Mới nhất', count: '2 vụ án' }),
+    h(T.SearchToolbar, { placeholder: 'Tìm mã vụ án, tên vụ án, mã đơn…', filterCount: 2, sortLabel: 'Mới nhất', count: '2 vụ án' })));
+</script>
+</body>
+</html>

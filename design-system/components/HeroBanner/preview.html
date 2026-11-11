@@ -1,0 +1,18 @@
+<!-- @dsCard group="Bố cục" height=620 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>HeroBanner — preview</title></head>
+<body>
+<div id="root" style="padding:16px;max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(T.HeroBanner, { imageSrc: '/_blob/05f666e58e86de6c6d8f4c597ff57d91', title: 'Tòa án điện tử',
+    description: 'Thực hiện thủ tục tố tụng với Tòa án nhanh chóng, minh bạch và an toàn — mọi lúc, mọi nơi.',
+    actions: h(React.Fragment, null, h(T.Button, { block: true, variant: 'light', icon: 'idCard' }, 'Đăng nhập bằng VNeID'), h(T.Button, { block: true, variant: 'outline-light', icon: 'user' }, 'Đăng nhập bằng tài khoản')),
+    note: 'Bảo mật theo tiêu chuẩn an toàn thông tin của TANDTC',
+    stats: [{ value: '2.847', label: 'Hồ sơ tiếp nhận' }, { value: '98%', label: 'Xử lý đúng hạn' }, { value: '24/7', label: 'Tiếp nhận đơn' }] }));
+</script>
+</body>
+</html>

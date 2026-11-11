@@ -1,0 +1,52 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>Cover</title>
+<style>
+  html, body { margin: 0; background: var(--surface-page); }
+  .cv { position: relative; width: 960px; height: 288px; overflow: hidden; background: var(--surface-page); }
+  .cv svg { position: absolute; left: 0; top: 0; }
+  .b-950 { fill: var(--brand-950); }
+  .b-900 { fill: var(--brand-900); }
+  .b-800 { fill: var(--brand-800); }
+  .b-700 { fill: var(--brand-700); }
+  .b-red { fill: var(--court-red); }
+  .b-slate { fill: var(--ink-muted); }
+  .b-rule { fill: var(--court-gold); }
+  .p-dot { fill: var(--white); }
+  .txt { position: absolute; left: 48px; bottom: 30px; }
+  .name { font-family: var(--font-sans); font-weight: 700; font-size: 64px; line-height: .95; letter-spacing: -0.5px; color: var(--ink); margin: 0; white-space: nowrap; }
+  .tag { font-family: var(--font-sans); font-size: 14px; line-height: 20px; color: var(--ink-subtle); margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="cv">
+  <svg width="960" height="120" viewBox="0 0 960 120" aria-hidden="true">
+    <!--
+      blocks: brand-950 336×116, brand-900 160×116, brand-800 176×116, brand-700 96×116, court-red 48×116, ink-muted 144×116 — the palette's red ramp from darkest to flag red, then the slate neutral bleeding off the right edge.
+      arrangement: top-band skeleton (name too wide for the 440px zone at 64px); flush strips stepping lighter left to right like the header gradient brand-950 → brand-800, closed by the 4px court-gold rule (the header border, the one place yellow belongs).
+      pattern: the palette speaks in dots (every status = text + tint + border + dot) → one row of twelve white dots (r 6, pitch space-6) across the darkest red, like the status dot.
+      steps & radii: band 116 + 4px rule; dot pitch 24 = space-6; dot r 6 = half of space-3; square block corners as the header bar.
+    -->
+    <rect class="b-950" x="0" y="0" width="336" height="116"/>
+    <rect class="b-900" x="336" y="0" width="160" height="116"/>
+    <rect class="b-800" x="496" y="0" width="176" height="116"/>
+    <rect class="b-700" x="672" y="0" width="96" height="116"/>
+    <rect class="b-red" x="768" y="0" width="48" height="116"/>
+    <rect class="b-slate" x="816" y="0" width="144" height="116"/>
+    <g class="p-dot">
+      <circle cx="36" cy="58" r="6"/><circle cx="60" cy="58" r="6"/><circle cx="84" cy="58" r="6"/><circle cx="108" cy="58" r="6"/>
+      <circle cx="132" cy="58" r="6"/><circle cx="156" cy="58" r="6"/><circle cx="180" cy="58" r="6"/><circle cx="204" cy="58" r="6"/>
+      <circle cx="228" cy="58" r="6"/><circle cx="252" cy="58" r="6"/><circle cx="276" cy="58" r="6"/><circle cx="300" cy="58" r="6"/>
+    </g>
+    <rect class="b-rule" x="0" y="116" width="960" height="4"/>
+  </svg>
+  <div class="txt">
+    <p class="name">Cổng Dịch vụ Tư pháp</p>
+    <div class="tag">Ứng dụng giao dịch điện tử với Tòa án nhân dân — đỏ chủ đạo, nền xám lạnh, chữ Roboto.</div>
+  </div>
+</div>
+</body>
+</html>

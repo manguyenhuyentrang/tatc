@@ -1,0 +1,25 @@
+<!-- @dsCard group="Hành động" height=420 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>Button — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:380px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.Button, { block: true, icon: 'send' }, 'Gửi đơn khởi kiện'),
+    h(T.Button, { block: true, loading: true }, 'Đang đăng nhập…'),
+    h('div', { style: { display: 'flex', gap: '12px', flexWrap: 'wrap' } },
+      h(T.Button, { variant: 'secondary' }, 'Xem tất cả'),
+      h(T.Button, { variant: 'tonal' }, 'Lưu nháp'),
+      h(T.Button, { variant: 'ghost', icon: 'upload' }, 'Tải tài liệu'),
+      h(T.Button, { disabled: true }, 'Gửi')),
+    h('div', { className: 'tp-on-dark', style: { display: 'flex', flexWrap: 'wrap', gap: '12px', padding: '16px', borderRadius: '16px', background: 'linear-gradient(135deg, var(--brand-800), var(--brand-banner))' } },
+      h(T.Button, { variant: 'gold', size: 'sm' }, 'Nộp đơn ngay'),
+      h(T.Button, { variant: 'light', size: 'sm' }, 'Đăng nhập bằng VNeID'),
+      h(T.Button, { variant: 'outline-light', icon: 'user' }, 'Đăng nhập bằng tài khoản'))));
+</script>
+</body>
+</html>

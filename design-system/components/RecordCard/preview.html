@@ -1,0 +1,20 @@
+<!-- @dsCard group="Thẻ" height=440 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>RecordCard — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Doc() {
+    var s = React.useState(false);
+    return h(T.RecordCard, { kind: 'Biên bản', title: 'Biên bản phiên họp kiểm tra việc giao nộp tài liệu, chứng cứ', court: 'Tòa án nhân dân khu vực 1 - Hà Nội', meta: ['Người ký: Thẩm phán Nguyễn Văn An'], date: 'Ngày ký: 28-10-2026', caseRef: { code: 'DS-2026-0018', title: 'Tranh chấp hợp đồng mua bán tài sản' }, starred: s[0], onStar: function () { s[1](!s[0]); }, onArchive: function () {}, onClick: function () {} });
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(Doc),
+    h(T.RecordCard, { kind: 'Kiến nghị, phản ánh', title: 'Kiến nghị bổ sung hướng dẫn nộp đơn trực tuyến cho người cao tuổi', code: 'CDVTP-KNTC-20261030-655159', court: 'Tòa án nhân dân khu vực 1 - Hà Nội', date: 'Ngày gửi: —', status: 'Gửi không thành công', statusTone: 'danger', starred: true, onStar: function () {}, onArchive: function () {}, onClick: function () {} })));
+</script>
+</body>
+</html>

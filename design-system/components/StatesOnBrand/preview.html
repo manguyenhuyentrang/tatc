@@ -1,0 +1,43 @@
+<!-- @dsCard group="Trạng thái" height=580 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>StatesOnBrand — preview</title></head>
+<body>
+<style>
+  .st { max-width: 390px; padding: 12px 16px 16px; box-sizing: border-box; background: var(--surface-page); display: flex; flex-direction: column; gap: 10px; }
+  .st h3 { margin: 12px 0 0; font: 700 15px/20px var(--font-sans); color: var(--ink); }
+  .st h3:first-child { margin-top: 0; }
+  .st-row { display: grid; grid-template-columns: 76px 1fr; gap: 10px; align-items: center; }
+  .st-k { font: 500 11px/14px var(--font-sans); letter-spacing: .6px; text-transform: uppercase; color: var(--ink-subtle); }
+  .st-v { min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .st-v .tp-field, .st-v .tp-select, .st-v .tp-hs, .st-v .tp-upload, .st-v .tp-opt, .st-v .tp-acc, .st-v .tp-nav, .st-v .tp-seg, .st-v .tp-appbar, .st-v .tp-tabs { width: 100%; min-width: 0; box-sizing: border-box; }
+  .st-red { padding: 12px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--brand-950), var(--brand-800)); }
+</style>
+<div id="root" class="st"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Mark(p) {
+    var r = React.useRef(null);
+    React.useEffect(function () { var el = r.current; if (!el) return; (p.sel ? el.querySelectorAll(p.sel) : [el.firstElementChild]).forEach(function (t) { if (t) t.classList.add(p.cls); }); });
+    return h('div', { ref: r, style: { display: 'contents' } }, p.children);
+  }
+  var P = function (el, sel) { return h(Mark, { cls: 'tp-is-pressed', sel: sel }, el); };
+  var F = function (el, sel) { return h(Mark, { cls: 'tp-is-focus', sel: sel }, el); };
+  function Row(k) { return h('div', { className: 'st-row' }, h('span', { className: 'st-k' }, k), h.apply(null, ['div', { className: 'st-v' }].concat([].slice.call(arguments, 1)))); }
+  function Sec(t) { return h('h3', null, t); }
+  var bar = function () { return h(T.AppBar, { title: 'Cổng dịch vụ tư pháp', actions: [{ icon: 'bell', label: 'Thông báo' }, { avatar: 'TR', label: 'Tài khoản' }, { icon: 'menu', label: 'Menu điều hướng' }] }); };
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    Sec('AppBar – nút trên nền đỏ'),
+    Row('Mặc định', h('div', { style: { width: '100%' } }, bar())),
+    Row('Nhấn', h('div', { style: { width: '100%' } }, P(bar(), '.tp-appbar-btn:nth-of-type(1)'))),
+    Row('Focus', h('div', { style: { width: '100%' } }, F(bar(), '.tp-appbar-btn:nth-of-type(1)'))),
+    Sec('HomeHeader – nhãn vai trò, chuông'),
+    Row('Nhấn', h('div', { className: 'tp-home-top st-red', style: { width: '100%', border: 0, padding: '12px' } }, P(h('div', { style: { display: 'flex', gap: '12px', alignItems: 'center' } }, h('button', { type: 'button', className: 'tp-role' }, 'Tài khoản cá nhân', h(T.Icon, { name: 'chevronDown' })), h('button', { type: 'button', className: 'tp-bell', 'aria-label': 'Thông báo' }, h(T.Icon, { name: 'bell' }))), 'button'))),
+    Row('Focus', h('div', { className: 'tp-home-top st-red', style: { width: '100%', border: 0, padding: '12px' } }, F(h('div', { style: { display: 'flex', gap: '12px', alignItems: 'center' } }, h('button', { type: 'button', className: 'tp-role' }, 'Tài khoản cá nhân', h(T.Icon, { name: 'chevronDown' }))), 'button'))),
+    Sec('BackLink'),
+    Row('Nhấn', h('div', { className: 'st-red', style: { width: '100%' } }, P(h(T.BackLink, null, 'Về trang chủ'))))));
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!-- @dsCard group="Thẻ" height=420 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>EventCard — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.EventCard, { day: '26', month: 'T10', kind: 'Phiên họp', title: 'Phiên họp kiểm tra chứng cứ', lines: [{ icon: 'clock', text: '08:30 – 10:00' }, { icon: 'mapPin', text: 'Phòng họp Tòa án' }], status: 'Chưa xác nhận', actions: [{ label: 'Xác nhận / báo vắng', primary: true }] }),
+    h(T.EventCard, { day: '29', month: 'T10', kind: 'Phiên họp · DS-2026-0018', title: 'Phiên họp kiểm tra việc giao nộp tài liệu, chứng cứ', lines: [{ icon: 'clock', text: '08:30' }, { icon: 'mapPin', text: 'Trực tuyến · Phòng họp trực tuyến' }], actions: [{ label: 'Xem giấy triệu tập' }, { label: 'Vào phòng chờ', primary: true }] })));
+</script>
+</body>
+</html>

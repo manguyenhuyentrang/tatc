@@ -1,0 +1,16 @@
+<!-- @dsCard group="Nhập liệu" height=760 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>FileUpload — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.FileUpload, { hint: 'Định dạng PDF, JPG, PNG, DOCX (tự chuyển sang PDF để ký số) · tối đa 10 tệp, mỗi tệp ≤ 10 MB.', onPick: function () {}, onLibrary: function () {} }),
+    h(T.FileUpload, { title: 'Tài liệu kèm theo', shortHint: 'PDF, JPG, PNG, DOCX · ≤ 10 MB', onPick: function () {}, files: [{ name: 'don-da-ky-so.pdf', meta: '[dung lượng]', onRemove: function () {} }, { name: 'KNTC.pdf', meta: 'Quyết định · Quyết định thông báo từ tòa · 0 B · 23/10/2026', onRemove: function () {} }] })));
+</script>
+</body>
+</html>

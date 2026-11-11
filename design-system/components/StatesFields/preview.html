@@ -1,0 +1,49 @@
+<!-- @dsCard group="Trạng thái" height=1580 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>StatesFields — preview</title></head>
+<body>
+<style>
+  .st { max-width: 390px; padding: 12px 16px 16px; box-sizing: border-box; background: var(--surface-page); display: flex; flex-direction: column; gap: 10px; }
+  .st h3 { margin: 12px 0 0; font: 700 15px/20px var(--font-sans); color: var(--ink); }
+  .st h3:first-child { margin-top: 0; }
+  .st-row { display: grid; grid-template-columns: 76px 1fr; gap: 10px; align-items: center; }
+  .st-k { font: 500 11px/14px var(--font-sans); letter-spacing: .6px; text-transform: uppercase; color: var(--ink-subtle); }
+  .st-v { min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .st-v .tp-field, .st-v .tp-select, .st-v .tp-hs, .st-v .tp-upload, .st-v .tp-opt, .st-v .tp-acc, .st-v .tp-nav, .st-v .tp-seg, .st-v .tp-appbar, .st-v .tp-tabs { width: 100%; min-width: 0; box-sizing: border-box; }
+  .st-red { padding: 12px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--brand-950), var(--brand-800)); }
+</style>
+<div id="root" class="st"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Mark(p) {
+    var r = React.useRef(null);
+    React.useEffect(function () { var el = r.current; if (!el) return; (p.sel ? el.querySelectorAll(p.sel) : [el.firstElementChild]).forEach(function (t) { if (t) t.classList.add(p.cls); }); });
+    return h('div', { ref: r, style: { display: 'contents' } }, p.children);
+  }
+  var P = function (el, sel) { return h(Mark, { cls: 'tp-is-pressed', sel: sel }, el); };
+  var F = function (el, sel) { return h(Mark, { cls: 'tp-is-focus', sel: sel }, el); };
+  function Row(k) { return h('div', { className: 'st-row' }, h('span', { className: 'st-k' }, k), h.apply(null, ['div', { className: 'st-v' }].concat([].slice.call(arguments, 1)))); }
+  function Sec(t) { return h('h3', null, t); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    Sec('TextField'),
+    Row('Mặc định', h(T.TextField, { label: 'Số điện thoại liên hệ', placeholder: 'Số điện thoại liên hệ' })),
+    Row('Focus', F(h(T.TextField, { label: 'Số điện thoại liên hệ', placeholder: 'Số điện thoại liên hệ' }), 'input')),
+    Row('Đã nhập', h(T.TextField, { label: 'Số điện thoại liên hệ', defaultValue: '0000000000', onClear: function () {} })),
+    Row('Lỗi', h(T.TextField, { label: 'Mật khẩu', icon: 'lock', type: 'password', placeholder: 'Nhập mật khẩu', error: 'Vui lòng nhập mật khẩu.' })),
+    Row('Chỉ đọc', h(T.TextField, { label: 'Số căn cước hoặc mã số thuế', readOnly: true, defaultValue: '000000000000' })),
+    Row('Vô hiệu', h(T.TextField, { label: 'Số căn cước hoặc mã số thuế', icon: 'idCard', disabled: true, placeholder: 'Nhập số căn cước hoặc mã số thuế' })),
+    Sec('SelectField'),
+    Row('Mặc định', h(T.SelectField, { label: 'Tòa án nhận đơn', labelVisible: true, placeholder: 'Tòa án nhận đơn' })),
+    Row('Nhấn', P(h(T.SelectField, { label: 'Tòa án nhận đơn', labelVisible: true, placeholder: 'Tòa án nhận đơn' }), '.tp-select-btn')),
+    Row('Focus', F(h(T.SelectField, { label: 'Tòa án nhận đơn', labelVisible: true, placeholder: 'Tòa án nhận đơn' }), '.tp-select-btn')),
+    Row('Lỗi', h(T.SelectField, { label: 'Tòa án nhận đơn', labelVisible: true, placeholder: 'Tòa án nhận đơn', error: '[Câu lỗi khi chưa chọn Tòa án]' })),
+    Row('Vô hiệu', h(T.SelectField, { label: 'Tỉnh, thành phố liên hệ', labelVisible: true, value: 'Thành phố Hà Nội', disabled: true })),
+    Sec('FileUpload'),
+    Row('Lỗi', h(T.FileUpload, { hint: 'PDF, JPG, PNG, DOCX · ≤ 10 MB', error: '[Câu lỗi khi chưa tải tệp bắt buộc]', onPick: function () {} })),
+    Row('Vô hiệu', h(T.FileUpload, { hint: 'PDF, JPG, PNG, DOCX · ≤ 10 MB', disabled: true, onPick: function () {}, onLibrary: function () {} }))));
+</script>
+</body>
+</html>

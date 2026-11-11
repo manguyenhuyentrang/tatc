@@ -1,0 +1,15 @@
+<!-- @dsCard group="Nhập liệu" height=120 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>RatingStars — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  function Demo() { var s = React.useState(4); return h(T.RatingStars, { label: 'Mức độ hài lòng', required: true, value: s[0], onChange: s[1] }); }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

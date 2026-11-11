@@ -1,0 +1,21 @@
+<!-- @dsCard group="Trạng thái" height=110 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>StatusBadge — preview</title></head>
+<body>
+<div id="root" style="padding:16px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h('div', { className: 'tp-row', style: { padding: 0 } },
+      h(T.StatusBadge, { tone: 'success' }, 'Đã thụ lý'), h(T.StatusBadge, { tone: 'info' }, 'Đang xử lý'),
+      h(T.StatusBadge, { tone: 'warning' }, 'Chờ bổ sung'), h(T.StatusBadge, { tone: 'danger' }, 'Trả lại đơn'),
+      h(T.StatusBadge, { tone: 'neutral' }, 'Nháp'), h(T.StatusBadge, { tone: 'brand' }, 'Mới')),
+    h('div', { className: 'tp-row', style: { padding: '12px 0 0' } },
+      h(T.StatusBadge, { variant: 'outline', tone: 'success', icon: 'checkCircle' }, 'Đã nhập'), h(T.StatusBadge, { variant: 'outline', tone: 'neutral' }, 'Chưa nhập'),
+      h(T.StatusBadge, { variant: 'outline', tone: 'warning' }, 'Chờ xử lý'), h(T.StatusBadge, { variant: 'outline', tone: 'info' }, 'Đang xử lý'), h(T.StatusBadge, { variant: 'outline', tone: 'success' }, 'Hoàn thành'))));
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!-- @dsCard group="Điều hướng" height=220 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>Stepper — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.Stepper, { steps: ['Người gửi đơn', 'Cơ quan, cá nhân liên quan', 'Nội dung và nơi nhận', 'Tài liệu kèm theo', 'Xem lại và ký gửi'], current: 1 }),
+    h(T.Stepper, { steps: ['Người gửi đơn', 'Cơ quan, cá nhân liên quan', 'Nội dung và nơi nhận', 'Tài liệu kèm theo', 'Xem lại và ký gửi'], current: 3 }),
+    h(T.Stepper, { steps: ['Người gửi đơn', 'Cơ quan, cá nhân liên quan', 'Nội dung và nơi nhận', 'Tài liệu kèm theo', 'Xem lại và ký gửi'], current: 5 })));
+</script>
+</body>
+</html>

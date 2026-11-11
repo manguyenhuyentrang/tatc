@@ -1,0 +1,49 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#a3131c">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TATC">
+<style>
+/* Xem trên điện thoại: vẽ đúng khung thiết kế 430 × 932 (iPhone 14 Pro Max), thu nhỏ cho vừa phần màn hình đang hiển thị
+   (trừ thanh địa chỉ/thanh tab của Safari, thanh trạng thái khi mở như app) – không bao giờ bị cắt; ẩn bảng điều khiển prototype */
+@media (max-width:500px){
+html,body{margin:0!important;padding:0!important;background:#1c2233!important;overscroll-behavior:none;overflow:hidden!important}
+.pt{display:block!important;padding:0!important;max-width:none!important}
+.pt-side,.pt-hint{display:none!important}
+.pt-stage{display:block!important}
+.pt-phone{position:fixed!important;left:50%!important;top:var(--fit-top,0px)!important;width:430px!important;height:932px!important;padding:0!important;margin:0!important;border-radius:0!important;box-shadow:none!important;background:none!important;transform-origin:top center;transform:translateX(-50%) scale(var(--fit-s,1));z-index:1}
+.pt-phone>.ph{width:430px!important;height:932px!important;min-height:0!important;border-radius:var(--fit-r,0px)!important;box-shadow:none!important}
+.pt-toast{position:fixed!important;left:16px;right:16px;bottom:16px;z-index:60;margin:0}
+}
+</style>
+<script>
+(function () {
+  var W = 430, H = 932;
+  function probe(id, css) { var e = document.getElementById(id); if (!e) { e = document.createElement('div'); e.id = id; e.style.cssText = 'position:fixed;left:0;width:1px;visibility:hidden;pointer-events:none;' + css; document.documentElement.appendChild(e); } return e.offsetHeight || 0; }
+  function fit() {
+    var de = document.documentElement, app = window.navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+    var vv = window.visualViewport ? Math.round(visualViewport.height) : 0, vw = window.visualViewport ? Math.round(visualViewport.width) : window.innerWidth;
+    var fx = probe('app-probe', 'top:0;bottom:0'), dvh = probe('app-probe-dvh', 'top:0;height:100vh;height:100dvh'), sat = probe('app-probe-sa', 'top:0;height:0;padding-top:env(safe-area-inset-top,0px)');
+    var sh = window.screen ? Math.max(screen.width, screen.height) : 0, doc = window.innerHeight >= window.innerWidth;
+    var ds = [vv, fx, dvh, window.innerHeight];
+    if (app && doc && sh && sat) ds.push(sh - sat);            /* iPhone (mở như app) chỉ vẽ tới màn hình − thanh trạng thái */
+    var vis = Math.min.apply(null, ds.filter(function (x) { return x > 0; }));
+    var top = app ? sat : 0, avail = Math.max(100, vis - top);  /* app: chừa thanh trạng thái thật */
+    var k = Math.min(1, vw / W, avail / H);
+    de.style.setProperty('--fit-s', k.toFixed(4));
+    de.style.setProperty('--fit-top', Math.round(top + (avail - H * k) / 2) + 'px');
+    de.style.setProperty('--fit-r', k < 0.999 ? '28px' : '0px');
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', function () { setTimeout(fit, 300); });
+  window.addEventListener('pageshow', fit);
+  document.addEventListener('DOMContentLoaded', fit);
+  if (window.visualViewport) visualViewport.addEventListener('resize', fit);
+})();
+</script>

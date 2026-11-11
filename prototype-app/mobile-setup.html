@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cài bản preview TATC trên điện thoại</title>
+<style>
+body{margin:0;background:#f1f3f6;color:#0e1626;font:16px/1.6 system-ui,sans-serif}main{max-width:660px;margin:24px auto;padding:0 16px}section{background:#fff;border:1px solid #e3e8ef;border-radius:16px;padding:20px;margin:16px 0}h1{font-size:24px;line-height:1.4}h2{font-size:20px}a{color:#a3131c}a.button{display:inline-block;padding:12px 18px;border-radius:12px;background:#a3131c;color:#fff;text-decoration:none;margin:4px 0}li{margin:10px 0}code{overflow-wrap:anywhere}small{color:#3b4660}
+</style>
+</head>
+<body><main>
+<h1>Cài bản preview TATC trên điện thoại</h1>
+<p>Kết nối điện thoại với mạng Wi-Fi có thể truy cập máy tính chạy server. Giữ máy tính bật trong lúc xem bản mới.</p>
+<section><h2>1. Tải chứng chỉ preview</h2>
+<p>Chứng chỉ này dùng để tin cậy kết nối HTTPS của bản preview nội bộ.</p>
+<a class="button" href="preview-ca.crt">Tải chứng chỉ TATC Preview</a>
+<p><small>Chỉ cài nếu trang này được mở từ máy tính chạy preview mà bạn tin cậy. Có thể gỡ chứng chỉ sau khi kết thúc preview.</small></p>
+</section>
+<section><h2>2. Tin cậy chứng chỉ</h2>
+<p><strong>iPhone / iPad</strong></p>
+<ol><li>Mở trang này bằng Safari và cho phép tải hồ sơ.</li><li>Vào <strong>Cài đặt → Cài đặt chung → VPN &amp; Quản lý thiết bị</strong> (hoặc “Đã tải về hồ sơ”), chọn <strong>TATC Local Preview CA</strong> và cài đặt.</li><li>Vào <strong>Cài đặt chung → Giới thiệu → Cài đặt tin cậy chứng nhận</strong>, bật tin cậy hoàn toàn cho <strong>TATC Local Preview CA</strong>.</li></ol>
+<p><strong>Android</strong></p>
+<ol><li>Tải tệp chứng chỉ. Trong Cài đặt, tìm <strong>Cài đặt chứng chỉ</strong> hoặc <strong>Chứng chỉ CA</strong> (thường ở Bảo mật → Mã hóa và thông tin xác thực).</li><li>Chọn cài <strong>Chứng chỉ CA</strong>, rồi chọn tệp <strong>preview-ca.crt</strong>. Tên menu tùy hãng điện thoại.</li></ol>
+</section>
+<section><h2>3. Mở HTTPS và thêm vào màn hình chính</h2>
+<a class="button" id="app" href="/">Mở app TATC qua HTTPS</a>
+<p>Địa chỉ: <code id="address"></code></p>
+<ul><li><strong>iPhone:</strong> Safari → Chia sẻ → Thêm vào Màn hình chính → bật “Mở dưới dạng ứng dụng web” nếu có → Thêm.</li><li><strong>Android:</strong> Chrome → menu ⋮ → Thêm vào màn hình chính → Cài đặt (hoặc “Cài đặt ứng dụng”).</li></ul>
+<p>Nếu còn cảnh báo chứng chỉ, hãy kiểm tra lại bước 2. Để dùng service worker, HTTPS phải được thiết bị tin cậy. Xem thêm <a href="https://support.apple.com/en-us/102390" target="_blank" rel="noreferrer">hướng dẫn tin cậy chứng chỉ của Apple</a>.</p>
+</section>
+<section><h2>Cập nhật và kết thúc preview</h2><p>Bản đang mở tự tải lại khi lưu thay đổi trên máy tính. Màn đang xem được giữ; nội dung biểu mẫu chưa lưu sẽ được đặt lại. Nếu app đang chạy nền hoặc điện thoại bị khóa, bản mới được kiểm tra khi mở lại. Bản đã tải có thể mở khi mất mạng và cập nhật khi có mạng trở lại.</p><p>Nếu không truy cập được, kiểm tra máy tính còn chạy server và mạng cho phép truy cập cổng 8080 / 8443. Khi kết thúc preview, xóa app và gỡ chứng chỉ <strong>TATC Local Preview CA</strong> trong Cài đặt.</p></section>
+</main><script>var u='https://'+location.hostname+':8443/';document.getElementById('app').href=u;document.getElementById('address').textContent=u;</script></body>
+</html>

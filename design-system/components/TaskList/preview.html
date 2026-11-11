@@ -1,0 +1,19 @@
+<!-- @dsCard group="Danh sách" height=330 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>TaskList — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.Tabs, { variant: 'chip', label: 'Phân loại việc cần làm', items: [{ key: 'all', label: 'Tất cả', count: 8 }, { key: 'td', label: 'Tống đạt', count: 1 }, { key: 'hs', label: 'Hồ sơ và đơn', count: 3 }, { key: 'ap', label: 'Nộp án phí, lệ phí', count: 1 }, { key: 'k', label: 'Khác', count: 3 }] }),
+    h(T.TaskList, { items: [
+      { day: '25', month: 'T10', title: 'Văn bản tống đạt có thời hạn', code: 'DS-2026-0012', remain: 'Còn 2 ngày', status: 'Sắp hết hạn', tone: 'warning' },
+      { day: '26', month: 'T10', title: 'Bổ sung tài liệu, chứng cứ', code: 'DS-2026-0018', remain: 'Còn 3 ngày', status: 'Sắp hết hạn', tone: 'warning' },
+      { day: '30', month: 'T10', title: 'Theo dõi tạm ứng án phí', code: 'DS-2026-0012', remain: 'Còn 7 ngày', status: 'Trong hạn' } ] })));
+</script>
+</body>
+</html>

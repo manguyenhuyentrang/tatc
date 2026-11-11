@@ -1,0 +1,17 @@
+<!-- @dsCard group="Danh sách" height=330 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>NotificationList — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="padding:12px;max-width:390px;background:var(--surface-page)"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(T.NotificationList, { items: [
+    { time: '09:45', title: 'Sắp đến hạn bổ sung tài liệu, chứng cứ', description: 'Tổng quan hồ sơ cần bổ sung tài liệu trước ngày 26/10/2026.', code: 'DS-2026-0018', unread: true },
+    { time: '08:30', title: 'Tòa án gửi văn bản tống đạt', description: 'Văn bản mới đã được gửi đến Hộp thư tống đạt.', code: 'DS-2026-0012', unread: true },
+    { time: '08:00', title: 'Đơn khởi kiện đã được tiếp nhận', description: 'Theo dõi trạng thái xử lý trong Quản lý đơn.', code: 'DS-2026-0021' } ] }));
+</script>
+</body>
+</html>

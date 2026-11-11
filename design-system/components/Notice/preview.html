@@ -1,0 +1,16 @@
+<!-- @dsCard group="Trạng thái" height=290 -->
+<!doctype html>
+<html>
+<head><link rel="stylesheet" href="../../tokens.css"><link rel="stylesheet" href="../bundle.css">
+<script src="../../vendor/react.production.min.js"></script><script src="../../vendor/react-dom.production.min.js"></script><script src="../bundle.js"></script>
+<meta charset="utf-8"><title>Notice — preview</title></head>
+<body>
+<div id="root" class="tp-stack" style="max-width:390px"></div>
+<script>
+  var T = window.TuPhap, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(T.Notice, null, 'Mỗi đơn chỉ một loại nội dung. Nếu vừa khiếu nại vừa tố cáo, hoặc có thêm phản ánh, kiến nghị, bạn gửi các đơn riêng.'),
+    h(T.Notice, { tone: 'reminder', title: 'Bạn chưa hoàn thiện cam kết giao dịch điện tử', actionLabel: 'Xác nhận cam kết ngay', onClose: function () {} }, 'Xác nhận cam kết để dùng đầy đủ các dịch vụ điện tử trên Cổng, ví dụ nộp đơn khởi kiện trực tuyến.')));
+</script>
+</body>
+</html>
