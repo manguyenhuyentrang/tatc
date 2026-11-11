@@ -1191,3 +1191,13 @@ textarea.tp-field-input { padding: var(--space-3) var(--space-4); min-height: 10
 .tp-mtc > b { font: 700 14px/20px var(--font-sans); color: var(--ink); } .tp-mtc-m { font: 400 12px/16px var(--font-sans); color: var(--ink-muted); } .tp-mtc-m b { font-weight: 500; color: var(--ink); }
 .tp-mtc-s { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
 .tp-mtc-a { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; align-self: stretch; margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--border); }
+
+/* CertificateCard – chân thẻ 2 nút nhỏ chia đều (phương án A, 11/11/2026) */
+
+.tp-cert-btns { justify-content: stretch; gap: 8px; }
+
+.tp-cert-btns > .tp-btn { flex: 1; min-width: 0; }
+
+.tp-cert-btns > .tp-cert-btn-danger { color: var(--danger); border-color: var(--border-strong); }
+
+.tp-cert-btns > .tp-cert-btn-danger:active { background: var(--surface-sunken); }

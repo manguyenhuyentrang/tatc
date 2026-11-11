@@ -188,12 +188,12 @@ var IB_HS = [['DS-2026-0018', 'Tranh chấp hợp đồng mua bán tài sản'],
 var IB_TOA = [COURT1, KV2, TPHN];
 /* mỗi văn bản: t tên, so số hiệu, nh nhãn, from, time, va mã hồ sơ, doc đã đọc, star, han (dd-mm-yyyy), nhom (khối theo nhóm), dk tệp đính kèm */
 var IB = [
-  { t: 'Biên bản phiên họp kiểm tra việc giao nộp tài liệu, chứng cứ', so: '07/2026/BB-TA', nh: 'BIEN_BAN', from: COURT1, time: '28-10-2026 08:15', va: 'DS-2026-0018', doc: true, han: '03-11-2026', nhom: 'bo-sung', dk: true },
+  { t: 'Biên bản phiên họp kiểm tra việc giao nộp tài liệu, chứng cứ', so: '07/2026/BB-TA', nh: 'BIEN_BAN', from: COURT1, time: '28-10-2026 08:15', va: 'DS-2026-0018', doc: false, han: '03-11-2026', nhom: 'bo-sung', dk: true },
   { t: 'Thông báo về phiên họp hòa giải', so: '12/2026/TB-HG', nh: 'THONG_BAO', from: KV2, time: '28-10-2026 07:30', va: 'HG-2026-0018', star: true, han: '01-11-2026', nhom: 'hoa-giai' },
   { t: 'Giấy xác nhận đã nhận tài liệu, chứng cứ', so: '31/2026/XN-TA', nh: 'GIAY_XAC_NHAN', from: TPHN, time: '27-10-2026 16:20', va: 'DS-2026-0012', doc: true },
-  { t: 'Quyết định đưa vụ án ra xét xử', so: '15/2026/QĐXXST-DS', nh: 'QUYET_DINH', from: COURT1, time: '27-10-2026 14:05', va: 'DS-2026-0012', doc: true, star: true, han: '08-11-2026', nhom: 'lich-phien', dk: true },
+  { t: 'Quyết định đưa vụ án ra xét xử', so: '15/2026/QĐXXST-DS', nh: 'QUYET_DINH', from: COURT1, time: '27-10-2026 14:05', va: 'DS-2026-0012', doc: false, star: true, han: '08-11-2026', nhom: 'lich-phien', dk: true },
   { t: 'Giấy mời tham gia phiên họp đối thoại', so: '08/2026/GM-HG', nh: 'GIAYMOI_TT', from: KV2, time: '26-10-2026 10:45', va: 'HG-2026-0018', doc: true, han: '04-11-2026', nhom: 'lich-phien-tt' },
-  { t: 'Thông báo kết quả xử lý đơn yêu cầu', so: '19/2026/TB-TA', nh: 'THONG_BAO', from: TPHN, time: '26-10-2026 09:10', va: 'DS-2026-0021', doc: true },
+  { t: 'Thông báo kết quả xử lý đơn yêu cầu', so: '19/2026/TB-TA', nh: 'THONG_BAO', from: TPHN, time: '26-10-2026 09:10', va: 'DS-2026-0021', doc: false },
   { t: 'Bản án hành chính sơ thẩm', so: '25/2026/HC-ST', nh: 'BAN_AN', from: COURT1, time: '25-10-2026 15:30', va: 'HC-2026-0003', doc: true, han: '04-11-2026', nhom: 'ban-an', dk: true },
   { t: 'Biên bản giao nhận văn bản tố tụng', so: '05/2026/BB-GN', nh: 'BIEN_BAN', from: KV2, time: '24-10-2026 11:20', va: 'DS-2026-0018', doc: true },
   { t: 'Quyết định áp dụng biện pháp khẩn cấp tạm thời', so: '03/2026/QĐ-BPKCTT', nh: 'QUYET_DINH', from: TPHN, time: '23-10-2026 16:40', va: 'DS-2026-0021', doc: true, nhom: 'bpkctt' },
@@ -315,7 +315,11 @@ function MailCard(p) {
   var m = p.m, dem = ibDem(m), chip = ibChip(m), arch = p.folder === 'archive', chon = p.sel !== undefined;
   var tm = React.useRef(null), held = React.useRef(false), xy = React.useRef(null);
   var huy = function () { clearTimeout(tm.current); };
-  return h('li', { className: 'ib-c' + (m.doc ? '' : ' ib-un') + (chon ? ' ib-chon' : '') + (p.sel ? ' ib-chon-on' : '') },
+  /* v315 (11/11/2026, chọn K1 sau 4 vòng đề xuất): thẻ nổi không viền, bóng nhẹ; chưa đọc = chấm đỏ trước tiêu đề + chữ đậm (bỏ nhãn 'Chưa đọc');
+     tiêu đề 16/24 tối đa 2 dòng; dòng Tòa án · Tống đạt ngày; thông tin vụ án thành các hàng có biểu tượng (Số TL - Ngày TL · Vụ án/Đơn · Tư cách);
+     Hạn xử lý là dòng chữ màu theo mức hạn dưới đường kẻ (bỏ dải nền) */
+  var va = IB_VA[m.va];
+  return h('li', { className: 'ib-c ibk' + (m.doc ? '' : ' ib-un') + (chon ? ' ib-chon' : '') + (p.sel ? ' ib-chon-on' : '') },
     h('button', { type: 'button', className: 'ph-mail2-hit', role: chon ? 'checkbox' : undefined, 'aria-checked': chon ? !!p.sel : undefined, 'aria-label': (chon ? 'Chọn: ' : (m.doc ? '' : 'Chưa đọc. ')) + m.t, 'data-pt-go': chon ? undefined : 'mailDetail',
       onPointerDown: function (e) { if (chon || !p.onHold) return; held.current = false; xy.current = [e.clientX, e.clientY]; tm.current = setTimeout(function () { held.current = true; p.onHold(m); }, 500); },
       onPointerMove: function (e) { if (xy.current && Math.abs(e.clientX - xy.current[0]) + Math.abs(e.clientY - xy.current[1]) > 10) huy(); },
@@ -326,19 +330,23 @@ function MailCard(p) {
         window.__ibSel = IB.indexOf(m);
       } }),
     chon ? h('span', { className: 'ib-ck', 'aria-hidden': 'true' }, p.sel ? h(T.Icon, { name: 'check' }) : null) : null,
-    h('div', { className: 'ib-c-h' }, m.doc ? null : h(T.StatusBadge, { tone: 'danger', icon: false, className: 'ib-dadoc' }, 'Chưa đọc'), /* v301: bỏ nhãn Đã đọc; chỉ thư chưa đọc có nhãn đỏ 'Chưa đọc' trước nhãn văn bản (giữ chấm đỏ + chữ đậm) */ h('span', { className: 'vk-tag' + ibTag(m.nh) }, IB_NHAN_TEN[m.nh]), h('span', { className: 'vk-code tp-num' }, m.va),
+    h('div', { className: 'ib-c-h' }, m.doc ? null : h(T.StatusBadge, { tone: 'danger', icon: false, className: 'ib-dadoc' }, 'Chưa đọc') /* v317: nhãn 'Chưa đọc' trước nhãn loại (theo ảnh mẫu), bỏ chấm đỏ */, h('span', { className: 'vk-tag' + ibTag(m.nh) }, IB_NHAN_TEN[m.nh]), h('span', { className: 'vk-code tp-num' }, m.va),
       h('span', { className: 'ib-c-act' },
         h('button', { type: 'button', className: 'ph-mail2-btn' + (m.star ? ' ph-mail2-on' : ''), 'aria-pressed': !!m.star, 'aria-label': 'Đánh dấu quan trọng', onClick: function () { m.star = !m.star; p.onDoi(); } }, h(T.Icon, { name: 'star' })),
         h('button', { type: 'button', className: 'ph-mail2-btn' + (arch ? ' ph-mail2-on' : ''), 'aria-label': arch ? 'Bỏ lưu trữ' : 'Lưu trữ', 'data-pt-go': 'snack:' + (arch ? 'Đã đưa văn bản trở lại Hộp thư.' : 'Đã lưu trữ văn bản.'), onClickCapture: function () { m.arch = !arch; p.onDoi(); } }, h(T.Icon, { name: 'archive' })))),
-    h('b', null, m.t), /* v303: bỏ chấm đỏ trước tên – thư chưa đọc có nhãn đỏ 'Chưa đọc' */
-    IbVaInfo(m), /* v283 */
+    h('b', null, m.t),
+    h('small', null, m.from + ' · Tống đạt ', h('span', { className: 'tp-num' }, m.time.split(' ')[0])),
+    va ? h('ul', { className: 'ibk-rows' },
+      va[2] ? h('li', null, h(T.Icon, { name: 'file' }), h('span', null, 'Số TL ', h('b', { className: 'tp-num' }, va[2]), ' - ', h('span', { className: 'tp-num' }, va[3]))) : null,
+      h('li', null, h(T.Icon, { name: 'scale' }), h('span', null, va[0])),
+      h('li', null, h(T.Icon, { name: 'user' }), h('b', null, va[1]))) : null,
     /* 03/11/2026 (v125): bỏ nhãn trạng thái (Chưa đọc / Cần hành động / Đã đọc) ở chân thẻ, thay bằng "Hạn xử lý"; văn bản không có hạn thì không có chân thẻ (chưa đọc vẫn có chấm đỏ + chữ đậm) */
     dem ? h('div', { className: 'ib-c-due ib-c-due2' }, h('span', { className: 'ib-c-hxl' }, h(T.Icon, { name: 'clock' }), 'Hạn xử lý: ', h('b', { className: 'ib-c-hxl-d' }, m.han)), h('span', { className: 'ib-due ib-due-' + dem.muc }, dem.text)) : null); /* v284: in đậm hạn xử lý */
 }
 /* 03/11/2026 (v136): trạng thái trống Hộp thư (không tìm thấy / thư mục trống) – ở giữa màn theo ảnh mẫu, màu theo design system */
 function IbEmpty(p) {
   return h('div', { className: 'ib-empty', role: 'status' }, h('span', { className: 'ib-empty-ico', 'aria-hidden': 'true' }, h(T.Icon, { name: p.icon || 'mail' })),
-    h('h2', null, p.title), h('p', null, p.text), p.action ? h(T.Button, { variant: 'secondary', size: 'sm', className: 'ib-empty-act', onClick: p.onAction }, p.action) : null);
+    h('h2', null, p.title), p.text ? h('p', null, p.text) : null /* v313: không có câu phụ thì bỏ dòng trống */, p.action ? h(T.Button, { variant: 'secondary', size: 'sm', className: 'ib-empty-act', onClick: p.onAction }, p.action) : null);
 }
 function InboxScr() {
   var fd = React.useState(IB_UI.folder), lc = React.useState(IB_UI.loc), sx = React.useState(IB_UI.sap), q = React.useState(''), sh = React.useState(null), n = React.useState(10), tai = React.useState(false), rr = React.useState(0);

@@ -1004,25 +1004,34 @@ var PT_LOC = [['all', 'Tất cả'], ['PT-01', 'Điện tử'], ['PT-02', 'Chờ
 var PT_SUB = 'Mỗi đơn, vụ án chọn phương thức điện tử hoặc giấy độc lập (Điều 4.5 NQ 01/2026). Đổi phương thức giữa chừng cần lý do chính đáng và Tòa án chấp nhận.';
 function PtCard(p) {
   var x = p.x, l = PT_LOAI[x.pv], t = PT_TT[x.tt];
-  var lnk = function (txt, go) { return h('button', { type: 'button', className: 'pt-lnk', 'data-pt-go': go }, txt); };
+  var lnk = function (txt, go) { return h('button', { type: 'button', className: 'pt-lnk', onClick: ptWzMoi, 'data-pt-go': go }, txt); };
   return h('li', { className: 'pt-c' },
     h('p', { className: 'pt-c-e' }, h(T.Icon, { name: l[1] }), l[0] + ' · ', h('span', { className: 'tp-num' }, x.ma)),
     h('b', { className: 'pt-c-t' }, x.ten),
     h('p', { className: 'pt-c-m' }, COURT1),
     x.alt && x.tt !== 'PT-01' ? h('p', { className: 'pt-c-alt' }, 'Tống đạt qua: ', h('b', null, x.alt)) : null,
     h('div', { className: 'pt-c-s' }, h(T.StatusBadge, { tone: t[1] }, t[0]), x.vt.map(function (v) { return h('span', { key: v, className: 'vk-tag' }, v); })),
-    x.tt === 'PT-01' ? h('div', { className: 'pt-c-a' }, Btn('Tạm chuyển sang giấy', 'secondary', { size: 'sm', 'data-pt-go': 'ptSus1' }), lnk('Chuyển giấy đến khi kết thúc', 'ptCan1')) : null,
+    x.tt === 'PT-01' ? h('div', { className: 'pt-c-a' }, Btn('Tạm chuyển sang giấy', 'secondary', { size: 'sm', onClick: ptWzMoi, 'data-pt-go': 'ptSus1' }), lnk('Chuyển giấy đến khi kết thúc', 'ptCan1')) : null,
     x.tt === 'PT-02' ? h('div', { className: 'pt-c-a' }, h('span', { className: 'ib-due ib-due-sap' }, 'Còn ' + x.con + ' ngày Tòa trả lời'),
       x.huy ? Btn('Hủy yêu cầu', 'secondary', { size: 'sm', onClick: function () { p.onDoi(x, 'PT-01'); }, 'data-pt-go': 'snack:Đã hủy yêu cầu.' }) : h('span', { className: 'pt-c-note' }, 'Đang chờ Tòa án xét duyệt')) : null,
     x.tt === 'PT-03' ? h('div', { className: 'pt-c-a' }, Btn('Tiếp tục điện tử', 'primary', { size: 'sm', onClick: function () { p.onDoi(x, 'PT-01'); }, 'data-pt-go': 'snack:Đã tiếp tục giao dịch điện tử.' }), lnk('Chuyển giấy đến khi kết thúc', 'ptCan1')) : null,
     x.tt === 'PT-04' ? h('p', { className: 'pt-c-a pt-c-note' }, 'Giao dịch bằng giấy đến khi kết thúc — không thể quay lại điện tử.') : null);
 }
+/* v313 (11/11/2026): theo web – 4 hồ sơ mỗi lần (pageSize 4); app tự tải thêm khi cuộn tới cuối (giống Hộp thư tống đạt) */
+var PT_PAGE = 4;
 function PtList(p) {
   var q = React.useState(''), f = React.useState('all'), ds0 = React.useState(function () { return p.rong ? [] : PT_HS.map(function (x) { return Object.assign({}, x); }); });
+  var n = React.useState(PT_PAGE), tai = React.useState(false), end = React.useRef(null);
   var all = ds0[0], tk = q[0].trim().toLowerCase();
   var doi = function (x, tt) { ds0[1](all.map(function (y) { return y.id === x.id ? Object.assign({}, y, { tt: tt }) : y; })); };
   var chips = PT_LOC.map(function (c) { return { key: c[0], label: c[1], count: c[0] === 'all' ? all.length : all.filter(function (x) { return x.tt === c[0]; }).length }; });
-  var ds = all.filter(function (x) { return (f[0] === 'all' || x.tt === f[0]) && (!tk || (x.ma + ' ' + x.ten).toLowerCase().indexOf(tk) >= 0); });
+  var ds = all.filter(function (x) { return (f[0] === 'all' || x.tt === f[0]) && (!tk || (x.ma + ' ' + x.ten).toLowerCase().indexOf(tk) >= 0); }), hien = ds.slice(0, n[0]);
+  React.useEffect(function () { n[1](PT_PAGE); }, [f[0], tk]);
+  React.useEffect(function () {
+    var el = end.current; if (!el || n[0] >= ds.length || typeof IntersectionObserver === 'undefined') return;
+    var ob = new IntersectionObserver(function (e) { if (e[0].isIntersecting && !tai[0]) { tai[1](true); setTimeout(function () { n[1](function (x) { return x + PT_PAGE; }); tai[1](false); }, 700); } });
+    ob.observe(el); return function () { ob.disconnect(); };
+  }, [n[0], ds.length, tai[0]]);
   var body;
   if (p.camKet === false) body = h(IbEmpty, { icon: 'folder', title: 'Chưa có hồ sơ nào đang mở', text: 'Nộp đơn để bắt đầu giao dịch điện tử.' });
   else if (p.loi) body = h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tải được danh sách hồ sơ.', text: 'Mã lỗi: [mã lỗi]', actionLabel: 'Thử lại', actionIcon: 'swap', onAction: noop, className: 'nv-err' });
@@ -1031,8 +1040,9 @@ function PtList(p) {
     h('div', { className: 'nv-stick' },
       h('div', { className: 'fx-search' }, Tf('Tìm hồ sơ', { icon: 'search', placeholder: 'Tìm theo mã hoặc tên đơn, vụ án', value: q[0], onChange: function (e) { q[1](e.target.value); }, onClear: function () { q[1](''); } })),
       h('div', { className: 'vk-tabs nv-chips' }, h(T.Tabs, { variant: 'chip', label: 'Lọc theo phương thức', value: f[0], onChange: f[1], items: chips }))),
-    ds.length ? h('ul', { className: 'qd-list' }, ds.map(function (x) { return h(PtCard, { key: x.id, x: x, onDoi: doi }); }))
-      : h(IbEmpty, { icon: 'search', title: 'Không tìm thấy hồ sơ phù hợp.', text: 'Thử đổi bộ lọc hoặc xóa từ khóa tìm kiếm.', action: 'Xóa bộ lọc', onAction: function () { q[1](''); f[1]('all'); } }));
+    ds.length ? h('ul', { className: 'qd-list' }, hien.map(function (x) { return h(PtCard, { key: x.id, x: x, onDoi: doi }); }),
+      n[0] < ds.length ? h('li', { ref: end, className: 'ph-loadmore ib-more', role: 'status' }, h('span', { className: 'tp-spinner', 'aria-hidden': 'true' }), h('span', null, 'Đang tải hồ sơ…')) : null)
+      : h(IbEmpty, { icon: 'search', title: 'Không tìm thấy hồ sơ phù hợp.' }) /* v313: đúng câu web, bỏ câu phụ và nút Xóa bộ lọc */);
   return Sub('Phương thức giao dịch điện tử', h(F, null, h('p', { className: 'nv-sub' }, PT_SUB), body));
 }
 function Method() { return h(PtList); }
@@ -1048,27 +1058,35 @@ function PtHoSo() {
   return h('div', { className: 'pt-hs' }, h('span', { className: 'pt-hs-ic', 'aria-hidden': 'true' }, h(T.Icon, { name: 'file' })),
     h('div', null, h('small', null, 'Áp dụng cho hồ sơ'), h('b', null, 'Tranh chấp hợp đồng vay tài sản'), h('span', { className: 'tp-num' }, 'Đơn · TN-20261020-0012')));
 }
+/* v313 (11/11/2026): kiểm tra thật khi bấm (theo web Qhe): bước 1 – lý do (bỏ khoảng trắng) và ô xác nhận; bước 2 – địa chỉ khi chọn Bưu chính.
+   Lỗi chỉ hiện sau khi bấm Tiếp tục, tự ẩn khi đã nhập; qua bước thì xóa cờ lỗi. Giá trị giữ trong PT_WZ_ST để bước 3 và Quay lại dùng lại. */
+var PT_WZ_ST = { ld: '', ok: false, m: 'bc', dc: PT_DC };
+function ptWzMoi() { PT_WZ_ST = { ld: '', ok: false, m: 'bc', dc: PT_DC }; }
+/* khung prototype bắt bấm ở pha capture nên không chặn được bằng stopPropagation: chỉ gắn data-pt-go khi hợp lệ; chưa hợp lệ thì nút là .pt-chk (xử lý tại chỗ, bật cờ lỗi) */
+function ptNut(hopLe, setTr, go) { return hopLe ? { 'data-pt-go': go, onClick: function () { setTr(false); } } : { className: 'pt-chk', onClick: function () { setTr(true); } }; }
 function PtWz1(p) {
-  var w = PT_WZ[p.k], ld = React.useState(''), ok = React.useState(false), tr = React.useState(false), du = ld[0].trim() && ok[0];
-  return Wz({ title: w.title, steps: PT_WZ_STEPS, n: 1, save: false, last: Btn(h(F, null, 'Tiếp tục', h(T.Icon, { name: 'chevronRight' })), 'primary', du ? { 'data-pt-go': w.id + '2' } : { onClick: function () { tr[1](true); } }),
+  var w = PT_WZ[p.k], ld = React.useState(PT_WZ_ST.ld), ok = React.useState(PT_WZ_ST.ok), tr = React.useState(false), du = !!(ld[0].trim() && ok[0]);
+  PT_WZ_ST.ld = ld[0]; PT_WZ_ST.ok = ok[0];
+  return Wz({ title: w.title, steps: PT_WZ_STEPS, n: 1, save: false, last: Btn(h(F, null, 'Tiếp tục', h(T.Icon, { name: 'chevronRight' })), 'primary', ptNut(du, tr[1], w.id + '2')),
     body: h(F, null,
       h(NvCall, { tone: p.k === 'can' ? 'danger' : 'warning', title: 'Nghĩa vụ tố tụng và thời hạn không thay đổi.' }, 'Sau khi tạm ngưng, văn bản của Tòa án sẽ được tống đạt qua phương thức thay thế — có thể chậm hơn. Bạn vẫn phải theo dõi và thực hiện đúng hạn mọi thủ tục.'),
       h(PtHoSo),
-      Tf('Lý do chuyển phương thức', { required: true, multiline: true, maxLength: 300, value: ld[0], onChange: function (e) { ld[1](e.target.value); }, placeholder: 'Nhập lý do chuyển sang nhận văn bản giấy…', help: ld[0].length + '/300', error: tr[0] && !ld[0].trim() ? 'Vui lòng nhập lý do chuyển phương thức.' : undefined }),
+      Tf('Lý do chuyển phương thức', { required: true, multiline: true, maxLength: 300, value: ld[0], onChange: function (e) { ld[1](e.target.value.slice(0, 300)); }, placeholder: 'Nhập lý do chuyển sang nhận văn bản giấy…', help: ld[0].length + '/300', error: tr[0] && !ld[0].trim() ? 'Vui lòng nhập lý do chuyển phương thức.' : undefined }),
       h('div', { className: 'ph-commit' }, h(T.Checkbox, { checked: ok[0], onChange: function (e) { ok[1](e.target.checked); }, error: tr[0] && !ok[0] ? 'Vui lòng xác nhận bạn đã hiểu hậu quả.' : undefined, label: 'Tôi đã đọc và hiểu rõ hệ quả của việc ' + w.title.toLowerCase() + ' đối với hồ sơ đang giải quyết.' }))) });
 }
 function PtWz2(p) {
-  var w = PT_WZ[p.k], m = React.useState('bc'), dc = React.useState(PT_DC), du = m[0] === 'tt' || dc[0].trim();
-  return Wz({ title: w.title, steps: PT_WZ_STEPS, n: 2, save: false, last: Btn(h(F, null, 'Tiếp tục', h(T.Icon, { name: 'chevronRight' })), 'primary', du ? { 'data-pt-go': w.id + '3' } : { disabled: true }),
+  var w = PT_WZ[p.k], m = React.useState(PT_WZ_ST.m), dc = React.useState(PT_WZ_ST.dc), tr = React.useState(false), du = m[0] === 'tt' || !!dc[0].trim();
+  PT_WZ_ST.m = m[0]; PT_WZ_ST.dc = dc[0];
+  return Wz({ title: w.title, steps: PT_WZ_STEPS, n: 2, save: false, last: Btn(h(F, null, 'Tiếp tục', h(T.Icon, { name: 'chevronRight' })), 'primary', ptNut(du, tr[1], w.id + '3')),
     body: h(F, null, FCard('Phương thức nhận văn bản thay thế', h(F, null,
       Lead('Theo Điều 9 NQ 01/2026, bạn phải đăng ký cách nhận văn bản của Tòa án khi không dùng giao dịch điện tử.'),
       h(ChonThe, { label: 'Phương thức nhận văn bản thay thế', v: m[0], onPick: m[1], items: PT_ALT }),
-      m[0] === 'bc' ? Tf('Địa chỉ nhận bưu chính', { multiline: true, value: dc[0], onChange: function (e) { dc[1](e.target.value); }, error: !dc[0].trim() ? 'Vui lòng nhập địa chỉ nhận văn bản.' : undefined }) : null), true)) });
+      m[0] === 'bc' ? Tf('Địa chỉ nhận bưu chính', { multiline: true, value: dc[0], onChange: function (e) { dc[1](e.target.value); }, error: tr[0] && !dc[0].trim() ? 'Vui lòng nhập địa chỉ nhận văn bản.' : undefined }) : null), true)) });
 }
 function PtWz3(p) {
-  var w = PT_WZ[p.k];
+  var w = PT_WZ[p.k], s = PT_WZ_ST, alt = s.m === 'bc' ? 'Bưu chính — ' + s.dc.trim() : 'Nhận trực tiếp tại Tòa án';
   return Wz({ title: w.title, steps: PT_WZ_STEPS, n: 3, save: false, last: Btn(p.k === 'can' ? 'Xác nhận hủy' : 'Gửi yêu cầu', 'primary', { 'data-pt-go': 'replace:' + w.id + 'Ok' }),
-    body: FCard('Xem lại và xác nhận', RvKV([['Loại yêu cầu', w.title], ['Hồ sơ', h('span', { className: 'tp-num' }, 'TN-20261020-0012')], ['Phương thức thay thế', 'Bưu chính — ' + PT_DC], ['Lý do', '[Lý do bạn đã nhập]']]), true) });
+    body: FCard('Xem lại và xác nhận', RvKV([['Loại yêu cầu', w.title], ['Phương thức thay thế', alt], ['Lý do', s.ld.trim() || '[Lý do bạn đã nhập]']]), true) });
 }
 /* kết quả: chờ Tòa duyệt (PT-02) hoặc áp dụng ngay (PT-03 / PT-04) */
 function PtOk(p) {
@@ -1833,8 +1851,9 @@ function SkThe(c) {
   return h('li', { key: c.id, className: 'sk-ct' },
     h('div', { className: 'sk-ct-h' }, h('div', null, h('small', null, 'Ký số từ xa · ' + c.ca), h('b', null, c.chu), h('span', null, c.cap)), h(T.StatusBadge, { tone: c.tt[1], icon: false }, c.tt[0])),
     h('dl', { className: 'sk-dl' }, [['Số serial', c.serial], ['Hiệu lực', c.hl], ['Dùng gần nhất', c.dung], ['Kiểm tra gần nhất', c.kiem]].map(function (r) { return h(F, { key: r[0] }, h('dt', null, r[0]), h('dd', { className: r[0] === 'Số serial' ? 'tp-num' : undefined }, r[1])); })),
-    h('div', { className: 'sk-ct-f' }, h('button', { type: 'button', className: 'me-link', 'data-pt-go': 'snack:Đã kiểm lại chứng thư số' }, h(T.Icon, { name: 'swap' }), 'Kiểm lại'),
-      h('button', { type: 'button', className: 'me-link sk-del', 'data-pt-go': 'signDelCert' }, h(T.Icon, { name: 'trash' }), 'Xóa khỏi danh sách')));
+    /* v311 (11/11/2026): chân thẻ chứng thư – phương án A: 2 nút nhỏ chia đôi (Kiểm lại viền đỏ; Xóa viền xám đậm, chữ đỏ lỗi), thay 2 liên kết chữ căn phải */
+    h('div', { className: 'sk-ct-f sk-ct-btns' }, h(T.Button, { size: 'sm', variant: 'secondary', icon: 'swap', 'data-pt-go': 'snack:Đã kiểm lại chứng thư số' }, 'Kiểm lại'),
+      h(T.Button, { size: 'sm', variant: 'secondary', icon: 'trash', className: 'sk-del-btn', 'data-pt-go': 'signDelCert' }, 'Xóa khỏi danh sách')));
 }
 function SkPhuongThuc(p) {
   if (p.err) return h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tải được thông tin chữ ký số.', actionLabel: 'Thử lại', actionIcon: 'swap', onAction: noop, className: 'nv-err' });

@@ -878,13 +878,13 @@
     return h('button', { type: 'button', className: cx('tp-atts', p.className), onClick: p.onClick },
       h(Icon, { name: p.icon || 'folder' }), h('span', { className: 'tp-atts-tx' }, h('b', null, p.title), p.meta ? h('small', null, p.meta) : null), h(Icon, { name: 'chevronRight' }));
   }
-  /* thẻ chứng thư số: nguồn · CA, chủ thể, CA cấp, nhãn hiệu lực, dl Số serial/Hiệu lực/Dùng gần nhất/Kiểm tra gần nhất, hành động chữ ở chân */
+  /* thẻ chứng thư số: nguồn · CA, chủ thể, CA cấp, nhãn hiệu lực, dl Số serial/Hiệu lực/Dùng gần nhất/Kiểm tra gần nhất, chân thẻ nút nhỏ chia đều (phương án A, 11/11/2026 – prototype v311) */
   function CertificateCard(p) {
     return h('div', { className: cx('tp-cert', p.className) },
       h('div', { className: 'tp-cert-h' }, h('div', null, p.source ? h('small', null, p.source) : null, h('b', null, p.subject), p.issuer ? h('span', null, p.issuer) : null),
         p.status ? h(StatusBadge, { tone: p.statusTone || 'success', icon: false }, p.status) : null),
       p.rows && p.rows.length ? h('dl', { className: 'tp-cert-dl' }, p.rows.map(function (r) { return h(React.Fragment, { key: r[0] }, h('dt', null, r[0]), h('dd', null, r[1])); })) : null,
-      p.actions && p.actions.length ? h('div', { className: 'tp-cert-f' }, p.actions.map(function (a) { return h('button', { key: a.label, type: 'button', className: cx('tp-cert-a', a.danger && 'tp-cert-a-danger'), onClick: a.onClick }, a.icon ? h(Icon, { name: a.icon }) : null, a.label); })) : null);
+      p.actions && p.actions.length ? h('div', { className: 'tp-cert-f tp-cert-btns' }, p.actions.map(function (a) { return h(Button, { key: a.label, size: 'sm', variant: 'secondary', icon: a.icon, className: a.danger ? 'tp-cert-btn-danger' : undefined, onClick: a.onClick }, a.label); })) : null);
   }
   /* thẻ một phiên ký số (Lịch sử ký): thời gian, đơn, nhãn trạng thái, lý do, phương thức + tư cách + n/m tệp; "Xem tệp" mở danh sách tệp */
   function SignSessionCard(p) {
