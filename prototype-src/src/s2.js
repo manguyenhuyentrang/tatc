@@ -100,7 +100,7 @@ function ProceedingDetail() {
   var ten = 'Yêu cầu mở thủ tục phá sản Công ty TNHH Thương mại Minh Phát', soTL = h('span', { className: 'tp-num' }, '1/2026/TLST-PS');
   return h(DtScreen, { title: 'Chi tiết vụ việc', tabLabel: 'Nội dung chi tiết vụ việc', tabs: PS_TABS, pre: null, headCls: 'dt-head-don',
     meta: h(F, null, h('span', { className: 'tp-num' }, 'PS-2026-0001'), ' · Phá sản'), name: ten,
-    badges: h(F, null, h(T.StatusBadge, { tone: 'info', icon: false }, 'Đang giải quyết'), h('span', { className: 'dt-role' }, 'Vai trò của bạn: ', h('b', null, 'Chủ nợ'))),
+    badges: h(F, null, h(T.StatusBadge, { tone: 'info', icon: false }, 'Đang giải quyết'), h('span', { className: 'dt-role' }, 'Tư cách của bạn: ', h('b', null, 'Chủ nợ'))),
     headExtra: h(T.CaseProgress, { label: 'Cấp xét xử', steps: ['Thụ lý', 'Sơ thẩm', 'Phúc thẩm'], current: 1 }),
     render: function (t) {
       if (t === 'info') return h(F, null,
@@ -712,7 +712,7 @@ function VuAnChiTiet(p) {
     foot: function (t) { return t === 'don' ? h(TaoBtn, { groups: VA_TAO_G, hl: p.noiBat === 'hoan-phien' ? 'Đơn yêu cầu khác' : null, open: p.noiBat === 'hoan-phien' }) : null; },
     meta: h(F, null, h('span', { className: 'tp-num' }, 'DS-2026-0012'), ' · Dân sự'),
     name: 'Tranh chấp hợp đồng vay tài sản',
-    badges: h(F, null, h(T.StatusBadge, { tone: 'info', icon: false }, 'Đang giải quyết'), h('span', { className: 'dt-role' }, 'Vai trò của bạn: ', h('b', null, p.vaiTro || 'Nguyên đơn'))),
+    badges: h(F, null, h(T.StatusBadge, { tone: 'info', icon: false }, 'Đang giải quyết'), h('span', { className: 'dt-role' }, 'Tư cách của bạn: ', h('b', null, p.vaiTro || 'Nguyên đơn'))),
     headExtra: h(T.CaseProgress, { label: 'Cấp xét xử', steps: ['Thụ lý', 'Sơ thẩm', 'Phúc thẩm'], current: 1 }),
     render: function (t) {
       if (t === 'info') return h(F, null,

@@ -2014,3 +2014,60 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 .ib-cardlist .ib-c.ibk.ib-chon .ib-c-due{margin-left:0;padding-left:0}
 /* v317 (11/11/2026): thư chưa đọc – nhãn 'Chưa đọc' (StatusBadge danger) trước nhãn loại văn bản + tiêu đề đậm; bỏ chấm đỏ */
 .ib-cardlist .ib-c.ibk .ib-c-h .ib-dadoc{flex:none;white-space:nowrap}
+/* v318 (11/11/2026): nút thẻ Phương thức giao dịch – phương án P1 (xếp chồng, rộng hết thẻ) */
+.pt-btns{flex-direction:column;align-items:stretch;gap:8px}
+.pt-btns>.tp-btn{width:100%}
+.pt-btn-dg{color:var(--danger)!important;border-color:var(--border-strong)!important}
+.pt-btn-dg:active{background:var(--surface-sunken)!important}
+.pt-info{display:inline-flex;align-items:center;gap:6px;margin:0;font:500 12px/16px var(--font-sans);color:var(--warning)}
+.pt-info .tp-ico{width:14px;height:14px}
+/* v321 (12/11/2026): nút đóng góc phải hộp "đơn đang soạn dở" */
+.ph-draft-box .ph-draft-x{position:absolute;top:4px;right:4px;margin:0}
+/* v322 (12/11/2026): nhãn "Chưa đọc" trên thẻ thư – nền đỏ chủ đạo brand-800, chữ trắng (tương phản ~7,4:1) */
+.ib-cardlist .ib-c.ibk .ib-c-h .ib-dadoc{background:var(--brand-800);border-color:var(--brand-800);color:var(--white)}
+/* v323 (12/11/2026): hộp "Chưa có người đại diện theo pháp luật" – cùng khung hộp đơn soạn dở; biểu tượng khiên trong vòng đỏ nhạt 48px */
+/* v324: hộp "Chưa có người đại diện" dùng đúng kiểu hộp đơn soạn dở (bỏ kiểu căn trái v323); chữ hộp xác nhận căn giữa */
+.ph-draft-box .ph-draft-t,.ph-draft-box .ph-draft-d{text-align:center}
+/* v325 (12/11/2026): Số giấy tờ trùng đương sự – ô viền đỏ nền đỏ nhạt + dòng lỗi có biểu tượng (phương án T1) */
+.ph-gt-err .ph-gt-box{border-color:var(--danger)!important;background:var(--danger-tint)!important}
+.ph-gt-msg{display:flex;align-items:flex-start;gap:4px;margin:4px 0 0;font:400 12px/16px var(--font-sans);color:var(--danger)}
+.ph-gt-msg .tp-ico{flex:none;width:14px;height:14px;margin-top:1px}
+
+/* v327 (12/11/2026): khối Yêu cầu Tòa án giải quyết – phương án Y1 thẻ con */
+.yc{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.yc-t b{display:block;font:500 14px/20px var(--font-sans);color:var(--ink)}
+.yc-t p{margin:4px 0 0;font:400 12px/16px var(--font-sans);color:var(--ink-muted)}
+.yc-list{display:flex;flex-direction:column;gap:12px}
+.yc-c{display:flex;flex-direction:column;gap:12px;padding:12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface)}
+.yc-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.yc-h>b{font:700 14px/20px var(--font-sans);color:var(--ink)}
+.yc-b{display:flex;flex-direction:column;gap:12px}
+.yc-x{flex:none;display:grid;place-items:center;width:36px;height:36px;padding:0;border:1px solid var(--danger-border);border-radius:var(--radius-sm);background:var(--surface);color:var(--danger);cursor:pointer}
+.yc-x .tp-ico{width:18px;height:18px}.yc-x:active{background:var(--danger-tint)}
+.yc .ph-co-add{width:100%}
+.yc-tong{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-radius:var(--radius-md);background:var(--surface-sunken)}
+.yc-tong span{font:500 12px/16px var(--font-sans);letter-spacing:.6px;color:var(--ink-muted)}
+.yc-tong b{font:700 16px/24px var(--font-sans);color:var(--ink)}
+.ph-rvkv dd{white-space:pre-line}
+/* v328 (12/11/2026): hộp Xác nhận đơn – biểu tượng minh họa + khối cảnh báo vàng khi xác nhận lại (W2) */
+.dm-cf-box .ph-draft-illo{margin-bottom:4px}
+.dm-cf-mk{display:flex;gap:8px;margin:4px 0 0;padding:10px 12px;border:1px solid var(--warning-border);border-radius:var(--radius-sm);background:var(--warning-tint);font:400 14px/20px var(--font-sans);color:var(--ink);text-align:left}
+.dm-cf-mk .tp-ico{flex:none;width:18px;height:18px;margin-top:1px;color:var(--warning)}.dm-cf-mk strong{font-weight:700;color:var(--danger)}
+
+/* v330 (12/11/2026): tiến độ ký của tổ chức – phương án O1 */
+.kytc{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface)}
+.kytc-h{display:flex;align-items:center;gap:8px}
+.kytc-h .tp-ico{flex:none;width:18px;height:18px;color:var(--ink-muted)}
+.kytc-h b{flex:1;min-width:0;font:700 14px/20px var(--font-sans);color:var(--ink)}
+.kytc-h span{flex:none;padding:2px 8px;border-radius:999px;background:var(--surface-sunken);font:500 12px/16px var(--font-sans);color:var(--ink-muted)}
+.kytc-l{margin:0}
+.kytc-l li small{display:block;font:400 12px/16px var(--font-sans);color:var(--ink-muted)}
+.kytc-ban{display:flex;gap:8px;margin:0;padding:10px 12px;border:1px solid var(--warning-border);border-radius:var(--radius-sm);background:var(--warning-tint);font:400 14px/20px var(--font-sans);color:var(--ink)}
+.kytc-ban .tp-ico,.kytc-loi .tp-ico{flex:none;width:18px;height:18px;margin-top:1px}
+.kytc-ban .tp-ico{color:var(--warning)}
+.kytc-loi{display:flex;gap:6px;margin:0;font:400 14px/20px var(--font-sans);color:var(--danger)}
+/* v331: nhóm địa chỉ – mỗi ô một dòng */
+.ph-addr-col{display:flex;flex-direction:column;gap:8px}
+/* v332: hộp đang tải đơn nháp */
+.dl3{gap:12px;padding:24px 16px}
+.dl-spin{width:32px;height:32px;border-width:3px}
