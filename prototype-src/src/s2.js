@@ -341,14 +341,25 @@ function MailCard(p) {
       h('li', null, h(T.Icon, { name: 'scale' }), h('span', null, va[0])),
       h('li', null, h(T.Icon, { name: 'user' }), h('b', null, va[1]))) : null,
     /* 03/11/2026 (v125): bỏ nhãn trạng thái (Chưa đọc / Cần hành động / Đã đọc) ở chân thẻ, thay bằng "Hạn xử lý"; văn bản không có hạn thì không có chân thẻ (chưa đọc vẫn có chấm đỏ + chữ đậm) */
-    dem ? h('div', { className: 'ib-c-due ib-c-due2' }, h('span', { className: 'ib-c-hxl' }, h(T.Icon, { name: 'clock' }), 'Hạn xử lý: ', h('b', { className: 'ib-c-hxl-d' }, m.han)), h('span', { className: 'ib-due ib-due-' + dem.muc }, dem.text)) : null); /* v284: in đậm hạn xử lý */
+    dem ? ibDueRow(m, dem) : null); /* v284: in đậm hạn xử lý; v345 (HT-W05): thêm loại việc cần làm */
+}
+
+/* v345 (HT-W05): loại việc cần làm trên thẻ thư = tên việc đầu tiên của khối theo nhóm (nhãn nút lấy từ trường `ten` của BE – dữ liệu mẫu) */
+function ibViec(m) { var k = IB_KHOI[m.nhom]; return m.can && k && k.b.length ? k.b[0][0] : null; }
+function ibDueRow(m, dem) {
+  var v = ibViec(m);
+  var han = h('span', { className: 'ib-c-hxl' }, h(T.Icon, { name: 'clock' }), 'Hạn xử lý: ', h('b', { className: 'ib-c-hxl-d' }, m.han));
+  var chip = h('span', { className: 'ib-due ib-due-' + dem.muc }, dem.text);
+  if (!v) return h('div', { className: 'ib-c-due ib-c-due2' }, han, chip);
+  return h('div', { className: 'ib-c-due ibv-a' }, h('p', { className: 'ibv-a-t' }, v), h('div', { className: 'ib-c-due2 ibv-c-r' }, han, chip));
 }
 /* 03/11/2026 (v136): trạng thái trống Hộp thư (không tìm thấy / thư mục trống) – ở giữa màn theo ảnh mẫu, màu theo design system */
 function IbEmpty(p) {
   return h('div', { className: 'ib-empty', role: 'status' }, h('span', { className: 'ib-empty-ico', 'aria-hidden': 'true' }, h(T.Icon, { name: p.icon || 'mail' })),
     h('h2', null, p.title), p.text ? h('p', null, p.text) : null /* v313: không có câu phụ thì bỏ dòng trống */, p.action ? h(T.Button, { variant: 'secondary', size: 'sm', className: 'ib-empty-act', onClick: p.onAction }, p.action) : null);
 }
-function InboxScr() {
+function InboxScr(p) {
+  p = p || {};
   var fd = React.useState(IB_UI.folder), lc = React.useState(IB_UI.loc), sx = React.useState(IB_UI.sap), q = React.useState(''), sh = React.useState(null), n = React.useState(10), tai = React.useState(false), rr = React.useState(0);
   var anchor = React.useRef(null), host = useHost(anchor), end = React.useRef(null);
   IB_UI.folder = fd[0]; IB_UI.loc = lc[0]; IB_UI.sap = sx[0];
@@ -385,7 +396,8 @@ function InboxScr() {
       h('button', { type: 'button', className: 'ph-ibar-sort ib-sort2', 'aria-label': 'Sắp xếp: ' + sapCur[2], onClick: function () { sh[1]('sap'); } }, h(T.Icon, { name: 'sortDesc' }), sapCur[2]),
       h('span', { className: 'sf-sp' }),
       h('button', { type: 'button', className: 'sf-pill' + (locOn ? ' sf-on' : ''), 'aria-label': locOn ? 'Bộ lọc, đang lọc ' + soLoc + ' điều kiện' : 'Bộ lọc', onClick: function () { sh[1]('loc'); } }, h(T.Icon, { name: 'filter' }), 'Bộ lọc', locOn ? h('span', { className: 'sf-badge tp-num', 'aria-hidden': 'true' }, soLoc) : null))),
-    ds.length ? h('ul', { className: 'ib-cardlist' }, hien.map(function (m) { return h(MailCard, { key: m.so, m: m, folder: fd[0], onDoi: doi, sel: chon[0] ? chon[0].indexOf(m) >= 0 : undefined, onHold: chonGiu, onTick: chonTick }); }),
+    p.loi ? h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tải được hộp thư.', text: 'Mã lỗi: [mã lỗi]', actionLabel: 'Thử lại', actionIcon: 'swap', onAction: noop, className: 'nv-err' }) /* v345 (HT-W06) */
+    : ds.length ? h('ul', { className: 'ib-cardlist' }, hien.map(function (m) { return h(MailCard, { key: m.so, m: m, folder: fd[0], onDoi: doi, sel: chon[0] ? chon[0].indexOf(m) >= 0 : undefined, onHold: chonGiu, onTick: chonTick }); }),
       n[0] < ds.length ? h('li', { ref: end, className: 'ph-loadmore ib-more', role: 'status' }, h('span', { className: 'tp-spinner', 'aria-hidden': 'true' }), h('span', null, 'Đang tải thêm văn bản…'))
         : ds.length > 10 ? h('li', { className: 'ib-het' }, 'Đã hiển thị hết ' + ds.length + ' văn bản') : null)
       : h(IbEmpty, { title: rong[0], text: rong[1], action: coLoc ? 'Xóa bộ lọc' : null, onAction: xoaLoc }),
@@ -416,11 +428,11 @@ var IB_KHOI = {
   'phan-hoi': { f: [['Việc có thể làm', 'Nộp văn bản ý kiến về kháng cáo']], b: [['Nộp ý kiến về kháng cáo', '']] },
   'thu-ly': { f: [['Số thụ lý', '120/2026/TLST-DS', 1], ['Ngày thụ lý', '20/10/2026'], ['Vụ án', 'DS-2026-0021', 1], ['Tư cách của bạn', 'Người khởi kiện']], b: [['Xem vụ án', 'caseDetail']], vo: true },
   'hoa-giai': { f: [['Nội dung', 'Mời tham gia phiên hòa giải tranh chấp hợp đồng thuê nhà'], ['Thời gian', '05/11/2026 · 08:30'], ['Địa điểm', 'Phòng hòa giải số 2, ' + KV2]], b: [['Trả lời lựa chọn hòa giải', ''], ['Chọn hòa giải viên', '']] },
-  bpkctt: { f: [['Nội dung', 'Áp dụng biện pháp phong tỏa tài khoản của bị đơn'], ['Tình trạng', 'Đang có hiệu lực']], b: [['Xem vụ án', 'caseDetail']], vo: true },
+  bpkctt: { f: [['Nội dung', 'Áp dụng biện pháp phong tỏa tài khoản của bị đơn'], ['Tình trạng', 'Đang có hiệu lực']], b: [], vo: true }, /* v345 (HT-M05) */
   'ykien-phanhoi': { f: [['Số thụ lý', '98/2026/TLST-DS', 1], ['Ngày thụ lý', '10/10/2026'], ['Vụ án', 'DS-2026-0012', 1], ['Tư cách của bạn', 'Người có quyền lợi, nghĩa vụ liên quan']], b: [['Gửi ý kiến, phản hồi', ''], ['Xem vụ án', 'caseDetail']] },
-  'quyet-dinh': { f: [['Số quyết định', '05/2026/QĐST-DS', 1], ['Ngày ban hành', '15/10/2026'], ['Nội dung', 'Công nhận sự thỏa thuận của các đương sự'], ['Tình trạng', 'Có hiệu lực pháp luật']], b: [['Xem vụ án', 'caseDetail']], vo: true } };
-function IbKhoi(m) {
-  var cf = IB_NHOM[m.nhom], k = IB_KHOI[m.nhom], dem = ibDem(m), het = dem && dem.con < 0;
+  'quyet-dinh': { f: [['Số quyết định', '05/2026/QĐST-DS', 1], ['Ngày ban hành', '15/10/2026'], ['Nội dung', 'Công nhận sự thỏa thuận của các đương sự'], ['Tình trạng', 'Có hiệu lực pháp luật']], b: [], vo: true } }; /* v345 (HT-M05) */
+function IbKhoi(m, thay) {
+  var cf = IB_NHOM[m.nhom], k = IB_KHOI[m.nhom], dem = ibDem(m), het = dem && dem.con < 0, khoa = het || thay;
   return h('section', { className: 'ph-blk ib-khoi' },
     h('div', { className: 'ib-khoi-h' }, h('h3', null, cf[0])), /* v131: bỏ ô biểu tượng ở tiêu đề khối theo nhóm */
     Rows(k.f),
@@ -428,9 +440,10 @@ function IbKhoi(m) {
     dem ? h('p', { className: 'ib-han' + (het ? ' ib-han-qua' : '') }, h(T.Icon, { name: 'clock' }), 'Hạn: ' + m.han.split('-').join('/') + ' · ' + (het ? 'đã quá ' + (-dem.con) + ' ngày' : dem.con === 0 ? 'hết hạn hôm nay' : 'còn ' + dem.con + ' ngày'))
       : k.vo ? h('p', { className: 'ib-han' }, h(T.Icon, { name: 'clock' }), 'Hạn: Vô thời hạn') : null,
     het ? h('p', { className: 'ib-het-han' }, 'Đã hết hạn — công dân không thể thực hiện. Vui lòng liên hệ Tòa án để được hướng dẫn.') : null,
-    h('div', { className: 'ib-khoi-b' }, k.b.map(function (b, i) {
-      return h(T.Button, { key: b[0], block: true, variant: 'secondary', disabled: !!het, /* v132: mọi nút trong khối theo nhóm dùng nền trắng (secondary) */ 'data-pt-go': het ? undefined : b[1] || undefined }, b[0]);
-    })));
+    thay ? h('p', { className: 'ib-het-han' }, 'Văn bản này đã được thay thế bởi văn bản tống đạt mới hơn.') : null, /* v345 (HT-W13) */
+    k.b.length ? h('div', { className: 'ib-khoi-b' }, k.b.map(function (b, i) {
+      return h(T.Button, { key: b[0], block: true, variant: 'secondary', disabled: !!khoa, /* v132: mọi nút trong khối theo nhóm dùng nền trắng (secondary) */ 'data-pt-go': khoa ? undefined : b[1] || undefined }, b[0]);
+    })) : null);
 }
 /* 03/11/2026 (v129): thẻ tên tệp – biểu tượng tệp, tên (v133: bỏ dòng định dạng · dung lượng), nút Xem (màn xem tệp) + Tải xuống; thay khung xem trực tiếp văn bản */
 /* tệp mẫu không mở được (bản số hóa lỗi) – để xem trạng thái lỗi */
@@ -439,28 +452,45 @@ function IbFile(name, meta) {
   return h('div', { className: 'ib-file' }, h('span', { className: 'ib-file-ic', 'aria-hidden': 'true' }, h(T.Icon, { name: 'file' })),
     h('span', { className: 'ib-file-t' }, h('b', { className: 'tp-num' }, name), meta ? h('small', null, meta) : null),
     h('button', { type: 'button', className: 'ib-file-b', 'aria-label': 'Xem ' + name, 'data-pt-go': IB_LOI_TEP[name] ? 'attachmentErr' : 'attachment', onClickCapture: function () { window.__ibFile = name; } }, h(T.Icon, { name: 'eye' })),
-    h('button', { type: 'button', className: 'ib-file-b', 'aria-label': 'Tải xuống ' + name, 'data-pt-go': 'snack:Đã tải xuống ' + name + '.' }, h(T.Icon, { name: 'download' })));
+    h('button', { type: 'button', className: 'ib-file-b', 'aria-label': 'Tải xuống ' + name, 'data-pt-go': IB_LOI_TEP[name] ? 'snack:Không tải được tệp.' : 'snack:Đã tải xuống ' + name + '.' /* v345 (HT-W10) */ }, h(T.Icon, { name: 'download' })));
 }
-function MailDetailScr() {
-  var m = window.__ibSel >= 1000 ? IB_X[window.__ibSel - 1000] : IB[window.__ibSel || 0], rr = React.useState(0), /* v246: chỉ số từ 1000 = văn bản trong tab Văn bản tống đạt của chi tiết đơn */ moLan = { current: m.moLan || (m.moLan = m.doc ? '28/10/2026 · 09:02' : '02/11/2026 · 09:15') };
-  React.useEffect(function () { m.doc = true; }, []); /* mở văn bản = ghi nhận đã đọc */
+/* v345: gợi ý khi văn bản không có việc cần làm (web layCta – index.tsx:1528-1587) */
+var IB_CTA = { bosung: ['Tòa án yêu cầu bổ sung tài liệu cho hồ sơ.', 'Bổ sung hồ sơ', 'appDetail'], anphi: ['Cần nộp tạm ứng án phí theo thông báo.', 'Thanh toán tạm ứng án phí', 'snack:Chức năng thanh toán đang được triển khai.'],
+  trieu: ['Bạn được triệu tập tham gia phiên làm việc.', 'Xem chi tiết hồ sơ', 'appDetail'], ketqua: ['Bạn có thể yêu cầu cấp trích lục hoặc bản sao văn bản này.', 'Yêu cầu cấp trích lục / bản sao', 'tl1'],
+  hs: ['Xem chi tiết hồ sơ liên quan đến văn bản này.', 'Xem hồ sơ', 'appDetail'] };
+function MailDetailScr(p) {
+  p = p || {};
+  var i = p.i != null ? p.i : window.__ibSel, m = i >= 1000 ? IB_X[i - 1000] : IB[i || 0], rr = React.useState(0), /* v246: chỉ số từ 1000 = văn bản trong tab Văn bản tống đạt của chi tiết đơn */ moLan = { current: m.moLan || (m.moLan = m.doc ? '28/10/2026 · 09:02' : '02/11/2026 · 09:15') };
+  var giu = !!p.giu; /* v345 (HT-W07): mở từ Việc cần làm (nộp tạm ứng án phí, bổ sung hồ sơ) – xem nhưng không ghi nhận đã đọc */
+  React.useEffect(function () { if (!giu && !p.loi) m.doc = true; }, []); /* mở văn bản = ghi nhận đã đọc */
   var doi = function () { rr[1](rr[0] + 1); };
+  if (p.loi) return Sub('Văn bản tống đạt', h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tải được văn bản.', actionLabel: 'Thử lại', actionIcon: 'swap', onAction: noop, className: 'nv-err' })); /* v345 (HT-W06) */
+  var daDoc = m.doc && !giu, ngay = m.time.slice(0, 10).split('-').join('/'), gio = m.time.slice(11, 16);
+  var cta = IB_CTA[p.cta || 'hs'];
   return Sub('Văn bản tống đạt', h(F, null,
-    /* 03/11/2026 (v127): gộp khối tiêu đề + khối đơn vị ban hành thành 1 (phương án A): nhãn + số hiệu + nút Quan trọng / Lưu trữ (biểu tượng, như C) → tên → Tòa án · người ký (không biểu tượng) → Đơn liên quan; bỏ Tải xuống, In; v128: bỏ trích yếu */
+    /* 03/11/2026 (v127): gộp khối tiêu đề + khối đơn vị ban hành thành 1 (phương án A): nhãn + số hiệu + nút Quan trọng / Lưu trữ (biểu tượng, như C) → tên → Tòa án · người ký (không biểu tượng) → Đơn liên quan */
     h('section', { className: 'ph-blk ib-dh ib-dh2' },
       h('div', { className: 'ib-c-h' }, h('span', { className: 'vk-tag' + ibTag(m.nh) }, IB_NHAN_TEN[m.nh]), h('span', { className: 'ib-so tp-num' }, m.so),
         h('span', { className: 'ib-c-act' },
           h('button', { type: 'button', className: 'ph-mail2-btn' + (m.star ? ' ph-mail2-on' : ''), 'aria-pressed': !!m.star, 'aria-label': 'Đánh dấu quan trọng', onClick: function () { m.star = !m.star; doi(); } }, h(T.Icon, { name: 'star' })),
           h('button', { type: 'button', className: 'ph-mail2-btn' + (m.arch ? ' ph-mail2-on' : ''), 'aria-pressed': !!m.arch, 'aria-label': m.arch ? 'Bỏ lưu trữ' : 'Lưu trữ', 'data-pt-go': 'snack:' + (m.arch ? 'Đã đưa văn bản trở lại Hộp thư.' : 'Đã lưu trữ văn bản.'), onClickCapture: function () { m.arch = !m.arch; doi(); } }, h(T.Icon, { name: 'archive' })))),
       h('h1', null, m.t),
-      h('p', { className: 'ib-from2' }, h('b', null, m.from), h('small', null, 'Người ký ', h('strong', null, 'Nguyễn Văn An'), ' (Thẩm phán) · ' + m.time.slice(0, 10).split('-').join('/'))),
-      /* v129 (phương án B): Đơn / vụ án liên quan thành 1 dòng chữ dưới người ký */
-      /* v130: mã hồ sơ dạng nút viên (cùng dáng nhãn còn/quá hạn), nền brand-tint, chữ brand-text */
+      h('p', { className: 'ib-from2' }, h('b', null, m.from), h('small', null, 'Người ký ', h('strong', null, 'Nguyễn Văn An'), ' (Thẩm phán) · ' + ngay)),
+      h('p', { className: 'ib-ty' }, '[Trích yếu văn bản]'), /* v345 (HT-W09): trích yếu (trường trichYeu) */
       h('p', { className: 'ib-hsl' }, 'Hồ sơ:', h('button', { type: 'button', className: 'ib-hs-pill tp-num', 'aria-label': 'Mở đơn ĐKK-2026-000123', 'data-pt-go': 'appDetail' }, 'ĐKK-2026-000123'), h('button', { type: 'button', className: 'ib-hs-pill tp-num', 'aria-label': 'Mở vụ án ' + m.va, 'data-pt-go': 'caseDetail' }, m.va)),
-      IbFile(m.so.replace(/\//g, '-') + '.pdf')),
-    m.nhom ? IbKhoi(m) : h('section', { className: 'ph-blk ib-cta' }, h('p', null, 'Xem chi tiết hồ sơ liên quan đến văn bản này.'), h(T.Button, { block: true, variant: 'secondary', 'data-pt-go': 'appDetail' }, 'Xem hồ sơ')),
-    m.dk ? Blk('Tài liệu đính kèm', h('div', { className: 'ib-files' }, IbFile('Phu-luc-01.pdf'), IbFile('Danh-sach-tai-lieu.pdf'))) : null));
-  /* 03/11/2026 (v126): bỏ dải chữ ký số và dòng ghi nhận lần mở đầu */
+      p.noFile ? h('p', { className: 'ib-nofile' }, h(T.Icon, { name: 'info' }), 'Bản số hóa của văn bản đang được chuẩn bị. Trường hợp chưa sẵn sàng, Tòa án sẽ tống đạt bản giấy theo quy định.') /* v345 (HT-W10) */
+        : IbFile(m.so.replace(/\//g, '-') + '.pdf')),
+    p.viec ? h('section', { className: 'ph-blk ib-khoi' }, /* v345 (HT-W14): có việc cần làm nhưng không thuộc nhóm nào */
+      p.viec === 'het' ? h(F, null, h('p', { className: 'ib-han ib-han-qua' }, h(T.Icon, { name: 'clock' }), 'Đã hết hạn nộp: 30/10/2026'), h('p', { className: 'ib-het-han' }, 'Đã hết hạn — công dân không thể thực hiện. Vui lòng liên hệ Tòa án để được hướng dẫn.')) : null,
+      h('p', { className: 'ib-viec-h' }, '[Tên tình trạng] — việc bạn có thể làm:'),
+      h('div', { className: 'ib-khoi-b' }, h(T.Button, { block: true, variant: 'secondary', disabled: p.viec === 'het' }, '[Tên việc 1]'), h(T.Button, { block: true, variant: 'secondary', disabled: p.viec === 'het' }, '[Tên việc 2]')))
+    : m.nhom ? IbKhoi(m, p.thay)
+    : h('section', { className: 'ph-blk ib-cta' }, h('p', null, cta[0]), h(T.Button, { block: true, variant: 'secondary', 'data-pt-go': p.khongHs ? 'snack:Không xác định được hồ sơ liên quan.' : cta[2] }, cta[1])), /* v345 (HT-W15) */
+    m.dk ? Blk('Tài liệu đính kèm', h('div', { className: 'ib-files' }, IbFile('Phu-luc-01.pdf'), IbFile('Danh-sach-tai-lieu.pdf'))) : null,
+    h('section', { className: 'ph-blk ib-kyso' }, /* v345 (HT-W11, HT-W12); v346: 3 dòng chữ nhỏ có biểu tượng trong khối trắng (PA B) */
+      h('p', { className: 'ib-ks-r' }, h(T.Icon, { name: 'checkCircle' }), h('span', null, 'Đã ký số bởi ', h('b', null, m.from), ' · CKS hợp lệ')),
+      h('p', { className: 'ib-ks-r ib-ks-g' }, h(T.Icon, { name: 'send' }), h('span', null, 'Tống đạt điện tử ', h('b', { className: 'tp-num' }, ngay + ' ' + gio))),
+      daDoc ? h('p', { className: 'ib-ks-r ib-ks-g' }, h(T.Icon, { name: 'eye' }), h('span', null, 'Bạn đã mở văn bản này lần đầu lúc ', h('b', { className: 'tp-num' }, moLan.current), '. Thông tin này được ghi nhận và gửi về Tòa án.')) : null)));
 }
 function MailDetail() { return h(MailDetailScr); }
 
@@ -621,7 +651,7 @@ function VbCards(list) {
       h('button', { type: 'button', className: 'ph-mail2-hit', 'aria-label': (moi ? 'Chưa xem. ' : '') + v.t, 'data-pt-go': 'mailDetail', onClickCapture: function () { window.__ibSel = 1000 + i; } }),
       h('div', { className: 'ib-c-h' }, h('span', { className: 'vk-tag' + ibTag(x.nh) }, IB_NHAN_TEN[x.nh]), h('span', { className: 'vk-code tp-num' }, v.so)),
       h('b', null, moi ? h('i', { className: 'ib-dot', 'aria-hidden': 'true' }) : null, v.t),
-      h('small', null, x.from + ' · ' + v.tg));
+      h('small', null, x.from + ' · ' + v.tg + (v.soHoa === 'chua' ? ' · Chưa có bản số hóa' : ''))); /* v348 (HG-W03) */
   }));
 }
 /* ---- 2. dòng thời gian G1 dùng chung: [tên, 'dd/mm/yyyy[ hh:mm:ss]', dòng phụ, nhãn, màu] – không có giờ thì bỏ cột giờ ---- */
@@ -632,7 +662,7 @@ function LsG1(list) {
       var tg = x[1].split(' ')[1];
       return h('li', { key: x[0] + x[1], className: (gi === 0 && i === 0 ? 'g1-now' : '') + (tg ? '' : ' g1-nt') },
         tg ? h('time', { className: 'g1-t tp-num' }, h('b', null, tg.slice(0, 5)), h('small', null, tg.slice(5))) : null,
-        h('span', { className: 'g1-dot', 'aria-hidden': 'true' }), h('div', { className: 'g1-c' }, h('b', null, x[0]), x[2] ? h('small', null, x[2]) : null, x[3] ? h('span', { className: 'ls-pill ls-pill-' + (x[4] || 'cam') }, x[3]) : null));
+        h('span', { className: 'g1-dot', 'aria-hidden': 'true' }), h('div', { className: 'g1-c' + (x[5] ? ' g1-cx' : '') }, h('b', null, x[0]), x[2] ? h('small', null, x[2]) : null, x[3] ? h('span', { className: 'ls-pill ls-pill-' + (x[4] || 'cam') }, x[3]) : null), x[5] ? h('span', { className: 'g1-x' }, IcoBtn('eye', 'Xem ' + x[0], x[5])) : null); /* v348: x[5] = đích nút Xem */
     })));
   })));
 }

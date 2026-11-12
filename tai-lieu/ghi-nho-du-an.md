@@ -19,3 +19,4 @@ Tài khoản mới không có bộ nhớ này. Các dòng dưới đây là đi�
 - Viết testcase: luôn ghi đè file đã có; chỉ tạo file mới khi chưa có.
 - Nghiệp vụ có 2 loại tài khoản: cá nhân và tổ chức. Từ v333 prototype chia 2 luồng, chọn ở màn Đăng nhập; chia luồng chỉ sắp xếp lại vị trí, ẩn/hiện thông tin, không thiết kế lại.
 - Danh sách đơn và tiến trình là thiết kế chuẩn cho các màn danh sách (đã áp cho Phương thức giao dịch điện tử, Cấp trích lục bản sao, Khiếu nại — Tố cáo).
+- Yêu cầu sửa prototype đã rõ và không đòi demo: sửa thẳng, không chụp/gửi ảnh PNG.
