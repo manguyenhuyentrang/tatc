@@ -184,7 +184,7 @@ var R = [
   ['home|homeAll', 'Xác nhận cam kết ngay', 'commitFormNew'], /* v165: Trang chủ vào thẳng màn Cam kết */ ['commit', 'Xác nhận cam kết ngay', 'commitForm'], ['commitNone', 'Xác nhận cam kết ngay', 'commitFormNew'], ['home|homeAll', '=Xem lịch đầy đủ', 'calPersonal'], ['home|homeAll', '=Xem chi tiết', 'cases', '.tp-event'],
   ['sub2|sub3|sub4|sub5|sub6|sub7', '=1. Loại đơn', 'replace:sub1d', '.ph-stepbar'], ['sub1|sub1d|sub2|sub3|sub4|sub5|sub6|sub7', '=2. Người khởi kiện', 'replace:sub2', '.ph-stepbar'], ['sub1|sub1d|sub2|sub3|sub4|sub5|sub6|sub7', '=3. Người bị kiện', 'replace:sub3', '.ph-stepbar'], ['sub1|sub1d|sub2|sub3|sub4|sub5|sub6|sub7', '=4. Nội dung', 'replace:sub4', '.ph-stepbar'], ['sub1|sub1d|sub2|sub3|sub4|sub5|sub6|sub7', '=5. Tài liệu', 'replace:sub5', '.ph-stepbar'], ['sub1|sub1d|sub2|sub3|sub4|sub5|sub6|sub7', '=6. Xem lại', 'replace:sub6', '.ph-stepbar'], ['sub1|sub1d|sub2|sub3|sub4|sub5|sub6|sub7', '=7. Ký số', 'replace:sub7', '.ph-stepbar'],
   ['home|homeAll', '=Xem thêm', 'news'], ['home|homeAll', '=Tất cả', 'sh:services', '.ph-blk-head'],
-  ['home|homeAll', 'Nộp đơn ngay', 'draftNoRep'] /* v323: tài khoản tổ chức chưa có người đại diện – hộp chặn trước hộp đơn soạn dở */, ['draftNoRep', '=Khai báo người đại diện', 'replace:accountOrg', '.ph-norep'], ['home|homeAll', 'Nộp đơn khởi kiện', 'draftAsk', '.tp-qa, .tp-tile'], ['home|homeAll', 'Hồ sơ của tôi', 'tab:records'], ['home|homeAll', 'Lịch của tôi', 'calPersonal'],
+  ['home|homeAll', 'Nộp đơn ngay', function () { return laTC() ? 'draftNoRep' : 'draftAsk'; }] /* v333: hộp chưa có người đại diện chỉ ở tài khoản tổ chức */ /* v323: tài khoản tổ chức chưa có người đại diện – hộp chặn trước hộp đơn soạn dở */, ['draftNoRep', '=Khai báo người đại diện', 'replace:accountOrg', '.ph-norep'], ['home|homeAll', 'Nộp đơn khởi kiện', 'draftAsk', '.tp-qa, .tp-tile'], ['home|homeAll', 'Hồ sơ của tôi', 'tab:records'], ['home|homeAll', 'Lịch của tôi', 'calPersonal'],
   ['home|homeAll', '=Lịch tố tụng', 'calPersonal', '.tp-tile'], ['home|homeAll', '=Cấp trích lục, bản sao', 'copyList', '.tp-tile'] /* v193: vào thẳng màn Theo dõi yêu cầu */, ['home|homeAll', '=Chữ ký số', 'sign', '.tp-tile'], ['home|homeAll', '=Phương thức giao dịch', 'method', '.tp-tile'], ['home|homeAll', '=Đánh giá', 'ratings', '.tp-tile'],
   ['home|homeAll', '=Tra cứu hồ sơ', 'tab:records', '.tp-tile'], ['home|homeAll', '=Lịch xét xử', 'calPersonal', '.tp-tile'], ['home|homeAll', '=Văn bản tống đạt', 'inbox', '.tp-tile'],
   ['home|homeAll', '=Trích lục bản sao', 'sh:copies', '.tp-tile'], ['home|homeAll', '=Lịch tiếp dân', 'sh:reception', '.tp-tile'], ['home|homeAll', '=Đăng ký lịch tiếp dân', 'snack:Chức năng đang được phát triển', '.tp-tile'] /* v192: chưa mở luồng, chỉ báo đang phát triển */, ['home|homeAll', '', 'article', '.tp-news'],
@@ -202,7 +202,7 @@ var R = [
   ['cases', 'Xem vụ án', 'caseDetail'], 
   ['proceedings', 'Xem chi tiết', 'proceedingDetail'], ['finance', 'Xem chi tiết', 'financeDetail'],
   ['inbox', '', 'mailDetail', '.ph-mail2-hit'], ['mailDetail', 'Van-ban-07.pdf', 'attachment'], ['mailDetail', 'Sửa đổi, bổ sung đơn khởi kiện', 'sub1'],
-  ['personal', 'Thông tin tài khoản', 'account'], ['personal', 'Cam kết giao dịch điện tử', 'commitOk'], /* v166: đồng nhất với Trang chủ – bản lần đầu; v310: mở thẳng màn có Lịch sử giao dịch điện tử (đã xác nhận) */ ['personal', 'Quản lý chữ ký số', 'sign'], ['personal', 'Phương thức giao dịch điện tử', 'method'],
+  ['personal', 'Thông tin tài khoản', 'account'], ['personal', '=Hồ sơ cá nhân', 'account'], ['personal', '=Hồ sơ tổ chức', 'account'] /* v337 */, ['personal', 'Cam kết giao dịch điện tử', 'commitOk'], /* v166: đồng nhất với Trang chủ – bản lần đầu; v310: mở thẳng màn có Lịch sử giao dịch điện tử (đã xác nhận) */ ['personal', 'Quản lý chữ ký số', 'sign'], ['personal', 'Phương thức giao dịch điện tử', 'method'],
   ['personal', 'Đổi mật khẩu', 'password'], ['personal', 'Câu hỏi thường gặp', 'faq'], ['personal', 'Đánh giá mức độ hài lòng', 'ratings'], ['personal', 'Đăng xuất', 'reset:login'],
   /* v290: Chỉnh sửa liên hệ sửa tại chỗ trong màn account (theo web) – bỏ luồng contact → verify → review */
   ['sign', 'Khai báo chứng thư số', 'cert'], ['sign', 'Thử ký tệp', 'signFile'], ['sign|signNone', 'Khai báo chứng thư', 'cert'],
@@ -228,7 +228,7 @@ var R = [
   ['tlOk', 'Về danh sách yêu cầu', 'reset:home,copyList'], ['sh:copies', 'Theo dõi yêu cầu', 'sheet:copyList'], ['tlOk', 'Về trang chủ', 'tab:home'],
   ['khcOk|ktcOk|kpaOk', 'Xem chi tiết hồ sơ', 'reset:home,complaints,complaintDetail'], ['khcOk|ktcOk|kpaOk', 'Về danh sách hồ sơ', 'reset:home,complaints'], ['kvaOk|kvaOkTc|kvaOkL|kvaOkLTc|kvaOkErr', 'Xem chi tiết hồ sơ', 'reset:home,complaintsTt,complaintTt'], ['kvaOk|kvaOkTc|kvaOkL|kvaOkLTc|kvaOkErr', 'Về danh sách hồ sơ', 'reset:home,complaintsTt']];
 /* phần tử tương tác tại chỗ (chuyển tab, chip, chọn…) không cần báo */
-var LOCAL = '.acc-l, .acc-form .tp-select-btn, .ckb-x, .sf-pill, .sf-chip, .gd-qdk, .sc-all, .sc-goiy button, .mg-opt, .qd-sap-btn, .qd-band-link, .qd-band-x, .qd-star, .nv-loc-btn, .ib-empty-act, .ib-chip2, .ib-pl-it, .ib-tool-b, .ib-xoa-loc, .ib-chip, .dt-tabs button, .dt-docs button, .vk-tabs button, .ph-dem button, .ctx-gh, .ph-boxlist button, .ph-opt button, .ph-tls button, .ph-tlr button, .ph-pd button, .ph-lvr-it, .ph-xn, .ph-ky button, .ph-ky-sheet button, .ph-rv2 button, .ph-tl-row button, .ph-tl-list li, .ph-gt-pre, .ph-gt-sheet button, .dm-sum-hit, .dm-del, .dm-cf button, .ph-mail2-btn, .ph-ibar-btn, .ph-ibar-sort, .ph-doc button, .ph-doc li, .ph-lib-sheet button, .ph-up2-it, .ph-rep-add, .ph-rep-del, .ph-co-sheet button, .ph-radio, .ph-co-add, .ph-co-del, .ph-proc2 .tp-menu2-item, .ph-lv-item, .ph-pick-it, .tp-notice-x, .tp-tab, .tp-seg button, .tp-seg-btn, .tp-qbar-chip, .tp-hs-act, .tp-mail-star, .tp-copy, .tp-check, .tp-stars button, .tp-select-btn, .tp-field-trail, .tp-acc-head, .tp-acc-radio, .tp-sec-head, .tp-role, .tp-cal-grid button, .tp-cal-week button, .tp-icon-btn, .tp-fs-head, .pt-chk, input, textarea, label'; /* v313: .pt-chk – nút kiểm tra dữ liệu tại chỗ, chỉ chuyển màn khi hợp lệ */
+var LOCAL = '.lg-loai button, .acc-l, .acc-form .tp-select-btn, .ckb-x, .sf-pill, .sf-chip, .gd-qdk, .sc-all, .sc-goiy button, .mg-opt, .qd-sap-btn, .qd-band-link, .qd-band-x, .qd-star, .nv-loc-btn, .ib-empty-act, .ib-chip2, .ib-pl-it, .ib-tool-b, .ib-xoa-loc, .ib-chip, .dt-tabs button, .dt-docs button, .vk-tabs button, .ph-dem button, .ctx-gh, .ph-boxlist button, .ph-opt button, .ph-tls button, .ph-tlr button, .ph-pd button, .ph-lvr-it, .ph-xn, .ph-ky button, .ph-ky-sheet button, .ph-rv2 button, .ph-tl-row button, .ph-tl-list li, .ph-gt-pre, .ph-gt-sheet button, .dm-sum-hit, .dm-del, .dm-cf button, .ph-mail2-btn, .ph-ibar-btn, .ph-ibar-sort, .ph-doc button, .ph-doc li, .ph-lib-sheet button, .ph-up2-it, .ph-rep-add, .ph-rep-del, .ph-co-sheet button, .ph-radio, .ph-co-add, .ph-co-del, .ph-proc2 .tp-menu2-item, .ph-lv-item, .ph-pick-it, .tp-notice-x, .tp-tab, .tp-seg button, .tp-seg-btn, .tp-qbar-chip, .tp-hs-act, .tp-mail-star, .tp-copy, .tp-check, .tp-stars button, .tp-select-btn, .tp-field-trail, .tp-acc-head, .tp-acc-radio, .tp-sec-head, .tp-role, .tp-cal-grid button, .tp-cal-week button, .tp-icon-btn, .tp-fs-head, .pt-chk, input, textarea, label'; /* v313: .pt-chk – nút kiểm tra dữ liệu tại chỗ, chỉ chuyển màn khi hợp lệ */
 var CAND = 'button, .tp-file';
 
 function labelOf(el) { return (el.getAttribute('aria-label') || el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim(); }
@@ -241,7 +241,7 @@ function resolve(id, el) {
     var within = r[3] || ((sc.indexOf('sh:') === 0 || sc === 'signDialog') ? '.tp-dlg' : null);
     if (within && !el.closest(within)) continue;
     var k = r[1];
-    if (k.charAt(0) === '=' ? lab === k.slice(1) : (k === '' || lab.indexOf(k) >= 0)) return r[2];
+    if (k.charAt(0) === '=' ? lab === k.slice(1) : (k === '' || lab.indexOf(k) >= 0)) return typeof r[2] === 'function' ? r[2]() : r[2];
   }
   return null;
 }
@@ -392,3 +392,41 @@ function Proto() {
       h('p', { className: 'pt-toast', role: 'status', hidden: !toast[0] }, toast[0] || '')));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(h(Proto));
+
+/* v333: lớp dữ liệu luồng Tổ chức – thay dữ liệu mẫu của người dùng cá nhân (Hoàng Dương, CCCD 001090012345, địa chỉ thường trú) bằng tổ chức mẫu
+   (Công ty ABC, MST 0101234567, địa chỉ trụ sở ACC_TC); nhãn dòng đổi theo (Họ và tên → Tên tổ chức, CCCD/Số định danh → Mã số thuế, địa chỉ → Địa chỉ trụ sở);
+   ẩn Ngày sinh / Giới tính / Quốc tịch / Ngày cấp / Nơi cấp trong khối thông tin của tổ chức (như web w0: Tên tổ chức, Mã số thuế, Trụ sở) */
+var TT_MST = '0101234567', TT_DCCN = 'Số 8 Phạm Hùng, Phường Từ Liêm, Thành phố Hà Nội';
+var TT_SO = ['Số CCCD', 'CCCD', 'Số định danh cá nhân', 'Số định danh', 'Số định danh cá nhân / CCCD'], TT_HT = ['Họ và tên', 'Họ tên'], TT_DC = ['Địa chỉ thường trú', 'Nơi thường trú', 'Địa chỉ', 'Nơi cư trú'], TT_AN = ['Ngày sinh', 'Giới tính', 'Quốc tịch', 'Ngày cấp', 'Nơi cấp'];
+function ttApply(root) {
+  if (!laTC()) return;
+  var rep = [[/Hoàng Dương/g, TC_TEN], [/001090012345/g, TT_MST], [new RegExp(TT_DCCN, 'g'), ACC_TC.truSo], [/(Số CCCD|CCCD|Số định danh cá nhân|Số định danh)(: ?)0101234567/g, 'Mã số thuế$2' + TT_MST], [/Người khởi kiện · Cá nhân/g, 'Người khởi kiện · Tổ chức']];
+  var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), n, ds = [];
+  while ((n = w.nextNode())) ds.push(n);
+  ds.forEach(function (t) {
+    var s = t.nodeValue, o = s, pa = t.parentNode;
+    rep.forEach(function (r) { s = s.replace(r[0], r[1]); });
+    if (s === 'HD' && pa && /(^|[\s-])av(\s|$)/.test(typeof pa.className === 'string' ? pa.className : '')) s = TC_TAT;
+    if (s !== o) t.nodeValue = s;
+  });
+  root.querySelectorAll('input, textarea').forEach(function (el) { if (el.value === 'Hoàng Dương') el.value = TC_TEN; });
+  root.querySelectorAll('dt, span, label, small, th, b, p, div').forEach(function (el) {
+    if (el.childElementCount || !el.firstChild || el.firstChild.nodeType !== 3) return;
+    var t = el.textContent.trim(), sib = el.nextElementSibling || (el.parentElement && el.parentElement.nextElementSibling);
+    if (!sib) return;
+    var v = sib.textContent || '';
+    if (TT_SO.indexOf(t) >= 0 && v.indexOf(TT_MST) >= 0) el.firstChild.nodeValue = 'Mã số thuế';
+    else if (TT_HT.indexOf(t) >= 0 && v.indexOf(TC_TEN) >= 0) el.firstChild.nodeValue = 'Tên tổ chức';
+    else if (TT_DC.indexOf(t) >= 0 && v.indexOf(ACC_TC.truSo) >= 0) el.firstChild.nodeValue = 'Địa chỉ trụ sở';
+    else if (TT_AN.indexOf(t) >= 0) {
+      var row = el.nextElementSibling ? el.parentElement : el.parentElement && el.parentElement.parentElement, box = row && row.parentElement;
+      if (box && row.style.display !== 'none' && (box.textContent.indexOf(TT_MST) >= 0 || box.textContent.indexOf(TC_TEN) >= 0)) row.style.display = 'none';
+    }
+  });
+}
+(function ttStart() { /* khung điện thoại được tạo lại khi đổi màn → theo dõi cả trang, áp vào khung đang có */
+  function chay() { var ph = document.querySelector('.pt-phone'); if (ph) ttApply(ph); }
+  var mo = new MutationObserver(function () { chay(); mo.takeRecords(); }); /* chạy ngay trong vi tác vụ – trước khi vẽ, không nháy chữ */
+  mo.observe(document.body, { childList: true, subtree: true, characterData: true });
+  chay();
+})();

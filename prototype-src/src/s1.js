@@ -77,7 +77,7 @@ function SheetOver(bg, title, desc, body, footer) {
 /* header Trang chủ (02/11/2026, kiểu Hồ sơ/Cá nhân, không tiêu đề): lời chào 16px + chuông, vai trò, Định danh VNeID; nội dung là tấm bo góc đè lên header */
 function HomeBg() {
   return h('div', { className: 'ph-me-top ph-home-hd' },
-    h(T.HomeHeader, { brand: false, greeting: 'Xin chào, Hoàng Dương', role: 'Công dân', canSwitchRole: true, subtitle: 'Định danh VNeID', unread: true }));
+    h(T.HomeHeader, { brand: false, greeting: 'Xin chào, ' + (laTC() ? TC_TEN : 'Hoàng Dương'), role: laTC() ? 'Tổ chức' : 'Công dân' /* v333 */, canSwitchRole: true, subtitle: 'Định danh VNeID', unread: true }));
 }
 function MenuSheet(title, desc, items, bg) {
   return SheetOver(bg || HomeBg(), title, desc, h(T.MenuList, { items: items.map(function (i) { return { illustration: i[0], label: i[1], description: i[2] }; }) }));
@@ -251,3 +251,9 @@ function NotiSettings() {
 }
 
 /* ---------- Lịch: v199 thay bằng Quản lý lịch, phiên tòa (s5 mục 11) ---------- */
+
+/* v333 (12/11/2026): 2 luồng theo loại tài khoản – Cá nhân / Tổ chức, chọn ở màn Đăng nhập (mặc định Cá nhân; tải lại trang về Cá nhân).
+   Theo web: loaiTaiKhoan === 'DoanhNghiep' → tổ chức (Ko), tên hiển thị tên tổ chức (Jo), nhãn vai trò "Tổ chức" / "Công dân" (Yo), "Hồ sơ tổ chức" / "Hồ sơ cá nhân" (Xo) */
+var LOAI_TK = 'cn', TC_TEN = 'Công ty ABC', TC_TAT = 'CA';
+function laTC() { return LOAI_TK === 'tc'; }
+function datLoaiTK(v) { LOAI_TK = v; }

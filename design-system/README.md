@@ -117,6 +117,17 @@ Thành phần mới (namespace `TuPhap`): `ReminderBanner`, `AccountBanner`, `Ta
 - **Trạng thái lỗi tải** dùng `EmptyState variant="center"` biểu tượng `alert` + "Thử lại" với câu đúng theo web (vd "Không tải được thông tin chữ ký số.").
 - Khối nhắc / chọn đang bật dùng chung cặp `warning-tint` + `warning-border` (banner cam kết, thẻ nguồn KNTC, lưu ý Trợ giúp pháp lý).
 
+## Mẫu mới từ prototype v311–v337 (bổ sung 12/11/2026)
+
+Các mẫu dưới đây đã được người dùng chọn trong prototype; không thêm component mới vào `bundle.js` (trừ `CertificateCard` chân thẻ 2 nút, v312).
+
+- **Màn danh sách – chuẩn theo Danh sách đơn và tiến trình** (v335–v336, áp cho Phương thức giao dịch điện tử, Cấp trích lục bản sao, Khiếu nại — Tố cáo): header gồm nút quay lại, tên màn, nút đỏ `size="sm"` ở góc phải ("Nộp đơn mới" / "Tạo yêu cầu mới"); không dùng nút đỏ rộng và dòng mô tả. Mỗi mục một thẻ trắng: hàng nhãn trạng thái + tình trạng (chấm + chữ), tên in đậm, các dòng nhãn – giá trị (mã + ngày gửi, Tư cách, Tòa án…), khối "Việc cần làm" (thẻ việc tô theo hạn) hoặc vùng nút thao tác ngăn bằng vạch kẻ.
+- **Hai loại tài khoản** (v333): màn Đăng nhập có `SegmentedControl` Cá nhân | Tổ chức trên ô Tài khoản. Tổ chức: `HomeHeader` nhãn vai trò "Tổ chức", menu Cài đặt "Hồ sơ tổ chức" (cá nhân "Hồ sơ cá nhân", v337); khối thông tin tổ chức hiện Tên tổ chức · Mã số thuế · Địa chỉ trụ sở, không hiện Ngày sinh/Giới tính/Quốc tịch.
+- **Ký số của tổ chức** (v330, v334): khối "Tên tổ chức – cần 2 chữ ký" gồm 2 dòng "Chữ ký cá nhân đại diện" (Ký số đại diện) và "Chữ ký tổ chức" (Ký số tổ chức, khóa tới khi đại diện ký xong), dùng ở mọi màn ký số. Quản lý chữ ký số: chứng thư mặc định và danh sách chứng thư chia nhóm "Cá nhân đại diện · Họ tên" / "Tổ chức".
+- **Giấy giới thiệu / Công văn** (v333, chỉ tổ chức): khối trắng gồm Số / ký hiệu và Ngày ký; bắt buộc khi tư cách là Cơ quan nhà nước thực hiện công vụ (Trích lục), không bắt buộc ở Sao chụp tài liệu.
+- **Hộp thoại xác nhận kiểu "đơn đang soạn dở"** (v321–v332): hình minh họa có huy hiệu (`IlloBadge`), tiêu đề, mô tả, 2 nút xếp dọc (nút chính đỏ, nút phụ xám); có nút đóng X góc phải khi cần. Dùng cho: đơn soạn dở, chưa có người đại diện, đổi loại việc, đổi cách nhập nội dung, xóa, mở đơn nháp lỗi.
+- **Thẻ thư tống đạt** (v315–v317): phương án K1 hàng biểu tượng, nhãn "Chưa đọc" nền đỏ hệ thống.
+
 ## Bộ màu nhãn Trầm (chốt 03/11/2026)
 
 Bộ 20 màu dùng chung để phân biệt **loại** (nhãn văn bản, nhóm, danh mục) ở mọi chức năng, không dùng cho trạng thái hay mức độ hạn (dùng `success`/`warning`/`danger`).

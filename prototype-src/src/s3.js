@@ -9,13 +9,15 @@ var ME_MENU = [
    VNeID, số định danh và "Xem" bỏ khỏi header – "Thông tin tài khoản" thành dòng đầu menu */
 /* v262: đổi chỗ 2 khối – Câu hỏi thường gặp / Đánh giá lên trước Đổi mật khẩu / Đăng ký lại thiết bị */
 var ME_MENU_V253 = [[{ icon: 'user', label: 'Thông tin tài khoản' }].concat(ME_MENU[0]), ME_MENU[2], ME_MENU[1], ME_MENU[3]];
+/* v337 (12/11/2026): mục đầu menu Cài đặt theo loại tài khoản – "Hồ sơ cá nhân" / "Hồ sơ tổ chức" (thay "Thông tin tài khoản") */
+function meMenu() { var g = ME_MENU_V253.slice(); g[0] = [Object.assign({}, g[0][0], { label: laTC() ? 'Hồ sơ tổ chức' : 'Hồ sơ cá nhân' })].concat(g[0].slice(1)); return g; }
 function Personal() {
   return h(Phone, { cls: 'ph-main' },
     h('div', { className: 'ph-me-top me-s2', style: { backgroundImage: 'linear-gradient(90deg,rgba(99,7,13,.95) 30%,rgba(163,19,28,.55)),url(' + HERO + ')' } },
-      h('span', { className: 'me-s2-av', 'aria-hidden': 'true' }, 'HD'),
-      h('span', { className: 'me-s2-tx' }, h('b', null, 'Hoàng Dương'),
-        h('button', { type: 'button', className: 'me-chip me-s2-chip', 'aria-label': 'Vai trò sử dụng: Công dân', onClick: noop }, 'Công dân', h(T.Icon, { name: 'chevronDown' })))),
-    h(Body, { cls: 'tp-sheet' }, h(T.MenuList, { groups: ME_MENU_V253 })), Nav('me'));
+      h('span', { className: 'me-s2-av', 'aria-hidden': 'true' }, laTC() ? TC_TAT : 'HD'), /* v333 */
+      h('span', { className: 'me-s2-tx' }, h('b', null, laTC() ? TC_TEN : 'Hoàng Dương'),
+        h('button', { type: 'button', className: 'me-chip me-s2-chip', 'aria-label': 'Vai trò sử dụng: ' + (laTC() ? 'Tổ chức' : 'Công dân'), onClick: noop }, laTC() ? 'Tổ chức' : 'Công dân', h(T.Icon, { name: 'chevronDown' })))),
+    h(Body, { cls: 'tp-sheet' }, h(T.MenuList, { groups: meMenu() })), Nav('me'));
 }
 /* Thông tin tài khoản, Chỉnh sửa liên hệ (03/11/2026): khung khối 100% như Soạn đơn; thông tin chỉ đọc nhãn trái – giá trị phải (RvKV) */
 /* v290 (09/11/2026): Thông tin tài khoản theo mã nguồn web /tai-khoan (screens/tai-khoan: index.tsx, ho-so-ca-nhan.tsx, ho-so-to-chuc.tsx, khoi-xac-thuc-2-lop.tsx;
@@ -120,7 +122,7 @@ function AccCaNhan(p) {
 }
 
 /* ---- Hồ sơ tổ chức ---- */
-var ACC_TC = { ten: 'Công ty TNHH Thương mại và Dịch vụ An Phát', mst: '0101234567', truSo: 'Số 25 Láng Hạ, Phường Láng, Thành phố Hà Nội', gp: 'Giấy chứng nhận đăng ký doanh nghiệp số 0101234567 do Sở Tài chính Thành phố Hà Nội cấp ngày 12/05/2015', sdt: '02438123456', email: 'lienhe@anphat.vn' };
+var ACC_TC = { ten: 'Công ty ABC' /* v333 */, mst: '0101234567', truSo: 'Số 25 Láng Hạ, Phường Láng, Thành phố Hà Nội', gp: 'Giấy chứng nhận đăng ký doanh nghiệp số 0101234567 do Sở Tài chính Thành phố Hà Nội cấp ngày 12/05/2015', sdt: '02438123456', email: 'lienhe@anphat.vn' };
 var ACC_NDD = [
   { ten: 'Nguyễn Văn Bình', cccd: '001085004321', ns: '20/03/1985', gt: 'Nam', qt: 'Việt Nam', xm: true, ky: [{ id: 1, tu: '01/01/2025', den: null, tt: 'DANG_HIEU_LUC', cv: 'Giám đốc' }] },
   { ten: 'Trần Thị Hoa', cccd: '001190007788', ns: '11/07/1990', gt: 'Nữ', qt: 'Việt Nam', xm: true, ky: [{ id: 2, tu: '01/03/2024', den: '31/12/2024', tt: 'HET_HIEU_LUC', cv: 'Phó Giám đốc' }] },
@@ -202,11 +204,10 @@ function Acc2LopBat(p) {
 var ACC_TABS = [{ key: 'cn', label: 'Cá nhân' }, { key: 'tc', label: 'Tổ chức' }];
 function Account(p) {
   p = p || {};
-  var loai = React.useState(p.loai || 'cn'), anchor = React.useRef(null), host = useHost(anchor);
+  var loai = [p.loai || (laTC() ? 'tc' : 'cn')], anchor = React.useRef(null), host = useHost(anchor); /* v333: bỏ tab demo – hiện theo loại tài khoản đăng nhập */
   var tt = React.useState(p.daBat || p.con != null || window.__accBat ? { bat: true, ngay: window.__accBat ? '09/11/2026' : '15/10/2026', con: p.con != null ? p.con : window.__accBat ? 10 : 8 } : { bat: false }); /* v292: demo bắt đầu từ chưa bật */
   var tc = loai[0] === 'tc';
   return h(Phone, { cls: 'ph-hd' }, h(T.AppBar, { variant: 'plain', title: tc ? 'Hồ sơ tổ chức' : 'Hồ sơ cá nhân', onBack: noop }),
-    h('div', { className: 'acc-tabs' }, h(T.Tabs, { label: 'Xem theo loại tài khoản (demo)', value: loai[0], onChange: loai[1], items: ACC_TABS })),
     h(Body, { cls: 'ph-plain ph-steps acc-body' }, h('span', { ref: anchor, hidden: true }),
       host ? h(F, { key: loai[0] }, tc ? h(AccToChuc, { host: host, sua: p.sua, otp: p.otp, them: p.them }) : h(AccCaNhan, { host: host, sua: p.sua, otp: p.otp }),
         h(Acc2Lop, { host: host, tt: tt, buoc: p.buoc })) : null));
@@ -511,7 +512,7 @@ function LvChiTiet(p) {
   return h(F, null, h('span', { ref: anchor, hidden: true }),
     h(T.SelectField, { label: 'Loại việc chi tiết', placeholder: '— Chọn loại việc chi tiết —', value: p.v || undefined, open: o[0], onClick: function () { o[1](true); } }),
     o[0] && host ? h(LvSheet, { host: host, title: 'Chọn loại việc chi tiết', onClose: function () { o[1](false); } },
-      h(LvRows, { label: 'Loại việc chi tiết', cur: p.v, items: p.ds.map(function (t) { return { id: t, name: t }; }), onPick: function (t) { if (LVCT_CHAN.indexOf(t) >= 0) { window.__ptSnack(LV_KHONG_PHU_HOP); return; } p.onChange(t); o[1](false); } })) : null);
+      h(LvRows, { label: 'Loại việc chi tiết', cur: p.v, items: p.ds.map(function (t) { return { id: t, name: t }; }), onPick: function (t) { if (!laTC() && LVCT_CHAN.indexOf(t) >= 0) { window.__ptSnack(LV_KHONG_PHU_HOP); return; } /* v333: chỉ chặn tài khoản cá nhân */ p.onChange(t); o[1](false); } })) : null);
 }
 /* hình minh họa Lĩnh vực vẽ mới theo nội dung (02/11/2026), cùng kiểu và lớp màu với bộ Illustration của design system; chỉ ở mức app */
 var ILLO_LV = {
@@ -774,7 +775,7 @@ var CO_MAU = [
   { ten: 'Lê Văn D', sdt: '0903111222', so: '001085000004', ns: '21/11/1985', qt: 'Việt Nam', tinh: 'Thành phố Hà Nội', xa: 'Phường Hoàn Kiếm', ct: 'Số 3 Hàng Bài', email: 'le.van.d@example.com', nc: '02/02/2022', noi: 'Cục Cảnh sát quản lý hành chính về trật tự xã hội', gt: 'nam' }];
 /* 03/11/2026: Cá nhân | Tổ chức đổi được bộ trường; Tổ chức theo web (plDescs nhánh tổ chức): Tên tổ chức / doanh nghiệp*, Mã số thuế / MSDN*, Địa chỉ trụ sở* (khóa – lấy từ tài khoản / tra cứu MST) + "Có người đại diện hợp pháp" (người đại diện theo pháp luật chọn từ danh mục – phương án C, và theo ủy quyền) */
 function PersonForm(ro, pre, dat) { return h(PersonBody, { ro: ro, pre: pre, dat: dat }); }
-var ORG_MAU = { ten: 'Công ty TNHH Thương mại An Phát', so: '0101234567', tinh: 'Thành phố Hà Nội', xa: 'Phường Cầu Giấy', ct: 'Số 25 Duy Tân' };
+var ORG_MAU = { ten: 'Công ty ABC', so: '0101234567', tinh: 'Thành phố Hà Nội', xa: 'Phường Láng', ct: 'Số 25 Láng Hạ' }; /* v333: = tổ chức đăng nhập (ACC_TC) */
 var ORG_CO_MAU = { ten: 'Công ty Cổ phần Xây dựng Minh Long', so: '0109876543', tinh: 'Thành phố Hà Nội', xa: 'Phường Đống Đa', ct: 'Số 102 Tây Sơn' };
 /* danh mục người đại diện theo pháp luật còn hiệu lực của tổ chức – dữ liệu mẫu */
 var NDPL = [{ id: 'a', ten: 'Trần Văn Minh', so: '001080000011', cv: 'Giám đốc' }, { id: 'b', ten: 'Lê Thị Hương', so: '001085000022', cv: 'Phó Giám đốc' }, { id: 'c', ten: 'Phạm Quốc Bảo', so: '001090000033', cv: 'Kế toán trưởng' }];
@@ -800,7 +801,7 @@ function PhapLuatPick() {
 function PersonBody(pp) {
   var ro = pp.ro, pre = pp.pre, dat = pp.dat;
   var d = ro ? (dat || ME_MAU) : null, co = !!dat;
-  var kind = React.useState((pre && pre.loai) || 'cn');
+  var kind = React.useState((pre && pre.loai) || (ro && !co && laTC() ? 'tc' : 'cn')); /* v333 */
   var seg = h(T.SegmentedControl, { label: ro && !co ? 'Loại người khởi kiện' : 'Loại người đồng khởi kiện', value: kind[0], onChange: kind[1], options: [{ value: 'cn', label: 'Cá nhân' }, { value: 'tc', label: 'Tổ chức' }] });
   if (kind[0] === 'tc') {
     var o = co ? Object.assign({}, ORG_CO_MAU, pre && pre.so ? { so: pre.so } : {}) : ORG_MAU, khoa = !!ro;
@@ -1186,7 +1187,7 @@ function KySoScreen(p) {
     sh[0] && host ? ReactDOM.createPortal(h(KySheet, { onClose: function () { sh[1](false); }, onKy: function () { sh[1](false); if (tcz) (ai.current === 'tc' ? tc : dd)[1](true); else ky[1](true); } }), host) : null),
     Btn('Nộp đơn', 'primary', da ? { 'data-pt-go': 'replace:success' } : { disabled: true, title: 'Vui lòng ký số đủ trước khi nộp đơn' }));
 }
-function Sub7() { return h(KySoScreen); }
+function Sub7() { return h(KySoScreen, { toChuc: laTC() }); } /* v333 */
 function SignDialog() { return h(KySoScreen, { sheet: true }); }
 /* Nộp đơn thành công – phương án C (chọn 03/11/2026): chỉ gồm thông tin theo ảnh web; màn kết quả toàn trang, không header (không quay lại các bước đã nộp), nền trắng, nội dung giữa màn;
    Mã tiếp nhận / Thời điểm gửi / Trạng thái dạng nhãn trái – giá trị phải có kẻ như bước 6; đáy: "Xem tại Quản lý đơn" (đỏ) trên, "Về trang chủ" (viền) dưới. Mã và thời điểm là giá trị mẫu theo ảnh web */
@@ -1252,10 +1253,10 @@ function KyGui(o) {
   var tep = [o.donTep].concat(o.tl.map(function (d) { return d[1]; }));
   return Wz({ title: o.title, steps: o.steps, n: o.n, body: h(F, null, h('span', { ref: anchor, hidden: true }),
     FCard(o.rvTitle, h(F, null, o.rvDesc ? Lead(o.rvDesc) : null, RvKV(o.review)), true),
-    FCard('Ký số', h(F, null, Lead(o.moTa),
+    FCard('Ký số', h(F, null, kyMoTa(o.moTa), /* v334 */
       h('ul', { className: 'ph-ky' },
         h('li', null, h('div', null, h('b', null, o.don)), IcoBtn('eye', 'Xem ' + o.don)),
-        h('li', null, h('span', { className: 'ph-ky-no' }, '1'), h('div', null, h('b', null, 'Hoàng Dương'), h('small', null, o.vaiTro), da ? h('small', { className: 'ph-ky-da' }, KY_LUC) : null),
+        laTC() ? h(KyTcRows, { tep: tep, onXong: function () { ky[1](true); } }) /* v334 */ : h('li', null, h('span', { className: 'ph-ky-no' }, '1'), h('div', null, h('b', null, 'Hoàng Dương'), h('small', null, o.vaiTro), da ? h('small', { className: 'ph-ky-da' }, KY_LUC) : null),
           da ? h(T.StatusBadge, { tone: 'success', icon: 'checkCircle' }, 'Đã ký') : h(T.Button, { size: 'sm', icon: 'pen', className: 'ph-ky-btn', onClick: function () { sh[1](true); } }, 'Ký số')))), true, da ? 'signed' : 'unsigned'),
     o.tl.length ? FCard('Tài liệu đính kèm (' + o.tl.length + ' tệp)', h('ul', { className: 'ph-ky' }, o.tl.map(function (d) {
       return h('li', { key: d[1] }, h('div', null, h('b', null, d[0]), h('small', null, d[1])), da ? h(T.StatusBadge, { tone: 'success', icon: 'checkCircle' }, 'Đã ký') : null, IcoBtn('eye', 'Xem ' + d[0]));
@@ -1342,12 +1343,13 @@ function Tl2(p) {
 }
 /* bước 3 – Tư cách người yêu cầu: từ vụ án → thẻ xác minh tự động; tự khai → chọn tư cách; ô cam kết */
 function Tl3(p) {
-  var tk = p && p.tuKhai;
+  var tk = p && p.tuKhai, tcach = React.useState(TL_TU_CACH[0]);
   return Wz({ title: TL_TITLE, steps: TL_STEPS, n: 3, go: 'tl4', body: h(F, null,
     FCard('Tư cách người yêu cầu', h(F, null, Lead('Tòa án căn cứ tư cách người yêu cầu để thẩm định quyền được cấp theo pháp luật tố tụng.'),
-      tk ? h(SelSheet, { label: 'Bạn yêu cầu với tư cách', req: true, opts: TL_TU_CACH, v: TL_TU_CACH[0] })
+      tk ? h(SelSheet, { label: 'Bạn yêu cầu với tư cách', req: true, opts: TL_TU_CACH, v: TL_TU_CACH[0], onChange: tcach[1] })
         : h('div', { className: 'ph-tlv' }, h('span', { className: 'ph-up3-ic' }, h(T.Icon, { name: 'shield' })), h('div', null, h('b', null, 'Nguyên đơn · DS-2026-0012'), h('small', null, 'Tư cách được hệ thống xác minh tự động qua liên kết vụ án — không cần khai lại.')))), true),
-    h('div', { className: 'ph-commit' }, h(T.Checkbox, { label: 'Tôi cam kết sử dụng bản sao bản án đúng mục đích đã khai báo và chịu trách nhiệm trước pháp luật.' }))) });
+    h('div', { className: 'ph-commit' }, h(T.Checkbox, { label: 'Tôi cam kết sử dụng bản sao bản án đúng mục đích đã khai báo và chịu trách nhiệm trước pháp luật.' })),
+    laTC() ? h(GiayGT, { bb: tk && tcach[0] === 'Cơ quan nhà nước thực hiện công vụ' }) : null) }); /* v333 */
 }
 function Tl4() {
   return KyGui({ title: TL_TITLE, steps: TL_STEPS, n: 4, rvTitle: 'Xem lại thông tin trước khi gửi đến Tòa án',
@@ -1422,7 +1424,7 @@ function ChooseKn(p) {
     h('div', { className: 'ph-foot' }, Bar(Btn('Bắt đầu khai đơn', 'primary', t ? { 'data-pt-go': knDau(t) + '1' } : { disabled: true }))));
 }
 function KnTT(loai, ten) { return h('div', { className: 'ph-kntt' }, h(T.Tag, null, loai), h('b', null, ten)); }
-function YesBox(p) { var c = React.useState(!!p.v); return h(F, null, h(T.Checkbox, { label: p.label, checked: c[0], onChange: function (e) { c[1](e.target.checked); if (p.onChange) p.onChange(e.target.checked); } }), c[0] && p.children ? p.children : null); }
+function YesBox(p) { var c = React.useState(!!p.v); if (p.an) return null; return h(F, null, h(T.Checkbox, { label: p.label, checked: c[0], onChange: function (e) { c[1](e.target.checked); if (p.onChange) p.onChange(e.target.checked); } }), c[0] && p.children ? p.children : null); }
 
 /* --- Khiếu nại hành chính / Tố cáo / Kiến nghị, phản ánh (web /khieu-nai-hanh-chinh/soan-don – 5 bước, buoc-soan.ts) --- */
 var KNH = {
@@ -1433,10 +1435,10 @@ function knhSteps(k) { return ['Người gửi đơn', KNH[k].b2, 'Nội dung v�
 function KnhWz(k, n, body, last) { return Wz({ title: 'Soạn đơn', steps: knhSteps(k), n: n, go: k + (n + 1), body: h(F, null, KnTT(KNH[k].loai, KNH[k].ten), body), last: last }); }
 function CungForm() { return h(F, null, Tf('Họ tên', { required: true, placeholder: 'Họ tên' }), TwoE(Tf('Số định danh', { required: true, inputMode: 'numeric', maxLength: 12, placeholder: 'Số định danh' }), Tf('Số điện thoại', { type: 'tel', placeholder: 'Số điện thoại' }))); }
 function Knh1(k) {
-  return KnhWz(k, 1, FCard('Người gửi đơn', h(F, null, RvKV(NGUOI_ME),
+  return KnhWz(k, 1, FCard('Người gửi đơn', h(F, null, RvKV(laTC() ? knhTcRows() : NGUOI_ME), /* v333 */
     Tf('Số điện thoại liên hệ', { required: true, type: 'tel', defaultValue: '0912345678', placeholder: 'Số điện thoại liên hệ' }),
     AddrG('Địa chỉ liên hệ', true, 'short'),
-    h(YesBox, { label: KNH[k].cung }, h('div', { className: 'ph-cung' }, Lead('Bạn là người đại diện và là người duy nhất ký số đơn.'),
+    h(YesBox, { label: KNH[k].cung, an: laTC() }, h('div', { className: 'ph-cung' }, Lead('Bạn là người đại diện và là người duy nhất ký số đơn.'),
       h(PartyList, { init: [{ moi: true }], dem: 'người cùng đứng đơn', goi: 'Người cùng đứng đơn', tu: 'người cùng đứng đơn', them: 'Thêm người cùng đứng đơn', form: function () { return CungForm(); } })))), true));
 }
 function Knh2(k) {
@@ -1472,7 +1474,7 @@ function Knh4(k) {
 function Knh5(k) {
   var x = KNH[k];
   return KyGui({ title: 'Soạn đơn', steps: knhSteps(k), n: 5, rvTitle: 'Xem lại, ký số và gửi', rvDesc: 'Sau khi gửi, bạn không sửa được đơn. Muốn thay đổi thì rút đơn và gửi đơn mới.',
-    review: [['Loại đơn', x.loai + ' — ' + x.ten], ['Người đại diện', 'Hoàng Dương · CCCD: 001090012345 · SĐT: 0912345678 · [địa chỉ liên hệ]'], [x.b2, '[Họ tên] · [Chức vụ] · [Nơi công tác]'], ['Tòa án nhận đơn', COURT1], ['Tiêu đề đơn', '[Tiêu đề đơn]'], ['Nội dung', '[Nội dung]'], ['Tài liệu kèm theo', 'Ảnh chụp biên bản (Khác)']].concat(k === 'ktc' ? [['Tùy chọn tố cáo', 'Không']] : []),
+    review: [['Loại đơn', x.loai + ' — ' + x.ten], [laTC() ? 'Tổ chức gửi đơn' : 'Người đại diện', 'Hoàng Dương · CCCD: 001090012345 · SĐT: 0912345678 · [địa chỉ liên hệ]'], [x.b2, '[Họ tên] · [Chức vụ] · [Nơi công tác]'], ['Tòa án nhận đơn', COURT1], ['Tiêu đề đơn', '[Tiêu đề đơn]'], ['Nội dung', '[Nội dung]'], ['Tài liệu kèm theo', 'Ảnh chụp biên bản (Khác)']].concat(k === 'ktc' ? [['Tùy chọn tố cáo', 'Không']] : []),
     moTa: 'Đơn và toàn bộ tài liệu kèm theo được ký một lần bằng chữ ký số cá nhân của Hoàng Dương.', don: 'Đơn ' + x.w, donTep: 'don-' + k + '.pdf', vaiTro: 'Người gửi đơn', tl: [['Ảnh chụp biên bản', 'anh-chup-bien-ban.pdf']],
     camDoan: 'Tôi cam đoan nội dung đơn và tài liệu kèm theo là đúng sự thật, chịu trách nhiệm trước pháp luật.', btn: 'Gửi đơn', ok: k + 'Ok' });
 }
@@ -1664,7 +1666,7 @@ function Splash() {
 function Login() {
   return h(Phone, { cls: 'ph-login' },
     h('div', { className: 'ph-login-top tp-on-dark' }, BgImg('ph-login-bg', window.__LOGIN_BG), h('img', { src: LOGO, alt: 'Quốc huy Tòa án nhân dân' }), /* v270: như màn chào – bỏ "Tòa án nhân dân tối cao", tên "CỔNG DỊCH VỤ TƯ PHÁP TÒA ÁN" 18px in hoa */ h('p', { className: 'ph-login-name' }, 'CỔNG DỊCH VỤ TƯ PHÁP TÒA ÁN')),
-    h('div', { className: 'ph-login-card' }, h('h2', null, 'Đăng nhập'),
+    h('div', { className: 'ph-login-card' }, h('h2', null, 'Đăng nhập'), h(LoginLoai), /* v333 */
       h(T.TextField, { label: 'Tài khoản', required: true, icon: 'idCard', inputMode: 'numeric', placeholder: 'Số định danh cá nhân hoặc tổ chức' /* v271 */ }),
       h(T.TextField, { label: 'Mật khẩu', required: true, icon: 'lock', type: 'password', placeholder: 'Nhập mật khẩu' }),
       h(T.Button, { block: true }, 'Đăng nhập'),
@@ -1743,3 +1745,25 @@ function KyToChuc(p) {
 function Sub7Tc() { return h(KySoScreen, { toChuc: true }); }
 function Sub7TcBan() { return h(KySoScreen, { toChuc: true, ban: true }); }
 function Sub7TcLoi() { return h(KySoScreen, { toChuc: true, loi: true }); }
+
+/* v333: Đăng nhập – thanh chọn loại tài khoản (Cá nhân | Tổ chức) trên ô Tài khoản */
+function LoginLoai() {
+  var v = React.useState(LOAI_TK);
+  return h('div', { className: 'lg-loai' }, h(T.SegmentedControl, { label: 'Loại tài khoản', value: v[0], onChange: function (x) { datLoaiTK(x); v[1](x); }, options: [{ value: 'cn', label: 'Cá nhân' }, { value: 'tc', label: 'Tổ chức' }] }));
+}
+/* v333: người đại diện theo pháp luật đang có hiệu lực của tổ chức mẫu */
+function tcDaiDien() { return ACC_NDD.filter(function (n) { return n.ky.some(function (k) { return ACC_KY.indexOf(k.tt) >= 0; }); }); }
+function tcChucVu(n) { var k = n.ky.filter(function (x) { return ACC_KY.indexOf(x.tt) >= 0; })[0]; return k ? k.cv : ''; }
+/* v333: Khiếu nại hành chính / Tố cáo / Kiến nghị – bước Người gửi đơn của tài khoản tổ chức (web: Tên tổ chức, Mã số thuế / mã định danh, Địa chỉ trụ sở, Người đại diện theo pháp luật, Chức vụ người đại diện) */
+function knhTcRows() {
+  var dd = tcDaiDien(), cv = [];
+  dd.forEach(function (n) { var c = tcChucVu(n); if (c && cv.indexOf(c) < 0) cv.push(c); });
+  return [['Tên tổ chức', ACC_TC.ten], ['Mã số thuế / mã định danh', ACC_TC.mst], ['Địa chỉ trụ sở', ACC_TC.truSo], ['Người đại diện theo pháp luật', dd.map(function (n) { return n.ten; }).join(', ') || '—'], ['Chức vụ người đại diện', cv.join(', ') || '—']];
+}
+/* v333: Giấy giới thiệu / Công văn – chỉ tài khoản tổ chức (web mJ: Trích lục – bắt buộc khi tư cách Cơ quan nhà nước và tự nhập bản án; Sao chụp tài liệu – không bắt buộc) */
+function GiayGT(p) {
+  var bb = !!p.bb;
+  return FCard('Giấy giới thiệu / Công văn', h(F, null,
+    Lead(bb ? 'Cơ quan nhà nước cần cung cấp số và ngày ký giấy giới thiệu hoặc công văn đề nghị cấp.' : 'Không bắt buộc. Nhập nếu cơ quan, tổ chức có giấy giới thiệu hoặc công văn đề nghị cấp.'),
+    TwoE(Tf('Số / ký hiệu', { required: bb, maxLength: 50, placeholder: 'VD: 125/GT-UBND' }), Tf('Ngày ký', Dt({ required: bb })))), true);
+}

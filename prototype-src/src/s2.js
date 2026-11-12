@@ -760,12 +760,12 @@ function VuAnChiTiet(p) {
 function EviKy() {
   var ky = React.useState(false), sh = React.useState(false), anchor = React.useRef(null), host = useHost(anchor), da = ky[0];
   return Wz({ title: 'Giao nộp tài liệu, chứng cứ', steps: EVI_STEPS, n: 3, save: false, body: h(F, null, h('span', { ref: anchor, hidden: true }),
-    FCard('Phiếu giao nộp', RvKV([['Hồ sơ, vụ án', h(F, null, h('span', { className: 'tp-num' }, 'DS-2026-0012'), ' · Tranh chấp hợp đồng vay tài sản')], ['Tòa án nhận', COURT1], ['Giai đoạn', 'Sơ thẩm'], ['Người giao nộp', 'Nguyên đơn'], ['Hình thức', 'Ký số cá nhân · nộp trực tuyến']]), true),
+    FCard('Phiếu giao nộp', RvKV([['Hồ sơ, vụ án', h(F, null, h('span', { className: 'tp-num' }, 'DS-2026-0012'), ' · Tranh chấp hợp đồng vay tài sản')], ['Tòa án nhận', COURT1], ['Giai đoạn', 'Sơ thẩm'], ['Người giao nộp', 'Nguyên đơn'], ['Hình thức', (laTC() ? 'Ký số tổ chức' : 'Ký số cá nhân') + ' · nộp trực tuyến'] /* v333 */]), true),
     FCard('Tài liệu giao nộp · 2', h('ol', { className: 'dt-num' }, h('li', null, h('b', null, 'Sao kê chuyển khoản'), h('small', null, 'sao-ke-chuyen-khoan.pdf')), h('li', null, h('b', null, 'Tin nhắn trao đổi'), h('small', null, 'tin-nhan.png'))), true),
     FCard('Biên bản giao nhận', h(F, null, Lead('Hệ thống tự lập, cần ký số trước khi giao nộp.'),
       h('ul', { className: 'ph-ky' },
         h('li', null, h('div', null, h('b', null, 'Biên bản giao nhận tài liệu, chứng cứ')), IcoBtn('eye', 'Xem biên bản')),
-        h('li', null, h('span', { className: 'ph-ky-no' }, '1'), h('div', null, h('b', null, 'Hoàng Dương'), h('small', null, 'Người giao nộp'), da ? h('small', { className: 'ph-ky-da' }, KY_LUC) : null),
+        laTC() ? h(KyTcRows, { tep: ['bien-ban-giao-nhan.pdf', 'sao-ke-chuyen-khoan.pdf', 'tin-nhan.png'], onXong: function () { ky[1](true); } }) /* v334 */ : h('li', null, h('span', { className: 'ph-ky-no' }, '1'), h('div', null, h('b', null, 'Hoàng Dương'), h('small', null, 'Người giao nộp'), da ? h('small', { className: 'ph-ky-da' }, KY_LUC) : null),
           da ? h(T.StatusBadge, { tone: 'success', icon: 'checkCircle' }, 'Đã ký') : h(T.Button, { size: 'sm', icon: 'pen', className: 'ph-ky-btn', onClick: function () { sh[1](true); } }, 'Ký số'))),
       da ? null : P('Cần ký số một lần cho biên bản và 2 tài liệu đính kèm trước khi giao nộp.', 'ph-muted dt-small'),
       Tf('Ghi chú gửi Tòa án', { multiline: true, placeholder: 'Không bắt buộc — VD: Văn bản xác nhận thường trú đang chờ UBND phường cấp, sẽ bổ sung trước 05/10/2026.' })), true, da ? 'signed' : 'unsigned'),

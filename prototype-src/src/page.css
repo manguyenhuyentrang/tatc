@@ -2071,3 +2071,15 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 /* v332: hộp đang tải đơn nháp */
 .dl3{gap:12px;padding:24px 16px}
 .dl-spin{width:32px;height:32px;border-width:3px}
+/* v333: Đăng nhập – thanh chọn loại tài khoản */
+.lg-loai{margin-bottom:4px}
+/* v334: khối cần 2 chữ ký đặt trong danh sách ký */
+.ph-ky li.kytc-li{display:block;padding:10px 0}
+/* v335: thẻ Phương thức giao dịch theo thẻ Danh sách đơn */
+.ptq .ptq-a{align-self:stretch;margin-top:4px;padding-top:12px;border-top:1px solid var(--border)}
+.ptq .ptq-a .pt-btns{display:flex;flex-direction:column;gap:8px}.ptq .ptq-a .pt-btns>.tp-btn{width:100%}
+.ptq .ptq-a .pt-c-note{margin:0}
+/* v336: Trích lục, KNTC theo khung Danh sách đơn */
+.qh-tt{cursor:default}
+.qc .kn-ban{margin:0;align-self:stretch}
+.ds-nhap .ph-2btn{display:flex;gap:8px}.ds-nhap .ph-2btn>.tp-btn{flex:1}

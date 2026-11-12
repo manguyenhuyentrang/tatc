@@ -2,8 +2,9 @@
 
 Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp dự án từ **một tài khoản Claude khác**.
 
-- Bản prototype mới nhất: **v310** (11/11/2026).
-- Ngày xuất: 11/11/2026 (bản đầu v307; cập nhật lên v310 cùng ngày).
+- Bản prototype mới nhất: **v337** (12/11/2026) – trên claude.ai là Version 329 của trang Prototype TATC Gen UI.
+- Ngày xuất: 11/11/2026 (bản đầu v307, v310); cập nhật lại ngày 12/11/2026 lên v337.
+- Từ v333 prototype có **2 luồng theo loại tài khoản**: chọn Cá nhân | Tổ chức ở màn Đăng nhập (mặc định Cá nhân; tải lại trang về Cá nhân). Tổ chức mẫu: "Công ty ABC", MST 0101234567, trụ sở Số 25 Láng Hạ, Phường Láng, Thành phố Hà Nội.
 - Vị trí trên máy: `E:\TATC\Mobile\Design_System`
 
 > Gửi Claude ở phiên mới: đọc hết tệp này trước khi làm việc. Mọi quy tắc ở mục 4 vẫn có hiệu lực.
@@ -14,11 +15,11 @@ Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp d�
 
 | Thư mục | Nội dung | Dùng khi |
 |---|---|---|
-| `tai-lieu/` | `design-system-day-du.md` (bản đầy đủ), `design-system-chot-2026-10-30.md` (quyết định đã chốt + nhật ký v1–v310), `ghi-nho-du-an.md` (ghi nhớ của tài khoản cũ) | Tải lên Project ở tài khoản mới; đọc trước khi thiết kế |
+| `tai-lieu/` | `design-system-day-du.md` (bản đầy đủ), `design-system-chot-2026-10-30.md` (quyết định đã chốt + nhật ký v1–v337), `ghi-nho-du-an.md` (ghi nhớ của tài khoản cũ) | Tải lên Project ở tài khoản mới; đọc trước khi thiết kế |
 | `skills/` | `gen-ui-mobile.zip` (gói skill để tải lên), `gen-ui-mobile/SKILL.md` (nội dung đọc được) | Cài skill ở tài khoản mới |
 | `design-system/` | Design system TuPhap: `README.md`, `tokens.json`, `tokens.css`, `components/` (bundle.js, bundle.css, index.d.ts, README + preview từng component), `fonts/`, `vendor/` (React 18.3.1) | Tra cứu component, token; mở các tệp preview `.html` trực tiếp trên máy |
 | `prototype-src/` | **Mã nguồn prototype** (`src/`), design system dùng khi dựng (`ds/` – chỉ có tệp cần để dựng: tokens, bundle, React; README và preview từng component xem ở `design-system/components/`), ảnh và phông (`assets/`), phần đầu/cuối của bản app (`app-shell/`), công cụ (`tools/`), bản dựng sẵn (`dist/`) | Sửa prototype |
-| `prototype/` | `Prototype-TATC-v310.html` – bản mới nhất, chạy độc lập, mở bằng trình duyệt, không cần mạng (`Prototype-TATC-v307.html` là bản xuất trước, giữ lại) | Xem nhanh, gửi người khác |
+| `prototype/` | `Prototype-TATC-v337.html` – bản mới nhất (chép từ `prototype-src/dist/prototype-test.html`), chạy độc lập, mở bằng trình duyệt, không cần mạng (`Prototype-TATC-v307.html`, `Prototype-TATC-v310.html` là bản xuất trước, giữ lại) | Xem nhanh, gửi người khác |
 | `prototype-app/` | Server xem trên điện thoại (HTTP 8080, HTTPS 8443), cài thành app (PWA). Hướng dẫn: `HUONG-DAN.txt` | Xem trên điện thoại |
 
 Các tệp trong `prototype-src/dist/` (tạo bằng `tools/build.py`):
@@ -63,17 +64,17 @@ Vùng làm việc cloud của mỗi phiên là tạm thời. **Bản gốc luôn
    - `app-shell/head.html`, `app-shell/tail.html`
    - `tools/build.py`, `tools/test_jump.js`, `tools/shot.js`
 2. Dựng: `cd prototype-src && python3 tools/build.py`
-3. Kiểm tra: `node tools/test_jump.js $PWD/dist/prototype-test.html` → kết quả đúng: `visited 488 empty [] errors []` (con số màn tăng khi thêm màn).
+3. Kiểm tra: `node tools/test_jump.js $PWD/dist/prototype-test.html` → kết quả đúng: `visited 499 empty [] errors []` ở v337 (con số màn tăng khi thêm màn; màn chào `splash` ít chữ là bình thường). Kiểm tra cả 2 luồng: chạy lại sau khi gọi `datLoaiTK('tc')` (luồng Tổ chức) trong trang.
 4. Phiên đầu tiên ở tài khoản mới: đăng `dist/artifact.html` bằng công cụ Artifact thành trang mới, tiêu đề **Prototype TATC Gen UI**. Ghi đường dẫn mới vào đầu 2 tài liệu Project. Các phiên sau: cập nhật đúng trang đó (không tạo trang mới).
 
 ### 3B. Mỗi lần sửa (vNNN = số phiên bản tiếp theo, bắt đầu từ v311)
 
-1. **Sao lưu trước khi sửa**: chép `dist/artifact.html` hiện tại thành `backups/prototype-tatc-gen-ui-mobile.bak-YYYYMMDD-HHMM.html` (giờ Việt Nam; nếu trùng tên thêm `-b`). Thư mục `backups/` nằm trong `prototype-src/`.
+1. **Sao lưu trước khi sửa**: chép `dist/artifact.html` hiện tại thành `backups/prototype-tatc-gen-ui-mobile.bak-YYYYMMDD-HHMM.html` (giờ Việt Nam; nếu trùng tên thêm `-b`). Thư mục `backups/` nằm trong `prototype-src/`. Người dùng yêu cầu (11/11/2026): mỗi lần sửa đều sao lưu, **chỉ giữ 5 bản gần nhất** (xóa bản cũ hơn).
 2. Sửa tệp trong `src/` (không sửa trực tiếp tệp trong `dist/`).
 3. Dựng: `python3 tools/build.py`
 4. Kiểm tra: `node tools/test_jump.js $PWD/dist/prototype-test.html` → không có màn rỗng, không có lỗi.
 5. Chụp màn để tự xem hoặc gửi người dùng: `node tools/shot.js $PWD/dist/prototype-test.html <id màn>[@cuộn] …` → ảnh trong `prototype-src/shots/`.
-6. Đăng lại `dist/artifact.html` lên trang Prototype TATC Gen UI của tài khoản mới, kèm nhãn ngắn (ví dụ `v311 …`).
+6. Đăng lại `dist/artifact.html` lên trang Prototype TATC Gen UI của tài khoản mới, kèm nhãn ngắn (ví dụ `v311 …`). Người dùng yêu cầu tự đăng sau mỗi lần sửa đã kiểm tra xong, không cần hỏi lại.
 7. Ghi lại vào máy người dùng (không ghi đè nếu người dùng vừa sửa tệp – dùng kiểm tra thời gian sửa tệp):
    - tệp `src/` đã đổi, 3 tệp `dist/`, bản sao lưu trong `backups/`;
    - `dist/app-index.html` chép thành `prototype-app/index.html` (điện thoại tự tải lại nếu server đang chạy).
@@ -88,6 +89,10 @@ Vùng làm việc cloud của mỗi phiên là tạm thời. **Bản gốc luôn
 - Thanh thông báo nổi: `window.__ptSnack('…')`.
 - Khung điện thoại 430×932 (iPhone 14 Pro Max), co theo cửa sổ.
 - Token màu không có `--brand`; đỏ chủ đạo dùng `--brand-800`, đỏ tươi `--court-red`.
+- Dựng trên Windows: `build.py` mặc định ghi xuống dòng CRLF; bọc `builtins.open` để ép `newline='\n'` rồi chạy `runpy.run_path('tools/build.py', run_name='__main__')`.
+- Bộ xử lý bấm của prototype chạy ở pha capture (`onClickCapture` trên `.pt-phone`): muốn chặn chuyển màn thì chỉ gắn `data-pt-go` khi hợp lệ, còn lại dùng lớp `pt-chk` (đã có trong `LOCAL`) + `onClick`. Luật `R` có thể trả về hàm (vd "Nộp đơn ngay" → `draftNoRep` với tổ chức, `draftAsk` với cá nhân).
+- Loại tài khoản (v333): biến `LOAI_TK`, hàm `laTC()`, `datLoaiTK(v)` ở `s1.js`. Luồng Tổ chức có lớp thay dữ liệu hiển thị trong `proto.js` (`ttApply`, theo dõi bằng `MutationObserver` trên `document.body`): Hoàng Dương → Công ty ABC, CCCD → Mã số thuế, thường trú → Địa chỉ trụ sở, ẩn Ngày sinh/Giới tính/Quốc tịch/Ngày cấp/Nơi cấp của tổ chức.
+- Mẫu danh sách chuẩn (v335–v336): thẻ theo `QdCard` của Danh sách đơn và tiến trình (hàng nhãn trạng thái + tình trạng · tên đậm · dòng nhãn – giá trị `qc-ben` · khối "Việc cần làm"); header kiểu `DsShell` (quay lại, tên màn, nút đỏ góc phải).
 
 ---
 
@@ -105,6 +110,7 @@ Cách hiểu các từ người dùng hay dùng:
 - **"đề xuất"**: làm 3 phương án, có ảnh chụp từng phương án, hỏi bằng câu hỏi lựa chọn (AskUserQuestion). Không áp dụng vào prototype trước khi người dùng chọn.
 - **"demo"**: làm bản cho xem rồi chờ người dùng quyết định.
 - **"stop" / "dừng"**: dừng ngay và hoàn tác phần đang làm dở.
+- **"app"**: hiểu là app Mobile.
 
 Nội dung và thiết kế:
 
@@ -142,6 +148,6 @@ Trả lời:
 
 ## 6. Tình trạng khi xuất
 
-- Không còn việc đang làm dở.
+- Cập nhật 12/11/2026 (v337): không còn việc đang làm dở. Thay đổi v311–v337 ghi ở cuối 2 tài liệu trong `tai-lieu/`; ảnh đề xuất và ảnh chụp trong `prototype-src/shots/`.
 - Chưa làm: chỉnh khung theo Samsung S26 Ultra (người dùng chọn giữ 430×932).
 - Mục "Còn chờ quyết định" và "Còn chờ cung cấp" xem trong `tai-lieu/design-system-chot-2026-10-30.md`.
