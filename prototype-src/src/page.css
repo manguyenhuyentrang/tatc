@@ -2249,3 +2249,33 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 .nv-c .nv-amt-cxd{font-size:inherit;line-height:inherit;color:var(--ink-muted)!important}
 /* v360: mũi tên ">" xoay xuống khi mở danh sách loại đơn */
 .rn-row .tp-ico{transition:transform .2s}.rn-row .rn-xoay90{transform:rotate(90deg)}
+/* v368: Khiếu nại — Tố cáo danh sách theo web */
+.knd-pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font:600 11px/16px var(--font-sans);white-space:nowrap}
+.knd-pill-kn{background:#F1EBFD;color:#7C4DDB}.knd-pill-tc{background:#FDEEE8;color:#D8542F}.knd-pill-pakn{background:var(--info-tint,#E8F0FD);color:var(--info,#1D5FD1)}.knd-pill-rut{background:var(--warning-tint);color:var(--warning-ink,#8A5A00)}.knd-pill-bv{background:var(--surface-sunken);color:var(--ink-muted)}
+.qc-top .knd-pill{margin-left:2px}
+.knd-han{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;margin:0;padding:2px 8px;border-radius:999px;background:var(--surface-sunken);color:var(--ink-muted);font:600 12px/18px var(--font-sans)}.knd-han svg{width:13px;height:13px}
+.knd-han-qua{background:var(--danger-tint);color:var(--danger)}.knd-han-kq{background:var(--success-tint);color:var(--success)}
+.knd-nhap{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:var(--radius-lg);background:var(--surface);box-shadow:var(--shadow-card),0 0 0 1px var(--border)}
+.knd-nhap-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.knd-nhap-h small{font:400 12px/16px var(--font-sans);color:var(--ink-muted)}
+.knd-nhap b{font:700 15px/22px var(--font-sans)}.knd-nhap p{margin:0;font:400 13px/18px var(--font-sans);color:var(--ink-muted)}.knd-nhap .tp-btn{align-self:flex-start}
+.knd-the-it{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;border-radius:var(--radius-lg);background:var(--surface);box-shadow:var(--shadow-card),0 0 0 1px var(--border)}
+.knd-the-it small{font:700 11px/16px var(--font-sans);color:var(--ink-subtle);text-transform:uppercase;letter-spacing:.04em}.knd-the-it b{font:800 22px/28px var(--font-sans);color:var(--ink)}
+.knd-ly{margin:0;font:600 12px/16px var(--font-sans);color:var(--danger)}.knd-han2{margin:0;font:500 12px/16px var(--font-sans);color:var(--ink-muted)}
+.knd-link{align-self:flex-start;border:0;padding:0;background:none;color:var(--brand-text);font:600 13px/18px var(--font-sans);text-decoration:underline;cursor:pointer}
+.knd-tai{display:flex;align-items:center;justify-content:center;gap:8px;padding:40px 0;font:400 14px/20px var(--font-sans);color:var(--ink-muted)}
+.knd-bang{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}.knd-bang button{display:flex;flex-direction:column;align-items:stretch;gap:4px;width:100%;padding:12px 14px;border:0;border-radius:var(--radius-lg);background:var(--surface);box-shadow:var(--shadow-card),0 0 0 1px var(--border);text-align:left;cursor:pointer}
+.knd-bang-h{display:flex;align-items:center;gap:8px}.knd-bang-h b{font:700 13px/18px var(--font-sans)}.knd-bang-t{font:600 14px/20px var(--font-sans);color:var(--ink)}.knd-bang small{font:400 12px/16px var(--font-sans);color:var(--ink-muted)}.knd-bang-k{color:var(--success)!important}
+/* v373: Chọn thủ tục khiếu nại, tố cáo – thẻ thủ tục trong bảng từ đáy (PA A) */
+.ct-dem{margin:8px 0 0;font:600 12px/16px var(--font-sans);color:var(--ink-muted)}
+.ct-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.ct-it{display:flex;align-items:flex-start;gap:12px;width:100%;border:0;background:none;text-align:left;cursor:pointer;font-family:var(--font-sans)}
+.ct-tx{display:flex;flex-direction:column;gap:2px;min-width:0}.ct-tx b{font:600 15px/22px var(--font-sans);color:var(--ink)}.ct-tx small{font:400 13px/18px var(--font-sans);color:var(--ink-muted)}
+.ct-rd{flex:none;width:20px;height:20px;margin-top:2px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--border-strong);background:var(--surface)}
+.ct-rd-on{box-shadow:inset 0 0 0 6px var(--brand-800,#9B1C1C)}
+.ct-l-A{gap:8px}.ct-l-A .ct-it{padding:12px 14px;border-radius:var(--radius-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--border)}
+.ct-l-A .ct-on{background:var(--brand-tint);box-shadow:inset 0 0 0 1.5px var(--brand-800,#9B1C1C)}
+.ct-l-B .ct-it{padding:12px 0;border-bottom:1px solid var(--border)}.ct-l-B li:last-child .ct-it{border-bottom:0}
+.ct-l-B .ct-tx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}.ct-l-B .ct-on b{color:var(--brand-text)}
+.ct-c{display:flex;flex-direction:column;gap:4px}.ct-c .ct-l{margin-top:4px}
+/* v374: thẻ thủ tục không có ô tròn */
+.ct-l-A .ct-it{padding:12px 14px}

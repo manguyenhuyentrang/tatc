@@ -346,7 +346,7 @@ function Guide(title, extra) {
 
 /* ---------- Nộp đơn khởi kiện ---------- */
 /* tên bước theo ảnh mẫu (02/11/2026): bước 2, 3 là Người khởi kiện, Người bị kiện */
-var SUB_STEPS = ['Loại đơn', 'Người khởi kiện', 'Người bị kiện', 'Nội dung', 'Tài liệu', 'Xem lại', 'Ký số'];
+var SUB_STEPS = ['Loại đơn', 'Người khởi kiện', 'Người bị khởi kiện', 'Nội dung', 'Tài liệu', 'Xem lại', 'Ký số']; /* v363: bước 2–3 theo nhãn tĩnh web khi cấu hình thủ tục để trống – Khởi kiện vụ án (nop-don-khoi-kien/field-defs.ts:363-364) */
 /* thanh tiến trình phương án P2 (chọn 02/11/2026): 7 đoạn ngang bằng nhau (đã qua và đang làm màu đỏ, chưa tới xám), dòng dưới "n. Tên bước" đậm + "Bước n/7", dòng tiếp bước tiếp theo; chuyển bước bằng Quay lại / Tiếp theo */
 function StepStrip(p) {
   var n = p.cur, all = p.steps.length;
@@ -1284,8 +1284,8 @@ var NGUOI_ME = [['Họ và tên', 'Hoàng Dương'], ['Số định danh cá nh�
 var TL_STEPS = ['Chọn bản án / quyết định', 'Loại & hình thức nhận', 'Tư cách người yêu cầu', 'Xem lại & gửi'];
 var TL_TITLE = 'Cấp trích lục, bản sao';
 /* vụ án mẫu của tài khoản và văn bản (bản án, quyết định) – dữ liệu mẫu */
-var TL_VA = [{ ma: 'DS-2026-0012', ten: 'Tranh chấp hợp đồng vay tài sản', vt: 'Nguyên đơn', toa: COURT1, vb: [['BA', '45/2026/DS-ST', 'Bản án dân sự sơ thẩm', '20/10/2026'], ['QD', '12/2026/QĐ-CNTT', 'Quyết định công nhận sự thỏa thuận', '15/10/2026']] },
-  { ma: 'DS-2026-0018', ten: 'Tranh chấp hợp đồng mua bán tài sản', vt: 'Bị đơn', toa: COURT1, vb: [['QD', '08/2026/QĐ-TĐC', 'Quyết định tạm đình chỉ giải quyết vụ án', '12/10/2026']] }];
+var TL_VA = [{ ma: 'DS-2026-0012', ten: 'Tranh chấp hợp đồng vay tài sản', vt: 'Nguyên đơn', toa: COURT1, vb: [['BA', '45/2026/DS-ST', 'Bản án dân sự sơ thẩm', '20/10/2026'], ['QD', '[Số quyết định]', 'Quyết định công nhận sự thỏa thuận', '15/10/2026']] },
+  { ma: 'DS-2026-0018', ten: 'Tranh chấp hợp đồng mua bán tài sản', vt: 'Bị đơn', toa: COURT1, vb: [['QD', '[Số quyết định]', 'Quyết định tạm đình chỉ giải quyết vụ án', '12/10/2026']] }];
 var TL_MUC_DICH = ['Thi hành án', 'Làm thủ tục hành chính', 'Đăng ký hộ tịch', 'Khiếu nại, tố cáo', 'Lưu trữ cá nhân', 'Mục đích khác'];
 var TL_LOAI_AN = ['Hình sự', 'Dân sự', 'Hôn nhân và gia đình', 'Kinh doanh, thương mại', 'Lao động', 'Hành chính', 'Phá sản', 'Sở hữu trí tuệ', 'Biện pháp xử lý hành chính', 'Phục hồi', 'Khiếu nại hành vi của người có thẩm quyền', 'Thi hành án'];
 var TL_TU_CACH = ['Đương sự trong vụ án', 'Công dân quan tâm / Nghiên cứu học tập', 'Cơ quan báo chí / Truyền thông', 'Cơ quan nhà nước thực hiện công vụ', 'Đại diện theo ủy quyền'];
@@ -1388,7 +1388,7 @@ var KN_TT = [
   { ma: 'tc2', n: 'tc', ten: 'Hành vi vi phạm của cán bộ, công chức trong nhiệm vụ, công vụ', desc: 'Cán bộ, công chức, viên chức, người lao động vi phạm khi thực hiện nhiệm vụ, công vụ.', cq: KN_CQ_TC, th: KN_TH_TC, hg: KN_30, cc: KN_LUAT_TC, hs: ['Thông tin, tài liệu, chứng cứ chứng minh hành vi bị tố cáo'] },
   { ma: 'tc3', n: 'tc', ten: 'Vi phạm chuẩn mực đạo đức và quy tắc ứng xử', desc: 'Vi phạm chuẩn mực, phẩm chất đạo đức và quy tắc ứng xử của cán bộ Tòa án.', cq: null, th: KN_TH_TC, hg: KN_30, cc: KN_LUAT_TC, hs: ['Thông tin, tài liệu, chứng cứ chứng minh hành vi bị tố cáo'] },
   { ma: 'tc4', n: 'tc', ten: 'Vi phạm quản lý nhà nước trong lĩnh vực tư pháp', desc: 'Vi phạm pháp luật trong quản lý nhà nước thuộc lĩnh vực tư pháp.', cq: null, th: KN_TH_TC, hg: KN_30, cc: KN_LUAT_TC, hs: ['Thông tin, tài liệu, chứng cứ chứng minh hành vi bị tố cáo'] },
-  { ma: 'pa1', n: 'pakn', ten: 'Kiến nghị, phản ánh', desc: 'Đưa ra ý kiến, đề xuất hoặc cung cấp thông tin về việc thực hiện chính sách, pháp luật, công tác quản lý và hoạt động của Tòa án. Không dùng để khiếu nại một quyết định, hành vi cụ thể.', cq: 'Tòa án nơi tiếp nhận kiến nghị, phản ánh', th: null, hg: null, cc: 'Luật Tiếp công dân 2013, sửa đổi năm 2025 (Luật 136/2025/QH15) · Nghị định 154/2026/NĐ-CP', hs: ['Tài liệu, hình ảnh minh họa (nếu có)'] }];
+  { ma: 'pa1', n: 'pakn', ten: 'Kiến nghị, phản ánh', desc: 'Đưa ra ý kiến, đề xuất hoặc cung cấp thông tin về việc thực hiện chính sách, pháp luật, công tác quản lý và hoạt động của Tòa án. Không dùng để khiếu nại một quyết định, hành vi cụ thể.', cq: 'Tòa án nơi tiếp nhận kiến nghị, phản ánh', th: null, hg: null, cc: 'Luật Tiếp công dân 2013, sửa đổi năm 2025 (Luật 136/2025/QH15) · [Nghị định hướng dẫn]', hs: ['Tài liệu, hình ảnh minh họa (nếu có)'] }];
 /* nhóm thủ tục: hàng chọn ngang 4 ô minh họa như bước 1 Soạn đơn */
 var KN_NHOM_PICK = [{ k: 'vuan', illo: 'banAn', ngan: 'Trong vụ án\ncủa tôi' }, { k: 'hc', illo: 'khieuNai', ngan: 'Khiếu nại\nhành chính' }, { k: 'tc', illo: 'toCao', ngan: 'Tố cáo' }, { k: 'pakn', illo: 'chat', ngan: 'Kiến nghị,\nphản ánh' }];
 function KnTenNhom(k) { return KN_NHOM.filter(function (n) { return n[0] === k; })[0][1]; }
@@ -1520,10 +1520,10 @@ function KnvLan2(k) {
     h('small', null, qd ? 'Khiếu nại lần hai tạo hồ sơ mới với mã tiếp nhận mới và chỉ tạo được một lần cho mỗi hồ sơ.' : 'Hồ sơ lần hai là hồ sơ mới với mã tiếp nhận mới, chỉ tạo được một lần cho mỗi hồ sơ lần đầu.'));
 }
 /* văn bản tống đạt của vụ án đã chọn – chia nhóm như web (phanNhomVanBan) */
-var KNV_VB = [{ id: 'v1', code: 'Mẫu 04-DS', name: 'Thông báo không chấp nhận yêu cầu thu thập chứng cứ', desc: 'số 15/2026/TB-TA · nhận ngày 25/10/2026 · hạn cuối 07/11/2026 · Còn 3 ngày' }, { id: 'v2', code: 'Mẫu 21-DS', name: 'Quyết định đình chỉ giải quyết yêu cầu', desc: 'số 09/2026/QĐ-ĐC · nhận ngày 20/10/2026 · hạn cuối 04/11/2026 · Hôm nay là ngày cuối' }];
+var KNV_VB = [{ id: 'v1', code: 'Mẫu 04-DS', name: 'Thông báo không chấp nhận yêu cầu thu thập chứng cứ', desc: 'số [Số thông báo] · nhận ngày 25/10/2026 · hạn cuối 07/11/2026 · Còn 3 ngày' }, { id: 'v2', code: 'Mẫu 21-DS', name: 'Quyết định đình chỉ giải quyết yêu cầu', desc: 'số [Số quyết định] · nhận ngày 20/10/2026 · hạn cuối 04/11/2026 · Hôm nay là ngày cuối' }];
 var KNV_DA = [{ ten: 'Quyết định áp dụng biện pháp khẩn cấp tạm thời', meta: 'Mẫu 15-DS · số 03/2026/QĐ-BPKCTT · nhận ngày 10/10/2026', hs: 'KNTT-2026-0009' }];
-var KNV_HET = [{ ten: 'Thông báo nộp tiền tạm ứng án phí', meta: 'Mẫu 08-DS · số 11/2026/TB-TA · nhận ngày 01/10/2026', han: 'hết hạn 08/10/2026 · Quá hạn 27 ngày' }];
-var KNV_CHUA = [{ ten: 'Giấy triệu tập', meta: 'Mẫu 01-DS · số 22/2026/GTT · nhận ngày 28/10/2026' }];
+var KNV_HET = [{ ten: 'Thông báo nộp tiền tạm ứng án phí', meta: 'Mẫu 08-DS · số [Số thông báo] · nhận ngày 01/10/2026', han: 'hết hạn 08/10/2026 · Quá hạn 27 ngày' }];
+var KNV_CHUA = [{ ten: 'Giấy triệu tập', meta: 'Mẫu 01-DS · số [Số giấy triệu tập] · nhận ngày 28/10/2026' }];
 function KnvVbOff(x, note) {
   return h('div', { key: x.ten, className: 'kv-vb-off', 'aria-disabled': 'true' }, h('b', null, x.ten), h('small', null, x.meta + (x.han ? ' · ' + x.han : '')), note ? h('p', null, note) : null);
 }
@@ -1631,7 +1631,7 @@ function Knv3(k, o) {
 function Knv4(k, o) {
   o = o || {}; var t = knvTT(k), tc = k === 'ktv', qd = k === 'kqd';
   var va = o.kg ? 'Không gắn vụ án' : 'DS-2026-0012 · Tranh chấp hợp đồng vay tài sản';
-  var review = qd ? [['Thủ tục', knvTen(k, o)], ['Vụ án', va], o.lan2 ? ['Hồ sơ lần đầu', 'KNTT-2026-0009'] : null, ['Văn bản bị khiếu nại', o.lan2 ? 'Quyết định giải quyết khiếu nại · số 12/2026/QĐ-GQKN' : 'Thông báo không chấp nhận yêu cầu thu thập chứng cứ · số 15/2026/TB-TA'],
+  var review = qd ? [['Thủ tục', knvTen(k, o)], ['Vụ án', va], o.lan2 ? ['Hồ sơ lần đầu', 'KNTT-2026-0009'] : null, ['Văn bản bị khiếu nại', o.lan2 ? 'Quyết định giải quyết khiếu nại · số 12/2026/QĐ-GQKN' : 'Thông báo không chấp nhận yêu cầu thu thập chứng cứ · số [Số thông báo]'],
     ['Cơ quan giải quyết', o.lan2 ? 'Chánh án Tòa án cấp trên trực tiếp' : 'Chánh án Tòa án đã ra văn bản'], ['Tóm tắt', '[Tóm tắt nội dung khiếu nại]'], ['Yêu cầu giải quyết', '[Yêu cầu giải quyết khiếu nại]'], ['Tài liệu, chứng cứ', '[Tài liệu, chứng cứ]']]
     : [['Loại việc', knvTen(k, o)], ['Vụ án liên quan', va], ['Tòa án', o.lan2 ? 'Tòa án nhân dân Thành phố Hà Nội' : COURT1], o.kg ? ['Số hồ sơ, vụ việc khai', '45/2026/TLST-DS'] : null,
       o.lan2 ? ['Hồ sơ lần đầu', 'KNTT-2026-0009'] : null,

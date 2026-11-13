@@ -327,6 +327,27 @@ Object.assign(SCR, {
 GROUPS2.forEach(function (g) { var j = g[1].indexOf('mailDetailThay'); if (j >= 0) g[1].splice(j + 1, 0, 'mailDetailChuaLink', 'mailDetailKhoa'); });
 Object.assign(BASE, { mailDetailChuaLink: 'inbox', mailDetailKhoa: 'inbox' });
 
+
+/* v368: màn trạng thái Khiếu nại — Tố cáo (danh sách) theo web */
+Object.assign(SCR, {
+  complaintsNhap: ['Khiếu nại HC – đơn chưa lưu (đang khai)', function () { return h(KnHome, { nhap: 1 }); }],
+  complaintsNhapKy: ['Khiếu nại HC – đơn chưa lưu (đã ký số, chưa gửi)', function () { return h(KnHome, { nhap: 'ky' }); }],
+  complaintsTim: ['Khiếu nại HC – tìm không thấy hồ sơ', function () { return h(KnHome, { q: 'KN-2099' }); }],
+  complaintsTai: ['Khiếu nại — Tố cáo – đang tải', function () { return h(KnHome, { tai: 1 }); }],
+  complaintsErr: ['Khiếu nại HC – lỗi tải danh sách', function () { return h(KnHome, { loi: 1 }); }],
+  complaintsTtErr: ['Khiếu nại tố tụng – lỗi tải danh sách', function () { return h(KnHome, { tab: 'tt', loi: 1 }); }],
+  complaintsTtGui: ['Khiếu nại tố tụng – có hồ sơ đang gửi', function () { return h(KnHome, { tab: 'tt', dangGui: 1 }); }],
+  complaintsTtLoc: ['Khiếu nại tố tụng – bộ lọc', function () { return h(KnHome, { tab: 'tt', locMo: 1 }); }],
+  complaintsTtLocErr: ['Khiếu nại tố tụng – bộ lọc, Từ ngày sau Đến ngày', function () { return h(KnHome, { tab: 'tt', locMo: 1, locLoi: 1 }); }],
+  complaintsTtBang: ['Khiếu nại tố tụng – theo dõi thời hạn', function () { return h(KnHome, { tab: 'tt', bang: 1 }); }],
+  complaintsTtL2Khoa: ['Khiếu nại tố tụng – lần hai hết điều kiện', function () { return h(KnHome, { tab: 'tt', lan2: 'khoa' }); }],
+  complaintsTtL2Da: ['Khiếu nại tố tụng – đã gửi lần hai', function () { return h(KnHome, { tab: 'tt', lan2: 'da' }); }],
+  complaintsTtNhapL2: ['Khiếu nại tố tụng – nháp lần hai', function () { return h(KnHome, { tab: 'tt', nhapLan2: 'con' }); }],
+  complaintsTtNhapL2Het: ['Khiếu nại tố tụng – nháp lần hai hết điều kiện', function () { return h(KnHome, { tab: 'tt', nhapLan2: 'het' }); }]
+});
+GROUPS2.forEach(function (g) { var j = g[1].indexOf('complaintsDraftDel'); if (j >= 0) g[1].splice.apply(g[1], [j + 1, 0].concat(['complaintsNhap', 'complaintsNhapKy', 'complaintsTim', 'complaintsTai', 'complaintsErr', 'complaintsTtErr', 'complaintsTtGui', 'complaintsTtLoc', 'complaintsTtLocErr', 'complaintsTtBang', 'complaintsTtL2Khoa', 'complaintsTtL2Da', 'complaintsTtNhapL2', 'complaintsTtNhapL2Het'])); });
+Object.assign(BASE, { complaintsNhap: 'home', complaintsNhapKy: 'home', complaintsTim: 'home', complaintsTai: 'home', complaintsErr: 'home', complaintsTtErr: 'home', complaintsTtGui: 'home', complaintsTtLoc: 'home', complaintsTtLocErr: 'home', complaintsTtBang: 'home', complaintsTtL2Khoa: 'home', complaintsTtL2Da: 'home', complaintsTtNhapL2: 'home', complaintsTtNhapL2Het: 'home' });
+
 function baseOf(id) {
   var b = BASE[id];
   if (b) return baseOf(b).concat([b]);

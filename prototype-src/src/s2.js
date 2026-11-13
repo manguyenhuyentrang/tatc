@@ -58,7 +58,7 @@ function MediationDetail() {
     Sec(2, 'Tiến trình hồ sơ', Timeline('Đang hòa giải', 'Lịch hòa giải: 26/10/2026 · 08:30', 'Tiếp nhận hồ sơ', '18/10/2026 · ' + COURT1)),
     Sec(3, 'Chức năng liên quan', h(T.Button, { variant: 'secondary', block: true, icon: 'message' }, 'Chức năng hòa giải, đối thoại'), true)));
 }
-var EVI_STEPS = ['Hồ sơ', 'Tài liệu', 'Xem lại và ký số'];
+var EVI_STEPS = ['Hồ sơ', 'Tài liệu', 'Xem lại & ký số']; /* v362: tên bước theo web giao-nop-chung-cu/index.tsx:23-25 */
 /* Giao nộp tài liệu, chứng cứ (03/11/2026): khung Soạn đơn (header + thanh tiến trình, khối 100%); chọn hồ sơ bằng danh sách dòng; tài liệu dùng chung thẻ Tài liệu của bước 5 */
 var EVI_HS = [{ id: 'a', code: 'DS-2026-0012', name: 'Tranh chấp hợp đồng vay tài sản', desc: 'Sơ thẩm · ' + COURT1 + ' · Thụ lý 15/10/2026' }, { id: 'b', code: 'DS-2026-0018', name: 'Tranh chấp hợp đồng mua bán tài sản', desc: 'Sơ thẩm · Tạm đình chỉ · ' + COURT1 + ' · Thụ lý 12/10/2026' }];
 function EviChon() {
@@ -97,7 +97,7 @@ function Proceedings() {
    Dữ liệu mẫu theo thẻ PS-2026-0001; nội dung riêng của phục hồi, phá sản chưa có nguồn để trong [ngoặc vuông]. Không có nút "Tạo đơn liên quan" (chưa có danh mục đơn cho vụ việc phá sản). */
 var PS_TABS = [{ key: 'info', label: 'Thông tin chung' }, { key: 'don', label: 'Đơn trong vụ việc' }, { key: 'stages', label: 'Các cấp xét xử' }, { key: 'hearings', label: 'Lịch phiên tòa' }, { key: 'docs', label: 'Văn bản tống đạt' }, { key: 'evidence', label: 'Tài liệu, chứng cứ' }, { key: 'judgments', label: 'Bản án / Quyết định' }, { key: 'process', label: 'Lịch sử vụ việc' }];
 function ProceedingDetail() {
-  var ten = 'Yêu cầu mở thủ tục phá sản Công ty TNHH Thương mại Minh Phát', soTL = h('span', { className: 'tp-num' }, '1/2026/TLST-PS');
+  var ten = 'Yêu cầu mở thủ tục phá sản Công ty TNHH Thương mại Minh Phát', soTL = h('span', { className: 'tp-num' }, '[Số thụ lý]');
   return h(DtScreen, { title: 'Chi tiết vụ việc', tabLabel: 'Nội dung chi tiết vụ việc', tabs: PS_TABS, pre: null, headCls: 'dt-head-don',
     meta: h(F, null, h('span', { className: 'tp-num' }, 'PS-2026-0001'), ' · Phá sản'), name: ten,
     badges: h(F, null, h(T.StatusBadge, { tone: 'info', icon: false }, 'Đang giải quyết'), h('span', { className: 'dt-role' }, 'Tư cách của bạn: ', h('b', null, 'Chủ nợ'))),
@@ -118,14 +118,14 @@ function ProceedingDetail() {
         FCard('Sơ thẩm · Đang giải quyết', RvKV([['Tòa án', COURT1], ['Số thụ lý', soTL], ['Ngày thụ lý', '15/10/2026'], ['Thẩm phán', '—'], ['Kết quả', '—']]), true),
         FCard('Phúc thẩm · Chưa phát sinh', P('Thông tin cấp phúc thẩm sẽ hiển thị khi vụ việc được thụ lý phúc thẩm.', 'ph-muted'), true));
       if (t === 'hearings') return FCard('Lịch phiên tòa', P('[Lịch phiên họp, hội nghị chủ nợ của vụ việc]', 'ph-muted'), true);
-      if (t === 'docs') return FCard('Văn bản tống đạt từ Tòa án', VbCards([{ t: 'Quyết định mở thủ tục phá sản', so: '01/2026/QĐ-MTTPS', tg: '20/10/2026', moi: true }, { t: 'Thông báo thụ lý đơn yêu cầu mở thủ tục phá sản', so: '01/2026/TB-TLĐ', tg: '15/10/2026' }]), true);
+      if (t === 'docs') return FCard('Văn bản tống đạt từ Tòa án', VbCards([{ t: 'Quyết định mở thủ tục phá sản', so: '[Số quyết định]', tg: '20/10/2026', moi: true }, { t: 'Thông báo thụ lý đơn yêu cầu mở thủ tục phá sản', so: '[Số thông báo]', tg: '15/10/2026' }]), true);
       if (t === 'evidence') return FCard('Tài liệu, chứng cứ đã giao nộp · 2 tài liệu', h(F, null,
         h('p', { className: 'dt-grp-t' }, 'Nộp kèm đơn yêu cầu · 08/10/2026'), DtDocs([['Đơn yêu cầu mở thủ tục phá sản', 'Bản chính · Đã nộp lúc 08/10/2026 09:12'], ['Tài liệu chứng minh khoản nợ đến hạn', 'Bản sao có chứng thực · Đã nộp lúc 08/10/2026 09:12']], DOC_THE),
         h(T.Button, { variant: 'tint', icon: 'upload', className: 'ph-co-add', 'data-pt-go': 'evidence2' }, 'Giao nộp tài liệu, chứng cứ')), true);
       if (t === 'judgments') return FCard('Bản án / Quyết định', h(F, null,
         DtDocs([['Quyết định mở thủ tục phá sản', 'Ban hành ngày 20/10/2026 · ' + COURT1]], DOC_THE),
         h('button', { type: 'button', className: 'vk-link', 'data-pt-go': 'tl1' }, 'Yêu cầu cấp trích lục quyết định', h(T.Icon, { name: 'chevronRight' }))), true);
-      return LsG1([['Quyết định mở thủ tục phá sản', '20/10/2026', 'Số 01/2026/QĐ-MTTPS'], ['Thông báo thụ lý đơn yêu cầu mở thủ tục phá sản', '15/10/2026', 'Số 01/2026/TB-TLĐ · ' + COURT1]]);
+      return LsG1([['Quyết định mở thủ tục phá sản', '20/10/2026', 'Số [Số quyết định]'], ['Thông báo thụ lý đơn yêu cầu mở thủ tục phá sản', '15/10/2026', 'Số [Số thông báo] · ' + COURT1]]);
     } });
 }
 var FIN = { amountLabel: 'Còn phải nộp · 2 khoản', amount: '4.500.000 ₫', subs: [{ label: 'Quá hạn hoặc còn ≤ 3 ngày', value: '1 khoản' }, { label: 'Đã nộp · 1 khoản', value: '300.000 ₫' }] };
@@ -188,26 +188,26 @@ var IB_HS = [['DS-2026-0018', 'Tranh chấp hợp đồng mua bán tài sản'],
 var IB_TOA = [COURT1, KV2, TPHN];
 /* mỗi văn bản: t tên, so số hiệu, nh nhãn, from, time, va mã hồ sơ, doc đã đọc, star, han (dd-mm-yyyy), nhom (khối theo nhóm), dk tệp đính kèm */
 var IB = [
-  { t: 'Biên bản phiên họp kiểm tra việc giao nộp tài liệu, chứng cứ', so: '07/2026/BB-TA', nh: 'BIEN_BAN', from: COURT1, time: '28-10-2026 08:15', va: 'DS-2026-0018', doc: false, han: '03-11-2026', nhom: 'bo-sung', dk: true },
-  { t: 'Thông báo về phiên họp hòa giải', so: '12/2026/TB-HG', nh: 'THONG_BAO', from: KV2, time: '28-10-2026 07:30', va: 'HG-2026-0018', star: true, han: '01-11-2026', nhom: 'hoa-giai' },
-  { t: 'Giấy xác nhận đã nhận tài liệu, chứng cứ', so: '31/2026/XN-TA', nh: 'GIAY_XAC_NHAN', from: TPHN, time: '27-10-2026 16:20', va: 'DS-2026-0012', doc: true },
-  { t: 'Quyết định đưa vụ án ra xét xử', so: '15/2026/QĐXXST-DS', nh: 'QUYET_DINH', from: COURT1, time: '27-10-2026 14:05', va: 'DS-2026-0012', doc: false, star: true, han: '08-11-2026', nhom: 'lich-phien', dk: true },
-  { t: 'Giấy mời tham gia phiên họp đối thoại', so: '08/2026/GM-HG', nh: 'GIAYMOI_TT', from: KV2, time: '26-10-2026 10:45', va: 'HG-2026-0018', doc: true, han: '04-11-2026', nhom: 'lich-phien-tt' },
-  { t: 'Thông báo kết quả xử lý đơn yêu cầu', so: '19/2026/TB-TA', nh: 'THONG_BAO', from: TPHN, time: '26-10-2026 09:10', va: 'DS-2026-0021', doc: false },
-  { t: 'Bản án hành chính sơ thẩm', so: '25/2026/HC-ST', nh: 'BAN_AN', from: COURT1, time: '25-10-2026 15:30', va: 'HC-2026-0003', doc: true, han: '04-11-2026', nhom: 'ban-an', dk: true },
-  { t: 'Biên bản giao nhận văn bản tố tụng', so: '05/2026/BB-GN', nh: 'BIEN_BAN', from: KV2, time: '24-10-2026 11:20', va: 'DS-2026-0018', doc: true },
+  { t: 'Biên bản phiên họp kiểm tra việc giao nộp tài liệu, chứng cứ', so: '[Số biên bản]', nh: 'BIEN_BAN', from: COURT1, time: '28-10-2026 08:15', va: 'DS-2026-0018', doc: false, han: '03-11-2026', nhom: 'bo-sung', dk: true },
+  { t: 'Thông báo về phiên họp hòa giải', so: '[Số thông báo]', nh: 'THONG_BAO', from: KV2, time: '28-10-2026 07:30', va: 'HG-2026-0018', star: true, han: '01-11-2026', nhom: 'hoa-giai' },
+  { t: 'Giấy xác nhận đã nhận tài liệu, chứng cứ', so: '[Số giấy xác nhận]', nh: 'GIAY_XAC_NHAN', from: TPHN, time: '27-10-2026 16:20', va: 'DS-2026-0012', doc: true },
+  { t: 'Quyết định đưa vụ án ra xét xử', so: '[Số quyết định]', nh: 'QUYET_DINH', from: COURT1, time: '27-10-2026 14:05', va: 'DS-2026-0012', doc: false, star: true, han: '08-11-2026', nhom: 'lich-phien', dk: true },
+  { t: 'Giấy mời tham gia phiên họp đối thoại', so: '[Số giấy mời]', nh: 'GIAYMOI_TT', from: KV2, time: '26-10-2026 10:45', va: 'HG-2026-0018', doc: true, han: '04-11-2026', nhom: 'lich-phien-tt' },
+  { t: 'Thông báo kết quả xử lý đơn yêu cầu', so: '[Số thông báo]', nh: 'THONG_BAO', from: TPHN, time: '26-10-2026 09:10', va: 'DS-2026-0021', doc: false },
+  { t: 'Bản án hành chính sơ thẩm', so: '[Số bản án]', nh: 'BAN_AN', from: COURT1, time: '25-10-2026 15:30', va: 'HC-2026-0003', doc: true, han: '04-11-2026', nhom: 'ban-an', dk: true },
+  { t: 'Biên bản giao nhận văn bản tố tụng', so: '[Số biên bản]', nh: 'BIEN_BAN', from: KV2, time: '24-10-2026 11:20', va: 'DS-2026-0018', doc: true },
   { t: 'Quyết định áp dụng biện pháp khẩn cấp tạm thời', so: '03/2026/QĐ-BPKCTT', nh: 'QUYET_DINH', from: TPHN, time: '23-10-2026 16:40', va: 'DS-2026-0021', doc: true, nhom: 'bpkctt' },
-  { t: 'Thông báo nộp tiền tạm ứng án phí', so: '21/2026/TB-TUAP', nh: 'THONG_BAO', from: COURT1, time: '22-10-2026 14:30', va: 'DS-2026-0018', han: '02-11-2026', nhom: 'nop-tien' },
-  { t: 'Thông báo thụ lý vụ án', so: '120/2026/TB-TLVA', nh: 'THONG_BAO', from: COURT1, time: '20-10-2026 09:00', va: 'DS-2026-0021', doc: true, nhom: 'thu-ly' },
-  { t: 'Thông báo về việc đề nghị cho ý kiến', so: '22/2026/TB-TA', nh: 'THONG_BAO', from: TPHN, time: '18-10-2026 15:10', va: 'DS-2026-0012', doc: true, han: '07-11-2026', nhom: 'ykien-phanhoi' },
-  { t: 'Quyết định công nhận sự thỏa thuận của các đương sự', so: '05/2026/QĐST-DS', nh: 'QUYET_DINH', from: KV2, time: '15-10-2026 10:30', va: 'HG-2026-0018', doc: true, nhom: 'quyet-dinh' },
-  { t: 'Thông báo kháng cáo', so: '09/2026/TB-KC', nh: 'THONG_BAO', from: TPHN, time: '12-10-2026 14:00', va: 'HC-2026-0003', doc: true, han: '10-11-2026', nhom: 'phan-hoi' },
-  { t: 'Giấy triệu tập đương sự', so: '17/2026/GTT-TA', nh: 'GIAYMOI_TT', from: COURT1, time: '10-10-2026 08:40', va: 'DS-2026-0018', doc: true },
-  { t: 'Đơn yêu cầu của đương sự khác', so: '04/2026/ĐYC', nh: 'DON_YEUCAU', from: KV2, time: '08-10-2026 16:15', va: 'HG-2026-0018', doc: true },
-  { t: 'Biên bản lấy lời khai của đương sự', so: '11/2026/BB-LK', nh: 'BIEN_BAN', from: TPHN, time: '05-10-2026 09:30', va: 'DS-2026-0012', doc: true, dk: true },
-  { t: 'Thông báo về việc chuyển hồ sơ vụ án', so: '14/2026/TB-CHS', nh: 'THONG_BAO', from: TPHN, time: '01-10-2026 10:00', va: 'DS-2026-0021', doc: true },
-  { t: 'Quyết định phân công Thẩm phán giải quyết vụ án', so: '30/2026/QĐ-PC', nh: 'QUYET_DINH', from: COURT1, time: '28-09-2026 14:20', va: 'DS-2026-0018', doc: true },
-  { t: 'Giấy xác nhận đã nhận đơn khởi kiện', so: '02/2026/XN-ĐKK', nh: 'GIAY_XAC_NHAN', from: COURT1, time: '25-09-2026 08:05', va: 'DS-2026-0018', doc: true }];
+  { t: 'Thông báo nộp tiền tạm ứng án phí', so: '[Số thông báo]', nh: 'THONG_BAO', from: COURT1, time: '22-10-2026 14:30', va: 'DS-2026-0018', han: '02-11-2026', nhom: 'nop-tien' },
+  { t: 'Thông báo thụ lý vụ án', so: '[Số thông báo]', nh: 'THONG_BAO', from: COURT1, time: '20-10-2026 09:00', va: 'DS-2026-0021', doc: true, nhom: 'thu-ly' },
+  { t: 'Thông báo về việc đề nghị cho ý kiến', so: '[Số thông báo]', nh: 'THONG_BAO', from: TPHN, time: '18-10-2026 15:10', va: 'DS-2026-0012', doc: true, han: '07-11-2026', nhom: 'ykien-phanhoi' },
+  { t: 'Quyết định công nhận sự thỏa thuận của các đương sự', so: '[Số quyết định]', nh: 'QUYET_DINH', from: KV2, time: '15-10-2026 10:30', va: 'HG-2026-0018', doc: true, nhom: 'quyet-dinh' },
+  { t: 'Thông báo kháng cáo', so: '[Số thông báo]', nh: 'THONG_BAO', from: TPHN, time: '12-10-2026 14:00', va: 'HC-2026-0003', doc: true, han: '10-11-2026', nhom: 'phan-hoi' },
+  { t: 'Giấy triệu tập đương sự', so: '[Số giấy triệu tập]', nh: 'GIAYMOI_TT', from: COURT1, time: '10-10-2026 08:40', va: 'DS-2026-0018', doc: true },
+  { t: 'Đơn yêu cầu của đương sự khác', so: '[Số văn bản]', nh: 'DON_YEUCAU', from: KV2, time: '08-10-2026 16:15', va: 'HG-2026-0018', doc: true },
+  { t: 'Biên bản lấy lời khai của đương sự', so: '[Số biên bản]', nh: 'BIEN_BAN', from: TPHN, time: '05-10-2026 09:30', va: 'DS-2026-0012', doc: true, dk: true },
+  { t: 'Thông báo về việc chuyển hồ sơ vụ án', so: '[Số thông báo]', nh: 'THONG_BAO', from: TPHN, time: '01-10-2026 10:00', va: 'DS-2026-0021', doc: true },
+  { t: 'Quyết định phân công Thẩm phán giải quyết vụ án', so: '[Số quyết định]', nh: 'QUYET_DINH', from: COURT1, time: '28-09-2026 14:20', va: 'DS-2026-0018', doc: true },
+  { t: 'Giấy xác nhận đã nhận đơn khởi kiện', so: '[Số giấy xác nhận]', nh: 'GIAY_XAC_NHAN', from: COURT1, time: '25-09-2026 08:05', va: 'DS-2026-0018', doc: true }];
 IB.forEach(function (m) { m.arch = false; m.can = !!(m.nhom && m.han); });
 function ibNgay(s) { var p = s.split(' ')[0].split('-'); return new Date(+p[2], +p[1] - 1, +p[0]); }
 function ibCon(m) { return m.han ? Math.round((ibNgay(m.han) - IB_TODAY) / 86400000) : null; }
@@ -306,7 +306,7 @@ var IB_RONG = { inbox: ['Chưa có văn bản tống đạt', 'Các thông báo,
 /* v256 (05/11/2026, chọn A): nhấn giữ thẻ 0,5 giây để vào chế độ chọn – ô vuông (checkbox) đầu thẻ, thẻ đã chọn nền xám; trong chế độ chọn bấm thẻ để tick / bỏ tick */
 /* v283 (09/11/2026, chọn D có sửa): thông tin vụ án trên thẻ thư – [tên vụ án, hoặc tên đơn nếu tống đạt cho đơn chưa thụ lý; vai trò; số thụ lý; ngày thụ lý] theo mã hồ sơ (dữ liệu mẫu) */
 var IB_VA = { 'DS-2026-0012': ['Tranh chấp hợp đồng vay tài sản', 'Nguyên đơn', '12/2026/TLST-DS', '15/10/2026'], 'DS-2026-0018': ['Tranh chấp hợp đồng mua bán tài sản', 'Bị đơn', '18/2026/TLST-DS', '02/10/2026'],
-  'DS-2026-0021': ['Đơn khởi kiện – Tranh chấp hợp đồng dịch vụ', 'Người khởi kiện', null, null], 'HC-2026-0003': ['Khiếu kiện quyết định hành chính về đất đai', 'Người khởi kiện', '03/2026/TLST-HC', '05/10/2026'], 'HG-2026-0018': ['Đơn khởi kiện – Tranh chấp quyền sử dụng đất', 'Người khởi kiện', null, null] };
+  'DS-2026-0021': ['Đơn khởi kiện – Tranh chấp hợp đồng dịch vụ', 'Người khởi kiện', null, null], 'HC-2026-0003': ['Khiếu kiện quyết định hành chính về đất đai', 'Người khởi kiện', '[Số thụ lý]', '05/10/2026'], 'HG-2026-0018': ['Đơn khởi kiện – Tranh chấp quyền sử dụng đất', 'Người khởi kiện', null, null] };
 function IbVaInfo(m) { var v = IB_VA[m.va]; if (!v) return h('small', null, m.from + ' · ' + m.time);
   /* v285: dòng trên bỏ vai trò; ô xám hiển thị liền, đủ thông tin: Số TL - Ngày - Tên vụ án - Vai trò; đơn chưa thụ lý: Tên đơn - Vai trò */
   return h(F, null, h('small', null, m.from + ' · Tống đạt ' + m.time.split(' ')[0]),
@@ -397,7 +397,7 @@ function InboxScr(p) {
       h('span', { className: 'sf-sp' }),
       h('button', { type: 'button', className: 'sf-pill' + (locOn ? ' sf-on' : ''), 'aria-label': locOn ? 'Bộ lọc, đang lọc ' + soLoc + ' điều kiện' : 'Bộ lọc', onClick: function () { sh[1]('loc'); } }, h(T.Icon, { name: 'filter' }), 'Bộ lọc', locOn ? h('span', { className: 'sf-badge tp-num', 'aria-hidden': 'true' }, soLoc) : null))),
     p.loi ? h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tải được hộp thư.', text: 'Mã lỗi: [mã lỗi]', actionLabel: 'Thử lại', actionIcon: 'swap', onAction: noop, className: 'nv-err' }) /* v345 (HT-W06) */
-    : ds.length ? h('ul', { className: 'ib-cardlist' }, hien.map(function (m) { return h(MailCard, { key: m.so, m: m, folder: fd[0], onDoi: doi, sel: chon[0] ? chon[0].indexOf(m) >= 0 : undefined, onHold: chonGiu, onTick: chonTick }); }),
+    : ds.length ? h('ul', { className: 'ib-cardlist' }, hien.map(function (m) { return h(MailCard, { key: m.so + '|' + m.t + '|' + m.time, m: m, folder: fd[0], onDoi: doi, sel: chon[0] ? chon[0].indexOf(m) >= 0 : undefined, onHold: chonGiu, onTick: chonTick }); }),
       n[0] < ds.length ? h('li', { ref: end, className: 'ph-loadmore ib-more', role: 'status' }, h('span', { className: 'tp-spinner', 'aria-hidden': 'true' }), h('span', null, 'Đang tải thêm văn bản…'))
         : ds.length > 10 ? h('li', { className: 'ib-het' }, 'Đã hiển thị hết ' + ds.length + ' văn bản') : null)
       : h(IbEmpty, { title: rong[0], text: rong[1], action: coLoc ? 'Xóa bộ lọc' : null, onAction: xoaLoc }),
@@ -424,13 +424,13 @@ var IB_KHOI = {
   'bo-sung': { f: [['Nội dung yêu cầu', 'Thiếu hoặc sai thông tin Người khởi kiện'], ['Hạn bổ sung', '03/11/2026']], b: [['Sửa đổi, bổ sung đơn khởi kiện', 'sub1'], ['Bổ sung tài liệu, chứng cứ', 'evidence1']] },
   'lich-phien': { f: [['Loại phiên', 'Phiên tòa'], ['Thời gian', '10/11/2026 · 08:00'], ['Hình thức', 'Trực tiếp và trực tuyến'], ['Địa điểm', 'Phòng xử án số 1, ' + COURT1]], ph: [['Đường dẫn', 'https://phonghop.toaan.gov.vn/p/ds20260012'], ['Mã phòng', '4815 2026', 1], ['Mật khẩu', 'TA2026', 1]], b: [['Xác nhận tham dự', 'sh:attendance'], ['Xem lịch phiên tòa', 'calMonth']] },
   'lich-phien-tt': { f: [['Loại phiên', 'Phiên đối thoại'], ['Thời gian', '06/11/2026 · 14:00'], ['Hình thức', 'Trực tuyến']], ph: [['Đường dẫn', 'https://phonghop.toaan.gov.vn/p/hg20260018'], ['Mã phòng', '2207 1846', 1], ['Mật khẩu', 'HG0018', 1]], b: [['Xác nhận tham dự', 'sh:attendance'], ['Xem lịch phiên họp', 'calMonth']] },
-  'ban-an': { f: [['Số bản án', '25/2026/HC-ST', 1], ['Ngày tuyên án', '25/10/2026']], b: [['Nộp đơn kháng cáo', ''], ['Yêu cầu cấp trích lục / bản sao', 'tl1']] },
+  'ban-an': { f: [['Số bản án', '[Số bản án]', 1], ['Ngày tuyên án', '25/10/2026']], b: [['Nộp đơn kháng cáo', ''], ['Yêu cầu cấp trích lục / bản sao', 'tl1']] },
   'phan-hoi': { f: [['Việc có thể làm', 'Nộp văn bản ý kiến về kháng cáo']], b: [['Nộp ý kiến về kháng cáo', '']] },
   'thu-ly': { f: [['Số thụ lý', '120/2026/TLST-DS', 1], ['Ngày thụ lý', '20/10/2026'], ['Vụ án', 'DS-2026-0021', 1], ['Tư cách của bạn', 'Người khởi kiện']], b: [['Xem vụ án', 'caseDetail']], vo: true },
   'hoa-giai': { f: [['Nội dung', 'Mời tham gia phiên hòa giải tranh chấp hợp đồng thuê nhà'], ['Thời gian', '05/11/2026 · 08:30'], ['Địa điểm', 'Phòng hòa giải số 2, ' + KV2]], b: [['Trả lời lựa chọn hòa giải', ''], ['Chọn hòa giải viên', '']] },
   bpkctt: { f: [['Nội dung', 'Áp dụng biện pháp phong tỏa tài khoản của bị đơn'], ['Tình trạng', 'Đang có hiệu lực']], b: [], vo: true }, /* v345 (HT-M05) */
   'ykien-phanhoi': { f: [['Số thụ lý', '98/2026/TLST-DS', 1], ['Ngày thụ lý', '10/10/2026'], ['Vụ án', 'DS-2026-0012', 1], ['Tư cách của bạn', 'Người có quyền lợi, nghĩa vụ liên quan']], b: [['Gửi ý kiến, phản hồi', ''], ['Xem vụ án', 'caseDetail']] },
-  'quyet-dinh': { f: [['Số quyết định', '05/2026/QĐST-DS', 1], ['Ngày ban hành', '15/10/2026'], ['Nội dung', 'Công nhận sự thỏa thuận của các đương sự'], ['Tình trạng', 'Có hiệu lực pháp luật']], b: [], vo: true } }; /* v345 (HT-M05) */
+  'quyet-dinh': { f: [['Số quyết định', '[Số quyết định]', 1], ['Ngày ban hành', '15/10/2026'], ['Nội dung', 'Công nhận sự thỏa thuận của các đương sự'], ['Tình trạng', 'Có hiệu lực pháp luật']], b: [], vo: true } }; /* v345 (HT-M05) */
 function IbKhoi(m, thay) {
   var cf = IB_NHOM[m.nhom], k = IB_KHOI[m.nhom], dem = ibDem(m), het = dem && dem.con < 0, khoa = het || thay;
   return h('section', { className: 'ph-blk ib-khoi' },
@@ -501,7 +501,7 @@ function PdfPage(n) {
     h('i'), h('i'), h('i'), h('i'), h('i'), h('i'), h('i'), h('span', { className: 'pdf-no tp-num' }, n + ' / 2'));
 }
 function Attachment() {
-  var name = window.__ibFile || '15-2026-QĐXXST-DS.pdf';
+  var name = window.__ibFile || '[Số quyết định].pdf';
   return Sub(name, h('div', { className: 'pdf-view' }, PdfPage(1), PdfPage(2)), null, [{ icon: 'download', label: 'Tải xuống', onClick: noop }]);
 }
 function AttachmentErr() {
@@ -636,14 +636,14 @@ function DtDonThe(d) {
 }
 /* v246 (04/11/2026): tab Văn bản tống đạt – nhiều văn bản, thẻ cùng kiểu Hộp thư tống đạt (chọn F1, bỏ hạn xử lý): nhãn loại màu + số văn bản; chưa xem = chấm đỏ + chữ đậm; Tòa án · ngày giờ; bấm thẻ mở chi tiết văn bản. Dữ liệu mẫu 3 văn bản */
 var DT_VB = [
-  { nh: 'THONG_BAO', t: 'Thông báo yêu cầu sửa đổi, bổ sung đơn khởi kiện', so: '12/2026/TB-TA', tg: '22/10/2026 09:30', moi: true },
-  { nh: 'THONG_BAO', t: 'Thông báo về việc nhận đơn khởi kiện', so: '09/2026/TB-TA', tg: '21/10/2026 15:10' },
-  { nh: 'GIAY_XAC_NHAN', t: 'Giấy xác nhận đã nhận đơn khởi kiện trực tuyến', so: '45/2026/GXN-TA', tg: '21/10/2026 08:15' }];
+  { nh: 'THONG_BAO', t: 'Thông báo yêu cầu sửa đổi, bổ sung đơn khởi kiện', so: '[Số thông báo]', tg: '22/10/2026 09:30', moi: true },
+  { nh: 'THONG_BAO', t: 'Thông báo về việc nhận đơn khởi kiện', so: '[Số thông báo]', tg: '21/10/2026 15:10' },
+  { nh: 'GIAY_XAC_NHAN', t: 'Giấy xác nhận đã nhận đơn khởi kiện trực tuyến', so: '[Số giấy xác nhận]', tg: '21/10/2026 08:15' }];
 /* bấm thẻ mở màn chi tiết văn bản đúng văn bản đó (IB_X, chỉ số 1000+); xem xong thẻ hết chấm đỏ */
 var IB_X = DT_VB.map(function (v) { return { t: v.t, so: v.so, nh: v.nh, from: COURT1, time: v.tg.replace(/\//g, '-'), doc: !v.moi }; });
 function DtVbThe(v, i) {
   var x = IB_X[i], moi = !x.doc;
-  return h('li', { key: v.so, className: 'ib-c' + (moi ? ' ib-un' : '') },
+  return h('li', { key: v.so + '|' + i, className: 'ib-c' + (moi ? ' ib-un' : '') },
     h('button', { type: 'button', className: 'ph-mail2-hit', 'aria-label': (moi ? 'Chưa xem. ' : '') + v.t, 'data-pt-go': 'mailDetail', onClickCapture: function () { window.__ibSel = 1000 + i; } }),
     h('div', { className: 'ib-c-h' }, h('span', { className: 'vk-tag' + ibTag(v.nh) }, IB_NHAN_TEN[v.nh]), h('span', { className: 'vk-code tp-num' }, v.so)),
     h('b', null, moi ? h('i', { className: 'ib-dot', 'aria-hidden': 'true' }) : null, v.t),
@@ -789,7 +789,7 @@ function VuAnChiTiet(p) {
         h('div', { className: 'dt-hear-d' }, h('b', { className: 'tp-num' }, '28'), h('span', null, 'T10')),
         h('div', { className: 'dt-hear-b' }, h('div', { className: 'dt-don-h' }, h(T.StatusBadge, { tone: 'warning', icon: false }, 'Sắp diễn ra')), h('b', null, 'Phiên tòa sơ thẩm'), RvKV([['Thời gian', '14:00, 28/10/2026'], ['Hình thức', 'Trực tiếp'], ['Địa điểm', 'Phòng xử án số 2 – ' + COURT1]]),
           h('div', { className: 'dt-acts' }, h(T.Button, { size: 'sm', 'data-pt-go': 'attendReply' }, 'Xác nhận tham dự'), h(T.Button, { size: 'sm', variant: 'secondary', icon: 'pen' }, 'Đề nghị hoãn phiên')))), true);
-      if (t === 'docs') return FCard('Văn bản tống đạt từ Tòa án', VbCards([{ t: 'Quyết định đưa vụ án ra xét xử', so: '25/2026/QĐXXST-DS', tg: '21/10/2026', moi: true }, { t: 'Thông báo thụ lý vụ án', so: '12/2026/TB-TLVA', tg: '15/10/2026' }]), true);
+      if (t === 'docs') return FCard('Văn bản tống đạt từ Tòa án', VbCards([{ t: 'Quyết định đưa vụ án ra xét xử', so: '[Số quyết định]', tg: '21/10/2026', moi: true }, { t: 'Thông báo thụ lý vụ án', so: '[Số thông báo]', tg: '15/10/2026' }]), true);
       if (t === 'evidence') return h(F, null,
         h('div', { className: 'ph-s1-note dt-info' }, h('p', null, 'Đương sự được quyền tiếp cận tài liệu, chứng cứ do bên khác nộp hoặc Tòa án thu thập, trừ tài liệu liên quan đến bí mật nhà nước, thuần phong mỹ tục, bí mật nghề nghiệp, bí mật kinh doanh, bí mật cá nhân, bí mật gia đình.')),
         FCard('Tài liệu, chứng cứ đã giao nộp · 4 tài liệu', h(F, null,
@@ -804,7 +804,7 @@ function VuAnChiTiet(p) {
         DtDocs([['Quyết định đưa vụ án ra xét xử', 'Tuyên / ban hành ngày 21/10/2026 · ' + COURT1]], DOC_THE),
         h('button', { type: 'button', className: 'vk-link', 'data-pt-go': 'tl1' }, 'Yêu cầu cấp trích lục quyết định', h(T.Icon, { name: 'chevronRight' })),
         P('Trường hợp bản số hóa chưa sẵn sàng, Tòa án sẽ tống đạt bản giấy theo quy định (Điều 219 BLTTDS).', 'ph-muted dt-small')), true);
-      return LsG1([['Quyết định đưa vụ án ra xét xử', '21/10/2026', 'Số 25/2026/QĐXXST-DS'], ['Thông báo thụ lý vụ án', '15/10/2026', 'Số 12/2026/TB-TLVA · ' + COURT1]]);
+      return LsG1([['Quyết định đưa vụ án ra xét xử', '21/10/2026', 'Số [Số quyết định]'], ['Thông báo thụ lý vụ án', '15/10/2026', 'Số [Số thông báo] · ' + COURT1]]);
     } });
 }
 
