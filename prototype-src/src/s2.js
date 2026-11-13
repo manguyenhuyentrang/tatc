@@ -525,9 +525,10 @@ function DtScreen(o) {
 }
 /* dòng tài liệu / văn bản: tên đậm, dòng phụ, nút xem chỉ biểu tượng */
 /* v244: o.tai = thêm nút tải về (biểu tượng) bên phải nút xem */
-function DtDocs(list, o) { /* v249: o.the = mỗi tài liệu một thẻ riêng */
+/* v351: nút Xem mở màn xem tệp (không xem trực tiếp trong màn) */
+function DtDocs(list, o) {
   return h('ul', { className: 'ph-ky dt-docs' + (o && o.the ? ' dt-docs-the' : '') }, list.map(function (d) {
-    return h('li', { key: d[0] + (d[1] || '') }, h('div', null, h('b', null, d[0]), d[1] ? h('small', null, d[1]) : null), d[2] || null, IcoBtn('eye', 'Xem ' + d[0]),
+    return h('li', { key: d[0] + (d[1] || '') }, h('div', null, h('b', null, d[0]), d[1] ? h('small', null, d[1]) : null), d[2] || null, XemTep(tepTen(d)),
       o && o.tai ? IcoBtn('download', 'Tải về ' + d[0], 'snack:Đã tải về ' + (d[1] || d[0]).split(' · ')[0]) : null);
   }));
 }
@@ -541,13 +542,18 @@ function DtTodoGon(o) {
    o.t tên việc · o.han dòng nhỏ · o.con phần đậm · o.tone: 'warning' (việc có hạn, mặc định) | 'neutral' (hành động tùy chọn, thông tin) | 'danger' (quá hạn, bị trả lại)
    o.btn {l, go, v, ic, dis} nút chính bên phải · o.more [{l, go}] hành động phụ: nút mũi tên xuống mở bảng chọn từ đáy (tiêu đề = tên việc)
    o.two [{l, go, v}] khi không xác định được nút chính: 2 nút chia đôi ở hàng dưới · nhãn dài hiện một phần + "…" (đủ chữ ở title, aria-label) · không hiện dòng mô tả */
+/* v351 (QLD2-W04): b.khoa = lý do khóa – nút mờ có biểu tượng khóa, bấm báo lý do; tone "info" (xanh) */
+/* v352 (QLD3-W02, W04): thêm o.note (dòng lý do khóa dưới nút) và o.dong (nút X đóng khối); v351: b.khoa, tone info */
 function DtViec(o) {
-  var sh = React.useState(false), anchor = React.useRef(null), host = useHost(anchor);
-  var bt = function (b) { return h(T.Button, { key: b.l, size: 'sm', variant: b.v || 'primary', icon: b.ic, disabled: b.dis, title: b.l, 'aria-label': b.l, 'data-pt-go': b.dis ? undefined : b.go }, h('span', { className: 'tdv-lb' }, b.l)); };
-  return h('section', { className: 'tdg tdv tdv-' + (o.tone || 'warning'), role: 'status' }, h('span', { ref: anchor, hidden: true }),
+  var sh = React.useState(false), an = React.useState(false), anchor = React.useRef(null), host = useHost(anchor);
+  if (an[0]) return null;
+  var bt = function (b) { return h(T.Button, { key: b.l, size: 'sm', variant: b.v || 'primary', icon: b.ic, disabled: b.dis, title: b.l, 'aria-label': b.l + (b.khoa ? ', đang bị khóa: ' + b.khoa : ''), 'aria-disabled': b.khoa ? true : undefined, className: b.khoa ? 'q2-khoa' : undefined, 'data-pt-go': b.dis ? undefined : b.khoa ? 'snack:' + b.khoa : b.go }, b.khoa ? h(T.Icon, { name: 'lock' }) : null, h('span', { className: 'tdv-lb' }, b.l)); };
+  return h('section', { className: 'tdg tdv tdv-' + (o.tone || 'warning') + (o.dong ? ' q3-dong' : ''), role: 'status' }, h('span', { ref: anchor, hidden: true }),
+    o.dong ? h('button', { type: 'button', className: 'q3-x', 'aria-label': 'Đóng thông báo', onClick: function () { an[1](true); } }, h(T.Icon, { name: 'x' })) : null,
     h('div', { className: 'tdg-b' }, h('b', null, o.t), o.han || o.con ? h('small', null, o.han || null, o.han && o.con ? ' · ' : null, o.con ? h('strong', null, o.con) : null) : null),
     o.btn ? h('div', { className: 'tdv-acts' }, bt(o.btn), o.more ? h(T.Button, { size: 'sm', variant: 'secondary', icon: 'chevronDown', className: 'tdv-more', 'aria-label': 'Hành động khác', 'aria-haspopup': 'dialog', onClick: function () { sh[1](true); } }) : null) : null,
     o.two ? h('div', { className: 'tdv-two' }, o.two.map(bt)) : null,
+    o.note ? h('p', { className: 'q3-note' }, o.note) : null,
     sh[0] && host ? h(LvSheet, { host: host, title: o.t, onClose: function () { sh[1](false); } }, h('ul', { className: 'ph-lvr' }, o.more.map(function (m) {
       return h('li', { key: m.l }, h('button', { type: 'button', className: 'ph-lvr-it', 'data-pt-go': m.go }, h('span', { className: 'ph-lvr-tx' }, h('span', { className: 'ph-lvr-t' }, m.l)), h(T.Icon, { name: 'chevronRight' })));
     }))) : null);
@@ -569,14 +575,14 @@ function DtParty(p) {
 }
 /* nhóm đơn liên quan có thể tạo (theo web TaoDonLienQuan) */
 var DT_TAO = [
-  ['Đơn liên quan đến khởi kiện', 'Bổ sung, sửa đổi, rút đơn và các điều chỉnh yêu cầu khởi kiện', [['Bổ sung tài liệu cho hồ sơ', 'evidence2'], ['Sửa đổi, bổ sung đơn theo yêu cầu của Tòa án', 'sd1'], ['Thay đổi, rút một phần yêu cầu khởi kiện', 'tr1'], ['Yêu cầu rút đơn khởi kiện', 'rd1']]],
+  ['Đơn liên quan đến khởi kiện', 'Bổ sung, sửa đổi, rút đơn và các điều chỉnh yêu cầu khởi kiện', [['Bổ sung tài liệu cho hồ sơ', 'bs1'], ['Sửa đổi, bổ sung đơn theo yêu cầu của Tòa án', 'sd1'], ['Thay đổi, rút một phần yêu cầu khởi kiện', 'tr1'], ['Yêu cầu rút đơn khởi kiện', 'rd1']]],
   ['Đơn liên quan biện pháp khẩn cấp tạm thời', 'Áp dụng biện pháp khẩn cấp tạm thời', [['Đơn yêu cầu áp dụng biện pháp khẩn cấp tạm thời', 'bp1']]],
   ['Đơn liên quan án phí, lệ phí, chi phí tố tụng', 'Miễn, giảm tạm ứng án phí, lệ phí khi có thông báo của Tòa án', [['Đề nghị miễn, giảm tạm ứng án phí', 'mg1']]],
   ['Đơn yêu cầu khác', 'Sao gửi tài liệu, chứng cứ và các yêu cầu khác', [['Sao gửi tài liệu, chứng cứ cho đương sự khác', 'sg1']]]];
 /* v242 (04/11/2026): khối "Tạo đơn liên quan" → nút "Tạo đơn liên quan đến vụ việc"; bấm nút mở bảng từ đáy "Chọn loại đơn cần tạo"
    (chọn C3 + D3): tên nhóm ngắn, mỗi nhóm một khối nền xám, mỗi dòng = biểu tượng tờ đơn + huy hiệu hành động màu theo nhóm + tên loại đơn; bấm dòng mở màn soạn */
 var TAO_NGAN = ['Khởi kiện', 'Biện pháp khẩn cấp', 'Án phí, lệ phí', 'Yêu cầu khác'], TAO_MAU = ['do', 'xanh', 'vang', 'luc'];
-var TAO_IC = { evidence2: 'filePlus', sd1: 'pen', tr1: 'swap', rd1: 'logout', bp1: 'shield', mg1: 'wallet', sg1: 'send' };
+var TAO_IC = { bs1: 'filePlus', evidence2: 'filePlus', sd1: 'pen', tr1: 'swap', rd1: 'logout', bp1: 'shield', mg1: 'wallet', sg1: 'send' };
 function TaoIc(id, gi) {
   return h('span', { className: 'td3 td-' + TAO_MAU[gi], 'aria-hidden': 'true' },
     h('svg', { viewBox: '0 0 40 40', className: 'td3-doc' }, h('path', { d: 'M9 4h15l7 7v23a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z', className: 'td3-p' }), h('path', { d: 'M24 4v7h7', className: 'td3-f' }),
@@ -584,14 +590,17 @@ function TaoIc(id, gi) {
     h('span', { className: 'td3-b' }, h(T.Icon, { name: TAO_IC[id] })));
 }
 /* v243 (04/11/2026): nút ghim ở thanh cuối màn khi đang ở tab Danh sách đơn – chọn tab là luôn thấy nút, không phải cuộn */
-function DtTaoDon() {
-  var o = React.useState(false), anchor = React.useRef(null), host = useHost(anchor);
+/* v350 (QLD1-W05): loại đơn đã nộp ít nhất 1 lần (p.lai: sd | tr | bp) → hộp xác nhận nộp thêm trước khi mở màn soạn */
+function DtTaoDon(p) {
+  p = p || {};
+  var o = React.useState(false), anchor = React.useRef(null), host = useHost(anchor), lai = p.lai || ['sd'], DI = { sd1: 'appLaiSd', tr1: 'appLaiTr', bp1: 'appLaiBp' };
   return h(T.ActionBar, null, h('div', { className: 'tao-wrap tao-bar' }, h('span', { ref: anchor, hidden: true }),
     h(T.Button, { block: true, variant: 'tint', icon: 'plus', onClick: function () { o[1](true); } }, 'Tạo đơn liên quan đến vụ việc')),
     o[0] && host ? h(LvSheet, { host: host, title: 'Chọn loại đơn cần tạo', onClose: function () { o[1](false); } },
       h('div', { className: 'tc3' }, DT_TAO.map(function (g, i) {
         return h('section', { key: g[0] }, h('p', { className: 'tc-gh' }, TAO_NGAN[i]), h('ul', { className: 'tc3-l' }, g[2].map(function (x) {
-          return h('li', { key: x[1] }, h('button', { type: 'button', className: 'tc3-it', 'data-pt-go': x[1] }, TaoIc(x[1], i), h('span', { className: 'tc-t' }, x[0])));
+          var go = DI[x[1]] && lai.indexOf(x[1].slice(0, 2)) >= 0 ? DI[x[1]] : x[1];
+          return h('li', { key: x[1] }, h('button', { type: 'button', className: 'tc3-it', 'data-pt-go': go }, TaoIc(x[1], i), h('span', { className: 'tc-t' }, x[0])));
         })));
       }))) : null);
 }
@@ -608,16 +617,20 @@ var DT_LS = [
   ['Tạo đơn', '20/10/2026 14:09:07']]; /* v240 (04/11/2026): bỏ số lượng ở tab chi tiết đơn khởi kiện */
 /* 03/11/2026 (v146): nhận p để vẽ các tình huống khác của đơn (chờ ký số, đã thụ lý, trả lại đơn, tạm ứng án phí) – xem s5.js */
 /* v241 (04/11/2026): thẻ đơn trong tab Danh sách đơn – đồng bộ kiểu thẻ ở màn Danh sách đơn (chọn A): trạng thái trên cùng, tên đơn đậm, nhãn – giá trị; đơn nháp có khối Việc cần làm */
+/* v350 (QLD1-W04): đơn đã nộp có dòng "Xem đơn" – bấm thẻ mở tệp đơn; nháp bổ sung hồ sơ mở trình tự Bổ sung, sửa đổi hồ sơ (bs1) */
 var DT_DONS = [
-  { loai: 'Đơn khởi kiện · ban đầu', t: 'Tranh chấp hợp đồng vay tài sản', tt: ['Đã gửi đơn', 'info'], ma: 'TN-20261020-0012', ngay: ['Ngày gửi', '20/10/2026'] },
-  { loai: 'Đơn bổ sung', t: 'Bổ sung tài liệu cho hồ sơ', tt: ['Bản nháp', 'neutral'], ma: null, ngay: ['Lưu nháp', '22/10/2026 · 10:15'], go: 'evidence2' }
+  { loai: 'Đơn khởi kiện · ban đầu', t: 'Tranh chấp hợp đồng vay tài sản', tt: ['Đã gửi đơn', 'info'], ma: 'TN-20261020-0012', ngay: ['Ngày gửi', '20/10/2026'], file: 'Don-khoi-kien-TN-20261020-0012.pdf' },
+  { loai: 'Đơn sửa đổi, bổ sung', t: 'Sửa đổi, bổ sung đơn theo yêu cầu của Tòa án', tt: ['Đã gửi', 'info'], ma: 'TN-20261022-0031', ngay: ['Ngày gửi', '22/10/2026 · 14:20'], file: 'Don-sua-doi-bo-sung-TN-20261022-0031.pdf' },
+  { loai: 'Đơn bổ sung', t: 'Bổ sung tài liệu cho hồ sơ', tt: ['Bản nháp', 'neutral'], ma: null, ngay: ['Lưu nháp', '22/10/2026 · 10:15'], go: 'bs1' }
 ];
 function DtDonThe(d) {
   return h('li', { key: d.t, className: 'qd-c qc' },
-    d.go ? h('button', { type: 'button', className: 'ph-mail2-hit', 'aria-label': 'Xem đơn: ' + d.t, 'data-pt-go': d.go }) : null,
+    d.go ? h('button', { type: 'button', className: 'ph-mail2-hit', 'aria-label': 'Tiếp tục soạn: ' + d.t, 'data-pt-go': d.go })
+      : d.file ? h('button', { type: 'button', className: 'ph-mail2-hit', 'aria-label': 'Xem đơn: ' + d.t, 'data-pt-go': 'attachment', onClickCapture: function () { window.__ibFile = d.file; } }) : null,
     h('div', { className: 'qc-top' }, h(T.StatusBadge, { tone: d.tt[1], icon: false }, d.tt[0])),
     h('div', { className: 'qc-th' }, h('b', { className: 'qc-t' }, d.t)),
     h('dl', { className: 'qc-ben' }, [['Loại đơn', d.loai], ['Mã tiếp nhận', h('span', { className: 'tp-num' }, vd(d.ma))], d.ngay].map(function (r) { return h('div', { key: r[0] }, h('dt', null, r[0]), h('dd', null, r[1])); })),
+    d.file ? h('div', { className: 'q1-xem' }, h(T.Icon, { name: 'eye' }), 'Xem đơn') : null,
     d.go ? h('div', { className: 'qd-c-f qc-vk vkx-box' }, h('p', { className: 'qc-vk-h vkx-h' }, 'Việc cần làm'), h('ul', { className: 'qc-vk-l' },
       h('li', { className: 'vk-card vka vkx vkx-none' }, h('button', { type: 'button', className: 'vka-b', 'data-pt-go': d.go }, h('span', { className: 'vka-tx' }, h('b', null, 'Tiếp tục soạn'), h('small', null, 'Không có thời hạn')))))) : null);
 }
@@ -694,17 +707,25 @@ function TaoBtn(p) {
 }
 function DonChiTiet(p) {
   p = p || {};
-  return h(DtScreen, { title: 'Chi tiết đơn', tabLabel: 'Nội dung chi tiết đơn', tabs: DON_TABS, headCls: 'dt-head-don', /* v231: tên đơn 16px */
-    foot: function (t) { return t === 'ds' ? h(DtTaoDon) : null; }, /* v243 */
+  /* v350 (QLD1-W13): lỗi tải chi tiết / không tìm thấy đơn (Thử lại + Quay lại); lỗi tải tab Danh sách đơn, Tài liệu, Văn bản */
+  if (p.loi) return h(Phone, { cls: 'ph-hd' }, h(T.AppBar, { variant: 'plain', title: 'Chi tiết đơn', onBack: noop }), h(Body, { cls: 'ph-plain dt-body' },
+    h('div', { className: 'q1-err' }, h(T.EmptyState, { variant: 'center', icon: 'alert', title: p.loi === 'ko' ? 'Không tìm thấy đơn này.' : 'Không tải được chi tiết đơn.', className: 'nv-err' }),
+      h('div', { className: 'q1-err-b' }, p.loi === 'ko' ? null : h(T.Button, { size: 'sm', variant: 'secondary', icon: 'swap' }, 'Thử lại'), h(T.Button, { size: 'sm', variant: 'secondary', icon: 'chevronLeft', 'data-pt-go': 'back' }, 'Quay lại')))));
+  var tabLoi = function (t) { return h(T.EmptyState, { variant: 'center', icon: 'alert', title: t, actionLabel: 'Thử lại', actionIcon: 'swap', onAction: noop, className: 'nv-err' }); };
+  var chamVb = DT_VB.some(function (v, i) { return !IB_X[i].doc; }); /* v350 (QLD1-W10) */
+  var yc = p.yc !== undefined ? p.yc : !p.viec && p.top === undefined ? 'con' : null; /* v350 (QLD1-W02): đơn đang có yêu cầu bổ sung */
+  return h(DtScreen, { title: 'Chi tiết đơn', tabLabel: 'Nội dung chi tiết đơn', tabs: donTabs(chamVb), tab0: p.tab0, headCls: 'dt-head-don', /* v231: tên đơn 16px */
+    foot: function (t) { return t === 'ds' && !p.tabLoi ? h(DtTaoDon, { lai: p.lai }) : null; }, /* v243 */
     meta: p.meta || h(F, null, h('span', { className: 'tp-num' }, 'TN-20261020-0012'), ' · Ngày tạo 20/10/2026'),
     name: p.name || 'Đơn khởi kiện – Tranh chấp hợp đồng vay tài sản',
     badges: p.badges || h(F, null, h(T.StatusBadge, { tone: 'info', icon: false }, 'Đã gửi đơn'), h(T.StatusBadge, { tone: 'warning', icon: false }, 'Yêu cầu bổ sung tài liệu')),
     /* v245 (04/11/2026): khối "Yêu cầu bổ sung tài liệu" rút gọn (chọn E1, bỏ viền màu trái) và đặt trước thanh tab; các biến thể truyền top riêng giữ nguyên chỗ cũ */
     /* v252: mọi biến thể đưa hành động gắn với đơn lên khối đầu màn (p.viec); p.top chỉ còn là nội dung đầu tab */
-    pre: p.viec ? h(DtViec, p.viec) : p.top !== undefined ? null : h(DtViec, { t: 'Yêu cầu bổ sung tài liệu', han: 'Hạn 26/10/2026', con: 'còn 3 ngày', btn: { l: 'Bổ sung tài liệu', go: 'evidence2' } }),
+    pre: p.viec ? h(DtViec, p.viec) : p.top !== undefined ? null : h(DtViec, { t: 'Yêu cầu bổ sung tài liệu', han: 'Hạn 26/10/2026', con: 'còn 3 ngày', btn: { l: 'Bổ sung tài liệu', go: 'bs1' } }), /* v350 (QLD1-W01) */
     top: p.top !== undefined ? p.top : null,
     render: function (t, setT) {
       if (t === 'tt') return h(F, null,
+        p.kq ? KqGiaiQuyet() : null, p.kn ? h(KnVanBan, { het: p.kn === 'het' }) : null, p.vuAn ? VuAnKhoi() : null, /* v350 (QLD1-W06, W07, W08) */
         FCard('Các bên trong đơn', h(F, null,
           h(DtParty, { tat: 'NK', ten: 'Hoàng Dương', ban: true, vt: 'Người khởi kiện · Cá nhân', rows: [['Số CCCD', h('span', { className: 'tp-num' }, '001090012345')], ['Điện thoại', '0912345678'], ['Địa chỉ', 'Số 8 Phạm Hùng, Phường Từ Liêm, Thành phố Hà Nội']] }),
           h(DtParty, { tat: 'BK', ten: 'Trần Văn Bình', vt: 'Người bị kiện · Cá nhân', rows: [['Địa chỉ', 'Số 12 Trần Thái Tông, Phường Cầu Giấy, Thành phố Hà Nội']] }),
@@ -713,12 +734,13 @@ function DonChiTiet(p) {
           h(DtParty, { tat: 'LQ', ten: 'Lê Thị Hoa', vt: 'Người có quyền lợi, nghĩa vụ liên quan · Cá nhân', rows: [['Số CCCD', h('span', { className: 'tp-num' }, '001192034567')], ['Điện thoại', '0987654321'], ['Địa chỉ', 'Số 3 ngõ 15 Duy Tân, Phường Cầu Giấy, Thành phố Hà Nội']] })), true),
         FCard('Nội dung yêu cầu', h(DtNoiDung, { kieu: p.nd || 'nhap' }), true), /* v238 */
         FCard('Tòa án xử lý đơn', RvKV([['Tòa án xử lý đơn', COURT1], ['Thẩm phán phụ trách', '—'], ['Số thụ lý', '—'], ['Mã vụ án', '—']]), true),
-        FCard('Thông tin đơn & hồ sơ pháp lý', RvKV([['Số tiếp nhận', h('span', { className: 'tp-num' }, 'TN-20261020-0012')], ['Lĩnh vực', 'Dân sự'], ['Hình thức nộp', 'Trực tuyến qua Cổng DVTP'], ['Ngày tạo', '20/10/2026'], ['Ngày gửi', '20/10/2026'], ['Tòa tiếp nhận', '—'], ['Tài liệu đính kèm', '3 tài liệu'], ['Vụ án liên quan', '—'], ['Loại đơn', 'Đơn khởi kiện']]), true));
-      if (t === 'ds') return FCard('Danh sách đơn trong vụ việc', h('ul', { className: 'qd-list dt-qc' }, DT_DONS.map(DtDonThe)), true); /* v241; v243: nút tạo đơn ghim ở thanh cuối màn (foot) */
-      if (t === 'tl') return h(F, null,
+        FCard('Thông tin đơn & hồ sơ pháp lý', RvKV([['Số tiếp nhận', h('span', { className: 'tp-num' }, 'TN-20261020-0012')], ['Lĩnh vực', 'Dân sự'], ['Hình thức nộp', 'Trực tuyến qua Cổng DVTP'], ['Ngày tạo', '20/10/2026'], ['Ngày gửi', '20/10/2026'], ['Tòa tiếp nhận', '—'], ['Tài liệu đính kèm', '3 tài liệu'], ['Vụ án liên quan', '—'], ['Loại đơn', 'Đơn khởi kiện']]), true),
+        p.tamUng ? h(TamUngKhoi, { tre: p.tamUng === 'tre' }) : null); /* v350 (QLD1-W08) */
+      if (t === 'ds') return p.tabLoi ? tabLoi('Không tải được danh sách đơn.') : FCard('Danh sách đơn trong vụ việc', h('ul', { className: 'qd-list dt-qc' }, DT_DONS.map(DtDonThe)), true); /* v241; v243: nút tạo đơn ghim ở thanh cuối màn (foot) */
+      if (t === 'tl') return p.tabLoi ? tabLoi('Không tải được danh sách tài liệu.') : h(F, null, yc ? h(TlYeuCau, { het: yc === 'het', files: yc === 'files' }) : null,
         /* v244 (04/11/2026): bỏ chữ "Nộp ngày" ở tiêu đề (chỉ thứ + ngày), bỏ nút "Tải lên tài liệu bổ sung", thêm nút tải về bên phải nút xem */
         FCard('Thứ Ba, 20/10/2026', DtDocs([['Đơn khởi kiện', 'don-khoi-kien.pdf · PDF'], ['Hợp đồng vay tài sản', 'hop-dong-vay.pdf · Bản sao có chứng thực'], ['Giấy nhận tiền', 'giay-nhan-tien.jpg · Bản chính']], { tai: true, the: true }), true)); /* v249: mỗi tài liệu 1 thẻ */
-      if (t === 'vb') return FCard('Văn bản tống đạt từ Tòa án', h('ul', { className: 'vb1' }, DT_VB.map(DtVbThe)), true); /* v246 */
+      if (t === 'vb') return p.tabLoi ? tabLoi('Không tải được văn bản tống đạt.') : FCard('Văn bản tống đạt từ Tòa án', h('ul', { className: 'vb1' }, DT_VB.map(DtVbThe)), true); /* v246 */
       /* v247 (04/11/2026): bỏ tab Hòa giải đối thoại; tab Lịch sử bỏ tiêu đề khối và nút thu gọn/mở rộng, dòng thời gian theo ảnh mẫu (chấm đỏ, tên, ngày giờ, mã tống đạt · Tòa án, nhãn trạng thái) */
       /* v248 (04/11/2026): dòng thời gian kiểu G1 – ngày làm tiêu đề nhóm, giờ:phút đậm ở cột trái (giây nhỏ bên dưới), chấm nhỏ trên đường dọc (mốc mới nhất chấm đỏ, mốc cũ chấm rỗng xám), bên phải tên + mã · Tòa án + nhãn trạng thái (giữ màu cam/xanh) */
       return h('section', { className: 'tp-sec-card tp-sec-open ls-card' }, h('div', { className: 'tp-sec-body' }, lsNhom(DT_LS).map(function (g, gi) {

@@ -680,7 +680,7 @@ function DocCard(p) {
       p.noName ? null : h('p', { className: 'ph-doc-file' }, p.doc.tep),
       Sf('Loại tài liệu', { required: true }),
       h('div', { className: 'ph-doc-act' },
-        h(T.Button, { variant: 'ghost', size: 'sm', icon: 'eye' }, 'Xem'),
+        h(T.Button, { variant: 'ghost', size: 'sm', icon: 'eye', 'data-pt-go': 'attachment', onClickCapture: function () { window.__ibFile = p.doc.tep; } }, 'Xem'), /* v351 */
         h('div', { className: 'ph-doc-menu' },
           h('button', { type: 'button', className: 'ph-doc-swap', 'aria-expanded': menu[0], onClick: function () { menu[1](!menu[0]); } }, 'Thay tệp', h(T.Icon, { name: 'chevronDown' })),
           null),
@@ -709,7 +709,7 @@ function LibSheet(p) {
             h(T.Checkbox, { 'aria-label': 'Chọn ' + f.ten, checked: on, onChange: function () { sel[1](on ? null : f.id); } }),
             h('div', { className: 'ph-lib-tx' }, h('p', { className: 'ph-lib-n' }, f.ten), h('p', null, f.loai + ' · ' + f.ngay.replace(/-/g, '/')), h('p', null, 'Nguồn: ', h('b', null, f.nguon)),
               p.chosen && p.chosen.id === f.id ? h('p', null, 'Đã chọn cho người đại diện này') : null),
-            h(T.Button, { variant: 'secondary', size: 'sm', icon: 'eye', className: 'ph-lib-view', 'aria-label': 'Xem ' + f.ten }));
+            h(T.Button, { variant: 'secondary', size: 'sm', icon: 'eye', className: 'ph-lib-view', 'aria-label': 'Xem ' + f.ten, 'data-pt-go': 'attachment', onClickCapture: function () { window.__ibFile = f.ten; } })); /* v351 */
         })) : h('p', { className: 'ph-lv-empty' }, 'Không có tệp khớp «' + q[0] + '».'),
         h('div', { className: 'ph-lib-pg' }, h('span', null, all.length ? ((cur - 1) * PER + 1) + '–' + ((cur - 1) * PER + list.length) + ' / ' + all.length : '0 / 0'),
           h('span', { className: 'ph-lib-pgr' }, h('button', { type: 'button', className: 'tp-icon-btn', disabled: cur <= 1, 'aria-label': 'Trang trước', onClick: function () { go(cur - 1); } }, h(T.Icon, { name: 'chevronLeft' })), cur + ' / ' + pages,
@@ -1098,7 +1098,11 @@ function TaiLieuCard(p) {
 function Sub5() { return Submit(5, h(TaiLieuCard)); }
 /* bước 6 – Xem lại & Xác nhận (phương án B có chỉnh, chốt 02/11/2026): khối cha "Xem lại & Xác nhận" (mô tả + 5 khối con gập/mở, mặc định mở); đầu khối con: mũi tên + tiêu đề + nút sửa chỉ biểu tượng bút, xám (về đúng bước);
    người khởi kiện, người bị kiện hiển thị bằng thẻ tóm tắt thu gọn như ở bước 2, 3 (không có nút xóa); tài liệu: tên, tệp · loại, nút xem chỉ biểu tượng xám. Gợi ý tòa án và cam kết là khối riêng. Xác nhận → popup "Xác nhận đơn?" → bước 7 */
-function IcoBtn(icon, label, go) { return h(T.Button, { variant: 'secondary', size: 'sm', icon: icon, className: 'ph-lib-view', 'aria-label': label, 'data-pt-go': go }); }
+/* v351: nút Xem (con mắt) chưa có đích hoặc chỉ báo "Đang mở…" → mở màn xem tệp (attachment) */
+function IcoBtn(icon, label, go) {
+  var xem = icon === 'eye' && (!go || /^snack:Đang mở/.test(go)), ten = String(label || '').replace(/^Xem /, '');
+  return h(T.Button, { variant: 'secondary', size: 'sm', icon: icon, className: 'ph-lib-view', 'aria-label': label, 'data-pt-go': xem ? 'attachment' : go, onClickCapture: xem ? function () { window.__ibFile = /\.[a-z]{3,4}$/i.test(ten) ? ten : ten + '.pdf'; } : undefined });
+}
 function RvList(items) { return h(T.InfoList, { variant: 'rows', className: 'ph-rv', items: items.map(function (r) { return { label: r[0], value: r[1] }; }) }); }
 /* bước 6 – phương án A (chọn 03/11/2026): nhãn xám bên trái, giá trị chữ thường bên phải, mỗi hàng 36px có kẻ mảnh; áp cho khối Loại việc và thông tin trong các khối/thẻ còn lại (người khởi kiện, người bị kiện, nội dung đơn) */
 function RvKV(items) { return h('dl', { className: 'ph-rvkv' }, items.map(function (r) { return h('div', { key: r[0] }, h('dt', null, r[0]), h('dd', null, vd(r[1]))); })); } /* v232: giá trị trống → '-' */

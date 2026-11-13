@@ -2139,3 +2139,75 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 .hgf-ky{display:flex;flex-direction:column;gap:4px;margin-top:8px;padding-top:10px;border-top:1px solid var(--border)}.hgf-ky>b{font:600 14px/20px var(--font-sans);color:var(--ink)}.hgf-ky>small{font:400 12px/16px var(--font-sans);color:var(--ink-muted)}
 
 .hgv-w{display:flex;flex-direction:column;gap:6px}.hgv-sub{margin:0;font:400 12px/16px var(--font-sans);color:var(--ink-muted)}
+
+/* v350 (13/11/2026): Quản lý đơn nhóm 1 (QLD1-W01…W14) */
+.q1-dlg p{margin:0 0 8px;font:400 14px/20px var(--font-sans);color:var(--ink-muted)}
+.q1-dlg ul{margin:0 0 8px;padding:10px 12px;list-style:none;border-radius:var(--radius-md);background:var(--surface-sunken);font:400 14px/20px var(--font-sans)}
+.q1-yc{display:flex;gap:10px;margin:0 0 12px;padding:14px 16px;border-radius:var(--radius-lg);background:var(--warning-tint);box-shadow:inset 0 0 0 1px var(--warning-border)}
+.q1-yc-het{background:var(--danger-tint);box-shadow:inset 0 0 0 1px var(--danger-border)}
+.q1-yc-ic{flex:none;color:var(--warning);margin-top:1px}.q1-yc-het .q1-yc-ic{color:var(--danger)}
+.q1-yc-ic svg{width:20px;height:20px}
+.q1-yc-b{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.q1-yc-b>b{font:600 15px/22px var(--font-sans);color:var(--ink)}
+.q1-yc-b>p{margin:0;font:400 14px/20px var(--font-sans);color:var(--ink-muted)}
+.q1-yc-han{font:500 14px/20px var(--font-sans);color:var(--warning-ink,#8A7426)}.q1-yc-het .q1-yc-han{color:var(--danger)}
+.q1-yc-up{margin-top:8px}
+.q1-yc-l{list-style:none;margin:8px 0 4px;padding:0;width:100%;display:flex;flex-direction:column;gap:6px}
+.q1-yc-l li{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--warning-border);font:500 14px/20px var(--font-sans)}
+.q1-yc-l li>svg{width:16px;height:16px;color:var(--warning);flex:none}.q1-yc-l li>span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.q1-yc-del{border:0;background:none;padding:4px;color:var(--ink-faint);display:grid;place-items:center}.q1-yc-del svg{width:16px;height:16px}
+.q1-kq{display:flex;align-items:flex-start;gap:10px;margin:0 0 12px;padding:14px 16px;border-radius:var(--radius-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--border)}
+.q1-kq p{margin:0;font:400 14px/21px var(--font-sans);color:var(--ink)}
+.q1-kn{margin:0 0 12px;padding:14px 16px;border-radius:var(--radius-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--border);display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.q1-kn b{font:600 15px/22px var(--font-sans)}.q1-kn p{margin:0 0 4px;font:400 14px/21px var(--font-sans);color:var(--ink-muted)}
+.q1-badge{margin:0 0 8px}
+.q1-tdot{display:inline-flex;align-items:center;gap:6px}.q1-dot{width:8px;height:8px;border-radius:50%;background:var(--brand,#C8102E);flex:none}
+.q1-xem{display:flex;align-items:center;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font:600 14px/20px var(--font-sans);color:var(--brand,#C8102E)}
+.q1-xem svg{width:16px;height:16px}
+.tdv-success{background:var(--success-tint);box-shadow:inset 0 0 0 1px var(--success-border)}
+.tdv-success .tdg-b b{color:var(--success)}.tdv-success .tdg-b small{color:var(--success)}
+.q1-loai{margin:8px 0 0}
+.q1-rong{display:flex;flex-direction:column;align-items:center;gap:4px;padding-bottom:24px}
+.q1-lock .vka-b{opacity:.6}.q1-lock-ic{flex:none;color:var(--ink-muted);display:grid;place-items:center}.q1-lock-ic svg{width:18px;height:18px}
+.q1-err{display:flex;flex-direction:column;align-items:center}.q1-err-b{display:flex;gap:8px;justify-content:center;margin-top:-8px}
+
+/* v351 (13/11/2026): Quản lý đơn nhóm 2 – phản tố, yêu cầu độc lập */
+.tdv-info{background:#EEF4FF;box-shadow:inset 0 0 0 1px #CFDEFB}.tdv-info .tdg-b b{color:#1A3E8F}
+.tdv-info .tdg-b small{color:var(--ink-muted)}
+.q2-khoa{opacity:.6}.q2-khoa svg{width:14px;height:14px}
+.vk-tag.q2-tag-PT{color:#1E7E94;background:#E6F1F4}.vk-tag.q2-tag-YC{color:#7A4FD0;background:#F3EEFB}
+.q2-err{display:flex;align-items:center;gap:6px;margin:8px 0 0;font:400 13px/18px var(--font-sans);color:var(--danger)}.q2-err svg{width:16px;height:16px;flex:none}
+.q2-ss{display:flex;flex-direction:column;gap:8px}
+.q2-ss>div{padding:10px 12px;border-radius:var(--radius-md);background:var(--surface-sunken)}
+.q2-ss>div.q2-ss-moi{background:var(--success-tint);box-shadow:inset 0 0 0 1px var(--success-border)}
+.q2-ss small{display:block;font:600 12px/16px var(--font-sans);color:var(--ink-muted);margin-bottom:4px}
+.q2-ss p{margin:0;font:400 14px/20px var(--font-sans);color:var(--ink);white-space:pre-line}
+.q2-chan-ico{background:var(--danger-tint);color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger-border)}
+.q2-chan{margin:16px 0 0;padding:12px 14px;border-radius:var(--radius-md);background:var(--danger-tint);box-shadow:inset 0 0 0 1px var(--danger-border)}
+.q2-chan p{margin:0;font:400 14px/20px var(--font-sans);color:var(--danger)}
+
+/* v352 (13/11/2026): Quản lý đơn nhóm 3 – kháng cáo */
+.tdv.q3-dong{position:relative;padding-right:40px}
+.q3-x{position:absolute;top:8px;right:8px;width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--ink-muted);display:grid;place-items:center}.q3-x svg{width:16px;height:16px}
+.q3-note{flex-basis:100%;margin:6px 0 0;font:400 13px/18px var(--font-sans);color:var(--ink-muted)}
+.vk-tag.q3-tag{color:#B4541A;background:#FBEFE6}
+.q3-khac{opacity:.85}.q3-khac-t{display:inline-block;margin-top:6px;padding:2px 8px;border-radius:999px;background:var(--surface-sunken);font:500 12px/16px var(--font-sans);color:var(--ink-muted)}
+
+/* v353 (13/11/2026): Quản lý đơn nhóm 4 – giám đốc thẩm, tái thẩm */
+.vk-tag.q4-tag-gdt{color:#0E6E9E;background:#E3F1F8}.vk-tag.q4-tag-tt{color:#2F7D4F;background:#E6F3EA}
+.q4-han{margin:12px 0;padding:14px 16px;border-radius:var(--radius-lg);background:var(--warning-tint);box-shadow:inset 0 0 0 1px var(--warning-border);display:flex;flex-direction:column;gap:4px}
+.q4-han-do{background:var(--danger-tint);box-shadow:inset 0 0 0 1px var(--danger-border)}
+.q4-han small{font:600 12px/16px var(--font-sans);text-transform:uppercase;letter-spacing:.4px;color:var(--ink-muted)}
+.q4-han b{font:700 18px/24px var(--font-sans);color:var(--warning-ink,#8A5A00)}.q4-han-do b{color:var(--danger)}
+.q4-han p{margin:0;font:400 14px/20px var(--font-sans);color:var(--ink)}.q4-han .q4-han-hq{color:var(--ink-muted);font-size:13px}
+.q4-tep{display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--border);margin:8px 0}
+.q4-tep-h{display:flex;align-items:center;gap:8px;font:500 14px/20px var(--font-sans)}.q4-tep-h>svg{width:18px;height:18px;color:var(--brand,#C8102E);flex:none}.q4-tep-h>span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.q4-tep-up{align-self:flex-start}
+/* v354: nhóm 1 theo chuẩn Soạn đơn */
+.q1sd-tlr{width:100%;margin:8px 0 0;background:var(--surface);border-radius:var(--radius-md)}
+.q1sd-up{width:100%;margin-top:8px;background:var(--surface);border-radius:var(--radius-md)}
+.q1n-han{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;background:var(--warning-tint);color:var(--warning-ink,#8A5A00);font:600 12px/18px var(--font-sans);white-space:nowrap}.q1n-han svg{width:13px;height:13px}
+.q1n-han-het{background:var(--danger-tint);color:var(--danger)}
+.q1s{margin:0 0 12px}.q1s-dau{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:6px}.q1s-dau .ph-p{margin:0}
+.q1s-fmt{display:block;font:400 13px/18px var(--font-sans);color:var(--ink-muted)}
+.q1s-luu{padding:12px 16px 4px;background:var(--surface)}
