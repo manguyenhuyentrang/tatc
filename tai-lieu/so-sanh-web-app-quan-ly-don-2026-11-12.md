@@ -76,38 +76,38 @@ Cách làm đã thống nhất: hỏi từng mã Có/Không. Với mã W: Có = 
 | QLD4-W15 | Có | 13/11/2026 – đã demo, đã áp dụng v353 |
 | QLD4-M01 | Có (giữ) | 13/11/2026 |
 | QLD4-M02 | Không | 13/11/2026 – đã bỏ v353 |
-| QLD5-W01 | Có | 13/11/2026 – chờ demo |
-| QLD5-W02 | Có | 13/11/2026 – chờ demo |
-| QLD5-W03 | Có | 13/11/2026 – chờ demo |
-| QLD5-W04 | Có | 13/11/2026 – chờ demo |
-| QLD5-W05 | Có | 13/11/2026 – chờ demo |
-| QLD5-W06 | Có | 13/11/2026 – chờ demo |
-| QLD5-W07 | Có | 13/11/2026 – chờ demo |
-| QLD5-W08 | Có | 13/11/2026 – chờ demo |
-| QLD5-W09 | Có | 13/11/2026 – chờ demo |
-| QLD5-W10 | Có | 13/11/2026 – chờ demo |
-| QLD5-W11 | Có | 13/11/2026 – chờ demo |
-| QLD5-W12 | Có | 13/11/2026 – chờ demo |
-| QLD5-W13 | Có | 13/11/2026 – chờ demo |
-| QLD5-W14 | Có | 13/11/2026 – chờ demo |
-| QLD5-W15 | Có | 13/11/2026 – chờ demo |
-| QLD5-W16 | Có | 13/11/2026 – chờ demo |
-| QLD5-W17 | Có | 13/11/2026 – chờ demo |
-| QLD6-W01 | Có | 13/11/2026 – chờ demo |
-| QLD6-W02 | Có | 13/11/2026 – chờ demo |
-| QLD6-W03 | Có | 13/11/2026 – chờ demo |
-| QLD6-W04 | Có | 13/11/2026 – chờ demo |
-| QLD6-W05 | Có | 13/11/2026 – chờ demo |
-| QLD6-W06 | Có | 13/11/2026 – chờ demo |
-| QLD6-W07 | Có | 13/11/2026 – chờ demo |
-| QLD6-W08 | Có | 13/11/2026 – chờ demo |
+| QLD5-W01 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W02 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W03 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W04 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W05 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W06 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W07 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W08 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W09 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W10 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W11 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W12 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W13 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W14 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W15 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W16 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD5-W17 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD6-W01 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD6-W02 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD6-W03 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD6-W04 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD6-W05 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD6-W06 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD6-W07 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
+| QLD6-W08 | Có | 13/11/2026 – đã demo, đã áp dụng v355 |
 | QLD6-M01 | Có (giữ) | 13/11/2026 |
 | QLD6-M02 | Có (giữ) | 13/11/2026 |
-| QLD6-M03 | Không | 13/11/2026 – đề xuất bỏ cho giống web (chọn 1 căn cứ) |
-| QLD6-M04 | Không | 13/11/2026 – đề xuất bỏ cho giống web |
+| QLD6-M03 | Không | 13/11/2026 – đã bỏ v355 |
+| QLD6-M04 | Không | 13/11/2026 – đã bỏ v355 |
 | QLD6-M05 | Có (giữ) | 13/11/2026 |
 
-Tổng kết 13/11/2026: đã trả lời đủ 94 mã (báo cáo thực có 76 mã W, 18 mã M; con số 73/16 ghi trước đây đếm thiếu). Mã W: 75 Có (chờ demo), 1 Không (QLD1-W03). Mã M: 10 giữ, 8 đề xuất bỏ (QLD2-M02…M06, QLD4-M02, QLD6-M03, QLD6-M04).
+Tổng kết 13/11/2026: đã trả lời đủ 94 mã (báo cáo thực có 76 mã W, 18 mã M; con số 73/16 ghi trước đây đếm thiếu). Mã W: 75 Có (chờ demo), 1 Không (QLD1-W03). Mã M: 10 giữ, 8 đề xuất bỏ (QLD2-M02…M06, QLD4-M02, QLD6-M03, QLD6-M04). Cập nhật v355: cả 6 nhóm đã demo và áp dụng (v350–v355, theo chuẩn Soạn đơn); 8 mã M đề xuất bỏ đã bỏ.
 
 ---
 
