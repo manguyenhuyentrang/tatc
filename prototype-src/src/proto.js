@@ -307,6 +307,26 @@ GROUPS2.forEach(function (g) {
 });
 Object.assign(BASE, { mg1DaGui: 'appDetailFee', mg1Ky: 'appDetailFee', mg1Sap: 'appDetailFee', mg3Err: 'mg2', rd3Chan: 'rd2', bp2Ky: 'bp1', bp2Khac: 'bp1', bp3Err: 'bp2', sd1Qua: 'appDetail', sd1Vo: 'appDetail', sd2Tep: 'sd1', sd2TepErr: 'sd1', sd3Err: 'sd2', trChanThuLy: 'appDetail', trChanChuaNhan: 'appDetail', tr2Bang: 'tr1', tr2BangErr: 'tr1', tr2Eform: 'tr1', tr2Ky: 'tr1', tr4Err: 'tr3', hgr1Nhap: 'mediationDone', hgr1Qua: 'mediationDone', hgr2: 'hgReview', hgr2err: 'hgReview', hgr3: 'hgr2', hgr3err: 'hgr2', hgr4: 'hgr3', hgrOk: 'hgr4' });
 
+
+/* v357: màn đã gửi khiếu nại lần hai, tố cáo tiếp, ý kiến dự thảo kết luận (web: thẻ kết quả) */
+Object.assign(SCR, {
+  knSecondOk: ['Khiếu nại lần hai (hành chính) – đã gửi', function () { return h(KnTiepOk, { title: 'Đã gửi đơn khiếu nại lần hai', goc: 'KN-2026-0012', ve: 'complaintDetail' }); }],
+  knSecondTtOk: ['Khiếu nại lần hai (tố tụng) – đã gửi', function () { return h(KnTiepOk, { title: 'Đã gửi đơn khiếu nại lần hai', goc: 'KNTT-2026-0009', ve: 'complaintTtDone' }); }],
+  knNextOk: ['Tố cáo tiếp – đã gửi', function () { return h(KnTiepOk, { title: 'Đã gửi văn bản tố cáo tiếp', goc: 'TC-2026-0004', ve: 'complaintDetailTc' }); }],
+  knOpinionOk: ['Cho ý kiến dự thảo kết luận – đã gửi', function () { return h(KnTiepOk, { title: 'Đã gửi ý kiến về dự thảo kết luận', goc: 'TC-2026-0004', ve: 'complaintDetailTc' }); }]
+});
+GROUPS2.forEach(function (g) { var j = g[1].indexOf('knOpinion'); if (j >= 0) g[1].splice(j + 1, 0, 'knSecondOk', 'knSecondTtOk', 'knNextOk', 'knOpinionOk'); });
+Object.assign(BASE, { knSecondOk: 'complaintDetail', knSecondTtOk: 'complaintTtDone', knNextOk: 'complaintDetailTc', knOpinionOk: 'complaintDetailTc' });
+
+
+/* v358: trạng thái nút hành động trong văn bản tống đạt */
+Object.assign(SCR, {
+  mailDetailChuaLink: ['Văn bản tống đạt – nút chưa có đường dẫn (chức năng đang được cập nhật)', function () { return h(MailDetailScr, { i: 1 }); }],
+  mailDetailKhoa: ['Văn bản tống đạt – nút bị khóa, không có lý do từ hệ thống', function () { return h(MailDetailScr, { i: 0, khoa: true }); }]
+});
+GROUPS2.forEach(function (g) { var j = g[1].indexOf('mailDetailThay'); if (j >= 0) g[1].splice(j + 1, 0, 'mailDetailChuaLink', 'mailDetailKhoa'); });
+Object.assign(BASE, { mailDetailChuaLink: 'inbox', mailDetailKhoa: 'inbox' });
+
 function baseOf(id) {
   var b = BASE[id];
   if (b) return baseOf(b).concat([b]);

@@ -2225,3 +2225,27 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 .q5-yc{display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--border)}
 .q5-yc-h{display:flex;align-items:center;justify-content:space-between}.q5-yc-h b{font:700 13px/18px var(--font-sans);color:var(--brand,#C8102E);text-transform:uppercase;letter-spacing:.4px}
 .q5-tong{margin:4px 0 0;font:600 13px/18px var(--font-sans);color:var(--ink-muted)}.q5-tong b{color:var(--brand,#C8102E)}
+/* v356: khối đầu Chi tiết hồ sơ khiếu nại, tố cáo rộng 100% như các khối bên dưới */
+.ph-steps > section.tly-head{margin-inline:0;padding:16px;border-radius:0;box-shadow:none;border-bottom:1px solid var(--border)}
+/* v356: Tiến trình – vòng biểu tượng 20px (hình 12px), tên bước 14px */
+.tp-tl-item{grid-template-columns:20px 1fr}
+.tp-tl-item::before{left:9px;top:22px}
+.tp-tl-dot{width:20px;height:20px}
+.tp-tl-dot .tp-ico{width:12px;height:12px}
+.tp-tl-title{font-size:14px;line-height:20px}
+/* v357: soạn đơn khiếu nại, tố cáo theo chuẩn Soạn đơn */
+.kn-tt-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 4px}.kn-tt-h b{font:600 15px/22px var(--font-sans);color:var(--ink)}
+.kn-vb-h{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;width:100%;flex-wrap:wrap}
+.kn-vb .kn-vb-btn{width:100%;margin-top:4px}
+/* v358: Hộp thư tống đạt bổ sung theo web */
+.ib-nav-ic{position:relative;display:inline-flex}
+.ib-nav-ic[data-n]::after{content:attr(data-n);position:absolute;top:-6px;left:calc(100% - 8px);min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:999px;background:var(--danger);color:#fff;font:700 11px/18px var(--font-sans);text-align:center;box-shadow:0 0 0 2px var(--surface)}
+.ib-khoa-ly{display:flex;align-items:flex-start;gap:6px;margin:-2px 0 2px;font:400 13px/18px var(--font-sans);color:var(--ink-muted)}.ib-khoa-ly svg{width:14px;height:14px;flex:none;margin-top:2px}
+/* v359: Nghĩa vụ tài chính – thẻ khoản theo thẻ danh sách chuẩn */
+.qc .nv-ban{margin:0;align-self:stretch}.nv-ban svg{width:14px;height:14px;flex:none;margin-top:1px}
+.nv-ban-danger{background:var(--danger-tint)}.nv-ban-danger svg{color:var(--danger)}
+.nv-ban-warning{background:var(--warning-tint)}.nv-ban-warning svg{color:var(--warning-ink,#8A5A00)}
+.nv-ban-info svg{color:var(--info,#1D5FD1)}
+.nv-c .nv-amt-cxd{font-size:inherit;line-height:inherit;color:var(--ink-muted)!important}
+/* v360: mũi tên ">" xoay xuống khi mở danh sách loại đơn */
+.rn-row .tp-ico{transition:transform .2s}.rn-row .rn-xoay90{transform:rotate(90deg)}
