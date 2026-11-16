@@ -98,7 +98,7 @@ function Proceedings() {
 var PS_TABS = [{ key: 'info', label: 'Thông tin chung' }, { key: 'don', label: 'Đơn trong vụ việc' }, { key: 'stages', label: 'Các cấp xét xử' }, { key: 'hearings', label: 'Lịch phiên tòa' }, { key: 'docs', label: 'Văn bản tống đạt' }, { key: 'evidence', label: 'Tài liệu, chứng cứ' }, { key: 'judgments', label: 'Bản án / Quyết định' }, { key: 'process', label: 'Lịch sử vụ việc' }];
 function ProceedingDetail() {
   var ten = 'Yêu cầu mở thủ tục phá sản Công ty TNHH Thương mại Minh Phát', soTL = h('span', { className: 'tp-num' }, '[Số thụ lý]');
-  return h(DtScreen, { title: 'Chi tiết vụ việc', tabLabel: 'Nội dung chi tiết vụ việc', tabs: PS_TABS, pre: null, headCls: 'dt-head-don',
+  return h(DtScreen, { title: 'Chi tiết vụ việc', tabLabel: 'Nội dung chi tiết vụ việc', tabs: PS_TABS, pre: null, headCls: 'dt-head-don', foot: function (t) { return t === 'info' ? h(PsTaoVb) : null; }, /* v395: Tạo văn bản (UC-115) */
     meta: h(F, null, h('span', { className: 'tp-num' }, 'PS-2026-0001'), ' · Phá sản'), name: ten,
     badges: h(F, null, h(T.StatusBadge, { tone: 'info', icon: false }, 'Đang giải quyết'), h('span', { className: 'dt-role' }, 'Tư cách của bạn: ', h('b', null, 'Chủ nợ'))),
     headExtra: h(T.CaseProgress, { label: 'Cấp xét xử', steps: ['Thụ lý', 'Sơ thẩm', 'Phúc thẩm'], current: 1 }),

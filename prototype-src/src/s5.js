@@ -4691,3 +4691,65 @@ function FileUploadD(p) {
       h('label', { className: 'tp-upload-add' }, h('input', { type: 'file', className: 'tp-file-input', multiple: true }), h('span', { className: 'tp-sr' }, p.uploadLabel || 'Tải lên tài liệu'), h(T.Icon, { name: 'plus' }))));
 }
 T.FileUpload = FileUploadD;
+
+/* ===== v395: Văn bản phát sinh của đơn yêu cầu phá sản, phục hồi (web /quan-ly-don/$id/phps, UC-115 ND-03..06).
+   Lối vào: nút "Tạo văn bản" ở tab Thông tin chung của chi tiết vụ việc → bảng chọn từ đáy, nhóm "Quản lý đơn yêu cầu đã nộp";
+   mục chưa gửi được hiện mờ kèm lý do. 4 bước như web; bước cuối thêm ký số (quy tắc Mobile: mọi đơn ký số). Dữ liệu mẫu. ===== */
+var PS_VB = {
+  nd03: { ten: 'Sửa đổi, bổ sung đơn', tuTd: true, nd: 'Nội dung đã sửa đổi, bổ sung', goiY: 'Trình bày nội dung đã sửa đổi, bổ sung theo từng yêu cầu của Tòa án.', tl: 'Tài liệu sửa đổi, bổ sung theo thông báo', bb: true,
+    camDoan: 'Tôi cam đoan nội dung sửa đổi, bổ sung và tài liệu kèm theo là đúng sự thật.', canCu: 'Luật Phá sản 142/2025: Điều 25 khoản 2 điểm b; Điều 39 khoản 2 điểm b', td: 'Thông báo sửa đổi, bổ sung đơn' },
+  nd04: { ten: 'Đề nghị xem xét lại việc trả lại đơn', tuTd: true, nd: 'Nội dung đề nghị xem xét lại', goiY: 'Nêu căn cứ cho rằng việc trả lại đơn chưa đúng.', tl: 'Tài liệu chứng minh',
+    camDoan: 'Tôi cam đoan nội dung đề nghị và tài liệu kèm theo là đúng sự thật.', canCu: 'Luật Phá sản 142/2025: Điều 25 khoản 4; Điều 39 khoản 4', td: 'Thông báo trả lại đơn', guiDen: 'Chánh án ' + COURT1 },
+  nd05: { ten: 'Rút đơn yêu cầu mở thủ tục phá sản', nd: 'Lý do rút đơn', goiY: 'Nêu lý do bạn đề nghị Tòa án cho rút đơn.', tl: 'Tài liệu kèm theo', lead: 'Đề nghị Tòa án cho rút đơn. Việc rút chỉ có hiệu lực khi Tòa án chấp nhận.',
+    camDoan: 'Tôi hiểu hệ quả của việc rút đơn và tự nguyện đề nghị Tòa án cho rút đơn.', canCu: 'Luật Phá sản 142/2025: Điều 39 khoản 3 điểm d' },
+  nd06: { ten: 'Rút đơn yêu cầu áp dụng thủ tục phục hồi', nd: 'Lý do rút đơn', goiY: 'Nêu lý do bạn đề nghị Tòa án cho rút đơn.', tl: 'Tài liệu kèm theo', lead: 'Đề nghị Tòa án cho rút đơn. Việc rút chỉ có hiệu lực khi Tòa án chấp nhận.', phucHoi: true,
+    camDoan: 'Tôi hiểu hệ quả của việc rút đơn và tự nguyện đề nghị Tòa án cho rút đơn.', canCu: 'Luật Phá sản 142/2025: Điều 37 khoản 1 điểm a' } };
+var PS_STEPS = ['Người gửi', 'Nội dung', 'Tài liệu', 'Xem lại & ký gửi'];
+var PS_DON = 'TN-20261008-0004';
+/* bảng chọn "Tạo văn bản": [mã, dòng phụ, lý do khóa] – mẫu đơn phá sản đã thụ lý */
+var PS_MENU = [['nd03', 'Theo văn bản số [Số thông báo] · hạn [Hạn bổ sung]', null], ['nd04', null, 'Chưa có thông báo trả lại đơn của Tòa án.'], ['nd05', null, 'Đơn đã được thụ lý hoặc đã bị trả lại.']];
+function PsTaoVb(p) {
+  p = p || {};
+  var o = React.useState(!!p.open), anchor = React.useRef(null), host = useHost(anchor), menu = p.menu || PS_MENU;
+  return h(T.ActionBar, null, h('div', { className: 'tao-wrap tao-bar' }, h('span', { ref: anchor, hidden: true }),
+    h(T.Button, { block: true, variant: 'tint', icon: 'plus', onClick: function () { o[1](true); } }, 'Tạo văn bản')),
+    o[0] && host ? h(LvSheet, { host: host, title: 'Tạo văn bản', onClose: function () { o[1](false); } },
+      h('div', { className: 'tc3' }, h('section', null, h('p', { className: 'tc-gh' }, 'Quản lý đơn yêu cầu đã nộp'), h('ul', { className: 'tc3-l' }, menu.map(function (x) {
+        var c = PS_VB[x[0]], khoa = !!x[2];
+        return h('li', { key: x[0] }, h('button', { type: 'button', className: 'tc3-it ps-it', disabled: khoa, 'aria-disabled': khoa, 'data-pt-go': khoa ? undefined : 'ps' + x[0].slice(2) + '_1' },
+          h('span', { className: 'td3 td-do', 'aria-hidden': 'true' },
+            h('svg', { viewBox: '0 0 40 40', className: 'td3-doc' }, h('path', { d: 'M9 4h15l7 7v23a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z', className: 'td3-p' }), h('path', { d: 'M24 4v7h7', className: 'td3-f' }), h('path', { d: 'M12 16h12M12 21h14M12 26h8', className: 'td3-l' })),
+            h('span', { className: 'td3-b' }, h(T.Icon, { name: /^nd0[56]/.test(x[0]) ? 'logout' : x[0] === 'nd04' ? 'swap' : 'pen' }))),
+          h('span', { className: 'tc-t' }, c.ten, x[1] ? h('small', { className: 'ps-it-s' }, x[1]) : null, khoa ? h('small', { className: 'ps-it-s ps-it-k' }, x[2]) : null)));
+      }))))) : null);
+}
+function PsWz(m, n, body) { var c = PS_VB[m]; return Wz({ title: c.ten, steps: PS_STEPS, n: n, go: 'ps' + m.slice(2) + '_' + (n + 1), body: body }); }
+function PsVanBanRows(c) { return c.tuTd ? [['Văn bản căn cứ', h(F, null, h('span', { className: 'tp-num' }, '[Số thông báo]'), ' ngày [Ngày tống đạt]')], ['Hạn', c.bb ? '[Hạn bổ sung]' : '[Hạn]']] : []; }
+function Ps1(p) {
+  var c = PS_VB[p.m];
+  return PsWz(p.m, 1, h(F, null, c.lead ? Lead(c.lead) : null,
+    FCard('Người gửi và nơi nhận', h(F, null, P('Thông tin lấy tự động, không sửa được.', 'ph-muted'),
+      RvKV([['Người gửi', laTC() ? TC_TEN : 'Hoàng Dương'], ['Gửi đến', c.guiDen || COURT1], ['Đơn yêu cầu', h('span', { className: 'tp-num' }, PS_DON)], ['Loại đơn', c.phucHoi ? 'Đơn yêu cầu áp dụng thủ tục phục hồi' : 'Đơn yêu cầu mở thủ tục phá sản'], ['Loại văn bản', c.ten]].concat(PsVanBanRows(c), [['Căn cứ pháp lý', c.canCu]]))), true)));
+}
+function Ps2(p) {
+  var c = PS_VB[p.m], v = React.useState('');
+  return PsWz(p.m, 2, h(F, null,
+    c.tuTd ? FCard('Nội dung Tòa án yêu cầu', P('[Nội dung yêu cầu trong ' + c.td.toLowerCase() + ']'), true) : null,
+    Blk(null, n7Tf(c.nd, v, { required: true, min: 10, max: 4000, placeholder: c.goiY }), { cls: 'bx-blk' })));
+}
+function Ps3(p) { var c = PS_VB[p.m]; return PsWz(p.m, 3, n7Tep(c.tl + (c.bb ? ' (bắt buộc).' : ''), c.bb ? 'PDF, JPG, PNG, DOCX · tối đa 10MB/tệp. Bắt buộc tải lên ít nhất 1 tệp.' : undefined, undefined, false)); }
+function Ps4(p) {
+  var c = PS_VB[p.m];
+  return h(KyGuiDon, { title: c.ten, steps: PS_STEPS, ok: 'ps' + p.m.slice(2) + 'Ok', tep: [c.ten + '.pdf'], tepMeta: 'Bản in văn bản', vaiTro: 'Chủ nợ',
+    top: FCard('Xem lại trước khi gửi', RvKV([['Loại văn bản', c.ten], ['Gửi đến', c.guiDen || COURT1], ['Đơn yêu cầu', h('span', { className: 'tp-num' }, PS_DON)]].concat(c.tuTd ? [['Văn bản căn cứ', h('span', { className: 'tp-num' }, '[Số thông báo]')]] : [], [[c.nd, '[' + c.nd + ']'], ['Tài liệu', c.bb ? 'tai-lieu-sua-doi-bo-sung.pdf' : 'Không có']])), true),
+    bottom: HopGhi('Sau khi gửi', 'Văn bản được gửi sang Tòa án. Lỗi kết nối thì văn bản chưa được gửi, bạn có thể gửi lại.'),
+    camDoan: c.camDoan });
+}
+function PsOk(p) {
+  var c = PS_VB[p.m];
+  return h(OkScr, { title: 'Đã gửi ' + c.ten.toLowerCase(), text: 'Kết quả xử lý hiện trên chi tiết đơn khi Tòa án gửi văn bản.',
+    info: [['Số tiếp nhận', 'Đang chờ Tòa án cấp'], ['Đơn liên quan', h('span', { className: 'tp-num' }, PS_DON)], ['Trạng thái', 'Đã gửi, chờ Tòa án xử lý']],
+    btns: h(F, null, Btn('Xem chi tiết vụ việc', 'primary', { 'data-pt-go': 'reset:records,proceedings,proceedingDetail' }), Btn('Về Vụ việc phục hồi phá sản', 'secondary', { 'data-pt-go': 'reset:records,proceedings' })) });
+}
+function PsTaoMo() { return h(ProceedingDetail); }
+
