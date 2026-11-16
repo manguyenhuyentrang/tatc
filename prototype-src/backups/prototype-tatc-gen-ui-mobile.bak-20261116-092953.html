@@ -3639,6 +3639,20 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 .ct-l-B .ct-it{padding:12px 0;border-bottom:1px solid var(--border)}.ct-l-B li:last-child .ct-it{border-bottom:0}
 .ct-l-B .ct-tx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}.ct-l-B .ct-on b{color:var(--brand-text)}
 .ct-c{display:flex;flex-direction:column;gap:4px}.ct-c .ct-l{margin-top:4px}
+/* v374: thẻ thủ tục không có ô tròn */
+.ct-l-A .ct-it{padding:12px 14px}
+/* v376: khối hành động đầu màn chi tiết – mỗi hành động một thẻ cùng kiểu (nền vàng như thẻ đầu, nội dung + hạn trái, nút phải) */
+.tdx{display:flex;flex-direction:column;gap:8px}
+.tdx-c{position:relative;display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:var(--radius-lg);background:var(--warning-tint);box-shadow:inset 0 0 0 1px var(--warning-border)}
+.tdx-c.tdx-dong{padding-right:40px}
+.tdx-r{display:flex;align-items:center;gap:10px}
+.tdx-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.tdx-nd{font:700 14px/20px var(--font-sans);color:var(--ink)}
+.tdx-han{display:flex;align-items:center;gap:6px;margin:0;font:500 12px/16px var(--font-sans)}.tdx-han .tp-ico{flex:none;width:14px;height:14px}
+.tdx-han-warning{color:var(--warning-ink,#8A5A00)}.tdx-han-danger{color:var(--danger)}.tdx-han-0{color:var(--ink-muted)}
+.tdx-c .tdx-btn{flex:0 0 auto;max-width:46%;width:auto;height:auto;min-height:36px;white-space:normal;line-height:16px;padding-top:6px;padding-bottom:6px;text-align:center}
+.tdx-lb{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tdx-c .q3-note{margin:0}
 
 /* Bố cục: bảng điều khiển trái + sân khấu điện thoại; một giao diện sáng cố định (app chỉ có chế độ sáng) */
 :root{color-scheme:light;--pt-bg:#e3e7ee;--pt-panel:#ffffff;--pt-line:#d5dbe4;--pt-hot:#1d6fd8;--pt-hot-tint:#e8f0fc;--pt-shell:#1b2230}
@@ -5738,14 +5752,14 @@ var DT_ND = ['Ngày 05/01/2026, tôi cho ông Trần Văn Bình vay 500.000.000 
 function DtNoiDung(p) {
   var mo = React.useState(false);
   if (p.kieu === 'file') return h('div', { className: 'nd-v' },
-    h('dl', { className: 'ph-rvkv' }, h('div', null, h('dt', null, 'Cách nhập nội dung'), h('dd', null, 'Tải đơn có sẵn'))),
+    /* v375: bỏ dòng "Cách nhập nội dung: Tải đơn có sẵn" */
     h('div', { className: 'nd-file' }, h('span', { className: 'nd-file-ic', 'aria-hidden': 'true' }, 'PDF'),
       h('div', { className: 'nd-file-tx' }, h('b', null, 'Đơn khởi kiện tự soạn'), h('small', null, 'don-khoi-kien-nguyen-minh-an.pdf · 1,2 MB'), h('small', null, 'Loại tài liệu: Đơn khởi kiện'),
         h(T.StatusBadge, { tone: 'success', icon: false }, 'Đã ký số')),
       h('div', { className: 'nd-file-b' }, IcoBtn('eye', 'Xem đơn'), IcoBtn('download', 'Tải về'))),
     h('p', { className: 'nd-note' }, h(T.Icon, { name: 'info' }), 'Nội dung đơn nằm trong tệp bạn đã tải lên. Mở tệp để xem đầy đủ.'));
   return h('div', { className: 'nd-v' },
-    h('dl', { className: 'ph-rvkv' }, h('div', null, h('dt', null, 'Cách nhập nội dung'), h('dd', null, 'Nhập thông tin'))),
+    /* v375: bỏ dòng "Cách nhập nội dung: Nhập thông tin" */
     h('div', { className: 'nd-text' + (mo[0] ? ' nd-open' : '') }, DT_ND.map(function (x, i) { return h('p', { key: i }, x); })),
     h('button', { type: 'button', className: 'vk-link nd-more', onClick: function () { mo[1](!mo[0]); } }, mo[0] ? 'Thu gọn' : 'Xem đầy đủ', h(T.Icon, { name: 'chevronDown', className: mo[0] ? 'nd-up' : undefined })),
     h('div', { className: 'nd-file nd-file-in' }, h('span', { className: 'nd-file-ic', 'aria-hidden': 'true' }, 'PDF'),
@@ -12081,6 +12095,77 @@ function ChooseKn(p) {
         nh[0] ? h('p', { className: 'ph-s1-law' }, h('b', null, KnTenNhom(nh[0])), ' · ' + so + ' thủ tục') : null),
       nh[0] ? h('section', { className: 'ph-s1-sec' }, Hd('Thủ tục', 1), h(KnThuTucPa, { pa: 'A', nhom: nh[0], v: tt[0], onChange: tt[1] }), t ? KnChiTiet2(t) : null) : null),
     h('div', { className: 'ph-foot' }, Bar(Btn('Bắt đầu khai đơn', 'primary', t ? { 'data-pt-go': knDau(t) + '1' } : { disabled: true }))));
+}
+
+/* ===== v374: Chọn thủ tục khiếu nại, tố cáo – bỏ ô tròn chọn trên thẻ; chạm thẻ chỉ đánh dấu, bấm "Áp dụng" ở chân bảng mới chọn và đóng bảng ===== */
+function CtList(p) {
+  return h('ul', { className: 'ct-l ct-l-' + p.pa, role: 'radiogroup', 'aria-label': 'Thủ tục' }, p.items.map(function (t) {
+    var on = p.v === t.ma;
+    return h('li', { key: t.ma }, h('button', { type: 'button', role: 'radio', 'aria-checked': on, className: 'ct-it' + (on ? ' ct-on' : ''), onClick: function () { p.onPick(t.ma); } },
+      h('span', { className: 'ct-tx' }, h('b', null, t.ten), h('small', null, t.desc))));
+  }));
+}
+function KnThuTucPa(p) {
+  var o = React.useState(!!p.open), q = React.useState(''), tam = React.useState(p.v || ''), anchor = React.useRef(null), host = useHost(anchor);
+  var list = KN_TT.filter(function (t) { return t.n === p.nhom; }), cur = list.filter(function (t) { return t.ma === p.v; })[0];
+  var kq = khongDau(q[0].trim()), loc = list.filter(function (t) { return !kq || khongDau(t.ten + ' ' + t.desc).indexOf(kq) >= 0; });
+  var tim = list.length > 6 ? h('div', { className: 'fx-search' }, Tf('Tìm thủ tục', { icon: 'search', placeholder: 'Tìm theo nội dung, VD: kỷ luật, mua sắm, đạo đức…', value: q[0], onChange: function (e) { q[1](e.target.value); }, onClear: function () { q[1](''); } })) : null;
+  return h(F, null, h('span', { ref: anchor, hidden: true }),
+    h(T.SelectField, { label: 'Thủ tục', placeholder: '— Chọn thủ tục —', value: cur ? cur.ten : undefined, open: o[0], onClick: function () { q[1](''); tam[1](p.v || ''); o[1](true); } }),
+    o[0] && host ? h(LvSheet, { host: host, title: 'Chọn thủ tục', onClose: function () { o[1](false); }, top: h(F, null, tim, h('p', { className: 'ct-dem' }, KnTenNhom(p.nhom) + ' · ' + loc.length + ' thủ tục')),
+      foot: h(T.Button, { block: true, disabled: !tam[0], onClick: function () { p.onChange(tam[0]); o[1](false); } }, 'Áp dụng') },
+      loc.length ? h(CtList, { pa: 'A', items: loc, v: tam[0], onPick: tam[1] }) : h('p', { className: 'ph-lv-empty' }, 'Không có thủ tục nào khớp «' + q[0] + '».')) : null);
+}
+
+/* ===== v376 (16/11/2026): khối hành động đầu màn chi tiết – mỗi hành động một thẻ (người dùng chọn PA B, các thẻ cùng kiểu).
+   Mỗi thẻ: nội dung yêu cầu + hạn bên trái, nút hành động bên phải (tối đa 2 dòng chữ). Các thẻ cùng kiểu thẻ đầu: nền vàng, nút chính; mức gấp thể hiện ở màu dòng hạn.
+   Hạn theo web: mỗi hành động có hạn riêng theo ma trận tống đạt – hành động (hanhDongMaTran[].han / ngayHan; null = không giới hạn thời hạn).
+   Hành động phụ cùng trả lời một yêu cầu có hạn (VD hết hạn bổ sung) dùng hạn của yêu cầu đó; chưa xác định được thì [Hạn thực hiện].
+   Bỏ nút mũi tên xuống và bảng chọn từ đáy. ===== */
+var TDX_INFO = {
+  'Đề nghị miễn, giảm án phí': { nd: 'Đề nghị miễn, giảm tạm ứng án phí', han: 'Hạn [Hạn đề nghị miễn, giảm]' },
+  'Lập đơn mới từ đơn này': { han: null },
+  'Khiếu nại việc trả lại đơn (Trong 10 ngày)': { nd: 'Khiếu nại việc trả lại đơn', han: 'Hạn cuối [Hạn khiếu nại] · trong 10 ngày', l: 'Khiếu nại việc trả lại đơn' },
+  'Đề nghị thay đổi hòa giải viên': { han: 'Hạn [Hạn đề nghị thay đổi]' },
+  'Đề nghị thay đổi người đối thoại': { han: 'Hạn [Hạn đề nghị thay đổi]' },
+  'Vào phòng họp trực tuyến': { nd: 'Tham gia phiên họp trực tuyến', han: null },
+  'Rút đơn khởi kiện': { nd: 'Yêu cầu rút đơn khởi kiện', han: null },
+  'Xem văn bản': { nd: 'Văn bản yêu cầu sửa đổi, bổ sung', han: null },
+  'Rút đơn': { han: null }
+};
+function tdxHan(txt, con, gap) {
+  return h('p', { className: 'tdx-han ' + (!txt ? 'tdx-han-0' : gap ? 'tdx-han-danger' : 'tdx-han-warning') }, h(T.Icon, { name: 'clock' }),
+    txt ? h('span', null, txt, con ? ' · ' : null, con ? h('strong', null, con) : null) : 'Không giới hạn thời hạn');
+}
+function tdxBtn(b) {
+  return h(T.Button, { size: 'sm', variant: 'primary', disabled: b.dis, className: 'tdx-btn' + (b.khoa ? ' q2-khoa' : ''), 'aria-label': (b.lb || b.l) + (b.khoa ? ', đang bị khóa: ' + b.khoa : ''), 'aria-disabled': b.khoa ? true : undefined, 'data-pt-go': b.dis ? undefined : b.khoa ? 'snack:' + b.khoa : b.go },
+    b.khoa ? h(T.Icon, { name: 'lock' }) : null, h('span', { className: 'tdx-lb' }, b.lb || b.l));
+}
+/* mỗi hành động → { nd, han, con, gap, b, note } */
+function tdxCards(o) {
+  var ds = o.btn ? [o.btn].concat(o.more || []) : (o.two || []);
+  var t = o.t, hanA = null, m = /^(.*) · hạn (\S+)$/.exec(o.t || '');
+  if (m) { t = m[1]; hanA = 'Hạn ' + m[2]; }
+  if (o.han && /^Hạn /.test(o.han)) hanA = o.han;
+  var gapA = o.tone === 'danger' || /quá hạn/.test(o.con || ''), i0 = ds[0] ? (TDX_INFO[ds[0].l] || {}) : {};
+  var hanYc = hanA; /* hạn của yêu cầu trong khối – hành động phụ chưa có hạn riêng dùng chung */
+  if (!hanA && i0.han) hanA = i0.han;
+  var noteA = o.note && !ds.some(function (x) { return x.khoa === o.note; }) ? o.note : null;
+  return [{ k: 'a', nd: t, han: hanA, con: o.con, gap: gapA, b: ds[0] ? Object.assign({}, ds[0], { lb: i0.l }) : null, note: noteA }]
+    .concat(ds.slice(1).map(function (b, i) {
+      var f = TDX_INFO[b.l] || {}, han = f.han !== undefined ? f.han : hanYc || '[Hạn thực hiện]';
+      return { k: 'p' + i, nd: f.nd || b.l, han: han, con: han === hanYc ? o.con : null, gap: han === hanYc && gapA, b: Object.assign({}, b, { lb: f.l }) };
+    }));
+}
+function DtViec(o) {
+  var an = React.useState(false);
+  if (an[0]) return null;
+  return h('div', { className: 'tdx', role: 'status' }, tdxCards(o).map(function (c) {
+    return h('section', { key: c.k, className: 'tdx-c' + (c.k === 'a' && o.dong ? ' tdx-dong' : '') },
+      c.k === 'a' && o.dong ? h('button', { type: 'button', className: 'q3-x', 'aria-label': 'Đóng thông báo', onClick: function () { an[1](true); } }, h(T.Icon, { name: 'x' })) : null,
+      h('div', { className: 'tdx-r' }, h('div', { className: 'tdx-t' }, h('b', { className: 'tdx-nd' }, c.nd), tdxHan(c.han, c.con, c.gap)), c.b ? tdxBtn(c.b) : null),
+      c.b && c.b.khoa ? h('p', { className: 'q3-note' }, c.b.khoa) : null, c.note ? h('p', { className: 'q3-note' }, c.note) : null);
+  }));
 }
 
 /* File 2: prototype bấm được, dùng lại các màn của file duyệt */

@@ -840,14 +840,14 @@ var DT_ND = ['Ngày 05/01/2026, tôi cho ông Trần Văn Bình vay 500.000.000 
 function DtNoiDung(p) {
   var mo = React.useState(false);
   if (p.kieu === 'file') return h('div', { className: 'nd-v' },
-    h('dl', { className: 'ph-rvkv' }, h('div', null, h('dt', null, 'Cách nhập nội dung'), h('dd', null, 'Tải đơn có sẵn'))),
+    /* v375: bỏ dòng "Cách nhập nội dung: Tải đơn có sẵn" */
     h('div', { className: 'nd-file' }, h('span', { className: 'nd-file-ic', 'aria-hidden': 'true' }, 'PDF'),
       h('div', { className: 'nd-file-tx' }, h('b', null, 'Đơn khởi kiện tự soạn'), h('small', null, 'don-khoi-kien-nguyen-minh-an.pdf · 1,2 MB'), h('small', null, 'Loại tài liệu: Đơn khởi kiện'),
         h(T.StatusBadge, { tone: 'success', icon: false }, 'Đã ký số')),
       h('div', { className: 'nd-file-b' }, IcoBtn('eye', 'Xem đơn'), IcoBtn('download', 'Tải về'))),
     h('p', { className: 'nd-note' }, h(T.Icon, { name: 'info' }), 'Nội dung đơn nằm trong tệp bạn đã tải lên. Mở tệp để xem đầy đủ.'));
   return h('div', { className: 'nd-v' },
-    h('dl', { className: 'ph-rvkv' }, h('div', null, h('dt', null, 'Cách nhập nội dung'), h('dd', null, 'Nhập thông tin'))),
+    /* v375: bỏ dòng "Cách nhập nội dung: Nhập thông tin" */
     h('div', { className: 'nd-text' + (mo[0] ? ' nd-open' : '') }, DT_ND.map(function (x, i) { return h('p', { key: i }, x); })),
     h('button', { type: 'button', className: 'vk-link nd-more', onClick: function () { mo[1](!mo[0]); } }, mo[0] ? 'Thu gọn' : 'Xem đầy đủ', h(T.Icon, { name: 'chevronDown', className: mo[0] ? 'nd-up' : undefined })),
     h('div', { className: 'nd-file nd-file-in' }, h('span', { className: 'nd-file-ic', 'aria-hidden': 'true' }, 'PDF'),

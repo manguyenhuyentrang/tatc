@@ -533,3 +533,6 @@ function ttApply(root) {
   mo.observe(document.body, { childList: true, subtree: true, characterData: true });
   chay();
 })();
+/* v379: đích của việc Xem kết quả */
+SCR.appTabVb = ['Chi tiết đơn – tab Văn bản tống đạt', function () { return h(DonChiTiet, { tab0: 'vb' }); }];
+Object.assign(BASE, { appTabVb: 'applications' });
