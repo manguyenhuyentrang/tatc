@@ -1389,8 +1389,7 @@ function HgReply(p) {
   var co = loai[0] === 'co', khong = loai[0] === 'khong', du = co ? !!pv[0] && !!hgv[0] : khong;
   var thongNhat = hgv[0] === 'tp' || hgv[0] === 'a';
   return SubS(ro ? 'Chi tiết trả lời lựa chọn ' + hg.ten + '' : 'Trả lời lựa chọn ' + hg.ten + '', h(F, null,
-    h('p', { className: 'nv-sub' }, 'Phiếu ý kiến — văn bản điện tử của Cổng' + (ro ? '' : ', ký số trước khi gửi')),
-    h(ChonThe, { label: 'Lựa chọn ' + hg.ten + '', v: loai[0], onPick: function (x) { if (!ro && !ky[0]) loai[1](x); }, items: [{ id: 'co', t: 'Đồng ý tham gia ' + hg.ten + '', d: 'Lựa chọn giải quyết tranh chấp qua ' + hg.ten + ' tiền tố tụng tại Tòa án và chọn ' + hg.Tv + '.' }, { id: 'khong', t: 'Không đồng ý ' + hg.ten + '', d: 'Chấm dứt ' + hg.ten + ' để Tòa án chuyển hồ sơ sang thụ lý vụ án theo quy định của pháp luật tố tụng (Điều 16.4.b).' }] }),
+    FCard('Lựa chọn ' + hg.ten, h(F, null, h('p', { className: 'nv-sub' }, 'Phiếu ý kiến — văn bản điện tử của Cổng' + (ro ? '' : ', ký số trước khi gửi')), h(ChonThe, { label: 'Lựa chọn ' + hg.ten + '', v: loai[0], onPick: function (x) { if (!ro && !ky[0]) loai[1](x); }, items: [{ id: 'co', t: 'Đồng ý tham gia ' + hg.ten + '', d: 'Lựa chọn giải quyết tranh chấp qua ' + hg.ten + ' tiền tố tụng tại Tòa án và chọn ' + hg.Tv + '.' }, { id: 'khong', t: 'Không đồng ý ' + hg.ten + '', d: 'Chấm dứt ' + hg.ten + ' để Tòa án chuyển hồ sơ sang thụ lý vụ án theo quy định của pháp luật tố tụng (Điều 16.4.b).' }] })), true) /* v387: gom vào khối trắng, không để trên nền */,
     FCard('Ý kiến của các đồng nguyên đơn', h(F, null, Lead('Vụ việc có 1 đồng nguyên đơn cùng đứng đơn. Nếu tất cả người khởi kiện và các đồng nguyên đơn thống nhất cùng chọn 01 ' + hg.Tv + ', Tòa án sẽ chỉ định theo lựa chọn đó. Nếu không thống nhất được, bạn có thể chọn phương án "Thẩm phán chỉ định" để gửi hồ sơ sang Tòa án giải quyết ngay mà không bị gián đoạn.'),
       h('ul', { className: 'hg-yk' }, h('li', null, h('div', null, h('b', null, 'Hoàng Dương'), h('small', null, 'Người khởi kiện (Bạn)')), h('span', null, khong ? 'Không đồng ý ' + hg.ten : hgv[0] === 'tp' ? 'Thẩm phán chỉ định' : hgv[0] ? (HG_HGV.filter(function (x) { return x.id === hgv[0]; })[0] || {}).name : '— Chưa chọn ' + hg.Tv + ' —'), ro ? h(T.StatusBadge, { tone: 'success', icon: false }, 'Đã gửi Tòa án (12/10/2026)') : h(T.StatusBadge, { tone: 'neutral', icon: false }, 'Đang thao tác')),
         h('li', null, h('div', null, h('b', null, 'Nguyễn Thị Lan'), h('small', null, 'Đồng nguyên đơn')), h('span', null, 'Nguyễn Văn An'), ro ? h(T.StatusBadge, { tone: 'success', icon: false }, 'Đã gửi Tòa án (13/10/2026)') : h(T.StatusBadge, { tone: 'warning', icon: false }, 'Đã lưu lựa chọn (01/11/2026)'))),
@@ -1401,8 +1400,7 @@ function HgReply(p) {
       h(SelSheet, { label: 'Phạm vi lựa chọn ' + hg.Tv + '', req: true, v: pv[0], ph: '— Chọn phạm vi —', opts: [{ id: 'cung', name: 'Thuộc Tòa án đang giải quyết' }, { id: 'khac', name: 'Thuộc Tòa án khác' }], onChange: pv[1] }),
       pv[0] === 'khac' ? h(SelSheet, { label: 'Tòa án nơi ' + hg.Tv + ' công tác', req: true, ph: '— Chọn Tòa án cùng khu vực —', opts: ['Tòa án nhân dân khu vực 2 - Hà Nội', 'Tòa án nhân dân khu vực 3 - Hà Nội'] }) : pv[0] ? Tf('Tòa án nơi ' + hg.Tv + ' công tác', { required: true, value: COURT1, readOnly: true }) : null,
       h(SelSheet, { label: 'Chọn ' + hg.Tv + '', req: true, v: hgv[0], ph: pv[0] ? '— Chọn ' + hg.Tv + ' —' : '— Chọn phạm vi ở trên, hoặc "Thẩm phán chỉ định" —', opts: (pv[0] === 'khac' ? HG_HGV.slice(0, 2) : HG_HGV).map(function (x) { return x.desc ? Object.assign({}, x, { desc: hg.Tv }) : x; }), onChange: hgv[1] })), true) : null,
-    khong ? Tf('Lý do không đồng ý', { multiline: true, maxLength: 500, value: ly[0], onChange: function (e) { ly[1](e.target.value); }, placeholder: 'Nhập lý do từ chối', help: ly[0].length + '/500' }) : null,
-    loai[0] ? Tf('Ghi chú (nếu có)', { multiline: true, maxLength: 500, value: gc[0], onChange: function (e) { gc[1](e.target.value); }, placeholder: 'Ý kiến/ghi chú bổ sung (không bắt buộc)' }) : null,
+    loai[0] ? FCard(khong ? 'Lý do và ghi chú' : 'Ghi chú', h(F, null, khong ? Tf('Lý do không đồng ý', { multiline: true, maxLength: 500, value: ly[0], onChange: function (e) { ly[1](e.target.value); }, placeholder: 'Nhập lý do từ chối', help: ly[0].length + '/500' }) : null, Tf('Ghi chú (nếu có)', { multiline: true, maxLength: 500, value: gc[0], onChange: function (e) { gc[1](e.target.value); }, placeholder: 'Ý kiến/ghi chú bổ sung (không bắt buộc)' })), true) : null, /* v387: gom vào khối trắng */
     ro ? null : h(HgKy, { ten: 'Văn bản ý kiến lựa chọn ' + hg.ten + '', du: du && (!co || thongNhat), chuaDu: !loai[0] ? 'Chọn Đồng ý hoặc Không đồng ý để ký số.' : 'Chọn đủ phạm vi, Tòa án và ' + hg.Tv + ' để ký số.', da: ky[0], onKy: function () { ky[1](true); }, onSua: function () { ky[1](false); }, khoa: 'Đơn đã ký số nên lựa chọn đã khóa.', sua: 'Sửa lựa chọn và ký lại' })),
     ro ? Bar(Btn('Đóng', 'secondary', { 'data-pt-go': 'back' })) : Bar(Btn('Lưu lựa chọn', 'secondary', ky[0] ? { disabled: true, title: 'Văn bản đã ký số — không lưu nháp nữa, hãy gửi Tòa án' } : { onClick: function () { ptSnack('Đã lưu lựa chọn. Các đồng nguyên đơn sẽ thấy lựa chọn của bạn.'); }, disabled: !loai[0] }), HgGui(ky[0], 'Đã gửi văn bản trả lời lựa chọn ' + hg.ten + ' đến Tòa án thành công.', 'Cần ký số đủ văn bản trả lời trước khi gửi')));
 }
@@ -2755,7 +2753,7 @@ function YkcOk() {
 var CC_STEPS = ['Yêu cầu của Tòa', 'Tài liệu', 'Xem lại & ký số'];
 function CcWz(n, body) { return Wz({ title: 'Cung cấp tài liệu, chứng cứ', steps: CC_STEPS, n: n, go: 'cc' + (n + 1), body: body }); }
 function Cc1() {
-  return CcWz(1, h(F, null, h(NvCall, { tone: 'warning', icon: 'clock', title: 'Hạn 15/11/2026 · còn 11 ngày.' }, ''),
+  return CcWz(1, h(F, null, null /* v389: bỏ dòng hạn đầu màn (hạn vẫn ở Hạn cung cấp trong khối Yêu cầu của Tòa án) */,
     FCard('Yêu cầu của Tòa án', h(F, null, Lead('Quyết định yêu cầu cung cấp tài liệu, chứng cứ — Mẫu số 12-DS.'),
       RvKV([['Số quyết định', h('span', { className: 'tp-num' }, '[Số quyết định]')], ['Tòa án ra quyết định', COURT1], ['Thẩm phán', 'Trần Văn Anh'], ['Vụ án', h('span', { className: 'tp-num' }, 'Mã DS-2026-0031')], ['Ngày nhận', '31/10/2026'], ['Hạn cung cấp', '15/11/2026']])), true),
     FCard('Tài liệu, chứng cứ Tòa án yêu cầu', h('ul', { className: 'n7-ul' }, h('li', null, h('b', null, 'Bản gốc hợp đồng đặt cọc ngày 05/01/2026')), h('li', null, h('b', null, 'Sao kê tài khoản từ 01/01/2026 đến 31/03/2026'))), true),
@@ -2764,7 +2762,7 @@ function Cc1() {
 }
 function Cc2() {
   var ko = React.useState(true), ten = React.useState('Sao kê tài khoản từ 01/01/2026 đến 31/03/2026'), ld = React.useState('Ngân hàng chưa cấp sao kê do tài khoản đã đóng; tôi đã gửi văn bản đề nghị ngày 01/11/2026 và đang chờ trả lời.');
-  return CcWz(2, h(F, null, FCard('Tài liệu, chứng cứ cung cấp', h(T.FileUpload, { kho: false, hint: 'PDF, JPG, PNG, DOCX · tối đa 10MB/tệp', uploadLabel: 'Tải lên tệp mới', libraryLabel: 'Chọn từ Kho dữ liệu cá nhân', files: [{ name: 'hop-dong-dat-coc-ban-goc.pdf', size: '1,6 MB' }] }), true),
+  return CcWz(2, h(F, null, FCard('Tài liệu, chứng cứ cung cấp', h(T.FileUpload, { goc: true /* v390: giữ kiểu khối tải tệp cũ theo yêu cầu */, kho: false, hint: 'PDF, JPG, PNG, DOCX · tối đa 10MB/tệp', uploadLabel: 'Tải lên tệp mới', libraryLabel: 'Chọn từ Kho dữ liệu cá nhân', files: [{ name: 'hop-dong-dat-coc-ban-goc.pdf', size: '1,6 MB' }] }), true),
     h('div', { className: 'ph-commit' }, h(T.Checkbox, { label: 'Có tài liệu, chứng cứ không cung cấp được.', checked: ko[0], onChange: function (e) { ko[1](e.target.checked); } })),
     ko[0] ? FCard('Tài liệu không cung cấp được', h(F, null, Tf('Tài liệu không cung cấp được', { required: true, value: ten[0], onChange: function (e) { ten[1](e.target.value); }, placeholder: 'Nhập tên tài liệu, chứng cứ không cung cấp được' }),
       n7Tf('Lý do và giải trình chi tiết', ld, { required: true, min: 30, max: 2000, placeholder: 'Nêu rõ lý do không cung cấp được và giải trình chi tiết' })), true) : null));
@@ -2795,9 +2793,8 @@ function Bx1(p) {
 }
 function Bx2(p) {
   var hu = React.useState(p.k === 'h' ? 'cc5' : 'hg1'), pv = React.useState('Giảm số tiền phong tỏa từ 650.000.000 đ xuống 420.000.000 đ trên cùng tài khoản'), ld = React.useState('Số tiền tranh chấp đã giảm sau khi tôi rút một phần yêu cầu ngày 25/10/2026.'), cc = React.useState('Căn cứ phong tỏa không còn vì bị đơn đã thanh toán toàn bộ số tiền tranh chấp ngày 28/10/2026.');
-  if (p.k === 'h') return BxWz('h', 2, h(F, null, FCard('Căn cứ đề nghị hủy bỏ', h(F, null, Lead('Chọn căn cứ đề nghị hủy bỏ biện pháp khẩn cấp tạm thời.'), h(ChonThe, { label: 'Căn cứ đề nghị hủy bỏ', v: hu[0], onPick: hu[1], items: BX_CANCU.map(function (x, i) { return { id: 'cc' + i, t: x }; }) })), true),
-    FCard('Trình bày căn cứ hủy bỏ', n7Tf('Trình bày căn cứ hủy bỏ', cc, { required: true, min: 20, max: 2000, placeholder: 'Ngày… bị đơn đã thanh toán toàn bộ số tiền tranh chấp nên căn cứ phong tỏa không còn…' }), true),
-    HopGhi('Sau khi gửi', 'Biện pháp bảo đảm được xem xét trả lại · Người bị áp dụng được khôi phục quyền.')));
+  if (p.k === 'h') return BxWz('h', 2, h(F, null, Blk(null, h(F, null, h(SelSheet, { label: 'Căn cứ đề nghị hủy bỏ', req: true, title: 'Chọn căn cứ đề nghị hủy bỏ', ph: '— Chọn căn cứ —', v: hu[0], onChange: hu[1], opts: BX_CANCU.map(function (x, i) { return { id: 'cc' + i, name: x }; }) }) /* v392: bỏ lời dẫn; căn cứ thành ô chọn mở bảng từ đáy */,
+    n7Tf('Trình bày căn cứ hủy bỏ', cc, { required: true, min: 20, max: 2000, placeholder: 'Ngày… bị đơn đã thanh toán toàn bộ số tiền tranh chấp nên căn cứ phong tỏa không còn…' })), { cls: 'bx-blk' }))); /* v392: bỏ ghi chú "Sau khi gửi" · v393: gộp 1 khối, bỏ tiêu đề và thu gọn */
   return BxWz('t', 2, h(F, null, FCard('Bạn muốn thay đổi theo hướng nào?', h(ChonThe, { label: 'Hướng thay đổi', v: hu[0], onPick: hu[1], items: BX_HUONG.map(function (x, i) { return { id: 'hg' + i, t: x }; }) }), true),
     FCard('Phạm vi, đối tượng sau khi thay đổi', n7Tf('Phạm vi, đối tượng sau khi thay đổi', pv, { required: true, max: 2000, help: 'Ghi rõ tài sản, tài khoản, số tiền hoặc hành vi bị hạn chế sau điều chỉnh, để Tòa án ra quyết định đúng phạm vi.' }), true),
     FCard('Trình bày lý do thay đổi', n7Tf('Trình bày lý do thay đổi', ld, { required: true, min: 20, max: 2000, placeholder: 'Số tiền tranh chấp đã giảm sau khi tôi rút một phần yêu cầu ngày…' }), true),
@@ -4665,7 +4662,7 @@ QD = QD_VK.concat(QD.filter(function (d) { return d.k === 'phasan'; }));
    Không có ô Kho ở luồng web không cho chọn từ kho (Cung cấp tài liệu, chứng cứ; Thay đổi / Hủy bỏ BPKCTT – kho: false). Giữ khối thử ký tệp. ===== */
 var FU_GOC = T.FileUpload;
 function FileUploadC(p) {
-  if (p.uploadLabel === 'Chọn tài liệu PDF') return h(FU_GOC, p);
+  if (p.uploadLabel === 'Chọn tài liệu PDF' || p.goc) return h(FU_GOC, p); /* v390: p.goc – dùng khối tải tệp gốc */
   var files = p.files || [], kho = p.kho !== false;
   return h('div', { className: 'fuc' }, p.title ? h('p', { className: 'fuc-t' }, p.title) : null, p.hint || files.length ? h('p', { className: 'fuc-h' }, h('span', null, p.hint || ''), files.length ? h('span', { className: 'tp-num' }, files.length + ' / ' + (p.max || 10) + ' tệp') : null) : null,
     files.length ? h('ul', { className: 'ph-tlr' }, files.map(function (f) {
@@ -4678,3 +4675,19 @@ function FileUploadC(p) {
       kho ? h('button', { type: 'button', className: 'ph-up2-it' }, h('span', { className: 'ph-up3-ic' }, h(T.Icon, { name: 'folder' })), h('b', null, 'Từ kho dữ liệu cá nhân')) : null));
 }
 T.FileUpload = FileUploadC;
+
+/* v391 (16/11/2026): khối tải tệp KHÔNG có nguồn Kho dữ liệu cá nhân dùng kiểu như màn Cung cấp tài liệu, chứng cứ (màn có Kho giữ kiểu v384): dòng số tệp, thẻ tệp có nhãn PDF, hàng "Tải lên …" có nút tròn "+" (viền nhạt) */
+function FileUploadD(p) {
+  if (p.uploadLabel === 'Chọn tài liệu PDF' || p.goc) return h(FU_GOC, p);
+  if (p.kho !== false) return FileUploadC(p);
+  var files = p.files || [];
+  return h('div', { className: 'tp-upload-list fub' }, p.hint ? P(p.hint, 'ph-muted fub-h') : null,
+    files.length ? h('div', { className: 'tp-upload-head' }, h('span'), h('span', { className: 'tp-num' }, files.length + ' / ' + (p.max || 10) + ' tệp')) : null,
+    files.length ? h('ul', { className: 'tp-files' }, files.map(function (f) {
+      return h('li', { key: f.name, className: 'tp-file' }, h('span', { className: 'tp-file-type', 'aria-hidden': 'true' }, 'PDF'),
+        h('span', { className: 'tp-file-text' }, h('span', { className: 'tp-file-name' }, f.name), f.meta || f.size ? h('span', { className: 'tp-file-meta' }, f.meta || f.size) : null));
+    })) : null,
+    h('div', { className: 'tp-upload-row' }, h('span', { className: 'tp-upload-ico' }, h(T.Icon, { name: 'upload' })), h('span', { className: 'tp-upload-row-text' }, h('span', null, p.uploadLabel || 'Tải lên tài liệu')),
+      h('label', { className: 'tp-upload-add' }, h('input', { type: 'file', className: 'tp-file-input', multiple: true }), h('span', { className: 'tp-sr' }, p.uploadLabel || 'Tải lên tài liệu'), h(T.Icon, { name: 'plus' }))));
+}
+T.FileUpload = FileUploadD;
