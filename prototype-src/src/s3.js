@@ -802,7 +802,7 @@ function PersonBody(pp) {
   var ro = pp.ro, pre = pp.pre, dat = pp.dat;
   var d = ro ? (dat || ME_MAU) : null, co = !!dat;
   var kind = React.useState((pre && pre.loai) || (ro && !co && laTC() ? 'tc' : 'cn')); /* v333 */
-  var seg = h(T.SegmentedControl, { label: ro && !co ? 'Loại người khởi kiện' : 'Loại người đồng khởi kiện', value: kind[0], onChange: kind[1], options: [{ value: 'cn', label: 'Cá nhân' }, { value: 'tc', label: 'Tổ chức' }] });
+  var seg = ro && !co ? null /* v386: người khởi kiện đầu tiên theo loại tài khoản */ : h(T.SegmentedControl, { label: ro && !co ? 'Loại người khởi kiện' : 'Loại người đồng khởi kiện', value: kind[0], onChange: kind[1], options: [{ value: 'cn', label: 'Cá nhân' }, { value: 'tc', label: 'Tổ chức' }] });
   if (kind[0] === 'tc') {
     var o = co ? Object.assign({}, ORG_CO_MAU, pre && pre.so ? { so: pre.so } : {}) : ORG_MAU, khoa = !!ro;
     return h(F, null, seg, h(F, { key: 'tc' },
@@ -852,16 +852,16 @@ function CoList(p) {
     h('span', { ref: anchor, hidden: true }),
     p.chinh ? h('p', { className: 'dm-meta' }, (st[0].length + 1) + ' người khởi kiện') : st[0].length ? h('p', { className: 'dm-meta' }, st[0].length + ' người đồng khởi kiện') : null,
     /* 03/11/2026 (chinh): danh sách người khởi kiện kiểu bước 3 – thẻ "Người khởi kiện 1" là người đăng nhập, mở sẵn, không xóa; người thêm qua bảng tra CCCD/MST là "Người khởi kiện 2, 3…" */
-    p.chinh ? h(Sum, { key: 'chinh', open: true, cuon: false, lbl: 'Người khởi kiện 1', ten: 'Người khởi kiện 1' }, PersonForm(true)) : null,
+    p.chinh ? h(Sum, { key: 'chinh', open: true, cuon: false, lbl: st[0].length ? 'Người khởi kiện 1' : 'Người khởi kiện', ten: st[0].length ? 'Người khởi kiện 1' : 'Người khởi kiện' }, PersonForm(true)) : null, /* v386 */
     st[0].map(function (x, i) {
       if (p.chinh) { var dc = Object.assign({}, x.v.loai === 'tc' ? ORG_CO_MAU : CO_MAU[(x.k - 1) % CO_MAU.length]); if (x.v.so) dc.so = x.v.so; var lb = 'Người khởi kiện ' + (i + 2);
         return h(Sum, { key: x.k, open: x.isNew, lbl: lb, ten: lb, onDel: function () { cf[1]({ k: x.k, ten: lb }); } }, PersonForm(true, x.v, dc)); }
       if (p.legacy) { var ten0 = x.v.ten || '[Họ và tên]'; return h(Sum, { key: x.k, open: x.isNew, no: i + 1, ten: ten0, sub: (x.v.loai === 'tc' ? 'Mã số thuế: ' : 'Số CCCD: ') + (x.v.so || '[số]'), onDel: function () { cf[1]({ k: x.k, ten: ten0 }); } }, PersonForm(false, x.v)); }
       var d = Object.assign({}, x.v.loai === 'tc' ? ORG_CO_MAU : CO_MAU[(x.k - 1) % CO_MAU.length]); if (x.v.so) d.so = x.v.so;
       var ten = d.ten;
-      return h(Sum, { key: x.k, open: x.isNew, no: i + 1, ten: ten, sub: (x.v.loai === 'tc' ? 'Mã số thuế: ' : 'Số CCCD: ') + d.so, onDel: function () { cf[1]({ k: x.k, ten: ten }); } }, PersonForm(true, x.v, d));
+      return h(Sum, { key: x.k, open: x.isNew, no: st[0].length > 1 ? i + 1 : null, ten: ten, sub: (x.v.loai === 'tc' ? 'Mã số thuế: ' : 'Số CCCD: ') + d.so, onDel: function () { cf[1]({ k: x.k, ten: ten }); } }, PersonForm(true, x.v, d));
     }),
-    h(T.Button, { variant: 'tint', block: true, icon: 'plus', className: 'ph-co-add', onClick: function () { open[1](true); } }, 'Thêm người khởi kiện'),
+    h(T.Button, { variant: 'tint', block: true, icon: 'plus', className: 'ph-co-add', onClick: function () { open[1](true); } }, p.chinh ? 'Thêm người khởi kiện' : 'Thêm đồng khởi kiện' /* v385 */),
     open[0] && host ? ReactDOM.createPortal(h(CoSheet, { onClose: function () { open[1](false); }, onOk: add }), host) : null,
     cf[0] && host ? ReactDOM.createPortal(h(ConfirmDel, { title: p.chinh ? 'Xóa người khởi kiện?' : 'Xóa người đồng khởi kiện?', desc: cf[0].ten + (p.chinh ? ' sẽ bị xóa khỏi danh sách người khởi kiện' : ' sẽ bị xóa khỏi danh sách người đồng khởi kiện'),
       onNo: function () { cf[1](null); }, onYes: function () { st[1](st[0].filter(function (y) { return y.k !== cf[0].k; })); cf[1](null); } }), host) : null);
@@ -881,9 +881,9 @@ function PartyList(p) {
   return h(F, null, h('span', { ref: anchor, hidden: true }),
     st[0].length ? h('p', { className: 'dm-meta' }, st[0].length + ' ' + p.dem) : null,
     st[0].map(function (x, i) {
-      var ten = x.v.ten || p.goi + ' ' + (i + 1);
+      var stt = st[0].length > 1 ? ' ' + (i + 1) : '', ten = x.v.ten || p.goi + stt; /* v386 */
       var xoa = p.giuMot && st[0].length < 2 ? null : function () { cf[1]({ k: x.k, ten: ten }); };
-      return h(Sum, { key: x.k, open: x.isNew || !!x.v.mo, cuon: !!x.isNew, lbl: p.goi + ' ' + (i + 1), ten: ten, onDel: xoa }, p.form(x.v));
+      return h(Sum, { key: x.k, open: x.isNew || !!x.v.mo, cuon: !!x.isNew, lbl: p.goi + stt, ten: ten, onDel: xoa }, p.form(x.v));
     }),
     h(T.Button, { variant: 'tint', block: true, icon: 'plus', className: 'ph-co-add', onClick: add }, p.them),
     cf[0] && host ? ReactDOM.createPortal(h(ConfirmDel, { title: 'Xóa ' + p.tu + '?', desc: cf[0].ten + ' sẽ bị xóa khỏi danh sách ' + p.tu,

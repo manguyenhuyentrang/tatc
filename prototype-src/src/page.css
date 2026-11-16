@@ -2300,3 +2300,12 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 /* v378: khối Tòa án yêu cầu bổ sung tài liệu rộng 100% như các khối ngày bên dưới */
 .dt-body>.q1s{margin:0 0 8px}
 .q1s>.tp-sec-card{border-radius:0}
+/* v381: khối Tài liệu bổ sung ở bước tài liệu (q5s, 22 màn) và khối thông tin khi đã ký số (q5-khoa, 3 màn) rộng 100%, bỏ lề và bo góc như các khối khác */
+.ph-steps>.q5s,.ph-steps>.q5-khoa{margin-left:0;margin-right:0}
+.q5s>.tp-sec-card,.q5-khoa>.tp-sec-card{border-radius:0}
+/* v383: ô "Tải lên tệp mới" của khối tải tệp (FileUpload) – viền cùng màu viền thẻ tệp (var(--border)) thay cho viền đậm */
+.tp-upload-row{border-color:var(--border)}
+/* v384 (16/11/2026): thống nhất khối tải tệp */
+.fuc{display:flex;flex-direction:column;gap:8px}.fuc .ph-p,.fuc p.ph-muted{margin:0}.fuc-h{display:flex;justify-content:space-between;gap:8px;margin:0;font:400 13px/18px var(--font-sans);color:var(--ink-muted)}.fuc-h span:last-child{flex:none}.fuc-t{margin:0;font:700 14px/20px var(--font-sans);color:var(--ink)}
+/* v386: ẩn ô số thứ tự rỗng */
+.dm-sum-no:empty{display:none}
