@@ -7063,7 +7063,7 @@ function PersonBody(pp) {
   function T1(l, i, o) { return ro ? Ro(l, me[i], o) : Tf(l, o); }
   function S1(l, i, o) { return ro ? RoSel(l, me[i], o) : Sf(l, Object.assign({ placeholder: 'Chọn' }, o || {})); }
   return h(F, null, seg,
-    TwoE(T1('Họ và tên', 0, { required: true }), T1('Số điện thoại', 1, { required: true, type: 'tel' })),
+    T1('Họ và tên', 0, { required: true }), T1('Số điện thoại', 1, { required: true, type: 'tel' }), /* v459: tách 2 dòng */
     Tf('Địa chỉ thư điện tử', { type: 'email', defaultValue: ro ? d.email : undefined }),
     TwoE(T1('Số CCCD', 2, ro ? { required: true } : { required: true, defaultValue: pre && pre.so }), Tf('Ngày cấp', Dt({ defaultValue: ro ? d.nc : undefined }))),
     Tf('Nơi cấp', { defaultValue: ro ? d.noi : undefined }),
@@ -7184,7 +7184,7 @@ function BiKienForm(p) {
   var v = p.v || {}, k = React.useState(v.loai || 'cn');
   return h(F, null, KindSeg('Loại người bị kiện', k[0], k[1]),
     k[0] === 'cn' ? h(F, null,
-      TwoE(Tf('Họ và tên', { required: true, defaultValue: v.ten }), Tf('Số điện thoại', { type: 'tel' })),
+      Tf('Họ và tên', { required: true, defaultValue: v.ten }), Tf('Số điện thoại', { type: 'tel' }), /* v459: tách 2 dòng */
       Tf('Địa chỉ thư điện tử', { type: 'email' }),
       h(SoGiayTo, { b3: true, init: v.gt }), TwoE(Tf('Ngày cấp', Dt()), Tf('Nơi cấp')),
       TwoE(Tf('Ngày, tháng, năm sinh', Dt()), Sf('Quốc tịch')),
@@ -7202,7 +7202,7 @@ function LienQuanForm(p) {
   var k = React.useState('cn'), qh = Tf('Mối quan hệ / Lý do liên quan', { required: true, multiline: true });
   return h(F, null, KindSeg('Loại người liên quan', k[0], k[1]),
     k[0] === 'cn' ? h(F, null,
-      TwoE(Tf('Họ và tên', { required: true }), Tf('Số điện thoại', { type: 'tel' })),
+      Tf('Họ và tên', { required: true }), Tf('Số điện thoại', { type: 'tel' }), /* v459: tách 2 dòng */
       Tf('Địa chỉ thư điện tử', { type: 'email' }),
       h(SoGiayTo, { b3: true }),
       TwoE(Sf('Quốc tịch'), Tf('Ngày, tháng, năm sinh', Dt())),
