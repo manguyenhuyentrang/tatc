@@ -142,7 +142,7 @@ function VkCard(x) {
     h('span', { className: 'vka-tx' }, h('b', null, x.t.title), h('small', null, x.loai + ' · ', h('span', { className: 'tp-num' }, x.t.code), ' · ', h('span', { className: coHan ? 'vka-han vka-han-' + x.muc : 'vka-han' }, con))),
     h(T.Icon, { name: 'chevronRight' })));
 }
-/* Trang chủ theo web /trang-chu (develop df77959): header → 4 ô dịch vụ → nhắc cam kết GDĐT → Việc cần làm → Lịch sắp tới → Tin tức & thông báo */
+/* Trang chủ theo web /trang-chu (develop df77959): header → 4 ô dịch vụ → nhắc cam kết GDĐT → Việc cần làm → Lịch sắp tới → Tin tức và thông báo */
 /* Trang chủ theo ảnh thiết kế 30/10/2026: banner trượt, 4 thẻ lớn, 8 ô "Dịch vụ khác" (không số đếm); thanh điều hướng 5 mục như các màn chính (đổi lại 02/11/2026) */
 /* thẻ Nộp đơn khởi kiện cả hàng, nền ảnh và nội dung banner (02/11/2026) */
 /* 03/11/2026: bỏ dòng "Tòa án điện tử" */

@@ -58,7 +58,7 @@ function MediationDetail() {
     Sec(2, 'Tiến trình hồ sơ', Timeline('Đang hòa giải', 'Lịch hòa giải: 26/10/2026 · 08:30', 'Tiếp nhận hồ sơ', '18/10/2026 · ' + COURT1)),
     Sec(3, 'Chức năng liên quan', h(T.Button, { variant: 'secondary', block: true, icon: 'message' }, 'Chức năng hòa giải, đối thoại'), true)));
 }
-var EVI_STEPS = ['Hồ sơ', 'Tài liệu', 'Xem lại & ký số']; /* v362: tên bước theo web giao-nop-chung-cu/index.tsx:23-25 */
+var EVI_STEPS = ['Hồ sơ', 'Tài liệu', 'Xem lại và ký số']; /* v362: tên bước theo web giao-nop-chung-cu/index.tsx:23-25 */
 /* Giao nộp tài liệu, chứng cứ (03/11/2026): khung Soạn đơn (header + thanh tiến trình, khối 100%); chọn hồ sơ bằng danh sách dòng; tài liệu dùng chung thẻ Tài liệu của bước 5 */
 var EVI_HS = [{ id: 'a', code: 'DS-2026-0012', name: 'Tranh chấp hợp đồng vay tài sản', desc: 'Sơ thẩm · ' + COURT1 + ' · Thụ lý 15/10/2026' }, { id: 'b', code: 'DS-2026-0018', name: 'Tranh chấp hợp đồng mua bán tài sản', desc: 'Sơ thẩm · Tạm đình chỉ · ' + COURT1 + ' · Thụ lý 12/10/2026' }];
 function EviChon() {
@@ -108,8 +108,8 @@ function ProceedingDetail() {
           h(DtParty, { tat: 'CN', ten: 'Hoàng Dương', ban: true, vt: 'Chủ nợ', rows: [['Số CCCD', h('span', { className: 'tp-num' }, '001090012345')], ['Người đại diện / ủy quyền', '—'], ['Địa chỉ', 'Số 8 Phạm Hùng, Phường Từ Liêm, Thành phố Hà Nội']] }),
           h(DtParty, { tat: 'DN', ten: 'Công ty TNHH Thương mại Minh Phát', vt: 'Tổ chức, doanh nghiệp bị yêu cầu', rows: [['Mã số thuế', h('span', { className: 'tp-num' }, '0100000123')], ['Người đại diện theo pháp luật', '—'], ['Địa chỉ', '—']] }),
           h('p', { className: 'dt-note' }, h(T.Icon, { name: 'lock' }), 'Một số thông tin của đương sự khác được ẩn nhằm bảo vệ dữ liệu cá nhân.')), true),
-        FCard('Tòa án & hội đồng xét xử', RvKV([['Tòa án đang giải quyết', COURT1], ['Thẩm phán / HĐXX', '—'], ['Cấp xét xử hiện tại', 'Sơ thẩm'], ['Số thụ lý giai đoạn hiện tại', soTL], ['Ngày thụ lý giai đoạn hiện tại', '15/10/2026']]), true),
-        FCard('Định danh & tình trạng vụ việc', RvKV([['Mã định danh', h('span', { className: 'tp-num' }, 'PS-2026-0001')], ['Loại vụ việc', 'Phá sản'], ['Trạng thái vụ việc', 'Đang giải quyết'], ['Tình trạng', 'Đã mở thủ tục phá sản'], ['Tên vụ việc', ten]]), true),
+        FCard('Tòa án và hội đồng xét xử', RvKV([['Tòa án đang giải quyết', COURT1], ['Thẩm phán / HĐXX', '—'], ['Cấp xét xử hiện tại', 'Sơ thẩm'], ['Số thụ lý giai đoạn hiện tại', soTL], ['Ngày thụ lý giai đoạn hiện tại', '15/10/2026']]), true),
+        FCard('Định danh và tình trạng vụ việc', RvKV([['Mã định danh', h('span', { className: 'tp-num' }, 'PS-2026-0001')], ['Loại vụ việc', 'Phá sản'], ['Trạng thái vụ việc', 'Đang giải quyết'], ['Tình trạng', 'Đã mở thủ tục phá sản'], ['Tên vụ việc', ten]]), true),
         FCard('Nghĩa vụ tài chính', h('button', { type: 'button', className: 'vk-link', 'data-pt-go': 'finance' }, 'Xem nghĩa vụ tài chính', h(T.Icon, { name: 'chevronRight' })), true),
         FCard('Đơn gốc của bạn', h('button', { type: 'button', className: 'dt-link-row', 'data-pt-go': 'psDonDetail' }, h('span', null, h('b', null, 'Đơn yêu cầu mở thủ tục phá sản'), h('small', { className: 'tp-num' }, 'TN-20261008-0004')), h('span', { className: 'dt-link-t' }, 'Xem đơn', h(T.Icon, { name: 'chevronRight' }))), true));
       if (t === 'don') return FCard('Đơn trong vụ việc', h('ul', { className: 'qd-list dt-qc' },
@@ -732,7 +732,7 @@ function DonChiTiet(p) {
           h(DtParty, { tat: 'LQ', ten: 'Lê Thị Hoa', vt: 'Người có quyền lợi, nghĩa vụ liên quan · Cá nhân', rows: [['Số CCCD', h('span', { className: 'tp-num' }, '001192034567')], ['Điện thoại', '0987654321'], ['Địa chỉ', 'Số 3 ngõ 15 Duy Tân, Phường Cầu Giấy, Thành phố Hà Nội']] })), true),
         FCard('Nội dung yêu cầu', h(DtNoiDung, { kieu: p.nd || 'nhap' }), true), /* v238 */
         FCard('Tòa án xử lý đơn', RvKV([['Tòa án xử lý đơn', COURT1], ['Thẩm phán phụ trách', '—'], ['Số thụ lý', '—'], ['Mã vụ án', '—']]), true),
-        FCard('Thông tin đơn & hồ sơ pháp lý', RvKV([['Số tiếp nhận', h('span', { className: 'tp-num' }, 'TN-20261020-0012')], ['Lĩnh vực', 'Dân sự'], ['Hình thức nộp', 'Trực tuyến qua Cổng DVTP'], ['Ngày tạo', '20/10/2026'], ['Ngày gửi', '20/10/2026'], ['Tòa tiếp nhận', '—'], ['Tài liệu đính kèm', '3 tài liệu'], ['Vụ án liên quan', '—'], ['Loại đơn', 'Đơn khởi kiện']]), true),
+        FCard('Thông tin đơn và hồ sơ pháp lý', RvKV([['Số tiếp nhận', h('span', { className: 'tp-num' }, 'TN-20261020-0012')], ['Lĩnh vực', 'Dân sự'], ['Hình thức nộp', 'Trực tuyến qua Cổng DVTP'], ['Ngày tạo', '20/10/2026'], ['Ngày gửi', '20/10/2026'], ['Tòa tiếp nhận', '—'], ['Tài liệu đính kèm', '3 tài liệu'], ['Vụ án liên quan', '—'], ['Loại đơn', 'Đơn khởi kiện']]), true),
         p.tamUng ? h(TamUngKhoi, { tre: p.tamUng === 'tre' }) : null); /* v350 (QLD1-W08) */
       if (t === 'ds') return p.tabLoi ? tabLoi('Không tải được danh sách đơn.') : FCard('Danh sách đơn trong vụ việc', h('ul', { className: 'qd-list dt-qc' }, DT_DONS.map(DtDonThe)), true); /* v241; v243: nút tạo đơn ghim ở thanh cuối màn (foot) */
       if (t === 'tl') return p.tabLoi ? tabLoi('Không tải được danh sách tài liệu.') : h(F, null, yc ? h(TlYeuCau, { het: yc === 'het', files: yc === 'files' }) : null,
@@ -771,8 +771,8 @@ function VuAnChiTiet(p) {
           p.vaiTro && p.vaiTro !== 'Bị đơn' ? null : h(DtParty, { tat: 'LQ', ten: 'Lê Thị Hoa', vt: 'Người có quyền lợi, nghĩa vụ liên quan', rows: [['Số CCCD', '—'], ['Địa chỉ', '—']] }),
           h('p', { className: 'dt-note' }, h(T.Icon, { name: 'lock' }), 'Một số thông tin của đương sự khác được ẩn nhằm bảo vệ dữ liệu cá nhân.'),
           h('div', { className: 'dt-acts' }, ['Bổ sung đương sự', 'Đổi vai trò tố tụng', 'Đề nghị về chứng cứ, người tham gia tố tụng'].map(function (x) { return h(T.Button, { key: x, variant: 'secondary', size: 'sm', 'data-pt-go': x === 'Bổ sung đương sự' ? 'dyc1_bs' : 'dyc1' }, x); } /* v397: mở Đơn yêu cầu khác */))), true),
-        FCard('Tòa án & hội đồng xét xử', RvKV([['Tòa án đang giải quyết', COURT1], ['Thẩm phán / HĐXX', 'Trần Văn Anh'], ['Cấp xét xử hiện tại', 'Sơ thẩm'], ['Số thụ lý giai đoạn hiện tại', h('span', { className: 'tp-num' }, '12/2026/TLST-DS')], ['Ngày thụ lý giai đoạn hiện tại', '15/10/2026']]), true),
-        FCard('Định danh & tình trạng vụ án', RvKV([['Mã vụ án', h('span', { className: 'tp-num' }, 'DS-2026-0012')], ['Loại án', 'Dân sự'], ['Trạng thái vụ án', 'Đang giải quyết'], ['Số giai đoạn đã qua', '1 giai đoạn'], ['Quan hệ tranh chấp', 'Tranh chấp hợp đồng vay tài sản']]), true),
+        FCard('Tòa án và hội đồng xét xử', RvKV([['Tòa án đang giải quyết', COURT1], ['Thẩm phán / HĐXX', 'Trần Văn Anh'], ['Cấp xét xử hiện tại', 'Sơ thẩm'], ['Số thụ lý giai đoạn hiện tại', h('span', { className: 'tp-num' }, '12/2026/TLST-DS')], ['Ngày thụ lý giai đoạn hiện tại', '15/10/2026']]), true),
+        FCard('Định danh và tình trạng vụ án', RvKV([['Mã vụ án', h('span', { className: 'tp-num' }, 'DS-2026-0012')], ['Loại án', 'Dân sự'], ['Trạng thái vụ án', 'Đang giải quyết'], ['Số giai đoạn đã qua', '1 giai đoạn'], ['Quan hệ tranh chấp', 'Tranh chấp hợp đồng vay tài sản']]), true),
         FCard('Án phí', h(F, null, h('div', { className: 'dt-fee' }, h('div', null, h('b', null, 'Tạm ứng án phí sơ thẩm'), h('small', null, 'Hạn nộp 30/10/2026')), h('div', { className: 'dt-fee-r' }, h('b', { className: 'tp-num' }, '1.250.000 đ'), h(T.StatusBadge, { tone: 'warning', icon: false }, 'Chưa nộp'))),
           h('button', { type: 'button', className: 'vk-link', 'data-pt-go': 'financeDetail' }, 'Xem nghĩa vụ tài chính', h(T.Icon, { name: 'chevronRight' }))), true),
         FCard('Đơn gốc của bạn', h('button', { type: 'button', className: 'dt-link-row', 'data-pt-go': 'appDetail' }, h('span', null, h('b', null, 'Đơn khởi kiện'), h('small', { className: 'tp-num' }, 'TN-20261020-0012')), h('span', { className: 'dt-link-t' }, 'Xem đơn', h(T.Icon, { name: 'chevronRight' }))), true));
@@ -805,7 +805,7 @@ function VuAnChiTiet(p) {
     } });
 }
 
-/* ---------- Giao nộp tài liệu, chứng cứ: bước 3 Xem lại & ký số + kết quả (theo web) ---------- */
+/* ---------- Giao nộp tài liệu, chứng cứ: bước 3 Xem lại và ký số + kết quả (theo web) ---------- */
 function EviKy() {
   var ky = React.useState(false), sh = React.useState(false), anchor = React.useRef(null), host = useHost(anchor), da = ky[0];
   return Wz({ title: 'Giao nộp tài liệu, chứng cứ', steps: EVI_STEPS, n: 3, save: false, body: h(F, null, h('span', { ref: anchor, hidden: true }),

@@ -155,7 +155,7 @@ function AccNdd(p) {
     AccSec('Người đại diện pháp luật', h(F, null,
       AccBtn('Thêm người đại diện', 'tint', { block: true, icon: 'plus', onClick: function () { them[1]({ moi: true }); } }), list)),
     t ? h(AccSheet, { host: p.host, title: cu ? 'Bổ nhiệm lại — ' + cu.ten : 'Thêm người đại diện', onClose: dong,
-      foot: h(F, null, AccBtn('Hủy', 'secondary', { onClick: dong }), AccBtn(cu ? 'Xác minh & bổ nhiệm lại' : 'Xác minh & thêm', 'primary', { onClick: function () { dong(); accSnack(cu ? 'Đã bổ nhiệm lại bằng một kỳ hiệu lực mới.' : 'Đã thêm người đại diện.'); } })) },
+      foot: h(F, null, AccBtn('Hủy', 'secondary', { onClick: dong }), AccBtn(cu ? 'Xác minh và bổ nhiệm lại' : 'Xác minh và thêm', 'primary', { onClick: function () { dong(); accSnack(cu ? 'Đã bổ nhiệm lại bằng một kỳ hiệu lực mới.' : 'Đã thêm người đại diện.'); } })) },
       h('div', { className: 'acc-form' },
         Tf('Họ và tên', { required: true, placeholder: 'VD: Nguyễn Văn B', defaultValue: cu ? cu.ten : undefined, readOnly: !!cu }),
         /* v291: ghép 2 trường một hàng */
@@ -230,7 +230,7 @@ function Commit() {
 }
 function Sign(empty) {
   return Sub('Quản lý chữ ký số', h(F, null,
-    h(T.Tabs, { label: 'Chữ ký số', items: [{ key: 'a', label: 'Phương thức & chứng thư' }, { key: 'b', label: 'Lịch sử ký' }, { key: 'c', label: 'Hướng dẫn cài USB ký số' }] }),
+    h(T.Tabs, { label: 'Chữ ký số', items: [{ key: 'a', label: 'Phương thức và chứng thư' }, { key: 'b', label: 'Lịch sử ký' }, { key: 'c', label: 'Hướng dẫn cài USB ký số' }] }),
     Sec(0, 'Phương thức ký mặc định', h(F, null, h(T.SelectField, { label: 'Nguồn ký', labelVisible: true, placeholder: '— Chọn —' }), h(T.SelectField, { label: 'Tư cách ký', labelVisible: true, placeholder: '— Chọn —' }), h(T.Button, { variant: 'secondary', block: true }, 'Chọn chứng thư')), true),
     Blk('Chứng thư số của bạn', h(F, null,
       h(T.EmptyState, { text: 'Chưa có chứng thư số được khai báo.', actionLabel: 'Khai báo chứng thư số' }),
@@ -1022,7 +1022,7 @@ function NoiDungCard(p) {
 }
 function Sub4() { return Submit(4, h(NoiDungCard)); }
 function Sub4Doi() { return Submit(4, h(NoiDungCard, { mo: true })); } /* v324: màn có sẵn hộp Đổi cách nhập (đi tới màn bất kỳ) */
-/* (cũ, thay bởi phương án S1 03/11/2026 bên dưới) bước 5 – Tài liệu & chứng cứ (theo ảnh web, phương án A, chốt 02/11/2026): mô tả định dạng → danh sách tài liệu (tài liệu bắt buộc theo loại việc + tài liệu tự tải lên) → 2 ô "Tải lên tài liệu bổ sung" / "Lấy từ kho dữ liệu cá nhân".
+/* (cũ, thay bởi phương án S1 03/11/2026 bên dưới) bước 5 – Tài liệu và chứng cứ (theo ảnh web, phương án A, chốt 02/11/2026): mô tả định dạng → danh sách tài liệu (tài liệu bắt buộc theo loại việc + tài liệu tự tải lên) → 2 ô "Tải lên tài liệu bổ sung" / "Lấy từ kho dữ liệu cá nhân".
    Thẻ tài liệu đã có tệp: tích xanh + tên tệp (chữ xanh); tài liệu bắt buộc: Loại tài liệu* → Tên tài liệu (khóa); tài liệu tự tải lên: Tên tài liệu* (nhập được); nút "Thay tệp ▾" (Tải từ thiết bị / Lấy từ kho dữ liệu cá nhân) + Xóa. Không có nút Xem.
    Tài liệu bắt buộc chưa có tệp: biểu tượng tải lên + tên + "Loại tài liệu*: —" + nút "Tải lên ▾". */
 var TL_BAT_BUOC = [{ id: 'dc', ten: 'Di chúc / Giấy chứng tử' }, { id: 'hd', ten: 'Tài liệu chứng minh quan hệ tranh chấp (HĐ, giấy tờ giao dịch...)' }];
@@ -1075,7 +1075,7 @@ function TaiLieuCard(p) {
     bs[1](d ? bs[0].map(function (y) { return y.k === r.k ? { k: y.k, tep: d.tep, ten: d.ten, loai: d.loai } : y; }) : bs[0].filter(function (y) { return y.k !== r.k; }));
   }
   function chon(f) { var t = lib[0]; lib[1](null); if (t === 'thay') setD({ tep: f.tep }); else if (t === 'bs') moi(f.tep); else if (t) mo(t, f.tep); }
-  return FCard(p.title || 'Tài liệu & chứng cứ', h(F, null, h('span', { ref: anchor, hidden: true }),
+  return FCard(p.title || 'Tài liệu và chứng cứ', h(F, null, h('span', { ref: anchor, hidden: true }),
     p.desc === null ? null : P(p.desc || 'Định dạng PDF, JPG, PNG, DOCX · tối đa 10MB/tệp.', 'ph-muted'),
     p.he ? h('ul', { className: 'ph-tlr' }, p.he.map(function (x) {
       return h('li', { key: x[0] }, h('span', { className: 'ph-up3-ic ph-tl-ic ph-tl-ok', 'aria-hidden': 'true' }, h(T.Icon, { name: 'lock' })), h('span', { className: 'ph-tlr-tx' }, h('b', null, x[0]), h('small', null, x[1])), x[2] ? IcoBtn('eye', 'Xem ' + x[2]) : null); /* v400 */
@@ -1098,7 +1098,7 @@ function TaiLieuCard(p) {
     lib[0] && host ? ReactDOM.createPortal(h(LibSheet, { chosen: null, onClose: function () { lib[1](null); }, onPick: chon }), host) : null), true);
 }
 function Sub5() { return Submit(5, h(TaiLieuCard)); }
-/* bước 6 – Xem lại & Xác nhận (phương án B có chỉnh, chốt 02/11/2026): khối cha "Xem lại & Xác nhận" (mô tả + 5 khối con gập/mở, mặc định mở); đầu khối con: mũi tên + tiêu đề + nút sửa chỉ biểu tượng bút, xám (về đúng bước);
+/* bước 6 – Xem lại và Xác nhận (phương án B có chỉnh, chốt 02/11/2026): khối cha "Xem lại và Xác nhận" (mô tả + 5 khối con gập/mở, mặc định mở); đầu khối con: mũi tên + tiêu đề + nút sửa chỉ biểu tượng bút, xám (về đúng bước);
    người khởi kiện, người bị kiện hiển thị bằng thẻ tóm tắt thu gọn như ở bước 2, 3 (không có nút xóa); tài liệu: tên, tệp · loại, nút xem chỉ biểu tượng xám. Gợi ý tòa án và cam kết là khối riêng. Xác nhận → popup "Xác nhận đơn?" → bước 7 */
 /* v351: nút Xem (con mắt) chưa có đích hoặc chỉ báo "Đang mở…" → mở màn xem tệp (attachment) */
 function IcoBtn(icon, label, go) {
@@ -1122,7 +1122,7 @@ function RvKhoi(p) {
 function XemLaiScreen(p) {
   var cf = React.useState(!!(p && p.lai)), anchor = React.useRef(null), host = useHost(anchor);
   var body = h(F, null, h('span', { ref: anchor, hidden: true }),
-    FCard('Xem lại & Xác nhận', h(F, null,
+    FCard('Xem lại và Xác nhận', h(F, null,
       P('Kiểm tra lại toàn bộ thông tin trước khi xác nhận đơn. Sau khi xác nhận, đơn chuyển sang bước Ký số — chỉ khi đủ chữ ký mới nộp được đến Tòa án.', 'ph-muted'),
       h(RvKhoi, { t: 'Loại việc', go: 'sub1d' }, RvKV([['Ngày làm đơn', '02/11/2026'], ['Loại thủ tục', 'Khởi kiện vụ án'], ['Lĩnh vực', 'Dân sự'], ['Loại việc', LOAI_VIEC[2][2]]])),
       h(RvKhoi, { t: 'Thông tin người khởi kiện', go: 'sub2' }, h('p', { className: 'dm-meta' }, '1 người khởi kiện'),
@@ -1283,7 +1283,7 @@ function KetQua(o) {
 var NGUOI_ME = [['Họ và tên', 'Hoàng Dương'], ['Số định danh cá nhân', '001090012345'], ['Ngày sinh', '12/05/1990'], ['Giới tính', 'Nam']];
 
 /* ===== Cấp trích lục, bản sao (theo web /trich-luc/moi – moi-yeu-cau.tsx, 03/11/2026): 4 bước ===== */
-var TL_STEPS = ['Chọn bản án / quyết định', 'Loại & hình thức nhận', 'Tư cách người yêu cầu', 'Xem lại & gửi'];
+var TL_STEPS = ['Chọn bản án / quyết định', 'Loại và hình thức nhận', 'Tư cách người yêu cầu', 'Xem lại và gửi'];
 var TL_TITLE = 'Cấp trích lục, bản sao';
 /* vụ án mẫu của tài khoản và văn bản (bản án, quyết định) – dữ liệu mẫu */
 var TL_VA = [{ ma: 'DS-2026-0012', ten: 'Tranh chấp hợp đồng vay tài sản', vt: 'Nguyên đơn', toa: COURT1, vb: [['BA', '45/2026/DS-ST', 'Bản án dân sự sơ thẩm', '20/10/2026'], ['QD', '[Số quyết định]', 'Quyết định công nhận sự thỏa thuận', '15/10/2026']] },
@@ -1330,7 +1330,7 @@ function Tl1(p) {
     h(T.Tabs, { label: 'Nguồn thông tin bản án', value: tab[0], onChange: tab[1], items: [{ key: 'va', label: 'Từ vụ án của tôi' }, { key: 'tk', label: 'Nhập thông tin bản án' }] }),
     tab[0] === 'va' ? h(TlTuVuAn) : h(TlTuKhai)), true) });
 }
-/* bước 2 – Loại & hình thức nhận; tuKhai: có mục "Bạn cần cấp loại văn bản nào?" (từ vụ án đã chọn ở bước 1) */
+/* bước 2 – Loại và hình thức nhận; tuKhai: có mục "Bạn cần cấp loại văn bản nào?" (từ vụ án đã chọn ở bước 1) */
 function Tl2(p) {
   var tk = p && p.tuKhai, lv = React.useState(tk ? 'BAN_SAO' : 'TRICH_LUC'), ht = React.useState('buu_chinh'), md = React.useState('');
   var ghiChu = lv[0] === 'TRICH_LUC' ? h(F, null, NoteBox(h('p', null, h('b', null, 'Tòa án quyết định nội dung trích lục'), ' phù hợp với mục đích sử dụng. Bạn có thể ghi chú phần cần trích để Tòa tham khảo.')),
@@ -1423,9 +1423,9 @@ function ChooseKn(p) {
   function chonNhom(k) { if (k !== nh[0]) { nh[1](k); tt[1](''); } }
   return h(Phone, { cls: 'ph-hd' }, h(T.AppBar, { variant: 'plain', title: 'Chọn thủ tục', onBack: noop }),
     h(Body, { cls: 'ph-plain ph-s1 ct2' },
-      h('p', { className: 'ct2-lead' }, 'Bạn muốn khiếu nại hoặc tố cáo việc gì?'),
+      /* v476: bỏ câu dẫn "Bạn muốn khiếu nại hoặc tố cáo việc gì?" */
       h('section', { className: 'ph-s1-sec' }, Hd('Nhóm thủ tục', 1), PickRow('Nhóm thủ tục', KN_NHOM_PICK, nh[0], chonNhom),
-        nh[0] ? h('p', { className: 'ph-s1-law' }, h('b', null, KnTenNhom(nh[0])), ' · ' + so + ' thủ tục') : null),
+        null), /* v476: bỏ dòng nhóm đã chọn · số thủ tục */
       nh[0] ? h('section', { className: 'ph-s1-sec' }, Hd('Thủ tục', 1), h(KnThuTuc, { nhom: nh[0], v: tt[0], onChange: tt[1] }), t ? KnChiTiet2(t) : null) : null),
     h('div', { className: 'ph-foot' }, Bar(Btn('Bắt đầu khai đơn', 'primary', t ? { 'data-pt-go': knDau(t) + '1' } : { disabled: true }))));
 }
@@ -1496,15 +1496,15 @@ function KnhOk(k) {
    v185 (04/11/2026): rà soát theo nop-don-qd.tsx, nop-don-hv-tc.tsx, man-gui-thanh-cong.tsx.
    Biến thể o: lan2 (khiếu nại/tố cáo lần hai, ?hoSoGocMa=), kg (không gắn vụ án), tong (mở từ Hộp thư, ?tongDatId=), het (hết thời hiệu), rong (chưa có vụ án). */
 var KNV = {
-  kqd: { ma: 'qd', w: 'khiếu nại', b1: 'Đối tượng & thời hiệu', b2: 'Nội dung & người khiếu nại', don: 'Đơn khiếu nại', l2: 'Khiếu nại lần hai',
+  kqd: { ma: 'qd', w: 'khiếu nại', b1: 'Đối tượng và thời hiệu', b2: 'Nội dung và người khiếu nại', don: 'Đơn khiếu nại', l2: 'Khiếu nại lần hai',
     he: [['Đơn khiếu nại', 'Hệ thống tạo từ nội dung bạn đã khai'], ['Bản sao quyết định bị khiếu nại', 'Lấy từ Hộp thư tống đạt']] },
-  khv: { ma: 'hv_nttt', w: 'khiếu nại', b1: 'Đối tượng & thời hiệu', b2: 'Nội dung & người khiếu nại', don: 'Đơn khiếu nại', l2: 'Khiếu nại lần hai',
+  khv: { ma: 'hv_nttt', w: 'khiếu nại', b1: 'Đối tượng và thời hiệu', b2: 'Nội dung và người khiếu nại', don: 'Đơn khiếu nại', l2: 'Khiếu nại lần hai',
     he: [['Đơn khiếu nại', 'Hệ thống tạo từ nội dung bạn đã khai']] },
-  ktv: { ma: 'tc', w: 'tố cáo', b1: 'Đối tượng & thời hiệu', b2: 'Nội dung & người tố cáo', don: 'Đơn tố cáo', l2: 'Tố cáo lần hai',
+  ktv: { ma: 'tc', w: 'tố cáo', b1: 'Đối tượng và thời hiệu', b2: 'Nội dung và người tố cáo', don: 'Đơn tố cáo', l2: 'Tố cáo lần hai',
     he: [['Đơn tố cáo', 'Hệ thống tạo từ nội dung bạn đã khai']] } };
 /* hậu tố mã màn theo biến thể: L = lần hai, Kg = không gắn vụ án */
 function knvSfx(o) { return o && o.lan2 ? 'L' : o && o.kg ? 'Kg' : o && o.don ? 'Don' : ''; } /* v400: Don */
-function knvSteps(k) { return [KNV[k].b1, KNV[k].b2, 'Tài liệu, chứng cứ', 'Xem lại & ký gửi']; }
+function knvSteps(k) { return [KNV[k].b1, KNV[k].b2, 'Tài liệu, chứng cứ', 'Xem lại và ký gửi']; }
 function knvTT(k) { return KN_TT.filter(function (t) { return t.ma === KNV[k].ma && t.n === 'vuan'; })[0]; }
 function knvTen(k, o) { return o && o.lan2 ? (k === 'kqd' ? 'Khiếu nại lần hai quyết định tố tụng' : KNV[k].l2 + ' · ' + knvTT(k).ten) : knvTT(k).ten; }
 function KnvWz(k, n, body, last, o) { return Wz({ title: 'Soạn đơn', steps: knvSteps(k), n: n, go: k + (n + 1) + knvSfx(o), body: h(F, null, KnTT('Trong vụ án, vụ việc của tôi', knvTen(k, o)), body), last: last }); }
@@ -1580,9 +1580,9 @@ function Knv1(k, o) {
   var va = React.useState(o.kg ? 'none' : 'DS-2026-0012'), kg = va[0] === 'none', doi = React.useState(false), tc = k === 'ktv';
   var cur = TL_VA.filter(function (x) { return x.ma === va[0]; })[0];
   var body;
-  if (o.lan2) body = FCard(k === 'ktv' ? 'Đối tượng bị tố cáo' : 'Đối tượng bị khiếu nại & thời hiệu', KnvLan2(k), true);
+  if (o.lan2) body = FCard(k === 'ktv' ? 'Đối tượng bị tố cáo' : 'Đối tượng bị khiếu nại và thời hiệu', KnvLan2(k), true);
   else if (k === 'kqd') return KnvWz(k, 1, h(KnvQd2, o), o.rong || o.loi ? Btn('Tiếp theo', 'primary', { disabled: true }) : null, o); /* v400 */
-  else body = FCard(tc ? 'Đối tượng bị tố cáo' : 'Đối tượng bị khiếu nại & thời hiệu', h(F, null,
+  else body = FCard(tc ? 'Đối tượng bị tố cáo' : 'Đối tượng bị khiếu nại và thời hiệu', h(F, null,
     /* v412: bỏ lời dẫn */
     h(KhvVaPick, { tc: tc, v: va[0], mo: o.vaMo, onPick: va[1] }), /* v412: ô chọn mở bảng từ đáy */
     kg ? h(F, null, h(SelSheet, { label: tc ? 'Tòa án nơi người bị tố cáo công tác' : 'Tòa án đang giải quyết vụ án, vụ việc', req: true, search: true, ph: tc ? 'Chọn tòa án nơi người bị tố cáo công tác' : 'Chọn tòa án đang giải quyết vụ án, vụ việc', opts: TL_TOA, v: o.kg ? COURT1 : undefined }),
@@ -1612,7 +1612,7 @@ function Knv2(k, o) {
           Tf('Diễn biến, nội dung khiếu nại', { required: true, multiline: true, placeholder: 'Nhập diễn biến, nội dung khiếu nại' }),
           Tf('Yêu cầu giải quyết khiếu nại', { required: true, multiline: true, placeholder: 'Nhập yêu cầu giải quyết khiếu nại' })),
       null /* v408: bỏ ghi chú chia loại đơn */), true),
-    FCard('Người ' + KNV[k].w + ' & tư cách', h(F, null, Lead('Tòa án căn cứ tư cách người gửi đơn để xác định quyền khiếu nại, tố cáo theo pháp luật tố tụng.'),
+    FCard('Người ' + KNV[k].w + ' và tư cách', h(F, null, Lead('Tòa án căn cứ tư cách người gửi đơn để xác định quyền khiếu nại, tố cáo theo pháp luật tố tụng.'),
       h('p', { className: 'ph-me' }, h('b', null, k === 'kqd' ? 'Chính tôi khiếu nại' : kg ? 'Chính tôi tự ' + KNV[k].w : 'Thông tin lấy từ vụ án'), h(T.StatusBadge, { tone: 'success', icon: false }, 'Theo tài khoản VNeID')),
       RvKV(rows),
       kg && !tc ? h(SelSheet, { label: 'Tư cách tố tụng của bạn', req: true, ph: 'Chọn tư cách tố tụng của bạn', opts: KNV_TU_CACH, v: tcach[0], onChange: tcach[1] }) : null,
@@ -1639,7 +1639,7 @@ function Knv4(k, o) {
       ['Tư cách người ' + KNV[k].w, 'Hoàng Dương (chính bạn) · ' + (o.kg && !tc ? 'Người bảo vệ quyền và lợi ích hợp pháp của đương sự' : o.kg ? '—' : 'Nguyên đơn')],
       tc ? ['Bảo vệ người tố cáo', 'Giữ bí mật họ tên, địa chỉ, bút tích và thông tin cá nhân của người tố cáo; đề nghị áp dụng biện pháp bảo vệ người tố cáo'] : null];
   var tl = qd && !o.lan2 ? [['Bản sao quyết định bị khiếu nại', 'ban-sao-quyet-dinh.pdf']] : o.kg && k === 'khv' ? [['Giấy tờ chứng minh tư cách người bảo vệ', 'giay-chung-nhan-nguoi-bao-ve.pdf']] : tc ? [['Tài liệu, chứng cứ chứng minh nội dung tố cáo', 'chung-cu-to-cao.pdf']] : [];
-  return KyGui({ title: 'Soạn đơn', steps: knvSteps(k), n: 4, rvTitle: 'Xem lại & ký gửi', rvDesc: 'Kiểm tra lại toàn bộ thông tin trước khi ký số và gửi đến Tòa án.',
+  return KyGui({ title: 'Soạn đơn', steps: knvSteps(k), n: 4, rvTitle: 'Xem lại và ký gửi', rvDesc: 'Kiểm tra lại toàn bộ thông tin trước khi ký số và gửi đến Tòa án.',
     review: review.filter(Boolean),
     moTa: 'Xem trước đơn và ký số từ xa bằng chữ ký số cá nhân (VNPT / Viettel / BKAV-CA). Ký xong, tích cam đoan rồi bấm “Gửi đơn”.', don: o.lan2 ? KNV[k].don + ' lần 2' : KNV[k].don, donTep: 'don-' + KNV[k].w.replace(/ /g, '-') + (o.lan2 ? '-lan-2' : '') + '.pdf', vaiTro: 'Người ' + KNV[k].w, tl: tl,
     camDoan: tc ? 'Tôi cam đoan những nội dung tố cáo và tài liệu kèm theo là đúng sự thật; tôi hiểu rằng việc tố cáo sai sự thật có thể bị xử lý theo quy định của pháp luật.' : 'Tôi cam đoan những nội dung khiếu nại và tài liệu kèm theo là đúng sự thật; tôi hiểu rằng việc khiếu nại sai sự thật có thể bị xử lý theo quy định của pháp luật.',
@@ -1772,7 +1772,7 @@ function GiayGT(p) {
 }
 
 /* ===== v400: Khiếu nại quyết định tố tụng – bước 1 (web nop-don-qd.tsx, develop 65e45a86), bố cục gọn, thứ tự như web:
-   "Thủ tục bạn đã chọn" → "Đối tượng bị khiếu nại & thời hiệu" (ô chọn đơn/vụ án → bảng từ đáy; thẻ chọn văn bản; 3 nhóm văn bản không chọn được, thu gọn)
+   "Thủ tục bạn đã chọn" → "Đối tượng bị khiếu nại và thời hiệu" (ô chọn đơn/vụ án → bảng từ đáy; thẻ chọn văn bản; 3 nhóm văn bản không chọn được, thu gọn)
    → khối cảnh báo sắp hết thời hiệu (≤2 ngày). Dữ liệu mẫu; số hiệu văn bản để [ngoặc vuông]. ===== */
 var KQD_TT = {
   c41: { ten: 'Khiếu nại văn bản, thông báo tố tụng', cq: 'Chánh án Tòa án đang giải quyết vụ án', han: '15 ngày kể từ ngày Tòa án nhận được khiếu nại; vụ việc phức tạp gia hạn không quá 15 ngày', th: '15 ngày' },
@@ -1847,7 +1847,7 @@ function KnvQd2(o) {
     h(NvCall, { tone: 'warning', title: 'Sắp hết thời hiệu khiếu nại — chỉ còn ' + vbc.con + ' ngày.' }, 'Thời hiệu ' + t.th + ' tính từ ' + vbc.nhan + ' — hạn cuối ' + vbc.hanCuoi + '.'),
     RvKV([['Thủ tục áp dụng', t.ten], ['Cơ quan có thẩm quyền giải quyết', t.cq], ['Thời hạn giải quyết', t.han]])), { cls: 'kq-guard' }) : null;
   return h(F, null, chon,
-    FCard('Đối tượng bị khiếu nại & thời hiệu', h('div', { className: 'kq-body' },
+    FCard('Đối tượng bị khiếu nại và thời hiệu', h('div', { className: 'kq-body' },
       vaF, vbF), true), /* v406: bỏ ghi chú Mở từ Hộp thư (web không có) */
     guard);
 }
