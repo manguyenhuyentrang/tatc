@@ -1817,7 +1817,7 @@ function KqdVaPick(p) {
     o[0] && host ? h(LvSheet, { host: host, title: 'Chọn đơn hoặc vụ án', onClose: function () { o[1](false); },
       top: h('div', { className: 'fx-search' }, Tf('Tìm vụ án', { icon: 'search', placeholder: 'Tìm theo mã vụ án, tên vụ án hoặc Tòa án…', value: q[0], onChange: function (e) { q[1](e.target.value); }, onClear: function () { q[1](''); } })) },
       P(kq ? loc.length + ' vụ án, đơn khớp' : KQD_VA.length + ' vụ án, đơn có quyết định, văn bản còn hạn khiếu nại', 'ph-muted kq-sheet-n'),
-      loc.length ? (p.pa || 'A' ? KqdVaList(p.pa || 'A', loc, p.v, function (id) { p.onPick(id); o[1](false); }) : h('ul', { className: 'ph-lvr', role: 'listbox', 'aria-label': p.label }, loc.map(dong))) : h('p', { className: 'ph-lv-empty' }, 'Không tìm thấy vụ án phù hợp.')) : null);
+      loc.length ? (p.pa || 'A' ? KqdVaList(p.pa || 'A', loc, p.v, function (id) { p.onPick(id); o[1](false); }) : h('ul', { className: 'ph-lvr', role: 'listbox', 'aria-label': p.label }, loc.map(dong))) : h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tìm thấy kết quả phù hợp' })) : null);
 }
 /* một nhóm văn bản không chọn được – dòng tiêu đề "Tên nhóm · số" thu gọn; mở ra: lời dẫn + danh sách (tên, mô tả, ghi chú) */
 function KqdNhom(p) {
@@ -1950,7 +1950,7 @@ function KhvVaPick(p) {
     o[0] && host ? h(LvSheet, { host: host, title: 'Chọn vụ án liên quan', onClose: function () { o[1](false); },
       top: h('div', { className: 'fx-search' }, Tf('Tìm vụ án', { icon: 'search', placeholder: 'Tìm theo mã vụ án, tên vụ án hoặc Tòa án…', value: q[0], onChange: function (e) { q[1](e.target.value); }, onClear: function () { q[1](''); } })) },
       loc.length ? h('div', { className: 'kqv-a' }, h(ChonThe, { label: 'Vụ án liên quan', v: p.v, onPick: function (id) { p.onPick(id); o[1](false); }, items: loc }))
-        : h('p', { className: 'ph-lv-empty' }, 'Không tìm thấy vụ án phù hợp.')) : null);
+        : h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tìm thấy kết quả phù hợp' })) : null);
 }
 
 /* v413: thẻ tài liệu bắt buộc chưa có tệp (Tố cáo) */

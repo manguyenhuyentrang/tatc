@@ -2728,3 +2728,63 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 .lc2-ev .lc2-tx{position:relative;margin-left:8px;padding:0 0 16px 20px;border-left:2px solid var(--border)}
 .lc2-ev:last-child .lc2-tx{padding-bottom:4px}
 .lc2-ev .lc2-tx:before{content:'';position:absolute;left:-6px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--brand-800);box-shadow:0 0 0 4px var(--brand-tint)}
+
+/* v508: ô tìm kiếm và nút Bộ lọc chung style (chọn C – cả hai dạng viên, cao 44px); chỉ hàng có nút Bộ lọc dạng viên */
+.ph-ibar:has(.kn-loc-pill) .fx-search .tp-field-input{height:44px;min-height:44px;border-radius:999px}
+.ph-ibar .kn-loc-pill{height:44px;padding:0 16px}
+
+/* v509: danh sách khiếu nại, tố cáo – khoảng cách đầu màn, ô tìm và thẻ đều 12px */
+.nv-stick:has(.kn-loc-pill){margin-top:-12px;padding:12px 16px 0}
+
+/* v511: nhãn trạng thái khiếu nại, tố cáo hành chính – mỗi trạng thái một màu (nền / chữ / viền) */
+.knst{border:1px solid}
+.knst-gnhap{background:#fbf6ec;color:#8c5a00;border-color:#eedfbf}
+.knst-gerr{background:#fdecec;color:#b42318;border-color:#f5c6c2}
+.knst-g0{background:#f1f3f6;color:#475467;border-color:#dde2e9}
+.knst-g1{background:#fff1e6;color:#b54708;border-color:#f9d3b4}
+.knst-g2{background:#e8f6f8;color:#0e7490;border-color:#bfe3ea}
+.knst-g3{background:#eaf1fd;color:#1f4fb5;border-color:#c7d7f5}
+.knst-g4{background:#fcebf4;color:#a21863;border-color:#f3c4dc}
+.knst-g5{background:#e7f5ec;color:#1e7a46;border-color:#bfe2cc}
+.knst-g6{background:#f5ece6;color:#7a3e1d;border-color:#e6cfc1}
+.knst-grut{background:#eceef8;color:#3f4a8a;border-color:#cdd2ec}
+/* v513: thẻ khiếu nại, tố cáo hành chính – nút việc tiếp theo (kiểu màn Chi tiết hồ sơ) */
+.knc-nut{display:flex;flex-direction:column;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.knc-nut .tp-btn{position:relative;z-index:1}
+/* v521: header tên dài + nút bên phải */
+.qh-icnut{flex:none;width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--brand-800);color:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(163,19,28,.25)}
+.qh-icnut .tp-ico,.qh-icnut svg{width:22px;height:22px}
+.qh-icnut:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.qh.qh-paB{flex-wrap:wrap;row-gap:2px;padding-bottom:14px}
+.qh-paB .qh-back{order:1}
+.qh-paB .qh-nop{order:2;margin-left:auto}
+.qh-paB .qh-sel{order:3;flex:1 1 100%;padding:0 8px}
+.qh-paB .qh-sel b{font-size:24px;line-height:30px;-webkit-line-clamp:2}
+.qh.qh-paC{position:static}
+.qh-paC .qh-fab{position:absolute;right:16px;bottom:32px;z-index:6;height:48px;padding:0 20px 0 16px;border-radius:999px;box-shadow:0 6px 16px rgba(163,19,28,.32)}
+.qh-paC~.ph-body{padding-bottom:96px}
+/* v522: nút (+) thanh điều hướng – đủ 10 việc tạo mới */
+.nw-dial-c{gap:8px;bottom:104px}
+.nw-dial-c .nw-dial-it{padding:4px 16px 4px 4px;font-size:15px;line-height:20px}
+.nw-dial-c .nw-dial-ic{--illo-circle:36px}.nw-dial-c .nw-dial-ic .tp-illo{width:24px;height:24px}
+.nw-sh{position:absolute;left:0;right:0;bottom:0;max-height:92%;overflow:auto;padding:4px 16px 100px;border-radius:20px 20px 0 0;background:var(--surface);box-shadow:0 -6px 20px rgba(14,22,38,.18)}
+.nw-sh-h{position:sticky;top:-8px;display:flex;justify-content:center;padding:12px 0 8px;background:var(--surface);z-index:1}
+.nw-sh-h b{font:700 17px/24px var(--font-sans);color:var(--ink)}
+.nw-sh-g{margin-top:8px}
+.nw-sh-gh{margin:0 0 6px 4px;font:600 13px/18px var(--font-sans);color:var(--ink-subtle);text-transform:uppercase;letter-spacing:.3px}
+.nw-sh-l{border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden}
+.nw-sh-it{display:flex;align-items:center;gap:12px;width:100%;padding:7px 12px;border:0;border-top:1px solid var(--border);background:var(--surface);text-align:left;font:500 15px/20px var(--font-sans);color:var(--ink);cursor:pointer}
+.nw-sh-it:first-child{border-top:0}
+.nw-sh-it>span:nth-child(2){flex:1}
+.nw-sh-it>.tp-ico,.nw-sh-it>svg{width:18px;height:18px;color:var(--ink-subtle)}
+.nw-sh-ic{--illo-circle:36px;border:0;background:var(--brand-tint)}.nw-sh-ic .tp-illo{width:24px;height:24px}
+.nw-gr{position:absolute;left:0;right:0;bottom:100px;padding:0 16px;display:flex;flex-direction:column;gap:12px}
+.nw-gr-gh{display:inline-block;margin:0 0 6px;padding:3px 12px;border-radius:999px;background:var(--brand-950);font:600 13px/18px var(--font-sans);color:#fff;letter-spacing:.3px}
+.nw-gr-l{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.nw-gr-it{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border:0;border-radius:16px;background:var(--surface);box-shadow:0 4px 12px rgba(0,0,0,.18);font:600 13px/17px var(--font-sans);color:var(--ink);text-align:center;cursor:pointer}
+.nw-gr-ic{--illo-circle:40px;border:0;background:var(--brand-tint)}.nw-gr-ic .tp-illo{width:26px;height:26px}
+
+
+/* v523: bảng Tạo mới của nút (+) – bỏ tiêu đề "Tạo mới" (giữ danh sách liền như v522) */
+.nw-sh .nw-sh-h{display:none}
+.nw-sh{padding-top:20px}
