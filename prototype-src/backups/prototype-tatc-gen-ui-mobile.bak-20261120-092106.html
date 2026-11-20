@@ -4113,6 +4113,51 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 /* v513: thẻ khiếu nại, tố cáo hành chính – nút việc tiếp theo (kiểu màn Chi tiết hồ sơ) */
 .knc-nut{display:flex;flex-direction:column;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .knc-nut .tp-btn{position:relative;z-index:1}
+/* v521: header tên dài + nút bên phải */
+.qh-icnut{flex:none;width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--brand-800);color:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(163,19,28,.25)}
+.qh-icnut .tp-ico,.qh-icnut svg{width:22px;height:22px}
+.qh-icnut:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.qh.qh-paB{flex-wrap:wrap;row-gap:2px;padding-bottom:14px}
+.qh-paB .qh-back{order:1}
+.qh-paB .qh-nop{order:2;margin-left:auto}
+.qh-paB .qh-sel{order:3;flex:1 1 100%;padding:0 8px}
+.qh-paB .qh-sel b{font-size:24px;line-height:30px;-webkit-line-clamp:2}
+.qh.qh-paC{position:static}
+.qh-paC .qh-fab{position:absolute;right:16px;bottom:32px;z-index:6;height:48px;padding:0 20px 0 16px;border-radius:999px;box-shadow:0 6px 16px rgba(163,19,28,.32)}
+.qh-paC~.ph-body{padding-bottom:96px}
+/* v522: nút (+) thanh điều hướng – đủ 10 việc tạo mới */
+.nw-dial-c{gap:8px;bottom:104px}
+.nw-dial-c .nw-dial-it{padding:4px 16px 4px 4px;font-size:15px;line-height:20px}
+.nw-dial-c .nw-dial-ic{--illo-circle:36px}.nw-dial-c .nw-dial-ic .tp-illo{width:24px;height:24px}
+.nw-sh{position:absolute;left:0;right:0;bottom:0;max-height:92%;overflow:auto;padding:4px 16px 100px;border-radius:20px 20px 0 0;background:var(--surface);box-shadow:0 -6px 20px rgba(14,22,38,.18)}
+.nw-sh-h{position:sticky;top:-8px;display:flex;justify-content:center;padding:12px 0 8px;background:var(--surface);z-index:1}
+.nw-sh-h b{font:700 17px/24px var(--font-sans);color:var(--ink)}
+.nw-sh-g{margin-top:8px}
+.nw-sh-gh{margin:0 0 6px 4px;font:600 13px/18px var(--font-sans);color:var(--ink-subtle);text-transform:uppercase;letter-spacing:.3px}
+.nw-sh-l{border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden}
+.nw-sh-it{display:flex;align-items:center;gap:12px;width:100%;padding:7px 12px;border:0;border-top:1px solid var(--border);background:var(--surface);text-align:left;font:500 15px/20px var(--font-sans);color:var(--ink);cursor:pointer}
+.nw-sh-it:first-child{border-top:0}
+.nw-sh-it>span:nth-child(2){flex:1}
+.nw-sh-it>.tp-ico,.nw-sh-it>svg{width:18px;height:18px;color:var(--ink-subtle)}
+.nw-sh-ic{--illo-circle:36px;border:0;background:var(--brand-tint)}.nw-sh-ic .tp-illo{width:24px;height:24px}
+.nw-gr{position:absolute;left:0;right:0;bottom:100px;padding:0 16px;display:flex;flex-direction:column;gap:12px}
+.nw-gr-gh{display:inline-block;margin:0 0 6px;padding:3px 12px;border-radius:999px;background:var(--brand-950);font:600 13px/18px var(--font-sans);color:#fff;letter-spacing:.3px}
+.nw-gr-l{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.nw-gr-it{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border:0;border-radius:16px;background:var(--surface);box-shadow:0 4px 12px rgba(0,0,0,.18);font:600 13px/17px var(--font-sans);color:var(--ink);text-align:center;cursor:pointer}
+.nw-gr-ic{--illo-circle:40px;border:0;background:var(--brand-tint)}.nw-gr-ic .tp-illo{width:26px;height:26px}
+
+
+/* v523: bảng Tạo mới của nút (+) – bỏ tiêu đề "Tạo mới" (giữ danh sách liền như v522) */
+.nw-sh .nw-sh-h{display:none}
+.nw-sh{padding-top:20px}
+/* v525: header Danh sách đơn – nút tròn đổi loại đơn cạnh nút (+) */
+.qh-lq>span{align-items:center;gap:6px;width:100%}
+.qh-lq b{-webkit-line-clamp:1!important;display:block!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.qh-lq-ic{flex:none;position:relative;display:grid;place-items:center;margin-left:auto;width:40px;height:40px;border:1px solid var(--border);border-radius:50%;background:var(--surface);font-style:normal;color:var(--brand-text)}
+.qh-lq-ic>.tp-ico,.qh-lq-ic>svg{width:20px;height:20px}
+.qh-lq-ei-illo .tp-illo{width:26px;height:26px}
+.qh-lq-badge{position:absolute;right:-2px;bottom:-2px;display:grid;place-items:center;width:18px;height:18px;border:2px solid var(--surface);border-radius:50%;background:var(--brand-800);color:#fff}
+.qh-lq-badge .tp-ico,.qh-lq-badge svg{width:12px!important;height:12px!important;stroke-width:3;color:#fff!important}
 
 
 /* Bố cục: bảng điều khiển trái + sân khấu điện thoại; một giao diện sáng cố định (app chỉ có chế độ sáng) */
@@ -8560,11 +8605,11 @@ function QdKindPick(p) {
 function QdShell(p) {
   var o = React.useState(false), anchor = React.useRef(null), host = useHost(anchor), cur = p.kinds.filter(function (k) { return k[0] === p.cur; })[0];
   return h(Phone, { cls: 'ph-hd qh-ph' }, h('span', { ref: anchor, hidden: true }),
-    h('header', { className: 'qh' }, h('button', { type: 'button', className: 'tp-icon-btn qh-back', 'aria-label': 'Quay lại', 'data-pt-go': 'back' }, h(T.Icon, { name: 'chevronLeft' })),
-      h('button', { type: 'button', className: 'qh-sel', 'aria-haspopup': 'dialog', 'aria-label': 'Loại đơn: ' + cur[1] + '. Đổi loại đơn', onClick: function () { o[1](true); } }, h('small', null, 'Danh sách đơn và tiến trình'), h('span', null, h('b', null, cur[1]), h(T.Icon, { name: 'chevronDown' }))),
-      h(T.Button, { size: 'sm', className: 'qh-nop', 'data-pt-go': 'draftAsk' }, 'Nộp đơn mới') /* v204: cỡ sm của DS (cao 36px) · v208: bỏ dấu +, nhãn 'Nộp đơn mới' */),
+    h('header', { className: 'qh' + HdCls() }, h('button', { type: 'button', className: 'tp-icon-btn qh-back', 'aria-label': 'Quay lại', 'data-pt-go': 'back' }, h(T.Icon, { name: 'chevronLeft' })),
+      h('button', { type: 'button', className: 'qh-sel qh-lq qh-lqE', 'aria-haspopup': 'dialog', 'aria-label': 'Loại đơn: ' + cur[1] + '. Đổi loại đơn', onClick: function () { o[1](true); } }, QdSelIn(cur[1], cur[0])),
+      HdNut('draftAsk', 'Nộp đơn mới') /* v204: cỡ sm của DS (cao 36px) · v208: bỏ dấu +, nhãn 'Nộp đơn mới' */),
     h(Body, { cls: 'ph-plain' }, p.body),
-    o[0] && host ? h(LvSheet, { host: host, title: 'Xem loại đơn', onClose: function () { o[1](false); } }, h(LvRows, { label: 'Loại đơn', cur: p.cur, items: p.kinds.map(function (k) { return { id: k[0], name: h('span', { className: 'qk-n' }, h('span', null, k[1]), h('span', { className: 'qk-cnt tp-num' }, qdDem(k[0]))) }; }), onPick: function (id) { p.onPick(id); o[1](false); } })) : null);
+    o[0] && host ? h(LvSheet, { host: host, title: 'Danh sách đơn và tiến trình', onClose: function () { o[1](false); } }, QdLoaiList(p.kinds, function (id) { p.onPick(id); o[1](false); })) : null);
 }
 function QdList(p) {
   var kinds = QD_KIND.filter(function (k) { return k[0] === 'gdt' || QD.some(function (d) { return d.k === k[0]; }); });
@@ -11091,8 +11136,8 @@ function KyTcRows(p) {
 /* v336 (12/11/2026): Theo dõi yêu cầu trích lục, bản sao + Khiếu nại — Tố cáo theo khung Danh sách đơn và tiến trình:
    nút tạo mới ở góc phải header (bỏ nút đỏ rộng + dòng mô tả), thẻ QdCard: hàng nhãn trạng thái + tình trạng · tên đậm · dòng nhãn–giá trị · "Việc cần làm" */
 function DsShell(title, body, nut, go) {
-  return h(Phone, { cls: 'ph-hd qh-ph' }, h('header', { className: 'qh' }, h('button', { type: 'button', className: 'tp-icon-btn qh-back', 'aria-label': 'Quay lại', 'data-pt-go': 'back' }, h(T.Icon, { name: 'chevronLeft' })),
-    h('div', { className: 'qh-sel qh-tt' }, h('span', null, h('b', null, title))), nut ? h(T.Button, { size: 'sm', className: 'qh-nop', 'data-pt-go': go }, nut) : null), h(Body, { cls: 'ph-plain' }, body));
+  return h(Phone, { cls: 'ph-hd qh-ph' }, h('header', { className: 'qh' + HdCls() }, h('button', { type: 'button', className: 'tp-icon-btn qh-back', 'aria-label': 'Quay lại', 'data-pt-go': 'back' }, h(T.Icon, { name: 'chevronLeft' })),
+    h('div', { className: 'qh-sel qh-tt' }, h('span', null, h('b', null, title))), nut ? HdNut(go, nut) : null), h(Body, { cls: 'ph-plain' }, body));
 }
 function dsRows(rows) { return h('dl', { className: 'qc-ben' }, rows.filter(Boolean).map(function (r) { return h('div', { key: r[0] }, h('dt', null, r[0] + ':'), h('dd', null, r[1])); })); }
 function dsTop(st, tinh, tone) {
@@ -13224,12 +13269,12 @@ function KnHcDetail2(o) {
   var p = o.p, k = o.k, tc = o.tc, hs = o.hs, rut = k === 'rut', tab = React.useState(p.tab0 || 'nd');
   /* v452: nút theo trạng thái (dữ liệu demo) – đang giải quyết: rút đơn; đã có kết quả: cho ý kiến dự thảo + tố cáo tiếp; đang soạn, gửi không thành công: sửa đơn + gửi lại đơn; trạng thái khác: không có nút */
   var g = hs.grp[0];
-  var nut = rut || p.kpa ? [] : knhcNutWeb({ nhom: knhcNhomTen(g), loai: hs.loai, han: (KNHC_DS.filter(function (c) { return c.ma === hs.ma; })[0] || {}).han }); /* v515: nút theo web (KntcHanhChinhService.toDetail) */
+  var nut = rut || p.kpa ? [] : knhcNutWeb({ nhom: knhcNhomTen(g), loai: hs.loai, han: (KNHC_DS.filter(function (c) { return c.ma === hs.ma; })[0] || {}).han, rutYc: hs.rutYc }); /* v515: nút theo web (KntcHanhChinhService.toDetail) */
   var head = h('section', { className: 'dt-head dt-head-don knh-head' }, h('p', { className: 'dt-meta' }, h('span', { className: 'tp-num' }, hs.ma), ' · Gửi ngày ' + hs.gui), h('h1', null, hs.tom),
     h('div', { className: 'dt-badges' }, hs.nhom ? h('span', { className: 'tp-badge knst knst-' + hs.nhom }, hs.grp[0]) : h(T.StatusBadge, { tone: hs.grp[1], icon: false }, hs.grp[0]), h(T.StatusBadge, { tone: 'neutral', icon: false }, p.kpa ? 'Kiến nghị, phản ánh' : hs.loai)),
     h('p', { className: 'knh-toa' }, 'Cơ quan tiếp nhận: ' + COURT1), hs.nhom && KNHC_TT_TEN[hs.ma] ? h('p', { className: 'knh-toa' }, 'Thủ tục: ' + KNHC_TT_TEN[hs.ma]) : null, /* v517 */
     nut.length ? h('div', { className: 'knh-nut' }, nut.map(function (x) { return h(T.Button, { key: x[0], size: 'sm', block: true, variant: x[2] ? 'primary' : 'secondary', 'data-pt-go': x[1] }, x[0]); })) : null);
-  var tabs = h('div', { className: 'dt-tabs knh-tabs' }, h(T.Tabs, { label: 'Nội dung hồ sơ', value: tab[0], onChange: tab[1], items: [{ key: 'nd', label: 'Nội dung khiếu nại, tố cáo' }, { key: 'tt', label: 'Tiến trình giải quyết' }] }));
+  var tabs = h('div', { className: 'dt-tabs knh-tabs' }, h(T.Tabs, { label: 'Nội dung hồ sơ', value: tab[0], onChange: tab[1], items: [{ key: 'nd', label: 'Nội dung khiếu nại, tố cáo' }, { key: 'tt', label: 'Tiến trình giải quyết' }].concat(hs.rutYc ? [{ key: 'rut', label: 'Yêu cầu rút đơn' }] : []) /* v520 */ }));
   var doiTuong = h('div', { className: 'knh-dt' }, h('p', { className: 'knh-dt-h' }, 'Đối tượng bị khiếu nại, tố cáo'),
     RvKV([['Loại đối tượng', 'Cá nhân'], ['Họ tên', tc ? 'Phạm Văn Đức' : 'Nguyễn Văn Long'], ['Chức vụ', 'Cán bộ bộ phận tiếp nhận hồ sơ'], ['Nơi công tác', COURT1], ['Địa chỉ', '-']]));
   var tab1 = h(F, null,
@@ -13244,7 +13289,7 @@ function KnHcDetail2(o) {
     FCard('Tiến trình xử lý', G1Std(o.buoc.map(function (b) { return { t: b[0], d: b[1], ngay: b[2], state: b[3] }; })), true));
   return SubS('Chi tiết hồ sơ', h(F, null, head,
     tc && hs.baoVe !== false ? h('div', { className: 'kn-bv' }, h(T.Icon, { name: 'lock' }), h('p', null, h('b', null, 'Bảo vệ người tố cáo. '), 'Danh tính của bạn được giữ bí mật với người bị tố cáo. Hồ sơ này chỉ người có thẩm quyền giải quyết được truy cập.')) : null,
-    tabs, tab[0] === 'tt' ? tab2 : tab1), null);
+    tabs, tab[0] === 'tt' ? tab2 : tab[0] === 'rut' && hs.rutYc ? KnRutTab(hs) : tab1), null);
 }
 
 /* v453: Rút đơn khiếu nại, tố cáo hành chính – như web RutDonModal: người yêu cầu rút (chỉ xem, lấy từ hồ sơ) · Hình thức rút · Lý do rút đơn (≥15 ký tự) · Ký số đơn rút (bắt buộc) · Hủy | Gửi yêu cầu rút */
@@ -13719,7 +13764,7 @@ function LichHome() {
     h('div', { className: 'lc2-w' }, LC_WEEK.map(function (d, i) {
       return h('span', { key: d, className: 'lc2-day' + (d === e0.d ? ' lc2-on' : '') + (d === 4 ? ' lc2-today' : '') }, h('small', null, thu[i]), h('b', { className: 'tp-num' }, d), h('i', { className: co.indexOf(d) >= 0 ? '' : 'lc2-no' }));
     })),
-    h('button', { type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e0.gio), h('span', { className: 'lc2-tx' }, lcTag(e0), h('b', null, e0.ten), h('small', null, e0.ht + ' · ' + e0.dd)))),
+    h('button', { type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e0.gio), h('span', { className: 'lc2-tx' }, h('b', null, e0.ten), h('small', null, e0.ht + ' · ' + e0.dd)))),
     { action: h(T.LinkArrow, { arrow: false }, 'Xem lịch đầy đủ'), cls: 'lc-blk' });
 }
 function Home(all) {
@@ -13762,7 +13807,7 @@ function LichHome() {
         h('small', null, thu[i]), h('b', { className: 'tp-num' }, d), h('i', { className: co.indexOf(d) >= 0 ? '' : 'lc2-no' }));
     })),
     ds.length ? ds.map(function (e) {
-      return h('button', { key: e.id, type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e.gio), h('span', { className: 'lc2-tx' }, lcTag(e), h('b', null, e.ten), h('small', null, e.ht + ' · ' + e.dd)));
+      return h('button', { key: e.id, type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e.gio), h('span', { className: 'lc2-tx' }, h('b', null, e.ten), h('small', null, e.ht + ' · ' + e.dd)));
     }) : h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tìm thấy kết quả phù hợp' })),
     { action: h(T.LinkArrow, { arrow: false }, 'Xem lịch đầy đủ'), cls: 'lc-blk' });
 }
@@ -13832,7 +13877,7 @@ function knhcNutWeb(c) {
   var n = c.nhom, tc = /^Tố cáo/.test(c.loai || ''), kn = !tc, dangXl = /^g[1-4]$/.test(n), kq = n === 'g5', qua = c.han === 'qua' && dangXl, vnpt = n !== 'g1' && n !== 'gerr' && n !== 'gnhap';
   var r = [];
   if (dangXl && vnpt) r.push(['Gửi yêu cầu rút đơn', tc ? 'withdrawTc' : 'withdraw', 1]);
-  if (kn && vnpt && (kq || qua)) r.push(['Khiếu nại lần hai · còn [số ngày] ngày', 'knSecond']);
+  if (kn && vnpt && (kq || qua)) r.push(['Khiếu nại lần hai', 'knSecond']);
   if (kq) r.push(['Cho ý kiến về dự thảo kết luận nội dung tố cáo', 'kpa1']);
   if (tc && vnpt && (kq || qua)) r.push(['Gửi đơn tố cáo tiếp', 'ktc1T']);
   if (n === 'gerr') r.push(['Sửa đơn', 'khc1', 1], ['Gửi lại đơn', 'snack:Đã gửi lại đơn thành công.']);
@@ -13889,6 +13934,99 @@ function KhoiRong() { return h(ES0, { variant: 'center', icon: 'alert', title: '
 IbEmpty = function (p) { return laRong(p.title) ? KhoiRong() : h(IbEmpty1, p); };
 T.EmptyState = function (p) { return laRong(p.title || p.text) ? KhoiRong() : h(ES0, p); };
 LcRong = function () { return KhoiRong(); };
+
+/* v520: Chi tiết hồ sơ khiếu nại, tố cáo hành chính – tab "Yêu cầu rút đơn" (chỉ có khi hồ sơ có yêu cầu rút), nội dung như khối Yêu cầu rút đơn của web chi-tiet.tsx:
+   Mã đơn rút · Trạng thái · Người yêu cầu · Hình thức · Ngày gửi · Lý do · nút Xem đơn rút đã ký. Có yêu cầu rút đang chờ thì không hiện nút Gửi yêu cầu rút đơn (web rutDangCho). */
+function KnRutTab(hs) {
+  var y = hs.rutYc;
+  return FCard('Yêu cầu rút đơn', h(F, null, RvKV([['Mã đơn rút', h('span', { className: 'tp-num' }, y.ma)], ['Trạng thái', y.tt], ['Người yêu cầu', y.nguoi], ['Hình thức', y.ht], ['Ngày gửi', y.ngay], ['Lý do', y.lyDo]]),
+    h(T.Button, { size: 'sm', variant: 'secondary', icon: 'eye', 'data-pt-go': 'attachment', onClickCapture: function () { window.__ibFile = 'don-rut-' + y.ma + '.pdf'; } }, 'Xem đơn rút đã ký')), true);
+}
+KNHC_DS.forEach(function (c) { if (c.ma === 'KN-2026-0010') c.rutYc = { ma: '[Mã đơn rút]', tt: 'Đã gửi, chờ cơ quan giải quyết phản hồi', nguoi: 'Hoàng Dương', ht: 'Rút toàn bộ', ngay: '17/11/2026', lyDo: 'Vấn đề đã được Tòa án khắc phục, tôi không còn nhu cầu giải quyết.' }; });
+var knhcNutWeb1 = knhcNutWeb;
+knhcNutWeb = function (c) { var r = knhcNutWeb1(c); var x = c.rutYc || (KNHC_DS.filter(function (y) { return y.ma === c.ma; })[0] || {}).rutYc; return x ? r.filter(function (b) { return b[0] !== 'Gửi yêu cầu rút đơn'; }) : r; };
+var KnHcDetail1 = KnHcDetail;
+KnHcDetail = function (p) {
+  var c = window.__knhcMa && KNHC_DS.filter(function (x) { return x.ma === window.__knhcMa; })[0];
+  if (!c || !c.rutYc || p.grp || p.kpa || p.k === 'rut') return h(KnHcDetail1, p);
+  var tc = c.loai === 'Tố cáo';
+  return h(KnHcDetail2, { p: p, k: tc ? 'tc' : 'kn', tc: tc, word: tc ? 'tố cáo' : 'khiếu nại', buoc: knhcBuoc(c), hs: { ma: c.ma, loai: c.loai, tom: c.tom, chu: 'Hoàng Dương', gui: c.gui, grp: [c.st, 'neutral'], nhom: c.nhom, baoVe: !!c.baoVe, rutYc: c.rutYc } });
+};
+
+/* v521: header tên dài + nút bên phải – phương án A */
+function HdPa() { return 'A'; }
+function HdCls() { var m = HdPa(); return m ? ' qh-pa' + m : ''; }
+function HdNut(go, label) {
+  var m = HdPa();
+  if (m === 'A') return h('button', { type: 'button', className: 'qh-icnut', 'aria-label': label, title: label, 'data-pt-go': go }, h(T.Icon, { name: 'plus' }));
+  if (m === 'C') return h(T.Button, { className: 'qh-nop qh-fab', icon: 'plus', 'data-pt-go': go }, label);
+  return h(T.Button, { size: 'sm', className: 'qh-nop', 'data-pt-go': go }, label);
+}
+
+/* v522: nút (+) thanh điều hướng – đủ 10 việc tạo mới, chia nhóm (kiểu A) */
+var NW_NHOM = [['Nộp đơn', [['nopDon', 'Đơn khởi kiện', 'K'], ['yeuCau', 'Đơn yêu cầu việc dân sự', 'draftAsk'], ['phaSan', 'Đơn yêu cầu phá sản, phục hồi', 'draftAsk'],
+    ['xemXet', 'Đơn giám đốc thẩm, tái thẩm', 'gx1']]],
+  ['Khiếu nại, tố cáo', [['khieuNai', 'Khiếu nại, tố cáo', 'choose']]],
+  ['Yêu cầu khác', [['trichLuc', 'Cấp trích lục, bản sao', 'tl1'], ['nguoiBaoVe', 'Đăng ký người bảo vệ', 'bvd1']]]];
+function nwGo(x) { return x[2] === 'K' ? nwDich('nopDon') : x[2]; }
+function NwMode() { return 'A'; }
+function NwPanel(dong) {
+  var m = NwMode();
+  if (m === 'A') { var tat = [].concat.apply([], NW_NHOM.map(function (g) { return g[1]; }));
+    return h('div', { className: 'nw-sh', role: 'menu', 'aria-label': 'Tạo mới' }, h('div', { className: 'nw-sh-h' }, h('b', null, 'Tạo mới')),
+      h('div', { className: 'nw-sh-l' }, tat.map(function (x) {
+        return h('button', { key: x[0] + x[1], type: 'button', role: 'menuitem', className: 'nw-sh-it', 'data-pt-go': nwGo(x) }, h('span', { className: 'tp-illo-circle nw-sh-ic' }, h(T.Illustration, { name: x[0] })), h('span', null, x[1]), h(T.Icon, { name: 'chevronRight' }));
+      }))); }
+  if (m === 'B') return h('div', { className: 'nw-gr', role: 'menu', 'aria-label': 'Tạo mới' }, NW_NHOM.map(function (g) {
+    return h('div', { key: g[0], className: 'nw-gr-g' }, h('p', { className: 'nw-gr-gh' }, g[0]), h('div', { className: 'nw-gr-l' }, g[1].map(function (x) {
+      return h('button', { key: x[0] + x[1], type: 'button', role: 'menuitem', className: 'nw-gr-it', 'data-pt-go': nwGo(x) }, h('span', { className: 'tp-illo-circle nw-gr-ic' }, h(T.Illustration, { name: x[0] })), h('span', null, x[1]));
+    })));
+  }));
+  var all = [].concat.apply([], NW_NHOM.map(function (g) { return g[1]; }));
+  return h('ul', { className: 'nw-dial nw-dial-c', role: 'menu', 'aria-label': 'Tạo mới' }, all.map(function (x) {
+    return h('li', { key: x[0] + x[1], role: 'none' }, h('button', { type: 'button', role: 'menuitem', className: 'nw-dial-it', 'data-pt-go': nwGo(x) }, h('span', { className: 'tp-illo-circle nw-dial-ic' }, h(T.Illustration, { name: x[0] })), h('span', null, x[1])));
+  }));
+}
+NavB = function (p) {
+  var mo = React.useState(!!window.__nwMo), n = ibSoChuaDoc(), dong = function () { mo[1](false); };
+  var ds = NAV.map(function (it) {
+    var on = it.key === p.active, bd = it.key === 'inbox' && n > 0 ? (n > 99 ? '99+' : String(n)) : null;
+    return h('button', { key: it.key, type: 'button', className: 'tp-nav-item' + (on ? ' tp-nav-on' : ''), 'aria-current': on ? 'page' : undefined, 'aria-describedby': bd ? 'ib-nav-n' : undefined },
+      h('span', { className: 'ib-nav-ic', 'data-n': bd || undefined }, h(T.Icon, { name: it.icon })), it.label);
+  });
+  ds.splice(2, 0, h('button', { key: 'nw', type: 'button', className: 'tp-nav-main nw-main pt-chk' + (mo[0] ? ' nw-on' : ''), 'aria-label': mo[0] ? 'Đóng' : 'Tạo mới', 'aria-expanded': mo[0], 'aria-haspopup': 'menu', onClick: function () { mo[1](!mo[0]); } },
+    h('span', { className: 'tp-nav-fab' }, h(T.Icon, { name: mo[0] ? 'x' : 'plus' }))));
+  return h('div', { className: 'ph-nav nw-nav' }, h('nav', { className: 'tp-nav tp-nav2', 'aria-label': 'Điều hướng chính' }, ds),
+    n > 0 ? h('span', { id: 'ib-nav-n', className: 'pt-sr' }, n + ' văn bản chưa đọc') : null,
+    mo[0] ? h('div', { className: 'nw-ov' }, h('div', { className: 'ph-scrim nw-scrim pt-chk', 'aria-hidden': 'true', onClick: dong }), NwPanel(dong)) : null);
+};
+
+/* v524: khối Lịch tố tụng ở Trang chủ – bỏ nhãn loại sự kiện (Phiên tòa, Phiên họp…) ở từng sự kiện; tên sự kiện đã nêu loại */
+
+/* v525: header Danh sách đơn – bỏ dòng nhỏ "Danh sách đơn và tiến trình"; nút tròn viền riêng cạnh nút (+) để đổi loại đơn (biểu tượng menu) */
+var QD_LQ_ILLO = { khoikien: 'nopDon', viecdansu: 'yeuCau', phasan: 'phaSan', khangcao: 'banAn', gdt: 'xemXet', phanto: 'phanTo' };
+function QdEi() { return 'menu'; }
+function QdSelIn(ten, k) {
+  var ei = QdEi();
+  var inner = ei === 'illo' ? h(T.Illustration, { name: QD_LQ_ILLO[k] || 'nopDon' })
+    : ei === 'filechev' ? h(F, null, h(T.Icon, { name: 'file' }), h('span', { className: 'qh-lq-badge' }, h(T.Icon, { name: 'chevronDown' })))
+    : h(T.Icon, { name: ei });
+  return h('span', null, h('b', null, ten), h('i', { className: 'qh-lq-ic qh-lq-ei-' + ei, 'aria-hidden': 'true' }, inner));
+}
+
+/* v525: Danh sách đơn – bảng đổi loại đơn giống bảng "Danh sách đơn và tiến trình" ở Trang chủ (LoaiDonList): hình minh họa, tên loại đơn, số đơn, mũi tên; chọn thì đổi loại tại chỗ */
+function QdLoaiList(kinds, pick) {
+  return h('div', { className: 'rn-list ld-list', role: 'list' }, kinds.map(function (k) {
+    return h('button', { key: k[0], type: 'button', className: 'rn-row ld-row', onClick: function () { pick(k[0]); } },
+      h('span', { className: 'tp-illo-circle rn-row-ic' }, h(T.Illustration, { name: LD_ILLO[k[0]] })),
+      h('span', { className: 'rn-row-tx' }, h('b', null, k[1])),
+      h('span', { className: 'qk-cnt tp-num' }, qdDem(k[0])), h(T.Icon, { name: 'chevronRight' }));
+  }));
+}
+
+/* v526: thẻ hồ sơ khiếu nại, tố cáo hành chính – bỏ khối nút hành động (người dùng yêu cầu). Bấm thẻ vẫn mở Chi tiết hồ sơ (đơn đang soạn: mở lại soạn đơn);
+   nút hành động chỉ còn ở màn Chi tiết hồ sơ (knhcNutWeb). Khối "Đơn chưa lưu" đầu danh sách giữ nút Tiếp tục. */
+knhcViec = function () { return []; };
 
 
 /* File 2: prototype bấm được, dùng lại các màn của file duyệt */

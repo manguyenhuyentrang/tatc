@@ -352,10 +352,10 @@ function QdShell(p) {
   var o = React.useState(false), anchor = React.useRef(null), host = useHost(anchor), cur = p.kinds.filter(function (k) { return k[0] === p.cur; })[0];
   return h(Phone, { cls: 'ph-hd qh-ph' }, h('span', { ref: anchor, hidden: true }),
     h('header', { className: 'qh' + HdCls() }, h('button', { type: 'button', className: 'tp-icon-btn qh-back', 'aria-label': 'Quay lại', 'data-pt-go': 'back' }, h(T.Icon, { name: 'chevronLeft' })),
-      h('button', { type: 'button', className: 'qh-sel', 'aria-haspopup': 'dialog', 'aria-label': 'Loại đơn: ' + cur[1] + '. Đổi loại đơn', onClick: function () { o[1](true); } }, h('small', null, 'Danh sách đơn và tiến trình'), h('span', null, h('b', null, cur[1]), h(T.Icon, { name: 'chevronDown' }))),
+      h('button', { type: 'button', className: 'qh-sel qh-lq qh-lqE', 'aria-haspopup': 'dialog', 'aria-label': 'Loại đơn: ' + cur[1] + '. Đổi loại đơn', onClick: function () { o[1](true); } }, QdSelIn(cur[1], cur[0])),
       HdNut('draftAsk', 'Nộp đơn mới') /* v204: cỡ sm của DS (cao 36px) · v208: bỏ dấu +, nhãn 'Nộp đơn mới' */),
     h(Body, { cls: 'ph-plain' }, p.body),
-    o[0] && host ? h(LvSheet, { host: host, title: 'Xem loại đơn', onClose: function () { o[1](false); } }, h(LvRows, { label: 'Loại đơn', cur: p.cur, items: p.kinds.map(function (k) { return { id: k[0], name: h('span', { className: 'qk-n' }, h('span', null, k[1]), h('span', { className: 'qk-cnt tp-num' }, qdDem(k[0]))) }; }), onPick: function (id) { p.onPick(id); o[1](false); } })) : null);
+    o[0] && host ? h(LvSheet, { host: host, title: 'Danh sách đơn và tiến trình', onClose: function () { o[1](false); } }, QdLoaiList(p.kinds, function (id) { p.onPick(id); o[1](false); })) : null);
 }
 function QdList(p) {
   var kinds = QD_KIND.filter(function (k) { return k[0] === 'gdt' || QD.some(function (d) { return d.k === k[0]; }); });
@@ -5510,7 +5510,7 @@ function LichHome() {
     h('div', { className: 'lc2-w' }, LC_WEEK.map(function (d, i) {
       return h('span', { key: d, className: 'lc2-day' + (d === e0.d ? ' lc2-on' : '') + (d === 4 ? ' lc2-today' : '') }, h('small', null, thu[i]), h('b', { className: 'tp-num' }, d), h('i', { className: co.indexOf(d) >= 0 ? '' : 'lc2-no' }));
     })),
-    h('button', { type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e0.gio), h('span', { className: 'lc2-tx' }, lcTag(e0), h('b', null, e0.ten), h('small', null, e0.ht + ' · ' + e0.dd)))),
+    h('button', { type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e0.gio), h('span', { className: 'lc2-tx' }, h('b', null, e0.ten), h('small', null, e0.ht + ' · ' + e0.dd)))),
     { action: h(T.LinkArrow, { arrow: false }, 'Xem lịch đầy đủ'), cls: 'lc-blk' });
 }
 function Home(all) {
@@ -5553,7 +5553,7 @@ function LichHome() {
         h('small', null, thu[i]), h('b', { className: 'tp-num' }, d), h('i', { className: co.indexOf(d) >= 0 ? '' : 'lc2-no' }));
     })),
     ds.length ? ds.map(function (e) {
-      return h('button', { key: e.id, type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e.gio), h('span', { className: 'lc2-tx' }, lcTag(e), h('b', null, e.ten), h('small', null, e.ht + ' · ' + e.dd)));
+      return h('button', { key: e.id, type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e.gio), h('span', { className: 'lc2-tx' }, h('b', null, e.ten), h('small', null, e.ht + ' · ' + e.dd)));
     }) : h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tìm thấy kết quả phù hợp' })),
     { action: h(T.LinkArrow, { arrow: false }, 'Xem lịch đầy đủ'), cls: 'lc-blk' });
 }
@@ -5745,5 +5745,62 @@ NavB = function (p) {
   return h('div', { className: 'ph-nav nw-nav' }, h('nav', { className: 'tp-nav tp-nav2', 'aria-label': 'Điều hướng chính' }, ds),
     n > 0 ? h('span', { id: 'ib-nav-n', className: 'pt-sr' }, n + ' văn bản chưa đọc') : null,
     mo[0] ? h('div', { className: 'nw-ov' }, h('div', { className: 'ph-scrim nw-scrim pt-chk', 'aria-hidden': 'true', onClick: dong }), NwPanel(dong)) : null);
+};
+
+/* v524: khối Lịch tố tụng ở Trang chủ – bỏ nhãn loại sự kiện (Phiên tòa, Phiên họp…) ở từng sự kiện; tên sự kiện đã nêu loại */
+
+/* v525: header Danh sách đơn – bỏ dòng nhỏ "Danh sách đơn và tiến trình"; nút tròn viền riêng cạnh nút (+) để đổi loại đơn (biểu tượng menu) */
+var QD_LQ_ILLO = { khoikien: 'nopDon', viecdansu: 'yeuCau', phasan: 'phaSan', khangcao: 'banAn', gdt: 'xemXet', phanto: 'phanTo' };
+function QdEi() { return 'menu'; }
+function QdSelIn(ten, k) {
+  var ei = QdEi();
+  var inner = ei === 'illo' ? h(T.Illustration, { name: QD_LQ_ILLO[k] || 'nopDon' })
+    : ei === 'filechev' ? h(F, null, h(T.Icon, { name: 'file' }), h('span', { className: 'qh-lq-badge' }, h(T.Icon, { name: 'chevronDown' })))
+    : h(T.Icon, { name: ei });
+  return h('span', null, h('b', null, ten), h('i', { className: 'qh-lq-ic qh-lq-ei-' + ei, 'aria-hidden': 'true' }, inner));
+}
+
+/* v525: Danh sách đơn – bảng đổi loại đơn giống bảng "Danh sách đơn và tiến trình" ở Trang chủ (LoaiDonList): hình minh họa, tên loại đơn, số đơn, mũi tên; chọn thì đổi loại tại chỗ */
+function QdLoaiList(kinds, pick) {
+  return h('div', { className: 'rn-list ld-list', role: 'list' }, kinds.map(function (k) {
+    return h('button', { key: k[0], type: 'button', className: 'rn-row ld-row', onClick: function () { pick(k[0]); } },
+      h('span', { className: 'tp-illo-circle rn-row-ic' }, h(T.Illustration, { name: LD_ILLO[k[0]] })),
+      h('span', { className: 'rn-row-tx' }, h('b', null, k[1])),
+      h('span', { className: 'qk-cnt tp-num' }, qdDem(k[0])), h(T.Icon, { name: 'chevronRight' }));
+  }));
+}
+
+/* v526: thẻ hồ sơ khiếu nại, tố cáo hành chính – bỏ khối nút hành động (người dùng yêu cầu). Bấm thẻ vẫn mở Chi tiết hồ sơ (đơn đang soạn: mở lại soạn đơn);
+   nút hành động chỉ còn ở màn Chi tiết hồ sơ (knhcNutWeb). Khối "Đơn chưa lưu" đầu danh sách giữ nút Tiếp tục. */
+knhcViec = function () { return []; };
+
+/* v527: Trang chủ – khối Việc cần làm (chọn I): giữ đủ thông tin; tên việc + "loại · mã hồ sơ" bên trái, "Hạn: dd/mm/yyyy" + "Còn n ngày" (tô theo mức hạn) căn phải */
+VkRows = function (all) {
+  return h('ul', { className: 'vr vr-I' }, (all ? VK : VK.slice(0, 3)).map(function (x) {
+    var p = x.han.split(' · '), coHan = x.han !== 'Không có thời hạn', ngay = coHan ? (p[1] || '').replace(/^hạn /, '') : '', con = coHan ? p[0] : 'Không có thời hạn';
+    return h('li', { key: x.t.title }, h('button', { type: 'button', className: 'vr-it', 'data-pt-go': x.go, 'aria-label': x.btn + ': ' + x.t.title + ', ' + x.loai + ', ' + x.t.code + (coHan ? ', hạn ' + ngay + ', ' + con.toLowerCase() : ', không có thời hạn') },
+      h('span', { className: 'vr-tx' }, h('b', null, x.t.title), h('small', null, x.loai, ' · ', h('span', { className: 'tp-num' }, x.t.code))),
+      h('span', { className: 'vrI-r' }, coHan ? h('small', null, 'Hạn: ', h('span', { className: 'tp-num' }, ngay)) : null, h('b', { className: 'vka-han' + (coHan ? ' vka-han-' + x.muc : '') }, con))));
+  }));
+};
+
+/* v529: Trang chủ – liên kết đầu khối Việc cần làm ("Xem tất cả" / "Thu gọn") và Lịch tố tụng ("Xem lịch đầy đủ") thành nút tròn chỉ biểu tượng, nền đỏ nhạt (chọn B):
+   mũi tên sang phải; "Thu gọn" là mũi tên xuống xoay lên. Chữ cũ giữ làm nhãn đọc màn hình (aria-label) nên luật bấm theo nhãn vẫn dẫn đúng màn */
+var Blk0x = Blk;
+Blk = function (title, children, o) {
+  var a = o && o.action;
+  if (a && a.type === T.LinkArrow && (title === 'Việc cần làm' || title === 'Lịch tố tụng')) {
+    var txt = a.props.children, thu = txt === 'Thu gọn';
+    o = Object.assign({}, o, { action: h(T.IconButton, { icon: thu ? 'chevronDown' : 'arrowRight', label: txt, className: 'xa-ib' + (thu ? ' xa-up' : '') }) });
+  }
+  return Blk0x(title, children, o);
+};
+
+/* v530: Trang chủ – ô "Xem tất cả" ở lưới Theo dõi vụ án, vụ việc: biểu tượng ba chấm ngang (⋯) màu đỏ thay mũi tên (chọn C).
+   Bộ biểu tượng design system chưa có ba chấm nên dựng bằng 3 chấm tròn 6px màu brand-800. */
+RecList = function () {
+  var ng = hm9Nhom(), tam = ng[0][1].concat(ng[1][1]).filter(function (x) { return x.ten !== 'Lịch tố tụng'; });
+  return h('div', { className: 'tp-tile-grid tp-tile-grid-illo ph-svc hm-rec-grid hm9 hm8' }, tam.map(function (x) { return h(T.ServiceTile, { key: x.ten, illustration: x.illo, label: x.tile }); }),
+    h('button', { key: 'all', type: 'button', className: 'tp-tile hm9-all hm-xtc' }, h('span', { className: 'tp-illo-circle hm-xtc-ic', 'aria-hidden': 'true' }, h('span', { className: 'xt-dots' }, h('i'), h('i'), h('i'))), h('span', null, 'Xem tất cả')));
 };
 

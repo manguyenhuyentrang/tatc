@@ -4147,6 +4147,19 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 .nw-gr-ic{--illo-circle:40px;border:0;background:var(--brand-tint)}.nw-gr-ic .tp-illo{width:26px;height:26px}
 
 
+/* v523: bảng Tạo mới của nút (+) – bỏ tiêu đề "Tạo mới" (giữ danh sách liền như v522) */
+.nw-sh .nw-sh-h{display:none}
+.nw-sh{padding-top:20px}
+/* v525: header Danh sách đơn – nút tròn đổi loại đơn cạnh nút (+) */
+.qh-lq>span{align-items:center;gap:6px;width:100%}
+.qh-lq b{-webkit-line-clamp:1!important;display:block!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.qh-lq-ic{flex:none;position:relative;display:grid;place-items:center;margin-left:auto;width:40px;height:40px;border:1px solid var(--border);border-radius:50%;background:var(--surface);font-style:normal;color:var(--brand-text)}
+.qh-lq-ic>.tp-ico,.qh-lq-ic>svg{width:20px;height:20px}
+.qh-lq-ei-illo .tp-illo{width:26px;height:26px}
+.qh-lq-badge{position:absolute;right:-2px;bottom:-2px;display:grid;place-items:center;width:18px;height:18px;border:2px solid var(--surface);border-radius:50%;background:var(--brand-800);color:#fff}
+.qh-lq-badge .tp-ico,.qh-lq-badge svg{width:12px!important;height:12px!important;stroke-width:3;color:#fff!important}
+
+
 /* Bố cục: bảng điều khiển trái + sân khấu điện thoại; một giao diện sáng cố định (app chỉ có chế độ sáng) */
 :root{color-scheme:light;--pt-bg:#e3e7ee;--pt-panel:#ffffff;--pt-line:#d5dbe4;--pt-hot:#1d6fd8;--pt-hot-tint:#e8f0fc;--pt-shell:#1b2230}
 html,body{background:var(--pt-bg)}
@@ -8593,10 +8606,10 @@ function QdShell(p) {
   var o = React.useState(false), anchor = React.useRef(null), host = useHost(anchor), cur = p.kinds.filter(function (k) { return k[0] === p.cur; })[0];
   return h(Phone, { cls: 'ph-hd qh-ph' }, h('span', { ref: anchor, hidden: true }),
     h('header', { className: 'qh' + HdCls() }, h('button', { type: 'button', className: 'tp-icon-btn qh-back', 'aria-label': 'Quay lại', 'data-pt-go': 'back' }, h(T.Icon, { name: 'chevronLeft' })),
-      h('button', { type: 'button', className: 'qh-sel', 'aria-haspopup': 'dialog', 'aria-label': 'Loại đơn: ' + cur[1] + '. Đổi loại đơn', onClick: function () { o[1](true); } }, h('small', null, 'Danh sách đơn và tiến trình'), h('span', null, h('b', null, cur[1]), h(T.Icon, { name: 'chevronDown' }))),
+      h('button', { type: 'button', className: 'qh-sel qh-lq qh-lqE', 'aria-haspopup': 'dialog', 'aria-label': 'Loại đơn: ' + cur[1] + '. Đổi loại đơn', onClick: function () { o[1](true); } }, QdSelIn(cur[1], cur[0])),
       HdNut('draftAsk', 'Nộp đơn mới') /* v204: cỡ sm của DS (cao 36px) · v208: bỏ dấu +, nhãn 'Nộp đơn mới' */),
     h(Body, { cls: 'ph-plain' }, p.body),
-    o[0] && host ? h(LvSheet, { host: host, title: 'Xem loại đơn', onClose: function () { o[1](false); } }, h(LvRows, { label: 'Loại đơn', cur: p.cur, items: p.kinds.map(function (k) { return { id: k[0], name: h('span', { className: 'qk-n' }, h('span', null, k[1]), h('span', { className: 'qk-cnt tp-num' }, qdDem(k[0]))) }; }), onPick: function (id) { p.onPick(id); o[1](false); } })) : null);
+    o[0] && host ? h(LvSheet, { host: host, title: 'Danh sách đơn và tiến trình', onClose: function () { o[1](false); } }, QdLoaiList(p.kinds, function (id) { p.onPick(id); o[1](false); })) : null);
 }
 function QdList(p) {
   var kinds = QD_KIND.filter(function (k) { return k[0] === 'gdt' || QD.some(function (d) { return d.k === k[0]; }); });
@@ -13751,7 +13764,7 @@ function LichHome() {
     h('div', { className: 'lc2-w' }, LC_WEEK.map(function (d, i) {
       return h('span', { key: d, className: 'lc2-day' + (d === e0.d ? ' lc2-on' : '') + (d === 4 ? ' lc2-today' : '') }, h('small', null, thu[i]), h('b', { className: 'tp-num' }, d), h('i', { className: co.indexOf(d) >= 0 ? '' : 'lc2-no' }));
     })),
-    h('button', { type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e0.gio), h('span', { className: 'lc2-tx' }, lcTag(e0), h('b', null, e0.ten), h('small', null, e0.ht + ' · ' + e0.dd)))),
+    h('button', { type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e0.gio), h('span', { className: 'lc2-tx' }, h('b', null, e0.ten), h('small', null, e0.ht + ' · ' + e0.dd)))),
     { action: h(T.LinkArrow, { arrow: false }, 'Xem lịch đầy đủ'), cls: 'lc-blk' });
 }
 function Home(all) {
@@ -13794,7 +13807,7 @@ function LichHome() {
         h('small', null, thu[i]), h('b', { className: 'tp-num' }, d), h('i', { className: co.indexOf(d) >= 0 ? '' : 'lc2-no' }));
     })),
     ds.length ? ds.map(function (e) {
-      return h('button', { key: e.id, type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e.gio), h('span', { className: 'lc2-tx' }, lcTag(e), h('b', null, e.ten), h('small', null, e.ht + ' · ' + e.dd)));
+      return h('button', { key: e.id, type: 'button', className: 'lc2-ev', 'data-pt-go': 'calPersonal' }, h('span', { className: 'lc2-time tp-num' }, e.gio), h('span', { className: 'lc2-tx' }, h('b', null, e.ten), h('small', null, e.ht + ' · ' + e.dd)));
     }) : h(T.EmptyState, { variant: 'center', icon: 'alert', title: 'Không tìm thấy kết quả phù hợp' })),
     { action: h(T.LinkArrow, { arrow: false }, 'Xem lịch đầy đủ'), cls: 'lc-blk' });
 }
@@ -13987,6 +14000,29 @@ NavB = function (p) {
     n > 0 ? h('span', { id: 'ib-nav-n', className: 'pt-sr' }, n + ' văn bản chưa đọc') : null,
     mo[0] ? h('div', { className: 'nw-ov' }, h('div', { className: 'ph-scrim nw-scrim pt-chk', 'aria-hidden': 'true', onClick: dong }), NwPanel(dong)) : null);
 };
+
+/* v524: khối Lịch tố tụng ở Trang chủ – bỏ nhãn loại sự kiện (Phiên tòa, Phiên họp…) ở từng sự kiện; tên sự kiện đã nêu loại */
+
+/* v525: header Danh sách đơn – bỏ dòng nhỏ "Danh sách đơn và tiến trình"; nút tròn viền riêng cạnh nút (+) để đổi loại đơn (biểu tượng menu) */
+var QD_LQ_ILLO = { khoikien: 'nopDon', viecdansu: 'yeuCau', phasan: 'phaSan', khangcao: 'banAn', gdt: 'xemXet', phanto: 'phanTo' };
+function QdEi() { return 'menu'; }
+function QdSelIn(ten, k) {
+  var ei = QdEi();
+  var inner = ei === 'illo' ? h(T.Illustration, { name: QD_LQ_ILLO[k] || 'nopDon' })
+    : ei === 'filechev' ? h(F, null, h(T.Icon, { name: 'file' }), h('span', { className: 'qh-lq-badge' }, h(T.Icon, { name: 'chevronDown' })))
+    : h(T.Icon, { name: ei });
+  return h('span', null, h('b', null, ten), h('i', { className: 'qh-lq-ic qh-lq-ei-' + ei, 'aria-hidden': 'true' }, inner));
+}
+
+/* v525: Danh sách đơn – bảng đổi loại đơn giống bảng "Danh sách đơn và tiến trình" ở Trang chủ (LoaiDonList): hình minh họa, tên loại đơn, số đơn, mũi tên; chọn thì đổi loại tại chỗ */
+function QdLoaiList(kinds, pick) {
+  return h('div', { className: 'rn-list ld-list', role: 'list' }, kinds.map(function (k) {
+    return h('button', { key: k[0], type: 'button', className: 'rn-row ld-row', onClick: function () { pick(k[0]); } },
+      h('span', { className: 'tp-illo-circle rn-row-ic' }, h(T.Illustration, { name: LD_ILLO[k[0]] })),
+      h('span', { className: 'rn-row-tx' }, h('b', null, k[1])),
+      h('span', { className: 'qk-cnt tp-num' }, qdDem(k[0])), h(T.Icon, { name: 'chevronRight' }));
+  }));
+}
 
 
 /* File 2: prototype bấm được, dùng lại các màn của file duyệt */
