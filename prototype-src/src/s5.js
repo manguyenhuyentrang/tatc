@@ -1028,10 +1028,11 @@ var PT_LOC = [['all', 'Tất cả'], ['PT-01', 'Điện tử'], ['PT-02', 'Chờ
 var PT_SUB = 'Mỗi đơn, vụ án chọn phương thức điện tử hoặc giấy độc lập (Điều 4.5 NQ 01/2026). Đổi phương thức giữa chừng cần lý do chính đáng và Tòa án chấp nhận.';
 /* v335 (12/11/2026): thẻ Phương thức giao dịch sắp theo thẻ Danh sách đơn và tiến trình (QdCard): hàng nhãn phương thức + tình trạng · tên · dòng nhãn–giá trị · khối thao tác cuối thẻ */
 function PtCard(p) {
+  var cfH = React.useState(false); /* v534: hỏi xác nhận trước khi hủy yêu cầu */
   var x = p.x, l = PT_LOAI[x.pv], t = PT_TT[x.tt];
   var rows = [[l[0], h('span', { className: 'tp-num' }, x.ma)], ['Tòa án', COURT1], ['Tư cách', x.vt.join(', ')]].concat(x.alt && x.tt !== 'PT-01' ? [['Tống đạt qua', x.alt]] : []);
   var act = x.tt === 'PT-01' ? h('div', { className: 'pt-btns' }, Btn('Tạm chuyển sang giấy', 'secondary', { size: 'sm', onClick: ptWzMoi, 'data-pt-go': 'ptSus1' }), Btn('Chuyển giấy đến khi kết thúc', 'secondary', { size: 'sm', onClick: ptWzMoi, 'data-pt-go': 'ptCan1' }))
-    : x.tt === 'PT-02' ? (x.huy ? h('div', { className: 'pt-btns' }, Btn('Hủy yêu cầu', 'secondary', { size: 'sm', onClick: function () { p.onDoi(x, 'PT-01'); }, 'data-pt-go': 'snack:Đã hủy yêu cầu.' })) : h('p', { className: 'pt-c-note' }, 'Đang chờ Tòa án xét duyệt'))
+    : x.tt === 'PT-02' ? (x.huy ? h('div', { className: 'pt-btns' }, Btn('Hủy yêu cầu', 'secondary', { size: 'sm', className: 'xn-l', onClick: function () { cfH[1](true); } }), cfH[0] ? h(XnDlg, { title: 'Hủy yêu cầu chuyển phương thức?', text: 'Yêu cầu của hồ sơ ' + x.ma + ' đang chờ Tòa án xét duyệt sẽ bị hủy và không khôi phục được. Hồ sơ tiếp tục giao dịch điện tử.', cancel: 'Không', ok: 'Hủy yêu cầu', go: 'snack:Đã hủy yêu cầu.', onKhong: function () { cfH[1](false); }, onOk: function () { cfH[1](false); p.onDoi(x, 'PT-01'); } }) : null) : h('p', { className: 'pt-c-note' }, 'Đang chờ Tòa án xét duyệt'))
     : x.tt === 'PT-03' ? h('div', { className: 'pt-btns' }, Btn('Tiếp tục điện tử', 'primary', { size: 'sm', onClick: function () { p.onDoi(x, 'PT-01'); }, 'data-pt-go': 'snack:Đã tiếp tục giao dịch điện tử.' }), Btn('Chuyển giấy đến khi kết thúc', 'secondary', { size: 'sm', onClick: ptWzMoi, 'data-pt-go': 'ptCan1' }))
     : h('p', { className: 'pt-c-note' }, 'Giao dịch bằng giấy đến khi kết thúc — không thể quay lại điện tử.');
   return h('li', { className: 'qd-c qc ptq' },
@@ -5804,3 +5805,32 @@ RecList = function () {
     h('button', { key: 'all', type: 'button', className: 'tp-tile hm9-all hm-xtc' }, h('span', { className: 'tp-illo-circle hm-xtc-ic', 'aria-hidden': 'true' }, h('span', { className: 'xt-dots' }, h('i'), h('i'), h('i'))), h('span', null, 'Xem tất cả')));
 };
 
+/* v532: rà soát UX (APP-6) – vùng chạm tối thiểu 44×44px cho mọi nút nhỏ trong khung điện thoại, KHÔNG đổi hình nút:
+   gắn lớp hit44 (vùng chạm vô hình bằng ::after) hoặc hit44b (bằng ::before khi ::after đã dùng); nút đang position static thì thêm hit44r làm mốc.
+   Bỏ qua liên kết nằm trong câu chữ và nút có overflow khác visible (vùng chạm sẽ bị cắt). Quét lại sau mỗi lần màn vẽ lại. */
+(function () {
+  var hen = 0, SEL = '.pt-phone .ph button, .pt-phone .ph a[href], .pt-phone .ph [role="button"], .pt-phone .ph [role="tab"]';
+  function rong(c) { return !c || c === 'none' || c === 'normal'; }
+  function quet() {
+    hen = 0;
+    document.querySelectorAll(SEL).forEach(function (el) {
+      if (el.classList.contains('hit44') || el.classList.contains('hit44b')) return;
+      var r = el.getBoundingClientRect(); if (!r.width || !r.height || (r.width >= 44 && r.height >= 44)) return;
+      var cs = getComputedStyle(el); if (cs.display === 'inline' || cs.overflowX !== 'visible' || cs.overflowY !== 'visible') return;
+      if (rong(getComputedStyle(el, '::after').content)) el.classList.add('hit44');
+      else if (rong(getComputedStyle(el, '::before').content)) el.classList.add('hit44b');
+      else return;
+      if (cs.position === 'static') el.classList.add('hit44r');
+    });
+  }
+  new MutationObserver(function () { if (!hen) hen = requestAnimationFrame(quet); })
+    .observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  if (document.readyState !== 'loading') quet(); else document.addEventListener('DOMContentLoaded', quet);
+})();
+
+/* v534: rà soát UX (UX-35) – hộp thoại xác nhận dùng chung cho thao tác không hoàn tác ngay trong màn (không chuyển màn); nút xử lý tại chỗ mang lớp xn-l */
+function XnDlg(p) {
+  var anchor = React.useRef(null), host = useHost(anchor);
+  return h(F, null, h('span', { ref: anchor, hidden: true }), host ? ReactDOM.createPortal(h(T.Dialog, { variant: 'center', inline: true, open: true, className: 'qd-dlg', title: p.title, description: p.text,
+    footer: h(F, null, h(T.Button, { variant: 'secondary', className: 'xn-l', onClick: p.onKhong }, p.cancel || 'Không'), h(T.Button, { variant: 'primary', className: 'xn-l', onClick: p.onOk, 'data-pt-go': p.go }, p.ok)) }), host) : null);
+}

@@ -628,3 +628,11 @@ R.unshift(['home|homeAll|records', '=Xem tất cả', 'allFn', '.hm-rec .ph-blk-
 
 /* v498: chuông ở header mới → Thông báo */
 R.unshift(['home|homeAll|records', 'Thông báo', 'notifications', '.rh-hd']);
+
+/* v534: rà soát UX (UX-35) – Đăng xuất hỏi xác nhận trước khi thoát */
+SCR.personalOut = ['Cá nhân – hỏi xác nhận đăng xuất', function () { return h(F, null, h(Personal), h(XnTop, null, h(QdConfirm, { title: 'Đăng xuất?', text: 'Bạn cần đăng nhập lại để tiếp tục sử dụng Cổng dịch vụ tư pháp.', cancel: 'Hủy', ok: 'Đăng xuất', go: 'reset:login' }))); }];
+R.unshift(['personal', 'Đăng xuất', 'personalOut']);
+LOCAL += ', .xn-l'; /* nút xử lý tại chỗ (hộp thoại xác nhận) */
+/* gắn hộp thoại vào khung màn khi màn gốc tự dựng khung .ph riêng */
+function XnTop(p) { var hs = React.useState(null); React.useEffect(function () { hs[1](document.querySelector('.pt-phone .ph')); }, []); return hs[0] ? ReactDOM.createPortal(p.children, hs[0]) : null; }
+GROUPS2.forEach(function (g) { var j = g[1].indexOf('personal'); if (j >= 0 && g[1].indexOf('personalOut') < 0) g[1].splice(j + 1, 0, 'personalOut'); });
