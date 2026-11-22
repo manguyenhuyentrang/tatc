@@ -5,8 +5,8 @@ var noop = function () {};
 (function () {
   var TF = T.TextField, SF = T.SelectField, GENERIC = { 'Chọn': 1, '— Chọn —': 1 };
   T.TextField = function (p) {
-    if (p.label && !p.readOnly && (p.placeholder === undefined || p.placeholder === 'dd/mm/yyyy'))
-      p = Object.assign({}, p, { placeholder: (p.placeholder === 'dd/mm/yyyy' || p.icon === 'calendar' ? 'Chọn ' : 'Nhập ') + p.label });
+    if (p.label && !p.readOnly && (p.placeholder === undefined || p.placeholder === 'dd-mm-yyyy'))
+      p = Object.assign({}, p, { placeholder: (p.placeholder === 'dd-mm-yyyy' || p.icon === 'calendar' ? 'Chọn ' : 'Nhập ') + p.label });
     return TF(p);
   };
   T.SelectField = function (p) {
@@ -96,13 +96,13 @@ var TASKS = [
 var TASK_TABS = [{ key: 'all', label: 'Tất cả', count: 8 }, { key: 'td', label: 'Tống đạt', count: 1 }, { key: 'hs', label: 'Hồ sơ và đơn', count: 3 }, { key: 'ap', label: 'Nộp án phí, lệ phí', count: 1 }, { key: 'k', label: 'Khác', count: 3 }];
 /* Việc cần làm – màn riêng (03/11/2026, theo ảnh web): khối "Phân bố mức độ khẩn cấp thời hạn tố tụng" (thanh tỉ lệ đỏ/vàng/xanh + 3 ô Đã quá hạn / Sắp hết hạn / Trong hạn an toàn có số đếm) → thanh lọc theo nhóm có số đếm → danh sách thẻ (ô biểu tượng theo loại, nhãn loại, mã hồ sơ, hạn; tiêu đề đậm; nút hành động đỏ) */
 var VK = [
-  { t: TASKS[0], nhom: 'td', loai: 'Tống đạt', ic: 'mail', han: 'Còn 2 ngày · hạn 25/10/2026', muc: 'sap', btn: 'Xem văn bản', go: 'mailDetail' },
-  { t: TASKS[1], nhom: 'hs', loai: 'Bổ sung hồ sơ', ic: 'file', han: 'Còn 3 ngày · hạn 26/10/2026', muc: 'sap', btn: 'Bổ sung hồ sơ', go: 'evidence1' },
-  { t: TASKS[2], nhom: 'ap', loai: 'Nộp tiền', ic: 'wallet', han: 'Còn 7 ngày · hạn 30/10/2026', muc: 'an', btn: 'Nộp tạm ứng', go: 'financeDetail' },
-  { t: TASKS[3], nhom: 'hs', loai: 'Ký số', ic: 'pen', han: 'Còn 5 ngày · hạn 28/10/2026', muc: 'an', btn: 'Ký số', go: 'sub7' },
-  { t: TASKS[4], nhom: 'hs', loai: 'Xác nhận đơn', ic: 'checkCircle', han: 'Còn 6 ngày · hạn 29/10/2026', muc: 'an', btn: 'Xác nhận', go: 'appDetail' },
-  { t: TASKS[5], nhom: 'k', loai: 'Phiên tòa', ic: 'scale', han: 'Còn 5 ngày · hạn 28/10/2026', muc: 'an', btn: 'Xác nhận tham dự', go: 'attendReply' },
-  { t: TASKS[6], nhom: 'k', loai: 'Hòa giải', ic: 'calendar', han: 'Còn 3 ngày · 26/10/2026', muc: 'sap', btn: 'Xem lịch', go: 'mediationDetail' },
+  { t: TASKS[0], nhom: 'td', loai: 'Tống đạt', ic: 'mail', han: 'Còn 2 ngày · hạn 25-10-2026', muc: 'sap', btn: 'Xem văn bản', go: 'mailDetail' },
+  { t: TASKS[1], nhom: 'hs', loai: 'Bổ sung hồ sơ', ic: 'file', han: 'Còn 3 ngày · hạn 26-10-2026', muc: 'sap', btn: 'Bổ sung hồ sơ', go: 'evidence1' },
+  { t: TASKS[2], nhom: 'ap', loai: 'Nộp tiền', ic: 'wallet', han: 'Còn 7 ngày · hạn 30-10-2026', muc: 'an', btn: 'Nộp tạm ứng', go: 'dvcqgExt' } /* đối chiếu 2A.1: việc án phí có mã thông báo → Cổng DVCQG */,
+  { t: TASKS[3], nhom: 'hs', loai: 'Ký số', ic: 'pen', han: 'Còn 5 ngày · hạn 28-10-2026', muc: 'an', btn: 'Ký số', go: 'sub7' },
+  { t: TASKS[4], nhom: 'hs', loai: 'Xác nhận đơn', ic: 'checkCircle', han: 'Còn 6 ngày · hạn 29-10-2026', muc: 'an', btn: 'Xác nhận', go: 'appDetail' },
+  { t: TASKS[5], nhom: 'k', loai: 'Phiên tòa', ic: 'scale', han: 'Còn 5 ngày · hạn 28-10-2026', muc: 'an', btn: 'Xác nhận tham dự', go: 'attendReply' },
+  { t: TASKS[6], nhom: 'k', loai: 'Hòa giải', ic: 'calendar', han: 'Còn 3 ngày · 26-10-2026', muc: 'sap', btn: 'Xem lịch', go: 'mediationDetail' },
   { t: TASKS[7], nhom: 'k', loai: 'Đánh giá', ic: 'star', han: 'Không có thời hạn', muc: 'an', btn: 'Đánh giá', go: 'rating' }];
 var VK_MUC = [['qua', 'Đã quá hạn', 'Cần xử lý ngay', 'alert'], ['sap', 'Sắp hết hạn', 'Cần lưu ý', 'clock'], ['an', 'Trong hạn an toàn', 'Còn thời gian', 'check']];
 function TasksAll() {
@@ -208,7 +208,7 @@ function Sheet(k, bg) { var s = SHEETS[k]; return MenuSheet(s[0], s[1], s[2], bg
 
 /* ---------- Trung tâm thông báo ---------- */
 var NOTI_TODAY = [
-  { time: '09:45', title: 'Sắp đến hạn bổ sung tài liệu, chứng cứ', description: 'Tổng quan hồ sơ cần bổ sung tài liệu trước ngày 26/10/2026.', code: 'DS-2026-0018', unread: true },
+  { time: '09:45', title: 'Sắp đến hạn bổ sung tài liệu, chứng cứ', description: 'Tổng quan hồ sơ cần bổ sung tài liệu trước ngày 26-10-2026.', code: 'DS-2026-0018', unread: true },
   { time: '08:30', title: 'Tòa án gửi văn bản tống đạt', description: 'Văn bản mới đã được gửi đến Hộp thư tống đạt.', code: 'DS-2026-0012', unread: true },
   { time: '08:00', title: 'Đơn khởi kiện đã được tiếp nhận', description: 'Theo dõi trạng thái xử lý trong Quản lý đơn.', code: 'DS-2026-0021' }];
 var NOTI_YDAY = [
@@ -218,7 +218,7 @@ function NotiRow() { var v = React.useState('a'); return h(StRow, { label: 'Lọ
 /* v266 (05/11/2026): Trung tâm thông báo vẽ lại, đổi tên chức năng thành "Thông báo"; bỏ biểu tượng đầu thẻ (chưa đọc: chấm đỏ trước tên + chữ đậm) – hàng chip Tất cả / Chưa đọc / Đã đọc + Mới nhất; nhóm Hôm nay / Hôm qua là nhãn xám; danh sách tràn mép:
    biểu tượng chuông nền xám + chấm đỏ khi chưa đọc, tên đậm khi chưa đọc, giờ bên phải, mô tả 1 dòng, mã hồ sơ dạng nhãn xám; bỏ "Đánh dấu tất cả đã đọc".
    Nhấn giữ 0,5 giây để chọn (ô tick đầu dòng) – thanh ghim đáy "✕ · Đã chọn N thông báo · Đánh dấu đã đọc" như Hộp thư (v257) */
-var NOTI_GO = { 'Sắp đến hạn bổ sung tài liệu, chứng cứ': 'evidence1', 'Tòa án gửi văn bản tống đạt': 'mailDetail', 'Đơn khởi kiện đã được tiếp nhận': 'appDetail', 'Lịch phiên tòa được cập nhật': 'calDue', 'Nhắc hạn tạm ứng án phí': 'financeDetail' };
+var NOTI_GO = { 'Sắp đến hạn bổ sung tài liệu, chứng cứ': 'evidence1', 'Tòa án gửi văn bản tống đạt': 'mailDetail', 'Đơn khởi kiện đã được tiếp nhận': 'appDetail', 'Lịch phiên tòa được cập nhật': 'calDue', 'Nhắc hạn tạm ứng án phí': 'finance' /* đối chiếu 2A.1 */ };
 function NotiItem(p) {
   var x = p.x, tm = React.useRef(null), held = React.useRef(false), huy = function () { clearTimeout(tm.current); }, chon = p.sel !== undefined;
   return h('li', { className: 'nt-it' + (x.unread ? ' nt-un' : '') },

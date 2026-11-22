@@ -43,7 +43,7 @@ Các luật này nặng hơn luật chung, vì người dùng đã nói rõ.
 | Chỉ dùng token màu design system. Màu phải mang nghĩa (trạng thái, mức hạn); không dùng dải màu trang trí gợi ra thứ tự hay mức độ không có thật. | Bắt buộc |
 | Không dùng thẻ đè lên nhau (kiểu ví), không dùng khối màu đậm cho mục điều hướng: dễ bị hiểu là vuốt được hoặc là bảng từ đáy, và tranh chú ý với header và nút (+). | Bắt buộc |
 | Thông tin không đặt trực tiếp trên nền trang. Chữ cố định đặt trên nền, các trường liền nhau gom chung một khối trắng. | Bắt buộc |
-| Ngày hiển thị dd/mm/yyyy, giữ năm. | Bắt buộc |
+| Ngày hiển thị DD-MM-YYYY, có giờ thì DD-MM-YYYY HH:mm, giữ năm (người dùng chốt 20/11/2026, v535; trước là dd/mm/yyyy). | Bắt buộc |
 | Biểu tượng chọn trong bộ biểu tượng TuPhap. Cần biểu tượng ngoài bộ thì nêu rõ trong đề xuất và chờ người dùng chọn. | Bắt buộc |
 | Thao tác không hoàn tác được (hủy yêu cầu đã gửi, xóa nháp, thu hồi, xóa chứng thư, đăng xuất) hỏi xác nhận bằng hộp thoại giữa màn: tiêu đề là câu hỏi, một câu nói hệ quả, "Không"/"Hủy" bên trái, nút hành động bên phải. "Xóa dòng yêu cầu" trong biểu mẫu soạn đơn giữ xóa ngay (người dùng chọn 20/11/2026). | Bắt buộc |
 | Nhãn có nền màu dùng cặp token `--tag-N-bg` / `--tag-N-text`, không tự pha màu chữ trên nền nhạt. | Bắt buộc |
@@ -117,7 +117,7 @@ Các luật này nặng hơn luật chung, vì người dùng đã nói rõ.
 | UX-113 | (Không áp dụng cho TATC) Không cắt chữ mang nghĩa chính | Người dùng chốt 20/11/2026: dài quá thì hiển thị "…" ở mọi màn, xem mục 2. | – | – |
 | UX-116 | Nhãn dạng viên giữ trên 1 dòng | `StatusBadge` không xuống dòng; nhãn dài thì rút ngắn theo quy ước của web. | Nên | |
 | UX-115 | Dãy chip lọc không bị cắt mất chip | Cho cuộn ngang có dấu hiệu, hoặc xuống dòng. | Bắt buộc | |
-| UX-85, UX-86 | Ngày, số định dạng rõ | Ngày dd/mm/yyyy; tiền có dấu chấm ngăn nghìn và đơn vị "đồng". | Bắt buộc | |
+| UX-85, UX-86 | Ngày, số định dạng rõ | Ngày DD-MM-YYYY (có giờ: DD-MM-YYYY HH:mm); tiền có dấu chấm ngăn nghìn và đơn vị "đồng". | Bắt buộc | |
 | APP-27 | Chịu được khi người dùng phóng chữ | Không cố định chiều cao cho khối chứa chữ dài; thử phóng chữ 130% với màn mới. | Nên | |
 
 ## 9. Những phần không dùng của ui-ux-pro-max

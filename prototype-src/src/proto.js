@@ -229,7 +229,7 @@ var R = [
   ['login', '=Đăng nhập', 'tab:home'], ['login', 'Tài khoản định danh điện tử', 'tab:home'], ['login', 'Về trang chủ', 'tab:home'],
   ['home', 'Cấp trích lục, bản sao', 'copyList'], ['home', 'Khiếu nại, tố cáo', 'complaints'], ['home', 'Phản ánh, kiến nghị', 'choose'], ['home', 'Trợ giúp pháp lý', 'aid'], ['home', '=Xem tất cả', 'tasks', '.ph-blk-head'], /* 03/11/2026: Xem tất cả → màn riêng Việc cần làm */
   ['homeAll', 'Cấp trích lục, bản sao', 'copyList'], ['homeAll', 'Khiếu nại, tố cáo', 'complaints'], ['homeAll', 'Phản ánh, kiến nghị', 'choose'], ['homeAll', 'Trợ giúp pháp lý', 'aid'], ['homeAll', 'Thu gọn', 'replace:home'],
-  ['home|homeAll', 'Văn bản tống đạt có thời hạn', 'mailDetail'], ['home|homeAll', 'Bổ sung tài liệu, chứng cứ', 'evidence1'], ['home|homeAll', 'Theo dõi tạm ứng án phí', 'financeDetail'],
+  ['home|homeAll', 'Văn bản tống đạt có thời hạn', 'mailDetail'], ['home|homeAll', 'Bổ sung tài liệu, chứng cứ', 'evidence1'], ['home|homeAll', 'Theo dõi tạm ứng án phí', 'dvcqgExt'],
   ['home|homeAll', 'Ký số đơn khởi kiện', 'sub7'], ['home|homeAll', 'Xác nhận đơn đồng yêu cầu', 'appDetail'], ['home|homeAll', 'Xác nhận tham dự phiên tòa', 'attendReply'],
   ['home|homeAll', 'Lịch hòa giải, đối thoại', 'mediationDetail'], ['home|homeAll', 'Đánh giá mức độ hài lòng', 'rating'],
   ['home|homeAll', 'Xác nhận cam kết ngay', 'commitFormNew'], /* v165: Trang chủ vào thẳng màn Cam kết */ ['commit', 'Xác nhận cam kết ngay', 'commitForm'], ['commitNone', 'Xác nhận cam kết ngay', 'commitFormNew'], ['home|homeAll', '=Xem lịch đầy đủ', 'calPersonal'], ['home|homeAll', '=Xem chi tiết', 'cases', '.tp-event'],
@@ -479,6 +479,9 @@ function Proto() {
     });
   }
   function jump(t) { setStack(baseOf(t).concat([t])); }
+  /* demo NDKK: chuyển màn từ mã (nút tự kiểm tra rồi mới chuyển), thông báo lỗi */
+  window.__ptGo = function (to) { if (to.indexOf('goSnack:') === 0) { var gs = to.slice(8).split('|'); jump(gs[0]); snackShow(gs[1]); } else if (to.indexOf('snack:') === 0) snackShow(to.slice(6)); else act(to); };
+  window.__ptSnackLoi = function (m) { snackShow('!' + m); };
   var snack = React.useState(null), sRef = React.useRef(null);
   window.__ptSnack = function (m) { snackShow(m); };
   function snackShow(msg) { snack[1](msg); clearTimeout(sRef.current); sRef.current = setTimeout(function () { snack[1](null); }, 3000); }
@@ -517,10 +520,397 @@ function Proto() {
       h(JumpBox, { id: id, onJump: jump })),
     h('main', { className: 'pt-stage' },
       h('div', { className: 'pt-phone', ref: ref, onClickCapture: onClick, key: stack.join('/') }, renderScreen(stack),
-        snack[0] ? h('div', { className: 'ph-snack', role: 'status' }, h(T.Icon, { name: 'checkCircle' }), h('span', null, snack[0])) : null),
+        snack[0] ? (snack[0].charAt(0) === '!' ? h('div', { className: 'ph-snack ph-snack-loi', role: 'alert' }, h(T.Icon, { name: 'alert' }), h('span', null, snack[0].slice(1))) : h('div', { className: 'ph-snack', role: 'status' }, h(T.Icon, { name: 'checkCircle' }), h('span', null, snack[0]))) : null),
       h('p', { className: 'pt-hint', hidden: id !== 'splash' }, 'Bấm vào màn chào để sang màn Đăng nhập.'),
       h('p', { className: 'pt-toast', role: 'status', hidden: !toast[0] }, toast[0] || '')));
 }
+/* ===== Rà soát UI Nộp đơn khởi kiện (demo 20/11/2026): màn trạng thái, luật bấm ===== */
+(function () {
+  if (/[?&]tk=tc/.test(location.search)) datLoaiTK('tc'); /* mở bản thử ở tài khoản tổ chức: thêm ?tk=tc */
+  /* nút Tiếp theo bước 1–5 tự kiểm tra rồi mới chuyển màn (1.18, 1.44, 1.55, 1.60, 1.66) */
+  R = R.filter(function (r) { return !(r[1] === '=Tiếp theo' && /^sub[1-6]/.test(r[0])); });
+  /* Lưu nháp các bước soạn đơn khởi kiện tự xử lý: Đang lưu… / lưu thất bại (1.95, 1.97) */
+  R.forEach(function (r) { if (r[1] === '=Lưu nháp' && r[0] === NHAP_KK) r[0] = r[0].split('|').filter(function (s) { return !/^sub\d/.test(s); }).join('|'); });
+  /* đơn đã xác nhận: Quay lại từ Bước 7 về Bước 6 chỉ xem; các bước chỉ xem nối nhau (1.81) */
+  R.unshift(['sub7|sub7Tc|sub7Dong|sub7Ban|sub7Tai|sub7Loi|sub7TcKhongDd|sub7TcHetDd|sub7GuiLoi|signPhan|signHet|signBan|signCaTai|signCaLoi|signRong|signNho|signTc|signTcTai|signTcLoi|signKhongTra|signTuChoi|signKyCaLoi|signLoiKhac|signCho', '=Quay lại', 'replace:sub6x'],
+    ['sub2x', '=Quay lại', 'replace:sub1x'], ['sub3x', '=Quay lại', 'replace:sub2x'], ['sub4x', '=Quay lại', 'replace:sub3x'], ['sub5x', '=Quay lại', 'replace:sub4x'], ['sub6x', '=Quay lại', 'replace:sub5x']);
+  LOCAL += ', .dm-sum-tg, .ph-hd-step .tp-appbar-text, .ph-ds-tool button, .dm-edit, .nd-bo, .ph-thieu-x, .ph-goiy button, .ph-ky-caloi button, .ph-lib-tt button:not(.ph-lib-mo)';
+  var M = {
+    sub1Kt: ['Nộp đơn – bước 1, bấm Tiếp theo khi chưa chọn', Sub1Kt],
+    sub1Ln: ['Nộp đơn – bước 1, Ly hôn – gợi ý chuyển loại việc', Sub1Don({ tt: 'a', lv: 'hn', v: 'VA-HN-1' })],
+    sub1Tt: ['Nộp đơn – bước 1, Công nhận thuận tình ly hôn', Sub1Don({ tt: 'b', lv: 'vhn', v: 'VD-HN-2' })],
+    sub1Vds: ['Nộp đơn – bước 1, Yêu cầu giải quyết việc dân sự', Sub1Don({ tt: 'b', lv: 'vds', v: '' })],
+    sub1Hc: ['Nộp đơn – bước 1, Khởi kiện hành chính – không có Lĩnh vực', Sub1Don({ tt: 'c', lv: null, v: '' })],
+    sub1Ps: ['Nộp đơn – bước 1, Phục hồi, phá sản', Sub1Don({ tt: 'd', lv: null, v: 'YCMTTPS_PHASAN' })],
+    sub1Dct: ['Nộp đơn – bước 1, chọn được Đ.26.7', Sub1Don({ tt: 'a', lv: 'ds', v: 'VA-DS-7' })],
+    sub2Kt: ['Nộp đơn – bước 2, bấm Tiếp theo còn ô bắt buộc trống', function () { return h(F, null, Sub2({}), h(TuKt, { b: 2 })); }],
+    sub2Thieu: ['Nộp đơn – bước 2, hồ sơ tài khoản thiếu thông tin', Sub2Don(null, { thieu: true })],
+    sub2Mot: ['Nộp đơn – bước 2, một người khởi kiện, không đồng khởi kiện', Sub2Don({ tt: 'a', lv: 'hn', v: 'VA-HN-1' })],
+    sub2Vds: ['Nộp đơn – bước 2, Người yêu cầu (việc dân sự)', Sub2Don({ tt: 'b', lv: 'vds', v: 'VD-DS-1' })],
+    sub2Ds: ['Nộp đơn – bước 2, danh sách có thanh công cụ', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { chinhInit: [{ k: 1, v: { loai: 'cn', so: CO_MAU[1].so } }], dongInit: [{ k: 1, v: { loai: 'cn', so: CO_MAU[0].so } }, { k: 2, v: { loai: 'tc', so: ORG_CO_MAU.so } }] })],
+    sub2Them: ['Nộp đơn – bước 2, bảng Thêm đồng khởi kiện', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { dongMo: true })],
+    sub2Ps: ['Nộp đơn – bước 2, phá sản – cá nhân', Sub2Don({ tt: 'd', lv: null, v: 'YCMTTPS_PHASAN' })],
+    sub2PsTc: ['Nộp đơn – bước 2, phá sản – tổ chức', Sub2Don({ tt: 'd', lv: null, v: 'YCMTTPS_PHASAN' }, { tc: true })],
+    sub2TcNhieu: ['Nộp đơn – bước 2, tổ chức – trên 10 người đại diện', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { tc: true, ndpl: NDPL_NHIEU, dd: {} })],
+    sub2TcRong: ['Nộp đơn – bước 2, tổ chức – chưa có người đại diện hợp lệ', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { tc: true, ndpl: [], dd: {} })],
+    sub2TcCu: ['Nộp đơn – bước 2, tổ chức – đơn nháp cũ', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { tc: true, ghiChu: 'Không còn trong danh mục người đại diện của tổ chức: Nguyễn Văn Cường.', dd: { init: [DD_CU] } })],
+    sub2TcCu2: ['Nộp đơn – bước 2, tổ chức – đơn nháp cũ, chọn lại người đại diện', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { tc: true, ghiChu: 'Đã lưu trước đó: Nguyễn Văn Cường — vui lòng chọn lại trong danh sách.', dd: {} })],
+    sub2Dd: ['Nộp đơn – bước 2, có người đại diện theo ủy quyền', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { dd: { init: [DD_MAU] } })],
+    sub2DdThem: ['Nộp đơn – bước 2, bảng Thêm người đại diện', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { dd: { moSan: {} } })],
+    sub2DdLuu: ['Nộp đơn – bước 2, Thêm người đại diện – phần 2', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { dd: { moSan: DD_SAN } })],
+    sub2DdTep: ['Nộp đơn – bước 2, Thêm người đại diện – lỗi tệp minh chứng', Sub2Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { dd: { moSan: Object.assign({ loiTep: '"giay-uy-quyen-scan.heic": Chỉ chấp nhận định dạng PDF, PNG, JPG.' }, DD_SAN) } })],
+    sub2Trung: ['Nộp đơn – bước 2, trùng đương sự với Bước 3', Sub2Trung],
+    sub3Kt: ['Nộp đơn – bước 3, bấm Tiếp theo còn thiếu', Sub3Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { kt: true })],
+    sub3Mot: ['Nộp đơn – bước 3, một người bị kiện cố định', Sub3Don({ tt: 'a', lv: 'hn', v: 'VA-HN-1' })],
+    sub3Ds: ['Nộp đơn – bước 3, danh sách có thanh công cụ', Sub3Don({ tt: 'a', lv: 'ds', v: 'VA-DS-1' }, { bkThem: [{ ten: 'Công ty TNHH Dịch vụ Ánh Dương', loai: 'tc' }], lqCo: true, lcInit: [{ ten: 'Phạm Văn Hùng', tinh: 'Thành phố Hà Nội', xa: 'Phường Đống Đa' }] })],
+    sub3Cq: ['Nộp đơn – bước 3, người bị kiện là Cơ quan', Sub3Don({ tt: 'a', lv: 'ds', v: 'VA-DS-1' }, { mau: { ten: 'Ủy ban nhân dân Phường Cầu Giấy', loai: 'cq', mo: true } })],
+    sub3Hc: ['Nộp đơn – bước 3, khởi kiện hành chính', Sub3Don({ tt: 'c', lv: null, v: 'HC-1' })],
+    sub3Ps: ['Nộp đơn – bước 3, phá sản – tổ chức bị yêu cầu', Sub3Don({ tt: 'd', lv: null, v: 'YCMTTPS_PHASAN' })],
+    sub3Tc: ['Nộp đơn – bước 3, người bị kiện là Tổ chức', Sub3Don({ tt: 'a', lv: 'ds', v: 'VA-DS-3' }, { mau: { ten: 'Công ty TNHH Dịch vụ Ánh Dương', loai: 'tc', mo: true, dd: true } })],
+    sub4Kt: ['Nộp đơn – bước 4, bấm Tiếp theo còn thiếu', Sub4Kt],
+    sub4Thieu: ['Nộp đơn – bước 4, chuyển tới từ Xác nhận khi còn thiếu', Sub4Thieu],
+    sub4File: ['Nộp đơn – bước 4, Tải đơn có sẵn – chưa có tệp', Sub4File],
+    sub4TepLoi: ['Nộp đơn – bước 4, Tải đơn có sẵn – tệp không hợp lệ', Sub4TepLoi],
+    sub5Kt: ['Nộp đơn – bước 5, tài liệu thiếu tên, loại', Sub5Kt],
+    sub5TepLoi: ['Nộp đơn – bước 5, tệp tải lên không hợp lệ', Sub5TepLoi],
+    sub5DmTai: ['Nộp đơn – bước 5, đang tải danh mục tài liệu', Sub5DmTai],
+    sub5Kho: ['Nộp đơn – bước 5, chọn nhiều tệp từ kho', Sub5Kho('ds')],
+    sub5KhoLoi: ['Nộp đơn – bước 5, kho – không tải được', Sub5Kho('loi')],
+    sub5KhoRong: ['Nộp đơn – bước 5, kho – chưa có tệp phù hợp', Sub5Kho('rong')],
+    sub5Xem: ['Nộp đơn – bước 5, tệp lấy từ kho có nút Xem', Sub5Xem],
+    sub6Kt: ['Nộp đơn – bước 6, Xác nhận khi chưa chọn tòa án, chưa cam kết', Sub6Kt],
+    sub6Thieu: ['Nộp đơn – bước 6, Xác nhận khi bước trước còn thiếu', Sub6O({ thieu: true, toa: COURT1 })],
+    sub6TaiToa: ['Nộp đơn – bước 6, đang tải danh sách tòa án (1.77)', Sub6O({ taiToa: 'luon', moToa: true })],
+    sub6DaiDien: ['Nộp đơn – bước 6, người khởi kiện có người đại diện', Sub6O({ daiDien: true })],
+    sub6Tc: ['Nộp đơn – bước 6, tổ chức', Sub6O({ tc: true })],
+    sub6TcPs: ['Nộp đơn – bước 6, tổ chức – phá sản', Sub6O({ tc: true, nd: { tt: 'd', lv: null, v: 'YCMTTPS_PHASAN' } })],
+    sub6BenRong: ['Nộp đơn – bước 6, không có người bị yêu cầu', Sub6O({ ben: 'rong', nd: { tt: 'b', lv: 'vhn', v: 'VD-HN-2' } })],
+    sub6Ct: ['Nộp đơn – bước 6, có loại việc chi tiết', Sub6O({ nd: { tt: 'a', lv: 'ds', v: 'VA-DS-4', ct: 'Nhãn hiệu' } })],
+    sub6TaiDon: ['Nộp đơn – bước 6, nội dung là đơn có sẵn', Sub6O({ taiDon: { ten: 'Đơn khởi kiện tranh chấp hợp đồng vay', tep: 'don-khoi-kien-nguyen-minh-an.docx', loai: 'Bản chính' } })],
+    sub6ChuaTaiDon: ['Nộp đơn – bước 6, đơn có sẵn chưa tải tệp', Sub6O({ taiDon: 'chua' })],
+    sub6KhongTep: ['Nộp đơn – bước 6, không có tài liệu đính kèm', Sub6O({ khongTep: true })],
+    sub6XnLoi: ['Nộp đơn – bước 6, xác nhận đơn thất bại', Sub6O({ xnLoi: true, toa: COURT1 })],
+    sub6LuuLoi: ['Nộp đơn – bước 6, lưu nháp thất bại', Sub6O({ luuLoi: true })],
+    sub1x: ['Nộp đơn – bước 1, đơn đã xác nhận – chỉ xem', SubX(1)], sub2x: ['Nộp đơn – bước 2, đơn đã xác nhận – chỉ xem', SubX(2)], sub3x: ['Nộp đơn – bước 3, đơn đã xác nhận – chỉ xem', SubX(3)],
+    sub4x: ['Nộp đơn – bước 4, đơn đã xác nhận – chỉ xem', SubX(4)], sub5x: ['Nộp đơn – bước 5, đơn đã xác nhận – chỉ xem', SubX(5)], sub6x: ['Nộp đơn – bước 6, đơn đã xác nhận – chỉ xem', SubX(6)],
+    sub7Tai: ['Nộp đơn – bước 7, đang tải tiến độ ký', Sub7O({ tai: true })],
+    sub7Loi: ['Nộp đơn – bước 7, không tải được tiến độ ký', Sub7O({ loi: true })],
+    sub7Ban: ['Nộp đơn – bước 7, hồ sơ đang có người ký', Sub7O({ ban: true })],
+    sub7ChuaTep: ['Nộp đơn – bước 7, chưa có tệp đơn', Sub7O({ chuaTep: true })],
+    sub7ChuaXn: ['Nộp đơn – bước 7, đơn chưa xác nhận', Sub7O({ chuaXn: true })],
+    sub7Dong: ['Nộp đơn – bước 7, có người đồng khởi kiện, tổ chức khác', Sub7O({ nhom: KY_NHOM_MAU })],
+    sub7TcKhongDd: ['Nộp đơn – bước 7, tổ chức chưa có người đại diện hợp lệ', Sub7O({ toChuc: true, khongDd: true })],
+    sub7TcHetDd: ['Nộp đơn – bước 7, người đại diện trên đơn hết hiệu lực', Sub7O({ toChuc: true, hetDd: true })],
+    signPhan: ['Nộp đơn – bảng ký, chỉ ký được một phần', Sub7O({ sheet: true, kq: 'phan' })],
+    signHet: ['Nộp đơn – bảng ký, hết thời gian chờ', Sub7O({ sheet: true, kq: 'het' })],
+    signKhongTra: ['Nộp đơn – bảng ký, không tra được trạng thái ký số (1.91)', Sub7O({ sheet: true, kqSan: 'khongTra' })],
+    signCho: ['Nộp đơn – bảng ký, chờ xác thực trên ứng dụng ký số (1.90)', Sub7O({ sheet: true, choSan: true })], /* v538 */
+    signTuChoi: ['Nộp đơn – bảng ký, Không ký được: bị từ chối (1.91)', Sub7O({ sheet: true, kqSan: 'tuChoi' })],
+    signKyCaLoi: ['Nộp đơn – bảng ký, Không ký được: nhà cung cấp báo lỗi (1.91)', Sub7O({ sheet: true, kqSan: 'caLoi' })],
+    signLoiKhac: ['Nộp đơn – bảng ký, Không ký được: lỗi hệ thống (1.91)', Sub7O({ sheet: true, kqSan: 'loiKhac' })],
+    signBan: ['Nộp đơn – bảng ký, hồ sơ đang có người khác ký', Sub7O({ sheet: true, banKy: true })],
+    signCaTai: ['Nộp đơn – bảng ký, đang tải nhà cung cấp', Sub7O({ sheet: true, caTrang: 'tai' })],
+    signCaLoi: ['Nộp đơn – bảng ký, không tải được nhà cung cấp', Sub7O({ sheet: true, caTrang: 'loi' })],
+    signRong: ['Nộp đơn – bảng ký, không có tệp cần ký', Sub7O({ sheet: true, rong: true })],
+    signNho: ['Nộp đơn – bảng ký, ghi nhớ lựa chọn', Sub7O({ sheet: true })],
+    signTc: ['Nộp đơn – bảng ký của tổ chức, tư cách ký', Sub7O({ toChuc: true, sheet: true, sheetAi: 'dd' })],
+    signTcTai: ['Nộp đơn – bảng ký của tổ chức, đang tải người đại diện', Sub7O({ toChuc: true, sheet: true, sheetAi: 'dd', ddTrang: 'tai' })],
+    signTcLoi: ['Nộp đơn – bảng ký của tổ chức, không tải được người đại diện', Sub7O({ toChuc: true, sheet: true, sheetAi: 'dd', ddTrang: 'loi' })],
+    sub7GuiLoi: ['Nộp đơn – bước 7, gửi đơn thất bại', Sub7O({ daKy: true, guiLoi: true })]
+  };
+  Object.assign(SCR, M);
+  GROUPS2.forEach(function (g) { if (g[0] === 'Nộp đơn khởi kiện') { var j = g[1].indexOf('signDialog'); g[1].splice.apply(g[1], [j, 0].concat(Object.keys(M))); } });
+})();
+/* ===== Đối chiếu web – prototype (demo 21/11/2026): hàm dùng chung đăng ký màn demo ===== */
+/* cmpThem(tên nhóm GROUPS2, chèn trước mã màn (hoặc null = cuối nhóm), { mã: [tên, hàm] }, { mã: màn nền BASE }) */
+function cmpThem(nhom, truoc, M, base) {
+  Object.assign(SCR, M); Object.assign(BASE, base || {});
+  var co = false;
+  GROUPS2.forEach(function (g) { if (g[0] === nhom) { co = true; var j = truoc ? g[1].indexOf(truoc) : -1; if (j < 0) j = g[1].length; g[1].splice.apply(g[1], [j, 0].concat(Object.keys(M))); } });
+  if (!co) GROUPS2.push([nhom, Object.keys(M)]);
+}
+/* ===== Đối chiếu web – prototype (demo 21/11/2026): màn trạng thái, luật bấm ===== */
+(function () {
+  var them = cmpThem;
+  function nvO(i, o) { return function () { if (i != null) window.__nvSel = i; return h(NvList, o); }; }
+  function nvD(i, o) { return function () { window.__nvSel = i; return FinanceDetail(o); }; }
+  function nvP(i, o) { return function () { window.__nvSel = i; return FinancePay(o); }; }
+  /* ---------- Đợt 2 – Nghĩa vụ tài chính ---------- */
+  them('Theo dõi vụ án, vụ việc', 'financePay', {
+    dvcqgExt: ['Cổng Dịch vụ công quốc gia – mở trên trình duyệt', DvcqgExt],
+    mailDetailNopTien: ['Văn bản tống đạt – thông báo nộp tiền', function () { return h(MailDetailScr, { i: 9 }); }],
+    financeLoading: ['Nghĩa vụ tài chính – đang tải', FinanceLoading],
+    financeKhongGap: ['Nghĩa vụ tài chính – không có khoản gấp', nvO(null, { nv: nvKhongGap() })],
+    financeFilterOn: ['Nghĩa vụ tài chính – đang lọc, Xóa bộ lọc', nvO(null, { loc0: { q: 'TB-2026', hs: 'all', loai: 'TAM_UNG_AP_PT', ky: 'all' } })],
+    financeDoneGiuLoai: ['Nghĩa vụ tài chính – đổi nhóm giữ Loại khoản', nvO(null, { nhom: 'xong', loc0: { q: 'TB-2026', hs: 'all', loai: 'TAM_UNG_AP_ST', ky: 'all' } })],
+    financeSearchKhongDau: ['Nghĩa vụ tài chính – tìm không dấu "vay tai san"', nvO(null, { loc0: { q: 'vay tai san', hs: 'all', loai: 'all', ky: 'all' } })],
+    financeHsPick: ['Nghĩa vụ tài chính – chọn hồ sơ, có ô tìm', nvO(null, { nv: nvNhieuHs(), moLoc: true, moHs: true })],
+    financeHsPickNone: ['Nghĩa vụ tài chính – chọn hồ sơ, không có mục khớp', nvO(null, { nv: nvNhieuHs(), moLoc: true, moHs: true, qHs: 'xyz' })],
+    financeDoneKy90: ['Nghĩa vụ tài chính – Đã nộp, 90 ngày gần nhất', nvO(null, { nhom: 'xong', loc0: { q: '', hs: 'all', loai: 'all', ky: '90' } })],
+    financeDoneKy: ['Nghĩa vụ tài chính – Đã nộp, Năm 2025', nvO(null, { nhom: 'xong', loc0: { q: '', hs: 'all', loai: 'all', ky: 'y2025' } })],
+    financeMore: ['Nghĩa vụ tài chính – 16 khoản, cuộn tải thêm', nvO(null, { nv: nvNhieu(16) })],
+    financeNoMatch: ['Nghĩa vụ tài chính – tìm không có kết quả', nvO(null, { loc0: { q: 'xyz', hs: 'all', loai: 'all', ky: 'all' } })],
+    financeDoneTrong: ['Nghĩa vụ tài chính – Đã nộp, nhóm rỗng', nvO(null, { nhom: 'xong', nv: NV.filter(function (k) { return k.mo; }) })],
+    financeDetailLs: ['Chi tiết khoản – được giảm, tab Lịch sử', nvD(1, { tab0: 'ls' })],
+    financeDetailPaidLs: ['Chi tiết khoản – đã nộp, tab Lịch sử', nvD(4, { tab0: 'ls' })],
+    financeDetailBlErr: ['Chi tiết khoản – tải biên lai lỗi', nvD(4, { blLoi: true })],
+    financePayCopied: ['Nộp tiền – đã sao chép mã', nvP(0, { cp0: 'ok' })],
+    financePayCopyErr: ['Nộp tiền – không sao chép được', nvP(0, { cp0: 'loi', copyLoi: true })],
+    financePayBusy: ['Nộp tiền – đang xử lý', nvP(0, { ban0: true })],
+    financePayNoAmount: ['Nộp tiền – khoản chưa có số tiền (lỗi máy chủ)', nvP(0, { noAmount: true })],
+    financePayNoNeed: ['Nộp tiền – khoản không cần nộp', nvP(4)]
+  }, { dvcqgExt: 'financePayOpen', mailDetailNopTien: 'inbox', financeLoading: 'records', financeKhongGap: 'records', financeFilterOn: 'records', financeDoneGiuLoai: 'records', financeSearchKhongDau: 'records',
+    financeHsPick: 'records', financeHsPickNone: 'records', financeDoneKy90: 'records', financeDoneKy: 'records', financeMore: 'records', financeNoMatch: 'records', financeDoneTrong: 'records',
+    financeDetailLs: 'finance', financeDetailPaidLs: 'financeDone', financeDetailBlErr: 'financeDone', financePayCopied: 'financeDetail', financePayCopyErr: 'financeDetail', financePayBusy: 'financeDetail',
+    financePayNoAmount: 'financeDetail', financePayNoNeed: 'financeDetailPaid' });
+  LOCAL += ', .nv-xoaloc, .nv-copy-btn, .nv-tai-bl, .ext-x';
+})();
+/* ===== Đối chiếu web – prototype (demo 21/11/2026), Đợt 1 – Trích lục, bản sao: màn demo, luật bấm ===== */
+(function () {
+  function C(f, o) { return function () { return h(f, o || {}); }; }
+  var dd = 'Cần đối chiếu số liệu công nợ và biên bản nghiệm thu.', ld = 'Nghiên cứu hồ sơ chuẩn bị phiên tòa';
+  var du = { ds0: [0], ld0: ld }; /* sao chụp: form đủ (nhận tại Tòa án) */
+  function SC(o) { return C(CaseCopy, Object.assign({ nguon: 'duong_su' }, o)); }
+  var M = {
+    /* 1A */
+    copyListMore: ['Theo dõi trích lục – 27 yêu cầu, cuộn tải thêm', C(TlyList, { nhieu: true })],
+    copyListLoad: ['Theo dõi trích lục – đang tải', C(TlyList, { tai: true })],
+    copyListErr: ['Theo dõi trích lục – lỗi tải', C(TlyList, { loi: 1 })],
+    copyListNoMatch: ['Theo dõi trích lục – chip "Đã tiếp nhận" 0 kết quả', C(TlyList, { tt0: 'ST-02b' })],
+    copyListSaved: ['Theo dõi trích lục – sau Lưu nháp, dải xanh', C(TlyList, { daLuu: true })],
+    copyDetailLoad: ['Chi tiết yêu cầu – đang tải', C(TlyDetail, { tai: true })],
+    copyDetailErr: ['Chi tiết yêu cầu – lỗi tải', C(TlyDetail, { loi: 1 })],
+    copyDetailNotFound: ['Chi tiết yêu cầu – không xác định được', C(TlyDetail, { loi: 'ko' })],
+    /* 1B */
+    tl1Nhap: ['Trích lục – bước 1, văn bản của bản nháp đã chọn', C(Tl1, { sel: 'v3', lp: 'bs' })],
+    tl2Nhap: ['Trích lục – bước 2, đã nạp bản nháp TL-2026-0035', C(Tl2, { nhap: true })],
+    caseDetailBa: ['Chi tiết vụ án – tab Bản án/Quyết định', function () { return h(VuAnChiTiet, { tab0: 'judgments' }); }],
+    tl2Va: ['Trích lục – bước 2, vào từ quyết định của vụ án', C(Tl2, { va: true })],
+    tl1Va: ['Trích lục – bước 1, thông tin vụ án đã chọn', C(Tl1, { va: true })],
+    tl1VaChuaBa: ['Trích lục – bước 1, vụ án chưa có bản án, bấm Tiếp theo', C(Tl1, { va: true, chuaBa: true, loi: true })],
+    tl1VaKt: ['Trích lục – bước 1, đang kiểm tra điều kiện', C(Tl1, { va: true, kt: true })],
+    tl1VaLoi: ['Trích lục – bước 1, không kiểm tra được điều kiện', C(Tl1, { va: true, loiKt: true })],
+    caseCopyNhap: ['Sao chụp – đã nạp bản nháp', SC({ nhap: true })],
+    caseCopyNhapLoad: ['Sao chụp – đang tải bản nháp', SC({ nhapTai: true })],
+    caseCopyNhapErr: ['Sao chụp – không tải được bản nháp', SC({ nhapLoi: true })],
+    copyDetailSc: ['Yêu cầu sao chụp – chờ tiếp nhận', C(TlyDetail, { k: 'sc' })],
+    copyDetailScNhap: ['Yêu cầu sao chụp – bản nháp', C(TlyDetail, { k: 'nhap', sc: true })],
+    /* 1C */
+    copyDetailRut: ['Yêu cầu – đã rút yêu cầu', C(TlyDetail, { k: 'rut' })],
+    copyDetailSolved: ['Yêu cầu – đã giải quyết', C(TlyDetail, { k: 'gq' })],
+    copyDetailWait: ['Yêu cầu – chờ tiếp nhận', C(TlyDetail, { k: 'cho' })],
+    copyDetailSuppLate: ['Yêu cầu – bổ sung quá hạn', C(TlyDetail, { k: 'bs', qua: true })],
+    copyDetailSuppSent: ['Yêu cầu – đã gửi bổ sung', C(TlyDetail, { k: 'bs', daGui: true })],
+    copyDetailMoved: ['Yêu cầu – có chuyển tòa', C(TlyDetail, { k: 'dang', chuyenToa: true })],
+    /* 1D */
+    copyWithdrawKhac: ['Rút yêu cầu – lý do Khác, đã đánh dấu', C(TlyWithdraw, { khac: true })],
+    copyWithdrawErrTrang: ['Rút yêu cầu – lỗi khoảng trắng sau khi bấm', C(TlyWithdraw, { khac: true, ct0: '      ', kt: true })],
+    copyWithdrawErr30: ['Rút yêu cầu – lỗi dưới 30 ký tự sau khi bấm', C(TlyWithdraw, { khac: true, ct0: 'Nộp nhầm đơn', kt: true })],
+    copyWithdrawBusy: ['Rút yêu cầu – đang xử lý', C(TlyWithdraw, { khac: true, ct0: 'Tôi đã nhận được bản sao từ Tòa án qua đường bưu chính.', ban: true })],
+    copyDetailRutOk: ['Yêu cầu – rút xong, ở lại chi tiết', C(TlyDetail, { k: 'rut', bao: 'Đã rút yêu cầu thành công.' })],
+    copySuppFiles: ['Nộp bổ sung – 2 tệp, giải trình 35 ký tự', C(TlySupp, { tep0: TL_TEP_MAU, gt0: 'Gửi bổ sung bản có chứng thực chữ ký.' })],
+    copySuppErr: ['Nộp bổ sung – lỗi sau khi bấm gửi', C(TlySupp, { tep0: [{ k: 1, tep: KHO[2].tep, ten: '', loai: '' }], gt0: 'Bổ sung tệp', kt: true })],
+    copySuppKho: ['Nộp bổ sung – chọn từ kho, chọn nhiều', C(TlySupp, { kho: true })],
+    copySuppSheet: ['Nộp bổ sung – bảng sửa tài liệu', C(TlySupp, { tep0: TL_TEP_MAU, sua0: 0 })],
+    /* 1E */
+    tl1All: ['Trích lục – bước 1, mở rộng tất cả', C(Tl1, { all: true })],
+    tl1NoMatch: ['Trích lục – bước 1, không tìm thấy văn bản', C(Tl1, { q0: 'xyz' })],
+    tl1Load: ['Trích lục – bước 1, đang tải văn bản', C(Tl1, { tai: true })],
+    tl1DsErr: ['Trích lục – bước 1, lỗi tải văn bản', C(Tl1, { dsLoi: true })],
+    tl1Empty: ['Trích lục – bước 1, chưa có văn bản', C(Tl1, { rong: true })],
+    tl1Sel: ['Trích lục – bước 1, chọn bản án → trích lục chọn sẵn', C(Tl1, { sel: 'v1' })],
+    tl1SelQd: ['Trích lục – bước 1, chọn quyết định', C(Tl1, { sel: 'v2' })],
+    tl1SelKhoa: ['Trích lục – bước 1, văn bản có thẻ bản sao khóa', C(Tl1, { sel: 'v5' })],
+    tl2Bs: ['Trích lục – bước 2, bản sao (không có ghi chú)', C(Tl2, { chon: { loai: 'BAN_SAO' } })],
+    tl2kQd: ['Trích lục – bước 2 tự khai, Quyết định → trích lục chọn sẵn', C(Tl2, { tuKhai: true, chon: { loaiVb: 'QUYET_DINH' } })],
+    tl1Err: ['Trích lục – bước 1, chưa chọn văn bản', C(Tl1, { loi: true })],
+    tl1kErr: ['Trích lục – bước 1 tự khai, thiếu số và Tòa án', C(Tl1, { tuKhai: true, loi: true })],
+    tl2Err: ['Trích lục – bước 2, bấm Tiếp theo khi trống', C(Tl2, { loi: true })],
+    tl2ErrTrang: ['Trích lục – bước 2, tên người nhận toàn khoảng trắng', C(Tl2, { dc0: { ten: '   ' } })],
+    tl2Max: ['Trích lục – bước 2, số lượng tối đa 10', C(Tl2, { sl: 10 })],
+    tl2Tinh: ['Trích lục – bước 2, bảng chọn tỉnh có ô tìm', C(Tl2, { moTinh: true })],
+    tl2kErr: ['Trích lục – bước 2 tự khai, ghi chú và mục đích ngắn', C(Tl2, { tuKhai: true, chon: { loaiVb: 'QUYET_DINH' }, gc0: 'Phần quyết định', md0: 'Thi hành án', ct0: 'Thi hành án', dc0: TL_DC_MAU, loi: true })],
+    tl3kErr: ['Trích lục – bước 3 tự khai, chưa tích cam kết', C(Tl3, { tuKhai: true, tcach0: TL_TU_CACH[1], loi: true })],
+    tl3kTcErr: ['Trích lục – bước 3, tổ chức Cơ quan nhà nước, thiếu giấy giới thiệu', C(Tl3, { tuKhai: true, tc: true, tcach0: 'Cơ quan nhà nước thực hiện công vụ', loi: true })],
+    /* 1F */
+    tl2Tep: ['Trích lục – bước 2, 2 tài liệu', C(Tl2, { tep0: TL_TEP_MAU })],
+    tl2TepErr: ['Trích lục – bước 2, tài liệu thiếu tên và loại', C(Tl2, { tep0: [{ k: 1, tep: KHO[2].tep, ten: '', loai: '' }], dc0: TL_DC_MAU, md0: 'Thi hành án', loi: true })],
+    tl2Kho: ['Trích lục – bước 2, chọn từ kho', C(Tl2, { kho: true })],
+    tl2TepMax: ['Trích lục – bước 2, 9/9 tệp, vượt giới hạn', C(Tl2, { tep0: tlTepNhieu(9), loiTai: 'Chỉ đính kèm tối đa 9 tệp; các tệp vượt giới hạn đã bị bỏ qua.' })],
+    tl3kCk: ['Trích lục – bước 3 tự khai, Công dân quan tâm – có cam kết', C(Tl3, { tuKhai: true, tcach0: TL_TU_CACH[1] })],
+    /* 1G */
+    tl4Ky: ['Trích lục – bước 4, đã ký đơn và tài liệu', C(Tl4, { da: true })],
+    tl4Bs: ['Trích lục – bước 4, bản sao', C(Tl4, { loai: 'BAN_SAO' })],
+    tl4Dang: ['Trích lục – bước 4, đang tạo đơn', C(Tl4, { dang: true })],
+    tl4Loi: ['Trích lục – bước 4, không tạo được đơn', C(Tl4, { loiTao: 'Không tạo được đơn để ký số.' })],
+    tl4LoiNhap: ['Trích lục – bước 4, không lưu được bản nháp trước khi ký', C(Tl4, { loiTao: 'Không lưu được bản nháp trước khi ký số.' })],
+    tl4KyCd: ['Trích lục – bước 4, đã ký + đã tích cam đoan', C(Tl4, { da: true, cd: true })],
+    tl4CdChuaKy: ['Trích lục – bước 4, đã tích cam đoan, chưa ký', C(Tl4, { cd: true })],
+    tl4Gui: ['Trích lục – bước 4, đang gửi yêu cầu', C(Tl4, { da: true, cd: true, gui: true })],
+    tl4ErrGui: ['Trích lục – bước 4, gửi lỗi', C(Tl4, { da: true, cd: true, loiGui: true })],
+    tlOkBs: ['Bản sao – đã gửi yêu cầu', C(TlOk, { bs: true })],
+    /* 1H */
+    caseCopyErr: ['Sao chụp – bấm gửi khi chưa chọn đương sự, chưa nhập lý do', SC({ kt: true })],
+    caseCopyDsLoad: ['Sao chụp – đang tải danh mục đương sự', SC({ dsTai: true })],
+    caseCopyDsErr: ['Sao chụp – lỗi tải danh mục đương sự', SC({ dsLoi: true })],
+    caseCopyDsEmpty: ['Sao chụp – chưa có đương sự khác', SC({ dsRong: true })],
+    caseCopyPreview: ['Sao chụp – đã xem trước đơn, chưa ký', SC(Object.assign({ xem: 'xem' }, du))],
+    caseCopyPreviewKy: ['Sao chụp – xem trước đã ký số', SC(Object.assign({ xem: 'xem', ky0: true }, du))],
+    caseCopyPreviewLoad: ['Sao chụp – đang chuẩn bị bản xem trước', SC(Object.assign({ xem: 'tao' }, du))],
+    caseCopyPreviewErr: ['Sao chụp – không tạo được bản xem trước', SC(Object.assign({ xem: 'loi' }, du))],
+    caseCopyChanged: ['Sao chụp – đã sửa sau khi xem trước', SC(Object.assign({ xem: 'doi' }, du))],
+    caseCopyBcErr: ['Sao chụp – bưu chính, 6 lỗi', SC(Object.assign({ bc: true, kt: true }, du))],
+    caseCopyTc: ['Sao chụp – tổ chức, 2 ô ký', SC(Object.assign({ xem: 'xem', tc: true }, du))],
+    caseCopyCdErr: ['Sao chụp – bấm gửi: chưa tích cam đoan, chưa ký', SC(Object.assign({ xem: 'xem', kt: true, nhac: 'Vui lòng ký số trước khi gửi yêu cầu.' }, du))],
+    caseCopyNhacXem: ['Sao chụp – bấm gửi khi chưa xem trước', SC(Object.assign({ kt: true, cd0: true, nhac: 'Vui lòng ký số trước khi gửi yêu cầu.' }, du))]
+  };
+  var B = {};
+  Object.keys(M).forEach(function (k) {
+    B[k] = /^copyList/.test(k) ? 'home' : /^copyDetail/.test(k) ? 'copyList' : /^copyWithdraw/.test(k) ? 'copyDetail' : /^copySupp/.test(k) ? 'copyDetailSupp'
+      : /^caseCopy/.test(k) || k === 'caseDetailBa' || /^tl1Va/.test(k) || k === 'tl2Va' ? 'caseDetail' : k === 'tl1Nhap' || k === 'tl2Nhap' ? 'copyList'
+      : /^tl1/.test(k) ? 'copyList' : /^tl2k/.test(k) ? 'tl1k' : /^tl2/.test(k) ? 'tl1' : /^tl3k/.test(k) ? 'tl2k' : /^tl4/.test(k) ? 'tl3' : null;
+    if (!B[k]) delete B[k];
+  });
+  B.caseDetailBa = 'cases'; B.copySuppLate = 'copyDetailSuppLate';
+  cmpThem('Cấp trích lục, bản sao', null, M, B);
+  /* luật bấm */
+  var tlIds = ['tl1', 'tl1k', 'tl2', 'tl2k', 'tl3', 'tl3k', 'tl4'].concat(Object.keys(M).filter(function (k) { return /^tl[1-4]/.test(k); })).join('|');
+  R.unshift(
+    [tlIds, '=Lưu nháp', 'reset:home,copyListSaved', '.tp-appbar'], /* 1G.3: Lưu nháp → danh sách + dải xanh "Đã lưu nháp [mã yêu cầu]…" (không thanh đáy) */
+    ['tlOkBs', 'Về danh sách yêu cầu', 'reset:home,copyList'], ['tlOkBs', 'Về trang chủ', 'tab:home'],
+    ['tl2Nhap', '=Quay lại', 'replace:tl1Nhap'], ['tl2Va', '=Quay lại', 'replace:tl1SelQd'],
+    ['caseDetail|caseDetailBa', '=Yêu cầu cấp trích lục quyết định', 'tl2Va']); /* 1B.2: mở thẳng bước 2 (nút của VuAnChiTiet – phần vuan) */
+  LOCAL += ', .tl-moall, .tl-xoaloc, .tl-vb, .tl-goiy button';
+})();
+/* ===== Đối chiếu web – prototype (demo 21/11/2026), Đợt 3 – Hộp thư tống đạt: màn demo, luật bấm ===== */
+(function () {
+  var L0 = IB_LOC0;
+  function ib(o) { return function () { return h(InboxScr, o); }; }
+  function md(o) { return function () { return h(MailDetailScr, o); }; }
+  cmpThem('Hộp thư tống đạt', null, {
+    homeHtGhim: ['Trang chủ – Hộp thư tống đạt, mở "Đã đánh dấu"', function () { return Home(false, { ghimMo: true }); }],
+    homeHtGhimLoi: ['Trang chủ – bỏ đánh dấu lỗi máy chủ', function () { return Home(false, { ghimMo: true, ghimLoi: true }); }],
+    mailDetailVk: ['Văn bản tống đạt – mở từ Việc cần làm', md({ i: 3, lk: true })],
+    mailDetailTb: ['Văn bản tống đạt – mở từ Thông báo', md({ i: 0, lk: true })],
+    mailDetailGtt: ['Văn bản tống đạt – Giấy triệu tập, mở từ Lịch', md({ i: 14, lk: true })],
+    inboxPl: ['Hộp thư – Phân loại thư, ẩn số 0', ib({ fd0: 'starred', sh0: 'pl' })],
+    inboxPlQt: ['Hộp thư – đang lọc nhãn, chọn thư mục thì bỏ nhãn', ib({ fd0: 'inbox', loc0: Object.assign({}, L0, { nhan: 'THONG_BAO' }), sh0: 'pl' })],
+    inboxDangLoc: ['Hộp thư – dòng "Đang lọc"', ib({ loc0: Object.assign({}, L0, { hs: 'DS-2026-0012', doc: 'unread', khoang: '30', toa: COURT1 }) })],
+    inboxDangLocTu: ['Hộp thư – dòng "Đang lọc", khoảng tùy chọn chỉ có Từ ngày', ib({ loc0: Object.assign({}, L0, { khoang: 'custom', tu: '2026-10-20' }) })],
+    inboxDangLocBl: ['Hộp thư – bảng Bộ lọc đang lọc hồ sơ, Nhập lại', ib({ loc0: Object.assign({}, L0, { hs: 'DS-2026-0012', doc: 'unread', khoang: '30', toa: COURT1 }), sh0: 'loc' })],
+    inboxTai: ['Hộp thư – đang tải danh sách', ib({ tai: true })],
+    inboxErrMay: ['Hộp thư – lỗi tải, có thông báo máy chủ', ib({ loi: 'may' })],
+    inboxRongHt: ['Hộp thư – thư mục Hộp thư trống', ib({ fd0: 'inbox', du: [] })],
+    inboxRongQt: ['Hộp thư – thư mục Quan trọng trống', ib({ fd0: 'starred', du: [] })],
+    inboxRongLt: ['Hộp thư – thư mục Đã lưu trữ trống', ib({ fd0: 'archive' })],
+    inboxRongLoc: ['Hộp thư – có lọc, không có kết quả', ib({ fd0: 'inbox', q0: 'zzzz' })],
+    inboxHsTim: ['Hộp thư – chọn hồ sơ trên 10 mục, có ô tìm', ib({ fd0: 'inbox', sh0: 'loc', hsThem: HT_HS_THEM, moHs: true })],
+    inboxHsTimRong: ['Hộp thư – chọn hồ sơ, tìm không khớp', ib({ fd0: 'inbox', sh0: 'loc', hsThem: HT_HS_THEM, moHs: true, qHs: 'zzzz' })],
+    mailDetailTai: ['Văn bản tống đạt – đang tải', md({ tai: true })],
+    mailDetailErrMay: ['Văn bản tống đạt – lỗi tải, có thông báo máy chủ', md({ loi: 'may' })],
+    attachmentTai: ['Xem tệp – đang tải bản số hóa', AttachmentTai],
+    attachmentKhongXem: ['Xem tệp – định dạng không xem trực tiếp được', AttachmentKhongXem],
+    mailDetailDon: ['Văn bản tống đạt – gắn với đơn, dòng Hồ sơ chỉ có mã đơn', md({ i: 5 })],
+    mailDetailMoDau: ['Văn bản tống đạt – mở lần đầu văn bản chưa đọc', function () { IB[0].doc = false; IB[0].moLan = null; return h(MailDetailScr, { i: 0 }); }],
+    mailDetailSd: ['Văn bản tống đạt – yêu cầu sửa đổi, bổ sung đơn', md({ i: 0 })],
+    mailDetailXxl: ['Văn bản tống đạt – vụ việc phá sản, nút thủ tục', md({ i: IB_PS, xxl: 'moi' })],
+    mailDetailXxlTiep: ['Văn bản tống đạt – vụ việc phá sản, đang soạn dở', md({ i: IB_PS, xxl: 'tiep' })],
+    mailDetailXxlGui: ['Văn bản tống đạt – vụ việc phá sản, đã gửi', md({ i: IB_PS, xxl: 'gui' })],
+    mailDetailXxlHet: ['Văn bản tống đạt – vụ việc phá sản, quá hạn', md({ i: IB_PS, xxl: 'het' })]
+  }, { homeHtGhim: 'home', homeHtGhimLoi: 'home', mailDetailVk: 'home', mailDetailTb: 'notifications', mailDetailGtt: 'calPersonal', inboxPl: 'inbox', inboxPlQt: 'inbox', inboxDangLoc: 'inbox', inboxDangLocTu: 'inbox', inboxDangLocBl: 'inbox',
+    inboxTai: 'inbox', inboxErrMay: 'inbox', inboxRongHt: 'inbox', inboxRongQt: 'inbox', inboxRongLt: 'inbox', inboxRongLoc: 'inbox', inboxHsTim: 'inbox', inboxHsTimRong: 'inbox', mailDetailTai: 'inbox', mailDetailErrMay: 'inbox',
+    attachmentTai: 'mailDetail', attachmentKhongXem: 'mailDetail', mailDetailDon: 'inbox', mailDetailMoDau: 'inbox', mailDetailSd: 'inbox', mailDetailXxl: 'inbox', mailDetailXxlTiep: 'inbox', mailDetailXxlGui: 'inbox', mailDetailXxlHet: 'inbox' });
+  /* luật bấm */
+  R = R.filter(function (r) { return !(r[0] === 'home|homeAll' && r[1] === '=Văn bản tống đạt'); }); /* 3A.1: luật thừa – Trang chủ không còn ô "Văn bản tống đạt" */
+  R.forEach(function (r) {
+    if (r[1] === 'Văn bản tống đạt có thời hạn') r[2] = 'mailDetailVk'; /* 3A.2 */
+    if (r[0] === 'mailDetail' && r[1] === 'Sửa đổi, bổ sung đơn khởi kiện') r[2] = 'sd1'; /* 3D.4 */
+  });
+  R.unshift(
+    /* 3A.2: văn bản mở từ liên kết (Trang chủ, Thông báo, Việc cần làm, Lịch, Nghĩa vụ tài chính…) – quay lại về danh sách lọc theo văn bản đó (như web) */
+    /* người dùng 21/11 (3A.2): văn bản mở từ liên kết – quay lại về đúng màn nguồn (không lọc liên kết) */
+    ['home|homeAll|homeHtGhim|homeHtGhimLoi', '=Mở hộp thư', 'tab:inbox']);
+  LOCAL += ', .ht-ghim-h, .ht-ghim-sao, .ht-xoaloc, .ht-tai-b, .ht-thulai button, .ht-khongxem button';
+})();
+
+/* 3D.4 (22/11): màn soạn UC-116 theo mẫu Soạn đơn */
+(function () {
+  var N = 'Đề nghị xem xét lại quyết định mở / không mở thủ tục phá sản';
+  cmpThem('Hộp thư tống đạt', null, {
+    xxl1: [N + ' – 1 người gửi', function () { return h(Xxl1, {}); }],
+    xxl1Uq: [N + ' – 1 người được ủy quyền', function () { return h(Xxl1, { uq: true }); }],
+    xxl2: [N + ' – 2 nội dung', function () { return h(Xxl2, {}); }],
+    xxl2Tai: [N + ' – 2 tải đơn có sẵn', function () { return h(Xxl2, { tai: true }); }],
+    xxl3: [N + ' – 3 tài liệu', Xxl3],
+    xxl4: [N + ' – 4 xem lại', Xxl4],
+    xxl5: [N + ' – 5 ký số', Xxl5],
+    xxlOk: [N + ' – đã gửi', XxlOk]
+  }, { xxl1: 'mailDetailXxl', xxl1Uq: 'mailDetailXxl', xxl2: 'xxl1', xxl2Tai: 'xxl1', xxl3: 'xxl2', xxl4: 'xxl3', xxl5: 'xxl4', xxlOk: 'mailDetailXxl' });
+  R.unshift(['xxl1|xxl1Uq|xxl2|xxl2Tai|xxl3|xxl4|xxl5', '=Lưu nháp', 'backTo:mailDetailXxlTiep', '.tp-appbar']);
+})();
+/* ===== Đối chiếu web – prototype (demo 21/11/2026), Đợt 4 – Vụ án: màn demo, luật bấm ===== */
+(function () {
+  function vl(o) { return function () { return h(VaList, o); }; }
+  function va(o) { return function () { if (o.ma) window.__vaSel = { ma: o.ma, ten: (vaTim(o.ma) || {}).t }; return h(VuAnChiTiet, o); }; }
+  function vt(o, top) { return function () { return h(VuAnChiTiet, Object.assign({ top: h(VaVaiTro, top) }, o)); }; }
+  function lr(o) { return function () { return h(LcReply, o); }; }
+  function rm(o) { return function () { return h(LcRoom, o); }; }
+  var BD = 'Bị đơn', LQ = 'Người có quyền lợi, nghĩa vụ liên quan';
+  cmpThem('Theo dõi vụ án, vụ việc', 'caseCopy', {
+    homeCases: ['Trang chủ – thẻ "Vụ án của tôi"', function () { return h(HomeVaDemo); }],
+    homeCasesPin: ['Trang chủ – thẻ "Vụ án của tôi", mở Đã đánh dấu', function () { return h(HomeVaDemo, { moGhim: true }); }],
+    casesTt: ['Vụ án – lọc sẵn "Tạm đình chỉ" từ Trang chủ', vl({ tt0: 2 })],
+    casesTtSai: ['Vụ án – trạng thái lọc sẵn không có trong danh mục', vl({ tt0: 'KHONG_CO' })],
+    caseDetailHear: ['Chi tiết vụ án – mở tab Lịch phiên tòa', va({ tab0: 'hearings' })],
+    casesBanDong: ['Vụ án – đã đóng banner phiên tòa', vl({ banDong: true })],
+    casesBanMoi: ['Vụ án – đã đóng phiên cũ, banner phiên mới', vl({ banDong: true, phienGN: VA_PGN2 })],
+    casesCapPt: ['Vụ án – lọc Cấp xét xử Phúc thẩm', vl({ loc0: { cap: 2 } })],
+    casesMore: ['Vụ án – 10 vụ đầu, dòng đang tải thêm', vl({ tinh: true })],
+    casesMore20: ['Vụ án – sau 1 lần tải thêm, 20 vụ', vl({ tinh: true, n0: 20 })],
+    casesMoreErr: ['Vụ án – lỗi khi tải thêm', vl({ moreErr: true })],
+    casesLoading: ['Vụ án – đang tải', vl({ tai: 'loading' })],
+    casesErr: ['Vụ án – lỗi tải danh sách', vl({ tai: 'err' })],
+    casesNoMatch: ['Vụ án – tìm không có kết quả', vl({ q0: 'ABC' })],
+    casesCopied: ['Vụ án – đã sao chép mã', vl({ cp0: 'DS-2026-0012' })],
+    casesPhien: ['Vụ án – loại Hành chính: nhãn phiên 3 trạng thái', vl({ loc0: { loai: 5 }, n0: 30 })],
+    caseDetailJudged: ['Chi tiết vụ án – đã có bản án, "Xem bản án"', va({ ma: 'DS-2025-0098', banAn: 'ba', judg: 'ba' })],
+    caseDetailJudgedTab: ['Chi tiết vụ án – tab Bản án / Quyết định', va({ ma: 'DS-2025-0098', banAn: 'ba', judg: 'ba', tab0: 'judgments' })],
+    caseDetailDismissed: ['Chi tiết vụ án – đình chỉ, "Xem quyết định đình chỉ"', va({ ma: 'DS-2026-0038', banAn: 'dc', judg: 'dc' })],
+    dyc1_tt: ['Đơn yêu cầu khác – 1 chọn sẵn thu thập chứng cứ', function () { return h(Dyc1, { k: 'tt' }); }],
+    caseDetailCopied: ['Chi tiết vụ án – đã sao chép mã', va({ cp0: true })],
+    caseDetailLoading: ['Chi tiết vụ án – đang tải', va({ tai: 'loading' })],
+    caseDetailErr: ['Chi tiết vụ án – lỗi tải', va({ tai: 'err' })],
+    caseDetailCcHom: ['Chi tiết vụ án – Cung cấp TLCC hết hạn hôm nay', va({ cc: 'hom' })],
+    caseDetailCcQua: ['Chi tiết vụ án – Cung cấp TLCC quá hạn, khóa', va({ cc: 'qua' })],
+    caseDetailNoFee: ['Chi tiết vụ án – chưa phát sinh án phí', va({ noFee: true })]
+  }, {});
+  var bV = {};
+  ['homeCases', 'homeCasesPin'].forEach(function (k) { bV[k] = 'home'; });
+  ['casesTt', 'casesTtSai', 'casesBanDong', 'casesBanMoi', 'casesCapPt', 'casesMore', 'casesMore20', 'casesMoreErr', 'casesLoading', 'casesErr', 'casesNoMatch', 'casesCopied', 'casesPhien'].forEach(function (k) { bV[k] = 'records'; });
+  Object.keys(SCR).forEach(function (k) { if (/^(caseDetail|caseHear)/.test(k) && !BASE[k] && k !== 'caseDetail') bV[k] = 'cases'; });
+  bV.dyc1_tt = 'caseDetail';
+  Object.assign(BASE, bV);
+  cmpThem('Lịch', null, {
+    attendReplyOnline: ['Phản hồi tham dự – phiên trực tuyến, có Điểm cầu', lr({ online: true })],
+    attendAbsentShort: ['Báo vắng mặt – chi tiết dưới 50 ký tự', lr({ vang: true, short: true })],
+    attendAbsentLong: ['Báo vắng mặt – chi tiết trên 1000 ký tự', lr({ vang: true, long: true })],
+    attendAbsentFileErr: ['Báo vắng mặt – tệp sai định dạng', lr({ vang: true, fileErr: true })],
+    attendAbsentFull: ['Báo vắng mặt – đủ 3 tệp', lr({ vang: true, full: true })],
+    attendAbsentUploading: ['Báo vắng mặt – đang tải tệp lên', lr({ vang: true, uploading: true })],
+    attendAbsentExpired: ['Phản hồi tham dự – hết hạn xác nhận', lr({ vang: true, expired: true })],
+    waitingRoomEarly: ['Phòng chờ – chưa đến giờ', rm({ tt: 'early' })],
+    waitingRoomLive: ['Phòng chờ – phiên đang diễn ra', rm({ tt: 'live' })],
+    waitingRoomNoLink: ['Phòng chờ – văn bản chưa có đường dẫn hợp lệ', rm({ tt: 'nolink', bam: true })],
+    phongHopExt: ['Phòng xét xử trực tuyến – mở trên trình duyệt', PhongHopExt]
+  }, { attendReplyOnline: 'hearingDetail', attendAbsentShort: 'hearingDetail', attendAbsentLong: 'hearingDetail', attendAbsentFileErr: 'hearingDetail', attendAbsentFull: 'hearingDetail',
+    attendAbsentUploading: 'hearingDetail', attendAbsentExpired: 'hearingDetail', waitingRoomEarly: 'hearingDetail', waitingRoomLive: 'hearingDetail', waitingRoomNoLink: 'hearingDetail', phongHopExt: 'waitingRoom' });
+  SCR.waitingRoomErr[0] = 'Phòng chờ – không tải được nội dung văn bản';
+  /* mở Phản hồi / Phòng chờ từ Chi tiết phiên: không coi là mở từ thẻ vụ án */
+  ['hearingDetail', 'hearingDetailDone', 'hearingDetailPost'].forEach(function (k) { var f = SCR[k][1]; SCR[k] = [SCR[k][0], function () { window.__lcTu = null; return f(); }]; });
+  /* 4A.2: "Xem vụ án" của banner mở tab Lịch phiên tòa (nút tự đặt đích) */
+  R = R.filter(function (r) { return !(r[0] === 'cases' && r[1] === 'Xem vụ án'); });
+  LOCAL += ', .va4-cp-b, .va4-star, .va4-ban-x, .va4-pin-t, .va4-pin-x, .va4-thulai, .tp-empty-act, .va4-tep-add, .va4-tep-x, .va4-gui, .va4-vao, .va4-dl-huy, .va4-px button, .va4-tai-b, .va4-cap-h, .va4-xba, .ph-selsh button, .va4-ti, .va4-seg button';
+})();
 ReactDOM.createRoot(document.getElementById('root')).render(h(Proto));
 
 /* v333: lớp dữ liệu luồng Tổ chức – thay dữ liệu mẫu của người dùng cá nhân (Hoàng Dương, CCCD 001090012345, địa chỉ thường trú) bằng tổ chức mẫu
