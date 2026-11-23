@@ -1819,10 +1819,10 @@ section.ckb.tdB{margin:12px 16px 4px;background:var(--warning-tint);box-shadow:i
 /* v249 (04/11/2026): tab Tài liệu chứng cứ – mỗi tài liệu một thẻ riêng (viền mảnh, bo góc), cách nhau 10px */
 .dt-docs-the{gap:10px}.ph-ky.dt-docs-the li{padding:12px 10px 12px 14px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface)}.ph-ky.dt-docs-the li:last-child{border-bottom:1px solid var(--border)}
 /* v250 (04/11/2026): mọi bước "Xem lại…" trong các luồng soạn đơn – khối nhãn – giá trị như màn chi tiết (v234): cột nhãn xám bên trái, giá trị căn trái thẳng cột, không đường kẻ */
-.ph:has(.ph-stepbar-xl) .ph-rvkv{display:grid;grid-template-columns:fit-content(42%) 1fr;gap:6px 12px}
+.ph:has(.ph-stepbar-xl) .ph-rvkv{display:grid;grid-template-columns:30% 65% !important;column-gap:5%;row-gap:6px} /* v565: màn Xem lại tương tự – 30% · 5% · 65% */
 .ph:has(.ph-stepbar-xl) .ph-rvkv>div{display:contents}
-.ph:has(.ph-stepbar-xl) .ph-rvkv dt{max-width:none;margin:0;font:400 12px/20px var(--font-sans);color:var(--ink-subtle)}
-.ph:has(.ph-stepbar-xl) .ph-rvkv dd{text-align:left;font:500 14px/20px var(--font-sans);color:var(--ink)}
+.ph:has(.ph-stepbar-xl) .ph-rvkv dt{max-width:none;margin:0;font:400 14px/20px var(--font-sans);color:var(--ink-subtle);overflow-wrap:anywhere} /* v565: 14px */
+.ph:has(.ph-stepbar-xl) .ph-rvkv dd{min-width:0;text-align:left;font:400 14px/20px var(--font-sans);color:var(--ink)} /* v565: 14px chữ thường */
 /* v251 (04/11/2026): áp UI đơn khởi kiện cho các đơn khác và các chức năng */
 .g1>li.g1-nt{grid-template-columns:20px 1fr}.g1>li.g1-nt::before{left:9px} /* lịch sử không có giờ: bỏ cột giờ */
 .tc3-hl .tc3-l{box-shadow:inset 0 0 0 1px var(--brand-800);background:var(--brand-50)}.tc3-hl-t{color:var(--brand-text);font-weight:600} /* nhóm được làm nổi bật trong bảng tạo đơn */
@@ -3625,3 +3625,89 @@ button.tp-upload-add{border:0;cursor:pointer}.va4-ua-dang{background:var(--surfa
 
 /* 22/11 (4E.4): Phòng chờ – khối 100%, các phần trong khối cách nhau */
 .va4-room-b>*+*{margin-top:12px}
+
+/* v546 (người dùng 23/11, PA C kiểu 2): nút "+ Thêm …" danh sách đương sự – viền đỏ cỡ nhỏ; cùng hàng số đếm, chưa có ai thì căn trái */
+.ph-them-nut.tp-btn{width:auto;flex:none;height:36px;min-height:36px;padding:0 12px;gap:4px;border:1px solid var(--brand-text);border-radius:8px;background:var(--surface,#fff);box-shadow:none;color:var(--brand-text)}
+.ph-ds-tool-r .ph-them-nut.tp-btn{margin-right:0}
+.ph-them-rong{display:flex;justify-content:flex-start}
+/* v550 (người dùng 23/11): khối người liên quan – Có/Không, hàng số đếm + nút Thêm, thẻ cách nhau như thân khối (14px) */
+.ph-lq{display:flex;flex-direction:column;gap:14px}
+
+/* v553 (PA C công tắc thu gọn, chốt 23/11 – tai-lieu/cau-tra-loi-cong-tac-chon-2026-11-23.md): chỉ công tắc loại đương sự và Có/Không – cao 36px, ôm chữ, căn trái, giữ màu mục đang chọn */
+.ph-seg-gon{display:flex;justify-content:flex-start}
+.ph-seg-gon .tp-seg{display:inline-flex;width:auto;max-width:100%;height:36px;padding:2px;gap:2px;border-radius:10px}
+.ph-seg-gon .tp-seg button{height:32px;min-height:32px;padding:0 14px;border-radius:8px;flex:none;white-space:nowrap} /* v554: bỏ min-height 40px gốc – trước bị che chân */
+
+/* v554 demo: ô ngày dạng ô chọn + bảng bánh xe Ngày – Tháng – Năm */
+.ph-sel-ngay .tp-select-caret{display:none}
+.ph-sel-ngay .tp-select-btn::after{content:'';flex:none;width:20px;height:20px;margin-left:auto;background:var(--ink-muted);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6h16v14H4z'/%3E%3Cpath d='M4 10h16'/%3E%3Cpath d='M8 3v4'/%3E%3Cpath d='M16 3v4'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6h16v14H4z'/%3E%3Cpath d='M4 10h16'/%3E%3Cpath d='M8 3v4'/%3E%3Cpath d='M16 3v4'/%3E%3C/svg%3E") center/contain no-repeat}
+.bx{display:flex;flex-direction:column;gap:8px;padding:4px 0 8px}
+.bx-nhan{display:grid;grid-template-columns:1fr 1.4fr 1fr;text-align:center;font:500 12px/16px var(--font-sans);color:var(--ink-muted)}
+.bx-khung{position:relative;display:grid;grid-template-columns:1fr 1.4fr 1fr;height:200px}
+.bx-dai{position:absolute;left:0;right:0;top:80px;height:40px;border-radius:8px;background:var(--brand-tint);pointer-events:none}
+.bx-cot{position:relative;height:200px;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none;-webkit-mask:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask:linear-gradient(transparent,#000 30%,#000 70%,transparent)}
+.bx-cot::-webkit-scrollbar{display:none}
+.bx-dem{height:80px}
+.bx-it{height:40px;display:grid;place-items:center;scroll-snap-align:center;font:400 16px/24px var(--font-sans);color:var(--ink-muted);cursor:pointer}
+.bx-it.bx-on{font-weight:700;color:var(--brand-text)}
+/* v554: bảng chọn mở từ ô lọc trong bảng kho nằm trên bảng kho */
+.ph-lib-sheet ~ .ph-lv-sheet,.ph:has(.ph-lib-sheet) .ph-lv-sheet{z-index:8}
+
+/* v558 (người dùng 23/11, PA 3): mọi khối Xem lại giữ kiểu cũ (nhãn xám 12px – giá trị 14px đậm vừa, không kẻ dòng) nhưng chia cột nhãn 25% · khoảng cách 5% · giá trị 70%, giá trị căn trái */
+.ph-rv2-b .ph-rvkv{display:grid;grid-template-columns:30% 65% !important;column-gap:5%;row-gap:6px} /* v560: 30% · 5% · 65% */
+.ph-rv2-b .ph-rvkv>div{display:contents}
+.ph .ph-rv2-b dl.ph-rvkv dt{max-width:none;margin:0;font:400 14px/20px var(--font-sans);color:var(--ink-subtle);overflow-wrap:anywhere} /* v563: nhãn 14px */
+.ph .ph-rv2-b dl.ph-rvkv dd{min-width:0;text-align:left;font:400 14px/20px var(--font-sans);color:var(--ink)} /* v563: giá trị 14px chữ thường */
+.rv-tx{display:block}
+.rv-tx.rv-gon{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
+.rv-them{display:block;margin-top:4px;padding:0;min-height:24px;border:0;background:none;font:500 14px/20px var(--font-sans);color:var(--brand-text);cursor:pointer}
+
+/* v559: nội dung đầy đủ trong bảng Xem thêm */
+.rv-toan{margin:0;padding:4px 0 16px;font:400 14px/20px var(--font-sans);color:var(--ink);white-space:pre-line;overflow-wrap:anywhere}
+/* v562 (người dùng 23/11): ô cam kết đã tích ở chế độ chỉ xem giữ màu đỏ như khi tích (không xám) */
+.ph-commit .tp-check-off input:checked + .tp-check-box{background:var(--brand-800);border-color:var(--brand-800);color:var(--on-primary)}
+/* v564 (người dùng 23/11 chọn PA B): STT thẻ đương sự ở khối Xem lại – số tròn nhỏ 22px, nền xám nhạt, viền xám, số xám (bớt nổi hơn đỏ) */
+.ph .ph-rv2-b .dm-sum-no{width:22px;height:22px;background:var(--surface-sunken);color:var(--ink-muted);border:1px solid var(--border);font:700 12px/16px var(--font-sans)}
+
+/* v565: STT thẻ đương sự trong khối xem lại (thẻ chứa bảng nhãn – giá trị) ở mọi màn – số tròn xám như v564 */
+.ph .dm-sum:has(.ph-rvkv) .dm-sum-no{width:22px;height:22px;background:var(--surface-sunken);color:var(--ink-muted);border:1px solid var(--border);font:700 12px/16px var(--font-sans)}
+
+/* v567 (PA 4): nút mở toàn văn ở khối Xem lại – nền xanh lá nhạt, viền xanh lá nhạt, chữ + biểu tượng mắt xanh lá (token success) */
+.rv-them{display:inline-flex;align-items:center;gap:6px;height:32px;min-height:32px;margin-top:8px;padding:0 12px;border:1px solid var(--success-border);border-radius:8px;background:var(--success-tint);color:var(--success);font:500 14px/20px var(--font-sans)}
+.rv-them .tp-ico{width:16px;height:16px;flex:none;color:var(--success)}
+/* v569 (phiên fork 23/11 – tai-lieu/demo-cot-30-5-65-2026-11-23.md): màn xem chi tiết chia khối trái phải – nhãn 30% · khe 5% · giá trị 65%, căn trái, giá trị in thường (không đậm); áp 3 nhóm: ph-rvkv (gồm màn gửi thành công ph-ok-rows), tp-info-rows, thẻ danh sách qc-ben */
+.ph-rvkv,.tp-info-rows{display:grid!important;grid-template-columns:30% 65%!important;column-gap:5%!important;row-gap:6px}
+.ph-rvkv>div,.tp-info-rows>div{display:contents}
+.ph-rvkv dt,.tp-info-rows dt{max-width:none!important;width:auto!important;margin:0!important}
+.ph-rvkv dd,.tp-info-rows dd{font-weight:400!important;text-align:left!important}
+.qc-ben{display:grid!important;grid-template-columns:30% 65%!important;column-gap:5%!important}
+.qc-ben dd{font-weight:400!important}
+/* v570 (phiên fork 23/11 – bổ sung demo-cot-30-5-65): cỡ chữ nhãn và giá trị 14px (line-height 20px) cho cả 3 nhóm ph-rvkv, tp-info-rows, qc-ben (trước nhãn 12px) */
+.ph-rvkv dt,.ph-rvkv dd,.tp-info-rows dt,.tp-info-rows dd,.qc-ben dt,.qc-ben dd{font-size:14px!important;line-height:20px!important}
+/* v572 (người dùng 23/11 "làm theo web" – bảng ký số): đang trong phiên ký, tệp chưa ký hiện vòng quay cỡ như biểu tượng tệp, màu thương hiệu (web TrangThaiIcon coPhien) */
+.ph-ky-files .tp-spinner{width:18px;height:18px;flex:none;color:var(--brand-text)}
+/* v575 (người dùng 23/11 chọn "Kiểu trong ảnh", thay PA A nền vàng của v574): khối "Đơn chưa lưu" giữ kiểu cũ – nền trắng, nút viền đỏ cỡ nhỏ căn trái, không mũi tên;
+   giữ phần đã chốt riêng ở phiên fork: thanh tiến độ đỏ theo số bước, cao 6px, nền thanh xám (trước cao 0px vì .dg-bar flex:1 trong khối xếp cột) */
+.knd-nhap .dg-bar{display:block;width:100%;flex:none;height:6px;min-height:6px;margin:4px 0 6px;background:var(--surface-sunken)}
+.knd-nhap .dg-bar i{background:var(--brand-800)}
+
+/* v578 (rà soát 11 điểm KNTC tố tụng, phiên fork 23/11): lỗi 10 PA G – nhãn trạng thái thẻ tố tụng mỗi trạng thái một màu Tag của design system; chấm tình trạng cùng màu, chữ tình trạng xám */
+.kn-c .tp-badge.kntt-st-10{background:var(--tag-10-bg);color:var(--tag-10-text);border-color:transparent}
+.kn-c .tp-badge.kntt-st-3{background:var(--tag-3-bg);color:var(--tag-3-text);border-color:transparent}
+.kn-c .tp-badge.kntt-st-1{background:var(--tag-1-bg);color:var(--tag-1-text);border-color:transparent}
+.kn-c .tp-badge.kntt-st-7{background:var(--tag-7-bg);color:var(--tag-7-text);border-color:transparent}
+.kn-c .tp-badge.kntt-st-9{background:var(--tag-9-bg);color:var(--tag-9-text);border-color:transparent}
+.kn-c .tp-badge.kntt-st-6{background:var(--tag-6-bg);color:var(--tag-6-text);border-color:transparent}
+.kn-c .qd-tinh.kntt-dot{color:var(--ink-muted)}
+.kn-c .kntt-dot-10::before{background:var(--tag-10)}.kn-c .kntt-dot-3::before{background:var(--tag-3)}.kn-c .kntt-dot-1::before{background:var(--tag-1)}
+.kn-c .kntt-dot-7::before{background:var(--tag-7)}.kn-c .kntt-dot-9::before{background:var(--tag-9)}.kn-c .kntt-dot-6::before{background:var(--tag-6)}
+/* lỗi 7: liên kết "Đã gửi … lần hai" nằm trên lớp chạm của thẻ, bấm được */
+.kn-c .kntt-l2-link{pointer-events:auto;position:relative;z-index:1}
+/* v580 (người dùng 23/11 chọn PA A): Soạn đơn – Bước 1 thu nhỏ khoảng trống: giữa các phần Loại thủ tục / Lĩnh vực / Loại việc cụ thể 24px (trước 44px), từ thanh bước xuống phần đầu 16px; tiêu đề – nội dung mỗi phần giữ 12px */
+.ph-body.ph-plain.ph-s1{gap:0;padding-top:4px}
+.ph-body.ph-s1>.ph-s1-sec:not(.ct2 .ph-s1-sec){margin:0;padding:12px 16px}
+/* v581 (người dùng 23/11 chọn PA A): bảng chọn Loại việc cụ thể – mỗi loại việc một thẻ viền bo góc, cách nhau 8px; thẻ đang chọn viền đỏ, nền hồng nhạt (như thẻ Chọn thủ tục) */
+.ph-lvr.ph-lvr-the{display:flex;flex-direction:column;gap:8px}
+.ph-lvr-the .ph-lvr-it{padding:12px 14px;border:0;border-radius:var(--radius-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--border)}
+.ph-lvr-the .ph-lvr-it[aria-selected=true]{background:var(--brand-tint);box-shadow:inset 0 0 0 1.5px var(--brand-800)}
+.ph-lvr-the .ph-lvr-ck{display:none}
