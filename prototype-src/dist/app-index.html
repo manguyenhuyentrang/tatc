@@ -19192,6 +19192,49 @@ LOCAL += ', .xn-l'; /* nút xử lý tại chỗ (hộp thoại xác nhận) */
 function XnTop(p) { var hs = React.useState(null); React.useEffect(function () { hs[1](document.querySelector('.pt-phone .ph')); }, []); return hs[0] ? ReactDOM.createPortal(p.children, hs[0]) : null; }
 GROUPS2.forEach(function (g) { var j = g[1].indexOf('personal'); if (j >= 0 && g[1].indexOf('personalOut') < 0) g[1].splice(j + 1, 0, 'personalOut'); });
 
+/* v608 (25-11-2026): bấm ‹ ở màn soạn (thanh tiêu đề có "Lưu nháp") → hộp "Thoát khi chưa hoàn tất?" (app: hooks/useConfirmExitWizard.tsx – Lưu nháp / Thoát / Ở lại).
+   PA A: hộp giữa màn kiểu "Đổi loại việc?": Lưu nháp và thoát (= bấm Lưu nháp), Thoát, không lưu (= quay lại), ✕ = Ở lại */
+function XnThoat(p) {
+  return h('div', { className: 'tp-dlg-wrap tp-dlg-inline ph-draft' }, h('div', { className: 'ph-scrim' }),
+    h('div', { className: 'ph-draft-box', role: 'alertdialog', 'aria-modal': 'true', 'aria-labelledby': 'xn-thoat-t' },
+      h('button', { type: 'button', className: 'tp-icon-btn ph-draft-x xn-l', 'aria-label': 'Ở lại', onClick: p.onO }, h(T.Icon, { name: 'x' })),
+      IlloBadge(['nopDon', 'alert']), h('p', { id: 'xn-thoat-t', className: 'ph-draft-t' }, 'Thoát khi chưa hoàn tất?'),
+      h('p', { className: 'ph-draft-d' }, 'Bạn có muốn lưu nháp nội dung đang nhập trước khi thoát không?'),
+      h('div', { className: 'ph-draft-btns' }, h(T.Button, { block: true, className: 'xn-l', onClick: p.onLuu }, 'Lưu nháp và thoát'), h(T.Button, { block: true, variant: 'tonal', className: 'xn-l', onClick: p.onThoat }, 'Thoát, không lưu'))));
+}
+/* v609: bản không có Lưu nháp – Ở lại (đỏ) / Thoát, không lưu (xám), không có ✕ */
+function XnThoatKo(p) {
+  return h('div', { className: 'tp-dlg-wrap tp-dlg-inline ph-draft' }, h('div', { className: 'ph-scrim' }),
+    h('div', { className: 'ph-draft-box', role: 'alertdialog', 'aria-modal': 'true', 'aria-labelledby': 'xn-thoat-t' },
+      IlloBadge(['nopDon', 'alert']), h('p', { id: 'xn-thoat-t', className: 'ph-draft-t' }, 'Thoát khi chưa hoàn tất?'),
+      h('p', { className: 'ph-draft-d' }, 'Nội dung đang nhập sẽ không được lưu. Bạn có chắc muốn thoát không?'),
+      h('div', { className: 'ph-draft-btns' }, h(T.Button, { block: true, className: 'xn-l', onClick: p.onO }, 'Ở lại'), h(T.Button, { block: true, variant: 'tonal', className: 'xn-l', onClick: p.onThoat }, 'Thoát, không lưu'))));
+}
+(function () {
+  var bo = false;
+  function mo(back, luu) {
+    var ph = document.querySelector('.pt-phone .ph'); if (!ph) return;
+    var d = document.createElement('div'); d.className = 'xn-thoat'; ph.appendChild(d);
+    var r = ReactDOM.createRoot(d), dong = function () { setTimeout(function () { r.unmount(); d.remove(); }, 0); };
+    var thoat = function () { dong(); bo = true; back.click(); bo = false; };
+    r.render(luu ? h(XnThoat, { onO: dong, onThoat: thoat, onLuu: function () { dong(); luu.click(); } }) : h(XnThoatKo, { onO: dong, onThoat: thoat }));
+  }
+  /* v609: luồng soạn nhiều bước không có Lưu nháp – vẫn hỏi, bản không lưu */
+  var KO_LUU = /^(evidence[123]|kct\d|bv[dn][1235]|ptSus[123]|ptCan[123])/;
+  function manHt() { var s = decodeURIComponent((location.hash || '').slice(1)).split('/'); return s[s.length - 1] || ''; }
+  document.addEventListener('click', function (e) {
+    if (bo || !e.target.closest) return;
+    var b = e.target.closest('.pt-phone .tp-appbar .tp-appbar-btn[data-pt-go="back"]'); if (!b || document.querySelector('.pt-phone .xn-thoat')) return;
+    var luu = [].filter.call(b.closest('.tp-appbar').querySelectorAll('button'), function (x) { return x.textContent.trim() === 'Lưu nháp'; })[0];
+    if (!luu && !KO_LUU.test(manHt())) return;
+    e.preventDefault(); e.stopPropagation(); mo(b, luu);
+  }, true);
+})();
+SCR.sub2Thoat = ['Nộp đơn – bấm ‹ khi đang soạn: hỏi lưu nháp trước khi thoát (v608)', function () { return h(F, null, h(SCR.sub2[1]), h(XnTop, null, h(XnThoat, {}))); }]; BASE.sub2Thoat = 'sub2';
+GROUPS2.forEach(function (g) { var j = g[1].indexOf('sub2'); if (j >= 0 && g[1].indexOf('sub2Thoat') < 0) g[1].splice(j + 1, 0, 'sub2Thoat'); });
+SCR.evidence2Thoat = ['Giao nộp tài liệu – bấm ‹ khi đang soạn: hỏi trước khi thoát, không lưu (v609)', function () { return h(F, null, h(SCR.evidence2[1]), h(XnTop, null, h(XnThoatKo, {}))); }]; BASE.evidence2Thoat = BASE.evidence2 || 'home';
+GROUPS2.forEach(function (g) { var j = g[1].indexOf('evidence2'); if (j >= 0 && g[1].indexOf('evidence2Thoat') < 0) g[1].splice(j + 1, 0, 'evidence2Thoat'); });
+
 </script>
 <script>if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){navigator.serviceWorker.register('sw.js').catch(function(){});}</script>
 </body></html>
