@@ -3879,3 +3879,8 @@ button.tp-upload-add{border:0;cursor:pointer}.va4-ua-dang{background:var(--surfa
 .nh-c b{color:var(--tag-3-text)}
 .nh-c .tp-ico{width:16px;height:16px;flex:none}
 .nh-c-dt{margin:4px 0 8px}
+
+/* v607: dòng "Đã nhập vào" bấm được trên thẻ (lớp phủ thẻ không chặn), đặt cuối thẻ */
+.qc .nh-c,.nh-c{pointer-events:auto!important;z-index:3}
+.nh-c *{pointer-events:none}
+.nh-c.nh-c-cuoi{margin:12px 0 0}

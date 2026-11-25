@@ -7466,8 +7466,9 @@ function VaCard(p) {
     h('button', { type: 'button', className: 'ph-mail2-hit', 'aria-label': 'Xem chi tiết vụ án ' + v.ma, 'data-pt-go': v.go, onClickCapture: function () { window.__vaSel = { ma: v.ma, ten: v.t }; } }),
     h('div', { className: 'qc-top va-mau-top' }, VaNhanTT(v), v.tinh ? VaNhanTinh(v) : null, h('span', { className: 'qc-sp' }), /* v596: đủ trạng thái + tình trạng, bộ màu */
       h('button', { type: 'button', className: 'ph-mail2-btn qd-star' + (v.ghim ? ' ph-mail2-on' : ''), 'aria-pressed': !!v.ghim, 'aria-label': v.ghim ? 'Bỏ đánh dấu' : 'Đánh dấu theo dõi', onClick: function () { v.ghim = !v.ghim; p.onDoi(); } }, h(T.Icon, { name: 'star' }))),
-    h('div', { className: 'qc-th' }, h('b', { className: 'qc-t' }, v.t)), VaNhapDong(v), /* v606 */
-    h('dl', { className: 'qc-ben' }, rows.map(function (r) { return h('div', { key: r[0] }, h('dt', null, r[0]), h('dd', null, r[1])); }))); /* v586: bỏ thanh tiến trình tố tụng trên thẻ */
+    h('div', { className: 'qc-th' }, h('b', { className: 'qc-t' }, v.t)),
+    h('dl', { className: 'qc-ben' }, rows.map(function (r) { return h('div', { key: r[0] }, h('dt', null, r[0]), h('dd', null, r[1])); })), /* v586: bỏ thanh tiến trình tố tụng trên thẻ */
+    VaNhapDong(v, false, true)); /* v607: dòng Đã nhập vào ở cuối thẻ */
 }
 
 /* v589 (25/11/2026): mã định danh vụ án theo cấu trúc HSVA{yy}-{yyyyMMddHHmmss} (ví dụ HSVA26-20261124113536) – dữ liệu mẫu suy từ ngày thụ lý + số thứ tự mã */
@@ -7594,9 +7595,9 @@ function ScBangMau() {
 }
 
 /* v606 (25-11-2026): dòng "Đã nhập vào {mã hồ sơ}" dưới tên vụ án (web: src/screens/vu-an/index.tsx – maHoSoNhapVao). Chạm → mở vụ án đích. Màu vàng nhạt (warning-tint) */
-function VaNhapDong(v, dt) {
+function VaNhapDong(v, dt, cuoi) {
   if (!v || !v.nhapVao) return null;
   var m = vaMaDd(vaTim(v.nhapVao) || { ma: v.nhapVao });
-  return h('button', { type: 'button', className: 'nh-c' + (dt ? ' nh-c-dt' : ''), 'data-pt-go': 'caseDetail', onClickCapture: function (e) { e.stopPropagation(); window.__vaSel = { ma: v.nhapVao }; } },
+  return h('button', { type: 'button', className: 'nh-c' + (dt ? ' nh-c-dt' : '') + (cuoi ? ' nh-c-cuoi' : ''), 'data-pt-go': 'caseDetail', onClickCapture: function (e) { e.stopPropagation(); window.__vaSel = { ma: v.nhapVao }; } },
     h(T.Icon, { name: 'info' }), h('span', null, 'Đã nhập vào ', h('b', { className: 'tp-num' }, m)), h(T.Icon, { name: 'chevronRight' }));
 }
