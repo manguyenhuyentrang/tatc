@@ -105,9 +105,9 @@ function ProceedingDetail() {
     render: function (t) {
       if (t === 'info') return h(F, null,
         FCard('Các bên trong vụ việc', h(F, null, h('p', { className: 'dm-meta' }, '1 chủ nợ · 1 tổ chức, doanh nghiệp bị yêu cầu'),
+          h(NvCall, { tone: 'warning', icon: 'lock' }, 'Một số thông tin của đương sự khác được ẩn nhằm bảo vệ dữ liệu cá nhân.'), /* v597: ghi chú ẩn thông tin – khung cảnh báo đầu khối (PA A) */
           h(DtParty, { tat: 'CN', ten: 'Hoàng Dương', ban: true, vt: 'Chủ nợ', rows: [['Số CCCD', h('span', { className: 'tp-num' }, '001090012345')], ['Người đại diện / ủy quyền', '—'], ['Địa chỉ', 'Số 8 Phạm Hùng, Phường Từ Liêm, Thành phố Hà Nội']] }),
-          h(DtParty, { tat: 'DN', ten: 'Công ty TNHH Thương mại Minh Phát', vt: 'Tổ chức, doanh nghiệp bị yêu cầu', rows: [['Mã số thuế', h('span', { className: 'tp-num' }, '0100000123')], ['Người đại diện theo pháp luật', '—'], ['Địa chỉ', '—']] }),
-          h('p', { className: 'dt-note' }, h(T.Icon, { name: 'lock' }), 'Một số thông tin của đương sự khác được ẩn nhằm bảo vệ dữ liệu cá nhân.')), true),
+          h(DtParty, { tat: 'DN', ten: 'Công ty TNHH Thương mại Minh Phát', vt: 'Tổ chức, doanh nghiệp bị yêu cầu', rows: [['Mã số thuế', h('span', { className: 'tp-num' }, '0100000123')], ['Người đại diện theo pháp luật', '—'], ['Địa chỉ', '—']] })), true),
         FCard('Tòa án và hội đồng xét xử', RvKV([['Tòa án đang giải quyết', COURT1], ['Thẩm phán / HĐXX', '—'], ['Cấp xét xử hiện tại', 'Sơ thẩm'], ['Số thụ lý giai đoạn hiện tại', soTL], ['Ngày thụ lý giai đoạn hiện tại', '15-10-2026']]), true),
         FCard('Định danh và tình trạng vụ việc', RvKV([['Mã định danh', h('span', { className: 'tp-num' }, 'PS-2026-0001')], ['Loại vụ việc', 'Phá sản'], ['Trạng thái vụ việc', 'Đang giải quyết'], ['Tình trạng', 'Đã mở thủ tục phá sản'], ['Tên vụ việc', ten]]), true),
         FCard('Nghĩa vụ tài chính', h('button', { type: 'button', className: 'vk-link', 'data-pt-go': 'finance' }, 'Xem nghĩa vụ tài chính', h(T.Icon, { name: 'chevronRight' })), true),
@@ -590,6 +590,9 @@ var DT_TAO = [
    (chọn C3 + D3): tên nhóm ngắn, mỗi nhóm một khối nền xám, mỗi dòng = biểu tượng tờ đơn + huy hiệu hành động màu theo nhóm + tên loại đơn; bấm dòng mở màn soạn */
 var TAO_NGAN = ['Khởi kiện', 'Biện pháp khẩn cấp', 'Án phí, lệ phí', 'Yêu cầu khác'], TAO_MAU = ['do', 'xanh', 'vang', 'luc'];
 var TAO_IC = { bs1: 'filePlus', evidence2: 'filePlus', sd1: 'pen', tr1: 'swap', rd1: 'logout', bp1: 'shield', mg1: 'wallet', sg1: 'send' };
+/* v603 (25/11/2026): ô biểu tượng A2 – vuông 40px bo 12, nền/chữ theo bảng màu nhãn; màu M1: khởi kiện tag-9, khẩn cấp tag-2, án phí tag-3, yêu cầu khác tag-10 */
+var TAO_TAG = { do: 9, xanh: 2, vang: 3, luc: 10 };
+function TaoTile(ic, mau) { var n = TAO_TAG[mau] || 10; return h('span', { className: 'tc4-ic', 'aria-hidden': 'true', style: { background: 'var(--tag-' + n + '-bg)', color: 'var(--tag-' + n + '-text)' } }, h(T.Icon, { name: ic || 'file' })); }
 function TaoIc(id, gi) {
   return h('span', { className: 'td3 td-' + TAO_MAU[gi], 'aria-hidden': 'true' },
     h('svg', { viewBox: '0 0 40 40', className: 'td3-doc' }, h('path', { d: 'M9 4h15l7 7v23a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z', className: 'td3-p' }), h('path', { d: 'M24 4v7h7', className: 'td3-f' }),
@@ -604,10 +607,10 @@ function DtTaoDon(p) {
   return h(T.ActionBar, null, h('div', { className: 'tao-wrap tao-bar' }, h('span', { ref: anchor, hidden: true }),
     h(T.Button, { block: true, variant: 'tint', icon: 'plus', onClick: function () { o[1](true); } }, 'Tạo đơn liên quan đến vụ việc')),
     o[0] && host ? h(LvSheet, { host: host, title: 'Chọn loại đơn cần tạo', onClose: function () { o[1](false); } },
-      h('div', { className: 'tc3' }, DT_TAO.map(function (g, i) {
+      h('div', { className: 'tc3 tc4' }, DT_TAO.map(function (g, i) { /* v603: PA A – dòng phẳng, ô biểu tượng A2, màu M1 */
         return h('section', { key: g[0] }, h('p', { className: 'tc-gh' }, TAO_NGAN[i]), h('ul', { className: 'tc3-l' }, g[2].map(function (x) {
           var go = DI[x[1]] && lai.indexOf(x[1].slice(0, 2)) >= 0 ? DI[x[1]] : x[1];
-          return h('li', { key: x[1] }, h('button', { type: 'button', className: 'tc3-it', 'data-pt-go': go }, TaoIc(x[1], i), h('span', { className: 'tc-t' }, x[0])));
+          return h('li', { key: x[1] }, h('button', { type: 'button', className: 'tc3-it', 'data-pt-go': go }, TaoTile(TAO_IC[x[1]], TAO_MAU[i]), h('span', { className: 'tc-t' }, x[0]), h(T.Icon, { name: 'chevronRight', className: 'tc4-cv' })));
         })));
       }))) : null);
 }
@@ -701,12 +704,10 @@ function TaoBtn(p) {
   return h(T.ActionBar, null, h('div', { className: 'tao-wrap tao-bar' }, h('span', { ref: anchor, hidden: true }),
     h(T.Button, Object.assign({ block: true, variant: 'tint', icon: 'plus' }, p.snack ? { 'data-pt-go': 'snack:' + p.snack } : { onClick: function () { o[1](true); } }), p.nhan || 'Tạo đơn liên quan đến vụ việc')),
     o[0] && host ? h(LvSheet, { host: host, title: 'Chọn loại đơn cần tạo', onClose: function () { o[1](false); } },
-      h('div', { className: 'tc3' }, p.groups.map(function (g) {
+      h('div', { className: 'tc3 tc4' }, p.groups.map(function (g) { /* v603: PA A/A2/M1 */
         var hl = p.hl === g[0];
         return h('section', { key: g[0], ref: hl ? hlRef : undefined, className: hl ? 'tc3-hl' : null }, h('p', { className: 'tc-gh' }, g[0], hl ? h('span', { className: 'tc3-hl-t' }, ' · Nộp đơn đề nghị hoãn phiên tòa tại đây') : null), h('ul', { className: 'tc3-l' }, g[2].map(function (x) {
-          return h('li', { key: x[0] }, h('button', { type: 'button', className: 'tc3-it', 'data-pt-go': x[1] }, h('span', { className: 'td3 td-' + g[1], 'aria-hidden': 'true' },
-            h('svg', { viewBox: '0 0 40 40', className: 'td3-doc' }, h('path', { d: 'M9 4h15l7 7v23a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z', className: 'td3-p' }), h('path', { d: 'M24 4v7h7', className: 'td3-f' }), h('path', { d: 'M12 16h12M12 21h14M12 26h8', className: 'td3-l' })),
-            h('span', { className: 'td3-b' }, h(T.Icon, { name: x[2] }))), h('span', { className: 'tc-t' }, x[0])));
+          return h('li', { key: x[0] }, h('button', { type: 'button', className: 'tc3-it' + (x[4] ? ' tc3-khoa' : ''), disabled: !!x[4], 'data-pt-go': x[4] ? undefined : x[1] }, TaoTile(x[2], g[1]), x[3] || x[4] ? h('span', { className: 'tc-tx' }, h('span', { className: 'tc-t' }, x[0]), x[3] ? h('small', { className: 'tc-gd' }, x[3]) : null, x[4] ? h('small', { className: 'tc-ly' }, x[4]) : null) /* v583 (1.27): nhãn giai đoạn, lý do khóa */ : h('span', { className: 'tc-t' }, x[0]), x[4] ? null : h(T.Icon, { name: 'chevronRight', className: 'tc4-cv' })));
         })));
       }))) : null);
 }
@@ -765,17 +766,24 @@ var VA_TABS = [{ key: 'info', label: 'Thông tin chung' }, { key: 'don', label: 
 /* v539 (đối chiếu web, người dùng duyệt 21–22/11): đầu màn 4C.1 (ô viết tắt, mã + sao chép chỉ dấu tích, loại án, nhãn trạng thái + tình trạng, Tư cách của bạn, Xem bản án / quyết định đình chỉ → tab Bản án / Quyết định), màn đang tải / lỗi;
    tab Thông tin chung theo 2A.1 (nút chức năng dòng khung viền cuối khối Các bên đương sự, bỏ "Xem nghĩa vụ tài chính") và 2A.2 (khối việc + 2 dòng khung viền);
    các tab khác, khối nhắc (p.top), Tạo đơn liên quan giữ nguyên bản gốc – không áp 4C.2–4F.4 (người dùng: không sửa màn Chi tiết vụ án nữa) */
+/* v583 (24-11-2026, phiên fork – ca F sheet 1 Vụ án): các tab theo web (1.18–1.42), banner gợi ý trước thanh tab (1.20), chấm "Có mục mới" ở tab Đơn / Văn bản tống đạt,
+   tab Bản án / Quyết định chỉ hiện khi có văn bản (1.21), bảng Chọn loại đơn cần tạo có nhãn giai đoạn và loại bị khóa (1.27) */
 function VuAnChiTiet(p) {
   p = p || {};
   var va = vaChon(p.ma), tb = React.useState(p.tab0 || 'info');
   if (p.tai) return h(Phone, { cls: 'ph-hd' }, h(T.AppBar, { variant: 'plain', title: 'Chi tiết vụ án', onBack: noop }), h(Body, { cls: 'ph-plain dt-body' },
     p.tai === 'loading' ? VaTai('Đang tải chi tiết vụ án…') : VaLoi('Không tải được chi tiết vụ án.', null)));
   var moTab = function (t) { tb[1](t); setTimeout(function () { var b = document.querySelector('.pt-phone .ph-body'), x = b && b.querySelector('.dt-tabs'); if (b && x) b.scrollTop += x.getBoundingClientRect().top - b.getBoundingClientRect().top; }, 30); };
-  return h(VaDt, { tab: tb[0], setTab: tb[1], tabs: VA_TABS,
-    head: h(VaHead, { va: va, vaiTro: p.vaiTro, banAn: p.banAn, cp0: p.cp0, onBanAn: function () { moTab('judgments'); } }),
-    pre: p.top || null,
-    foot: tb[0] === 'don' ? h(TaoBtn, { groups: VA_TAO_G, hl: p.noiBat === 'hoan-phien' ? 'Đơn yêu cầu khác' : null, open: p.noiBat === 'hoan-phien' }) : null,
-    render: function (t) { return t === 'info' ? VaTabInfo(p, va) : VaTabGoc(p, t); } });
+  var cham = { don: !!p.ycdl, docs: p.docs !== 'empty' && !(p.tabTai && p.tab0 === 'docs') };
+  var tabs = VA_TABS.filter(function (t) { return !(p.noJudg && t.key === 'judgments'); }).map(function (t) {
+    return cham[t.key] ? { key: t.key, label: h(F, null, t.label, h('i', { className: 'va4-tdot', role: 'img', 'aria-label': 'Có mục mới' })) } : t;
+  });
+  var pre = p.top || p.goiY ? h(F, null, p.top || null, p.goiY ? vaGoiYs(p.goiY) : null) : null;
+  return h(VaDt, { tab: tb[0], setTab: tb[1], tabs: tabs,
+    head: h(VaHead, { va: va, vaiTro: p.vaiTro, banAn: p.banAn, onBanAn: function () { moTab('judgments'); } }),
+    pre: pre,
+    foot: tb[0] === 'don' ? h(TaoBtn, { groups: vaTaoG(p), hl: p.noiBat === 'hoan-phien' ? 'Đơn yêu cầu khác' : null, open: p.noiBat === 'hoan-phien' || !!p.taoMo }) : null,
+    render: function (t) { return VaTab5(p, va, t); } });
 }
 
 /* ---------- Giao nộp tài liệu, chứng cứ: bước 3 Xem lại và ký số + kết quả (theo web) ---------- */
