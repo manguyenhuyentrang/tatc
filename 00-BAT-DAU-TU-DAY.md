@@ -2,12 +2,38 @@
 
 Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp dự án từ **một tài khoản Claude khác**.
 
-- Bản prototype mới nhất: **v337** (12/11/2026) – trên claude.ai là Version 329 của trang Prototype TATC Gen UI.
+- Bản prototype mới nhất: **v609** (25-11-2026) – xem mục "Cập nhật 26-11-2026" ngay dưới. (Số liệu v337 ở các mục sau là của lần xuất 12/11/2026.)
 - Ngày xuất: 11/11/2026 (bản đầu v307, v310); cập nhật lại ngày 12/11/2026 lên v337.
 - Từ v333 prototype có **2 luồng theo loại tài khoản**: chọn Cá nhân | Tổ chức ở màn Đăng nhập (mặc định Cá nhân; tải lại trang về Cá nhân). Tổ chức mẫu: "Công ty ABC", MST 0101234567, trụ sở Số 25 Láng Hạ, Phường Láng, Thành phố Hà Nội.
 - Vị trí trên máy: `E:\TATC\Mobile\Design_System`
 
 > Gửi Claude ở phiên mới: đọc hết tệp này trước khi làm việc. Mọi quy tắc ở mục 4 vẫn có hiệu lực.
+
+## Cập nhật 26-11-2026 – đọc mục này trước (thay cho số liệu cũ ở các mục dưới)
+
+**Trạng thái hiện tại**
+- Prototype mới nhất: **v609** (25-11-2026) – `prototype/Prototype-TATC-v609.html`; trên claude.ai: https://claude.ai/artifact/CKnVgGSByzDJD7vDSWCnDd (Version 596).
+- Git: https://github.com/manguyenhuyentrang/tatc nhánh `main`, commit mới nhất `4703211` (đã push). Chỉ push phần đã chốt: `prototype-src/src`, `prototype-src/dist`, `prototype-app/index.html`, `prototype/Prototype-TATC-vNNN.html`, 2 tài liệu design system, `skills/`. Không push `de-xuat/`, `ra-soat-ux/`, `prototype-src/backups/`, `prototype-src/shots/`; tệp ghi chú khác trong `tai-lieu/` hỏi trước.
+- Nhật ký từng phiên bản (đến v609): cuối `tai-lieu/design-system-chot-2026-10-30.md` và `tai-lieu/design-system-day-du.md`, dòng dạng `- vNNN (DD-MM-YYYY): …`, chèn ngay sau dòng phiên bản trước.
+- Skill: `skills/gen-ui-mobile/` (có `references/bo-mau-trang-thai.md` – bộ màu **Status-color**, 22 màu) và `skills/gen-ui-mobile.zip`.
+- Bộ nhớ Claude (quy tắc, quyết định của người dùng): bản sao ở `tai-lieu/ghi-nho-claude/` (đọc `MEMORY.md` trước). Ở tài khoản/phiên mới có thể nói "hãy ghi nhớ các tệp trong tai-lieu/ghi-nho-claude".
+- Demo đề xuất (không phải bản chốt): `de-xuat/` (mới nhất: `demo-thoat-soan-don-2026-11-25.html`, `demo-thoat-soan-don-khac-2026-11-25.html`, `demo-mau-don-va-da-nhap-2026-11-25.html`, `demo-status-color*.html`).
+
+**Quy trình hiện dùng mỗi lần sửa (thay mục 3B)**
+1. Sao lưu: chép cả `prototype-src/src` thành `prototype-src/backups/src-bak-YYYYMMDD-HHMMSS`, giữ 5 bản mới nhất.
+2. Sửa `src/` → `python tools/build.py` (trong `prototype-src`).
+3. Kiểm tra lỗi: `cd prototype-src/tools/kiem-tra && timeout 110 node cdpeval.js "file:///E:/TATC/Mobile/Design_System/prototype-src/dist/prototype-test.html?t=$(date +%s)" "$(cat chk_all.js)"` → `"nerr":14` là chuẩn (14 lỗi có sẵn dạng `cn:sh:`/`tc:sh:`). Luôn thêm `?t=…` để tránh bản cũ trong bộ nhớ đệm. cdpeval treo/không in gì = mã chèn lỗi cú pháp (kiểm bằng `node --check`).
+4. Chụp màn: `CDP_PORT=9444 timeout 150 node cdpshot2.js jobs.json thuMucAnh`, `jobs.json` = `[[tênẢnh, url, mãMàn, cuộn(0 | "end" | "css")], …]`.
+5. Chuyển màn trong cdpeval: `window.__ptGo('reset:home,<mã màn>')`; hoặc mở url `…#a%2Fb%2Fc` (ngăn màn).
+6. Lưu `prototype/Prototype-TATC-vNNN.html` (chép `dist/prototype-test.html`), chép `dist/app-index.html` → `prototype-app/index.html`, ghi nhật ký 2 tài liệu, đăng `dist/artifact.html` lên artifact trên (bị từ chối "Repeat the identical Artifact call" thì gọi lại 1 lần).
+7. Demo: chép `dist/prototype-test.html` sang `de-xuat/demo-…html`, chèn JS trước chuỗi `/* luật bấm: [màn`, thêm màn qua `SCR`/`BASE`/`GROUPS2.unshift`. Mẫu: `tools/kiem-tra/demo-mau/`.
+
+**Việc đã chốt gần đây (v603–v609)**
+- v603 Chọn loại đơn PA A/A2/M1; NVTC 1.2, 1.17, 1.18, 1.24. v604–v605 Status-color cho trạng thái/tình trạng Vụ án và Đơn (bỏ hồng, tím; Đình chỉ, Tạm đình chỉ cùng st-1 nhãn đậm).
+- v606–v607 dòng "Đã nhập vào {mã}" vàng nhạt, cuối thẻ, chạm mở thẳng vụ án đích.
+- v608–v609 bấm ‹ ở màn soạn: hộp "Thoát khi chưa hoàn tất?" (có Lưu nháp: Lưu nháp và thoát / Thoát, không lưu / ✕; không Lưu nháp: Ở lại / Thoát, không lưu).
+
+**Không còn việc đang làm dở.** Chưa push: các tệp ghi chú trong `tai-lieu/` (cau-tra-loi-*, ra-soat-*, de-xuat-*, demo-*) và thư mục `de-xuat/`, `ra-soat-ux/` – vẫn có trên máy.
 
 ---
 
