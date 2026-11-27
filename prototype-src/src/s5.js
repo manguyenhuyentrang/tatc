@@ -869,9 +869,13 @@ function CaseProgress3(p) { return h(T.CaseProgress, { label: 'Tiến trình', s
    03/11/2026 (v149): Vụ án của tôi – vẽ lại theo web /vu-an (index.tsx, chi-tiet.tsx, sao-chup/*, moi-sao-chup).
    ===================================================================== */
 var VA = [
-  { ma: 'DS-2026-0012', lv: 'DS', loai: 'Dân sự', tt: ['Đang giải quyết', 'info'], t: 'Tranh chấp hợp đồng vay tài sản', vt: 'Nguyên đơn', cap: [['Sơ thẩm', 'cur']], toa: COURT1, thuLy: '15-10-2026', phien: ['Phiên tòa · 14:00, 05-11-2026', 'sap'], ghim: 1, go: 'caseDetail' },
+  { ma: 'DS-2026-0012', lv: 'DS', loai: 'Dân sự', tt: ['Đang giải quyết', 'info'], t: 'Tranh chấp hợp đồng vay tài sản', vt: 'Nguyên đơn', cap: [['Sơ thẩm', 'cur']], toa: COURT1, thuLy: '15-10-2026', soTl: '12/2026/TLST-DS', phien: ['Phiên tòa · 14:00, 05-11-2026', 'sap'], ghim: 1, go: 'caseDetail' },
   { ma: 'HN-2026-0007', lv: 'HN', loai: 'Hôn nhân và gia đình', tt: ['Tạm đình chỉ', 'warning'], t: 'Ly hôn, tranh chấp nuôi con', vt: 'Bị đơn', cap: [['Sơ thẩm', 'cur']], toa: 'Tòa án nhân dân khu vực 2 - Hà Nội', thuLy: '02-09-2026', go: 'caseDetailPaused' },
-  { ma: 'DS-2025-0098', lv: 'DS', loai: 'Dân sự', tt: ['Đã giải quyết', 'success'], t: 'Tranh chấp quyền sử dụng đất', vt: 'Nguyên đơn', cap: [['Sơ thẩm', 'done'], ['Phúc thẩm', 'cur']], toa: 'Tòa án nhân dân thành phố Hà Nội', thuLy: '10-03-2025', han: 'Hạn kháng cáo: 12-11-2026', go: 'caseDetailReview' }];
+  { ma: 'DS-2025-0098', lv: 'DS', loai: 'Dân sự', tt: ['Đã giải quyết', 'success'], t: 'Tranh chấp quyền sử dụng đất', vt: 'Nguyên đơn', cap: [['Sơ thẩm', 'done'], ['Phúc thẩm', 'cur']], toa: 'Tòa án nhân dân thành phố Hà Nội', thuLy: '10-03-2025', han: 'Hạn kháng cáo: 12-11-2026', go: 'caseDetailReview' },
+  /* v632 (27/11/2026): mẫu nhãn cấp Giám đốc thẩm, Sơ thẩm lần 2 (L8) và thẻ khóa – bạn không tham gia lần thụ lý hiện tại (L6); dữ liệu chỉ là ví dụ */
+  { ma: 'DS-2024-0031', lv: 'DS', loai: 'Dân sự', tt: ['Đang giải quyết', 'info'], t: 'Tranh chấp hợp đồng mua bán nhà', vt: 'Bị đơn', cap: [['Sơ thẩm', 'done'], ['Phúc thẩm', 'done'], ['Giám đốc thẩm', 'cur']], toa: 'Tòa án nhân dân cấp cao tại Hà Nội', thuLy: '20-11-2026', go: 'caseDetail' },
+  { ma: 'DS-2025-0044', lv: 'DS', loai: 'Dân sự', tt: ['Đang giải quyết', 'info'], t: 'Tranh chấp thừa kế tài sản', vt: 'Người có quyền lợi, nghĩa vụ liên quan', cap: [['Sơ thẩm', 'done'], ['Phúc thẩm', 'done'], ['Sơ thẩm lần 2', 'cur']], toa: 'Tòa án nhân dân khu vực 3 - Hà Nội', thuLy: '18-11-2026', go: 'caseDetail' },
+  { ma: 'KT-2026-0003', lv: 'KT', loai: 'Kinh doanh, thương mại', tt: ['Đang giải quyết', 'info'], t: 'Tranh chấp hợp đồng cung ứng dịch vụ', vt: 'Bị đơn', cap: [['Sơ thẩm', 'done'], ['Phúc thẩm', 'cur']], toa: 'Tòa án nhân dân thành phố Hà Nội', thuLy: '16-11-2026', go: 'caseDetail', khoaLanHt: true }];
 /* v207: vụ án mẫu theo bảng map (dòng 30–89) – [lv, loại án, mã tình trạng, tình trạng, mã hành động, tên vụ án, (trạng thái, tông)]
    «Giữ nguyên» (không mã GS): trạng thái "Đang xử lý đơn", tình trạng "Tòa án đã nhận đơn" (theo yêu cầu 04/11/2026) */
 var GS = { 'GS-01': 'Đã thụ lý — chuẩn bị xét xử', 'GS-02': 'Đã có QĐ đưa vụ án ra xét xử', 'GS-04': 'Đã tuyên án / ra quyết định sơ thẩm', 'GS-05': 'Tạm đình chỉ', 'GS-06': 'Đình chỉ', 'GS-07': 'Đang hòa giải trong tố tụng', 'GS-08': 'Đã hòa giải thành — chờ QĐ công nhận', 'GS-09': 'Đã công nhận sự thỏa thuận', 'GS-10': 'Đã có QĐ đưa ra xét xử theo thủ tục rút gọn', 'GS-11': 'Phiên tòa hoãn', 'GS-12': 'Phiên tòa tạm ngừng', 'GS-17': 'Đã có QĐ đưa ra xét xử phúc thẩm', 'GS-18': 'Phiên tòa phúc thẩm hoãn', 'GS-21': 'Đã tuyên án phúc thẩm — có hiệu lực ngay', 'GS-28': 'Yêu cầu bổ sung tài liệu, chứng cứ', 'GS-31': 'Bổ sung người tham gia tố tụng', 'GS-33': 'Đình chỉ một phần yêu cầu — vụ án tiếp tục', 'GS-34': 'Đã có QĐ mở phiên họp giải quyết kháng cáo QĐ tạm đình chỉ / đình chỉ', GIU: 'Tòa án đã nhận đơn', 'RS-02': 'Chờ nộp tạm ứng án phí / lệ phí', 'RS-07': 'Chờ nộp tạm ứng chi phí tố tụng', 'RS-47': 'Đã trả lại đơn thay đổi, bổ sung yêu cầu' };
@@ -926,9 +930,10 @@ var VV = [
   { ma: 'PS-2026-0004', lv: 'PS', loai: 'Phá sản', tt: ['Đang xử lý đơn', 'info'], tinh: ['Tòa án đã nhận đơn', 'info'], t: 'Yêu cầu mở thủ tục phá sản Công ty TNHH Vận tải Sao Mai', vt: 'Người lao động', cap: [['Sơ thẩm', 'cur']], toa: COURT1, thuLy: '18-09-2026', go: 'proceedingDetail' },
   { ma: 'PS-2026-0005', lv: 'PS', loai: 'Phá sản', tt: ['Đã giải quyết', 'success'], tinh: ['Đã tuyên bố phá sản', 'neutral'], t: 'Yêu cầu mở thủ tục phá sản Công ty TNHH Dệt may Phú Hưng', vt: 'Chủ nợ', cap: [['Sơ thẩm', 'done']], toa: COURT1, thuLy: '12-05-2026', go: 'proceedingDetail' }];
 function Proceedings() { return h(VaList, { vv: true }); } /* v207: vẽ lại Vụ việc của tôi theo kiểu thẻ vụ án; v308: Vụ việc phục hồi phá sản */
-var VA_LOC = [['loai', 'Loại án', ['Tất cả loại án', 'Dân sự', 'Hôn nhân và gia đình', 'Kinh doanh, thương mại', 'Lao động', 'Hành chính', 'Việc dân sự']], ['cap', 'Cấp xét xử', ['Tất cả cấp xét xử', 'Sơ thẩm', 'Phúc thẩm', 'Giám đốc thẩm, tái thẩm']], ['tt', 'Trạng thái', ['Tất cả trạng thái', 'Đang giải quyết', 'Tạm đình chỉ', 'Đã giải quyết', 'Đang xử lý đơn', 'Đang xử lý', 'Đã xử lý']], ['vt', 'Vai trò', ['Tất cả vai trò', 'Nguyên đơn', 'Bị đơn', 'Người có quyền lợi, nghĩa vụ liên quan']]];
+var VA_LOC = [['loai', 'Loại án', ['Tất cả loại án', 'Dân sự', 'Hôn nhân và gia đình', 'Kinh doanh, thương mại', 'Lao động', 'Hành chính', 'Việc dân sự']], ['cap', 'Cấp xét xử', ['Tất cả cấp xét xử', 'Giám đốc thẩm', 'Phúc thẩm', 'Sơ thẩm', 'Thủ tục xem xét lại quyết định của Hội đồng TP TANDTC', 'Tái thẩm']], ['tt', 'Trạng thái', ['Tất cả trạng thái', 'Đang giải quyết', 'Tạm đình chỉ', 'Đã giải quyết', 'Đang xử lý đơn', 'Đang xử lý', 'Đã xử lý', 'Đã nhập vào vụ án khác']], ['vt', 'Vai trò', ['Tất cả vai trò', 'Nguyên đơn', 'Bị đơn', 'Người có quyền lợi, nghĩa vụ liên quan']]];
 /* v308: bộ lọc Vụ việc phục hồi phá sản – loại vụ việc, vai trò theo dữ liệu mẫu */
-var VV_LOC = [['loai', 'Loại vụ việc', ['Tất cả loại vụ việc', 'Phục hồi', 'Phá sản']], VA_LOC[1], VA_LOC[2], ['vt', 'Vai trò', ['Tất cả vai trò', 'Chủ nợ', 'Người yêu cầu', 'Người lao động']]];
+/* v632: bộ lọc cấp theo danh sách người dùng gửi; trạng thái thêm "Đã nhập vào vụ án khác" (chỉ Vụ án, vụ việc của tôi) */
+var VV_LOC = [['loai', 'Loại vụ việc', ['Tất cả loại vụ việc', 'Phục hồi', 'Phá sản']], VA_LOC[1], [VA_LOC[2][0], VA_LOC[2][1], VA_LOC[2][2].slice(0, -1)], ['vt', 'Vai trò', ['Tất cả vai trò', 'Chủ nợ', 'Người yêu cầu', 'Người lao động']]];
 var VA_LOC0 = { loai: 0, cap: 0, tt: 0, vt: 0 };
 function VaLocSheet(p) {
   var l = React.useState(p.loc), v = l[0];
@@ -971,14 +976,14 @@ function VaList(p) {
   var q = React.useState(p.q0 || ''), sh = React.useState(p.ttMo ? 'tt' : null), rr = React.useState(0), so = React.useState(p.n0 || 10), anchor = React.useRef(null), host = useHost(anchor);
   if (p.banDong && window.__vaBanDong == null) window.__vaBanDong = VA_PGN.id;
   var tk = khongDau(q[0].trim()), v = lc[0], soLoc = ['loai', 'cap', 'tt', 'vt'].filter(function (k) { return v[k]; }).length;
-  var ds = (p.rong ? [] : p.vv ? VV : VA).filter(function (x) { return (!tk || khongDau([x.ma, vaMaDd(x), x.t].join(' ')).indexOf(tk) >= 0) && (!v.tt || x.tt[0] === L[2][2][v.tt]) && (!v.loai || x.loai === L[0][2][v.loai]) && (!v.vt || x.vt === L[3][2][v.vt]) && (!v.cap || vaCapCur(x) === L[1][2][v.cap]); });
+  var ds = (p.rong ? [] : p.vv ? VV : VA).filter(function (x) { return (!tk || khongDau([x.ma, vaMaDd(x), x.t].join(' ')).indexOf(tk) >= 0) && (!v.tt || (L[2][2][v.tt] === 'Đã nhập vào vụ án khác' ? !!x.nhapVao : x.tt[0] === L[2][2][v.tt])) && (!v.loai || x.loai === L[0][2][v.loai]) && (!v.vt || x.vt === L[3][2][v.vt]) && (!v.cap || vaCapCur(x).indexOf(L[1][2][v.cap]) === 0); });
   ds = ds.slice().sort(function (a, b) { return (b.ghim ? 1 : 0) - (a.ghim ? 1 : 0) || vaNgay(b.thuLy) - vaNgay(a.thuLy); });
   var coLoc = !!tk || soLoc, pg = p.phienGN || VA_PGN, hienBan = !p.rong && !p.vv && !p.tai && window.__vaBanDong !== pg.id;
   var xoaLoc = function () { q[1](''); lc[1](VA_LOC0); so[1](10); };
   var hien = ds.slice(0, so[0]);
   return Sub(p.vv ? 'Vụ việc phục hồi phá sản' : 'Vụ án, vụ việc của tôi', h(F, null, h('span', { ref: anchor, hidden: true }),
     h('div', { className: 'nv-stick qd-stick' },
-      h('div', { className: 'ph-ibar tl-ibar' }, h('div', { className: 'fx-search' }, Tf(p.vv ? 'Tìm vụ việc' : 'Tìm vụ án', { icon: 'search', placeholder: p.vv ? 'Tìm theo mã vụ việc, tên vụ việc…' : 'Tìm theo mã vụ án, tên vụ án, mã đơn…', value: q[0], onChange: function (e) { q[1](e.target.value); so[1](10); }, onClear: function () { q[1](''); so[1](10); } })),
+      h('div', { className: 'ph-ibar tl-ibar' }, h('div', { className: 'fx-search' }, Tf(p.vv ? 'Tìm vụ việc' : 'Tìm vụ án', { icon: 'search', placeholder: p.vv ? 'Tìm theo mã vụ việc, tên vụ việc…' : 'Tìm theo mã hồ sơ, tên vụ án, mã đơn…', value: q[0], onChange: function (e) { q[1](e.target.value); so[1](10); }, onClear: function () { q[1](''); so[1](10); } })),
       /* người dùng 22/11 (4A.2): ô tìm và Bộ lọc cùng 1 hàng (như quy tắc 1A.2) */
         /* v583 (1.1 – PA C kiểu Hộp thư): hàng 1 ô tìm + nút vuông Trạng thái vụ án (biểu đồ tròn); hàng 2 số vụ án trái, Bộ lọc phải */
         /* v591: bỏ nút Trạng thái vụ án; Bộ lọc lên cùng hàng ô tìm (ô tìm bo tròn theo quy tắc chung) */
@@ -6784,6 +6789,11 @@ function VaPhien(ph) {
 }
 /* 4B.3 / 4D.4: thanh tiến trình tố tụng (GiaiDoanStepper) – cuộn ngang, tự cuộn tới bước hiện tại */
 function VaGdStep(p) {
+  /* v635 (27/11/2026): tab Các cấp xét xử – timeline dọc (PA A): đủ các bước, bước đã qua ✓ chữ đen, bước hiện tại chữ đậm + vòng sáng, bước chưa đến chữ xám */
+  if (p.doc) return h('ol', { className: 'va-gdv', 'aria-label': p.label || 'Tiến trình tố tụng' }, p.steps.map(function (s, i) {
+    var st = i < p.cur ? 'done' : i === p.cur ? 'cur' : 'todo';
+    return h('li', { key: i, className: 'va-gdv-' + st, 'aria-current': st === 'cur' ? 'step' : undefined }, h('i', { 'aria-hidden': 'true' }, st === 'done' ? h(T.Icon, { name: 'check' }) : i + 1), h('span', null, s));
+  }));
   var ref = React.useRef(null);
   React.useEffect(function () { var el = ref.current; if (!el) return; /* người dùng 22/11 (4B.3): bước đầu không bị che – cuộn tới đúng mép một bước (bước trước bước hiện tại) */
     var li = el.children, cur = p.cur, max = el.scrollWidth - el.clientWidth, s = Math.max(0, cur - 1); if (max <= 0 || !li[s]) return;
@@ -6879,7 +6889,7 @@ function VaHead(p) {
     h('div', { className: 'va4-tcl' }, h('p', null, h(T.Icon, { name: 'user' }), 'Tư cách của bạn:', h('b', null, p.vaiTro || v.vt)),
       vaMaDd(v) !== v.ma ? h('p', null, h(T.Icon, { name: 'scale' }), 'Lần thụ lý hiện tại:', h('b', { className: 'tp-num' }, v.ma)) : null),
     p.banAn ? h(T.Button, { size: 'sm', icon: 'eye', className: 'va4-xba va4-xba-' + p.banAn, onClick: p.onBanAn }, p.banAn === 'dc' ? 'Xem quyết định đình chỉ' : 'Xem bản án') : null,
-    h(T.CaseProgress, { label: 'Cấp xét xử', steps: buoc, current: ci }),
+    null, /* v629 (27-11-2026): bỏ thanh Cấp xét xử (Thụ lý – Sơ thẩm – Phúc thẩm) ở đầu màn theo yêu cầu người dùng */
     false /* v539: 4C.3 không áp – banner tạm đình chỉ giữ ở khối nhắc gốc (p.top) */ && v.tt[0] === 'Tạm đình chỉ' ? h('div', { className: 'va4-tdc', role: 'status' }, h(T.Icon, { name: 'shield' }),
       h('div', null, h('b', null, 'Vụ án đang tạm đình chỉ giải quyết (Điều 214, 215 BLTTDS)'),
         h('p', null, 'Thời hạn tố tụng tạm dừng tính. Đương sự có quyền yêu cầu Tòa án tiếp tục giải quyết vụ án khi lý do tạm đình chỉ không còn.'),
@@ -6901,8 +6911,64 @@ var VA_GY = {
   tien: { kieu: 'NOP_TIEN', t: '[Tiêu đề gợi ý nộp tiền]', d: '[Mô tả gợi ý nộp tiền]', nut: '[Nhãn nút nộp tiền]', go: 'dvcqgExt' }
 };
 
+/* v637 (27-11-2026): Chi tiết vụ án theo trang "Vụ án của tôi" bản 1.2 (Cổng – QLA) – người dùng chốt 6 câu sau demo de-xuat/demo-chi-tiet-vu-an-qla-2026-11-27.html:
+   câu 1 PA A (tab Bản án, quyết định sau Các cấp xét xử, có bộ lọc lần thụ lý "mã · cấp (hiện tại)", không hiện lần không tham gia), câu 2 PA A (khối Định danh),
+   câu 3 PA A (thẻ mỗi lần thụ lý), câu 4 PA B (banner một dòng trước thanh tab), câu 5 PA B (nhóm Đương sự từ vụ án bị nhập), câu 6 PA B (ẩn 3 nút, chỉ còn dòng khóa).
+   Tình huống lần thụ lý theo vụ án (dữ liệu chỉ là ví dụ): mặc định 1 lần; DS-2025-0098 phúc thẩm; DS-2024-0031 giám đốc thẩm; DS-2025-0044 sơ thẩm lần 2;
+   KT-2026-0003 không tham gia lần mới; vụ án có nhapVao bị nhập; p.th = 'CT' (đã chuyển tòa) / 'GOP' (được gộp) cho màn mẫu riêng */
+var VA_GD_GDT = ['Kháng nghị', 'Thụ lý giám đốc thẩm', 'Chuẩn bị phiên tòa giám đốc thẩm', 'Phiên tòa giám đốc thẩm', 'Kết thúc giám đốc thẩm'];
+var VA_GD_STL = ['Thụ lý', 'Chuẩn bị xét xử', 'Xét xử sơ thẩm', 'Kết thúc sơ thẩm'];
+var VA_TOA_KV3 = 'Tòa án nhân dân khu vực 3 - Hà Nội', VA_TOA_HN = 'Tòa án nhân dân thành phố Hà Nội';
+var VA_GOP_DS = [{ vtNhan: 1, tat: 'NĐ', ten: 'Đỗ Thanh Tùng', vt: 'Nguyên đơn', rows: [['Số CCCD', '—'], ['Địa chỉ', '—']] }, { vtNhan: 1, tat: 'BĐ', ten: 'Công ty CP Nhà Việt', vt: 'Bị đơn', rows: [['Mã số thuế', '—'], ['Địa chỉ', '—']] }];
+var VA_DON_GOP = { tt: ['Đã thụ lý', 'success'], loai: 'Đơn khởi kiện', ma: '[Mã đơn]', nguoi: 'Đỗ Thanh Tùng', kenh: 'CONG', ngay: '29-10-2026', lan: '[Mã lần thụ lý vụ bị nhập]', tu: '[Mã hồ sơ bị nhập]', tep: 'don-khoi-kien.pdf' };
+function vaTh(p, va) {
+  p = p || {};
+  var DANG = ['Đang giải quyết', 'info'], ma = va.ma, toa = va.toa || COURT1, cap = vaCapCur(va);
+  var k = p.th || (va.nhapVao ? 'NHAP' : p.stages === 'khoa' ? 'KTG' : { 'DS-2025-0098': 'PT', 'DS-2024-0031': 'GDT', 'DS-2025-0044': 'STL', 'KT-2026-0003': 'KTG' }[ma]) || 'ST';
+  var st0 = { ten: cap, ma: ma, so: va.soTl || '[Số thụ lý]', toa: toa, ngay: va.thuLy, tp: 'Trần Văn Anh', st: va.tt, gd: vaGd(va) || { steps: VA_GD.ST, cur: 4 } };
+  var st1 = { ten: 'Sơ thẩm', ma: '[Mã lần thụ lý sơ thẩm]', so: '[Số thụ lý sơ thẩm]', toa: COURT1, ngay: '[Ngày thụ lý sơ thẩm]', tp: '[Thẩm phán]', gd: { steps: VA_GD.ST, cur: 7 } };
+  var pt1 = { ten: 'Phúc thẩm', ma: '[Mã lần thụ lý phúc thẩm]', so: '[Số thụ lý phúc thẩm]', toa: VA_TOA_HN, ngay: '[Ngày thụ lý phúc thẩm]', tp: '[Thẩm phán]', gd: { steps: VA_GD.PT, cur: 5 } };
+  var ba = function (ngay, tag, ghi) { return { loai: 'Bản án', so: '[Số bản án]', ngay: ngay, tag: tag, ghi: ghi }; };
+  var d = {
+    ST: { caps: [st0] },
+    PT: { caps: [{ ten: 'Phúc thẩm', ma: ma, so: '[Số thụ lý phúc thẩm]', toa: toa, ngay: va.thuLy, tp: '[Thẩm phán]', st: DANG, gd: { steps: VA_GD.PT, cur: 2 } },
+      Object.assign({}, st1, { kq: ba('[Ngày tuyên án]', ['Bị kháng cáo', 'warning']) })] },
+    GDT: { caps: [{ ten: 'Giám đốc thẩm', ma: ma, so: '[Số thụ lý giám đốc thẩm]', toa: toa, ngay: va.thuLy, tp: 'Hội đồng xét xử giám đốc thẩm', st: DANG, gd: { steps: VA_GD_GDT, cur: 1 }, tam: 1 },
+      Object.assign({}, pt1, { kq: ba('[Ngày tuyên án]', ['Bị kháng nghị', 'warning']) }), Object.assign({}, st1, { kq: ba('[Ngày tuyên án]', ['Bị kháng cáo', 'warning']) })] },
+    STL: { top: ['info', 'Vụ án được thụ lý sơ thẩm lại'],
+      caps: [{ ten: 'Sơ thẩm · Lần 2', ma: ma, so: '[Số thụ lý]', toa: toa, ngay: va.thuLy, tp: '[Thẩm phán]', st: DANG, gd: { steps: VA_GD_STL, cur: 1 }, tam: 1 },
+        Object.assign({}, pt1, { kq: ba('[Ngày tuyên án]', null, 'Hủy bản án sơ thẩm, giao xét xử lại') }), Object.assign({}, st1, { toa: toa, kq: ba('[Ngày tuyên án]', ['Bị hủy', 'danger']) })] },
+    CT: { top: ['info', 'Vụ án đã được chuyển từ ' + COURT1 + ' sang ' + VA_TOA_KV3],
+      caps: [{ ten: 'Sơ thẩm', ma: ma, so: '[Số thụ lý]', toa: VA_TOA_KV3, ngay: '09-11-2026', tp: '[Thẩm phán]', st: DANG, gd: { steps: VA_GD.ST, cur: 3 } },
+        { ten: 'Sơ thẩm', ma: '[Mã lần thụ lý trước]', so: va.soTl || '[Số thụ lý]', toa: COURT1, ngay: va.thuLy, tp: 'Trần Văn Anh', st: ['Đã chuyển sang tòa khác', 'neutral'], gd: { steps: VA_GD.ST, cur: 4 }, kq: { loai: 'Quyết định chuyển vụ án', so: '[Số quyết định]', ngay: '01-11-2026' } }] },
+    GOP: { gop: 1, top: ['info', 'Vụ án [Mã hồ sơ bị nhập] đã được nhập vào vụ án này'], caps: [Object.assign({}, st0, { st: DANG })] },
+    NHAP: { nhap: 1, khoa: 'Hồ sơ chỉ còn để xem',
+      caps: [Object.assign({}, st0, { st: ['Đã nhập vào ' + vaMaDd(vaTim(va.nhapVao) || { ma: va.nhapVao || '' }), 'neutral'], kq: { loai: 'Quyết định nhập vụ án', so: '[Số quyết định]', ngay: '18-11-2026' } })] },
+    KTG: { ktg: 1, khoa: 'Bạn không tham gia lần thụ lý hiện tại', top: ['xam', 'Bạn không tham gia lần thụ lý phúc thẩm của vụ án'],
+      caps: [{ ten: 'Phúc thẩm', ma: ma, so: '[Số thụ lý phúc thẩm]', toa: VA_TOA_HN, ngay: va.thuLy, khoa: 1 }, Object.assign({}, st1, { kq: ba('[Ngày tuyên án]', ['Bị kháng cáo', 'warning']) })] }
+  }[k];
+  d.k = k;
+  /* câu 1: bộ lọc lần thụ lý chỉ gồm lần bạn tham gia; lần đầu danh sách là lần hiện tại */
+  d.lan = d.caps.filter(function (c) { return !c.khoa; }).map(function (c, i) { return { id: c.ma, name: c.ma + ' · ' + c.ten + (i === 0 && !d.ktg ? ' (hiện tại)' : '') }; });
+  return d;
+}
+/* câu 4 PA B: banner gọn một dòng (chỉ tiêu đề) trước thanh tab; không tham gia lần mới: nền xám + khóa; vụ án bị nhập không có banner (giữ dòng Đã nhập vào) */
+function vaThBan(d) {
+  if (!d || !d.top) return null;
+  return h('div', { className: 'va5-ban va5-ban-' + d.top[0], role: 'status' }, h(T.Icon, { name: d.top[0] === 'xam' ? 'lock' : 'info' }), h('b', null, d.top[1]));
+}
+/* câu 2 PA A: khối Định danh và tình trạng vụ án */
+function vaDinhDanh(va, d) {
+  var prev = d.caps[1];
+  return FCard('Định danh và tình trạng vụ án', RvKV([['Mã hồ sơ vụ án', h('span', { className: 'tp-num' }, vaMaDd(va))], ['Loại án', va.loai],
+    ['Mã vụ án (lần thụ lý hiện tại)', h('span', { className: 'tp-num' }, d.caps[0].ma)], ['Trạng thái vụ án', d.nhap ? d.caps[0].st[0] : va.tt[0]], ['Số giai đoạn đã qua', (d.caps.length - 1) + ' giai đoạn']]
+    .concat(d.gop ? [['Vụ án đã nhập vào', h('span', { className: 'tp-num' }, '[Mã hồ sơ bị nhập]')]] : [])
+    .concat([['Số thụ lý giai đoạn trước', prev ? h('span', { className: 'tp-num' }, prev.so) : '—'], ['Ngày thụ lý giai đoạn trước', prev ? prev.ngay : '—'], ['Quan hệ tranh chấp', va.t]])), true);
+}
+
 /* ---------- 4D.1: tab Thông tin chung ---------- */
 function VaTabInfo(p, va) {
+  var d = vaTh(p, va), c0 = d.caps[0];
   var cc = p.cc || 'con', khoa = cc === 'qua', ccT = { con: ' (còn 5 ngày)', hom: ' (hết hạn hôm nay)', qua: ' (đã quá 3 ngày)' }[cc];
   return h(F, null,
     /* 2A.2 (21/11, người dùng chọn PA-A): khối việc + 2 dòng khung viền Xem đơn, In / xuất hồ sơ */
@@ -6911,14 +6977,13 @@ function VaTabInfo(p, va) {
         note: khoa ? 'Đã quá hạn cung cấp tài liệu, chứng cứ.' : null, btns: khoa ? null : [Btn('Cung cấp tài liệu, chứng cứ', 'primary', { icon: 'upload', 'data-pt-go': 'cc1' })] });
       var xem = function () { window.__ibFile = '[Hồ sơ vụ án].pdf'; };
       return h(VaViecDs, { els: vaViecTheoTt(va, p, viec) }); /* v602: việc theo MATRAN_BIEUMAU_HANHDONG (tình trạng × tư cách) */ })(),
-    FCard('Các bên đương sự', h(F, null, /* v612: bỏ dòng đếm đương sự */
-          h(NvCall, { tone: 'warning', icon: 'lock' }, 'Một số thông tin của đương sự khác được ẩn nhằm bảo vệ dữ liệu cá nhân.'), /* v597: ghi chú ẩn thông tin – khung cảnh báo đầu khối (PA A) */
-      p.vaiTro ? h(DtParty, { vtNhan: 1, tat: 'NĐ', ten: 'Nguyễn Văn Hùng', vt: 'Nguyên đơn', rows: [['Số CCCD', '—'], ['Địa chỉ', '—']] }) : null, h(DtParty, { vtNhan: 1, tat: p.vaiTro === 'Bị đơn' ? 'BĐ' : p.vaiTro ? 'LQ' : 'NĐ', ten: 'Hoàng Dương', ban: true, vt: p.vaiTro || va.vt, rows: [['Số CCCD', h('span', { className: 'tp-num' }, '001090012345')], ['Người đại diện / ủy quyền', '—'], ['Người bảo vệ lợi ích hợp pháp', '—'], ['Địa chỉ', 'Số 8 Phạm Hùng, Phường Từ Liêm, Thành phố Hà Nội']] }),
-      p.vaiTro === 'Bị đơn' ? null : h(DtParty, { vtNhan: 1, tat: 'BĐ', ten: 'Trần Văn Bình', vt: 'Bị đơn', rows: [['Số CCCD', '—'], ['Người đại diện / ủy quyền', '—'], ['Địa chỉ', '—']] }),
-      p.vaiTro && p.vaiTro !== 'Bị đơn' ? null : h(DtParty, { vtNhan: 1, tat: 'LQ', ten: 'Lê Thị Hoa', vt: 'Người có quyền lợi, nghĩa vụ liên quan', rows: [['Số CCCD', '—'], ['Địa chỉ', '—']] }),
-      h(VaActs)), true),
-    FCard('Tòa án & hội đồng xét xử', RvKV([['Tòa án đang giải quyết', va.toa || COURT1], ['Thẩm phán / HĐXX', 'Trần Văn Anh'], ['Cấp xét xử hiện tại', vaCapCur(va)], ['Số thụ lý giai đoạn hiện tại', h('span', { className: 'tp-num' }, '12/2026/TLST-DS')], ['Ngày thụ lý giai đoạn hiện tại', va.thuLy]]), true),
-    FCard('Định danh & tình trạng vụ án', RvKV([['Mã định danh', h('span', { className: 'tp-num' }, vaMaDd(va))] /* v590 */, ['Loại án', va.loai], ['Trạng thái vụ án', va.tt[0]], ['Số giai đoạn đã qua', va.cap.length + ' giai đoạn'], ['Quan hệ tranh chấp', va.t]]), true),
+    FCard('Các bên đương sự', h(VaDuongSu, { gop: d.gop, khoa: d.khoa, note: d.ktg ? 'Danh sách đương sự dưới đây là danh sách tại thời điểm bạn còn tham gia (lần thụ lý sơ thẩm [Số thụ lý sơ thẩm]).' : null, ds: [ /* v637 */ /* v622 (27/11/2026, PA C3): thẻ Bạn tách đầu (viền trái đỏ), nhóm Đương sự khác (n) kèm ghi chú ẩn thông tin, tiêu đề Thao tác; bỏ khung cảnh báo vàng v597 */
+      p.vaiTro ? { vtNhan: 1, tat: 'NĐ', ten: 'Nguyễn Văn Hùng', vt: 'Nguyên đơn', rows: [['Số CCCD', '—'], ['Địa chỉ', '—']] } : null,
+      { vtNhan: 1, tat: p.vaiTro === 'Bị đơn' ? 'BĐ' : p.vaiTro ? 'LQ' : 'NĐ', ten: 'Hoàng Dương', ban: true, vt: p.vaiTro || va.vt, rows: [['Số CCCD', h('span', { className: 'tp-num' }, '001090012345')], ['Người đại diện / ủy quyền', '—'], ['Người bảo vệ lợi ích hợp pháp', '—'], ['Địa chỉ', 'Số 8 Phạm Hùng, Phường Từ Liêm, Thành phố Hà Nội']] },
+      p.vaiTro === 'Bị đơn' ? null : { vtNhan: 1, tat: 'BĐ', ten: 'Trần Văn Bình', vt: 'Bị đơn', rows: [['Số CCCD', '—'], ['Người đại diện / ủy quyền', '—'], ['Địa chỉ', '—']] },
+      p.vaiTro && p.vaiTro !== 'Bị đơn' ? null : { vtNhan: 1, tat: 'LQ', ten: 'Lê Thị Hoa', vt: 'Người có quyền lợi, nghĩa vụ liên quan', rows: [['Số CCCD', '—'], ['Địa chỉ', '—']] }] }), true),
+    FCard('Tòa án và hội đồng xét xử', RvKV([['Tòa án đang giải quyết', c0.toa], ['Thẩm phán / HĐXX', d.ktg ? h('span', { className: 'va5-an' }, 'Không hiển thị') : c0.tp], ['Cấp xét xử hiện tại', c0.ten], ['Số thụ lý giai đoạn hiện tại', h('span', { className: 'tp-num' }, c0.so)], ['Ngày thụ lý giai đoạn hiện tại', c0.ngay]]), true), /* v637: theo lần thụ lý hiện tại */
+    vaDinhDanh(va, d), /* v637 câu 2 PA A */
     FCard('Án phí', p.noFee ? P('Chưa phát sinh khoản án phí', 'ph-muted') : h('div', { className: 'dt-fee' }, h('div', null, h('b', null, 'Tạm ứng án phí sơ thẩm'), h('small', null, 'Hạn nộp 30-10-2026')),
       h('div', { className: 'dt-fee-r' }, h('b', { className: 'tp-num' }, '1.250.000 đ'), h(T.StatusBadge, { tone: 'warning', icon: false }, 'Chưa nộp'))), true));
 }
@@ -6969,7 +7034,7 @@ var VA_TAO4 = [
     { t: 'Đề nghị về chi phí tố tụng', d: 'Chi phí giám định, định giá, người làm chứng, người phiên dịch', go: 'dyc1_gd', ic: 'wallet', gd: 's' }]],
   ['Đơn yêu cầu khác', 'Yêu cầu, đề nghị phát sinh trong tố tụng và các thủ tục riêng', 'g4', [
     { k: 'dyc', t: 'Đơn yêu cầu, đề nghị khác trong tố tụng', d: 'Hoãn phiên tòa · chứng cứ · người làm chứng · giám định, định giá · tạm đình chỉ', go: 'dyc1', ic: 'pen', gd: 's' }]],
-  ['Giao nộp & sao gửi tài liệu, chứng cứ', 'Nộp bổ sung tài liệu, chứng cứ cho vụ án và thực hiện nghĩa vụ sao gửi cho đương sự khác', 'g5', [
+  ['Giao nộp và sao gửi tài liệu, chứng cứ', 'Nộp bổ sung tài liệu, chứng cứ cho vụ án và thực hiện nghĩa vụ sao gửi cho đương sự khác', 'g5', [
     { k: 'gn', t: 'Giao nộp tài liệu, chứng cứ cho vụ án', d: 'Nộp bổ sung tài liệu, chứng cứ cho hồ sơ vụ án đang giải quyết (Điều 96 BLTTDS)', go: 'evidence2', ic: 'upload', gd: 's' },
     { k: 'gn', t: 'Sao gửi tài liệu, chứng cứ cho đương sự khác', d: 'Tự sao gửi hoặc đề nghị Tòa án hỗ trợ khi không tự thực hiện được (Khoản 5 Điều 96, Khoản 9 Điều 70)', go: 'sg1', ic: 'send', gd: 's' }]]];
 /* trạng thái vụ án: 'dgq' đang giải quyết | 'tdc' tạm đình chỉ | 'xong' đã giải quyết; nhomKK: người dùng thuộc nhóm khởi kiện */
@@ -7001,7 +7066,7 @@ function VaTaoBtn(p) {
               return h('li', { key: x.t }, h('button', { type: 'button', className: 'va4-ti' + (x.khoa ? ' va4-ti-khoa' : ''), disabled: !!x.khoa, 'aria-disabled': x.khoa ? 'true' : undefined,
                   'data-pt-go': x.khoa || rut ? undefined : x.go, onClick: rut ? function () { dl[1](true); } : undefined },
                 h('span', { className: 'va4-ti-ic va4-' + g[2] }, h(T.Icon, { name: x.ic })),
-                h('span', { className: 'va4-ti-b' }, h('b', null, x.t), h('span', { className: 'va4-gdc va4-gdc-' + x.gd }, x.gd === 'ts' ? 'Trước & sau thụ lý' : 'Sau thụ lý'), h('small', null, x.d), x.khoa ? h('span', { className: 'va4-ly' }, x.khoa) : null),
+                h('span', { className: 'va4-ti-b' }, h('b', null, x.t), h('span', { className: 'va4-gdc va4-gdc-' + x.gd }, x.gd === 'ts' ? 'Trước và sau thụ lý' : 'Sau thụ lý'), h('small', null, x.d), x.khoa ? h('span', { className: 'va4-ly' }, x.khoa) : null),
                 x.khoa ? h(T.Icon, { name: 'lock' }) : h(T.Icon, { name: 'chevronRight' })));
             })));
         }))) : null,
@@ -7179,8 +7244,25 @@ function PhongHopExt() {
 /* Chi tiết vụ án – nhóm nút chức năng ở cuối khối Các bên đương sự (người dùng 21/11 chọn B4): dòng biểu tượng + tên + mũi tên, gom trong khung viền.
    Web hiện cả 3 nút cố định, không theo trạng thái vụ án (vu-an/chi-tiet.tsx). */
 var VA_ACTS = [['user', 'Bổ sung đương sự', 'dyc1_bs'], ['swap', 'Đổi vai trò tố tụng', 'dyc1'], ['filePlus', 'Đề nghị về chứng cứ, người tham gia tố tụng', 'dyc1_tt']];
+/* v622 (PA C3): khối Các bên đương sự – thẻ của bạn ở đầu, nhóm "Đương sự khác (n)" liền một khối, rồi tiêu đề "Thao tác" + VaActs */
+function VaDuongSu(o) {
+  var ds = o.ds.filter(Boolean), ban = ds.filter(function (x) { return x.ban; }), khac = ds.filter(function (x) { return !x.ban; });
+  /* v637: o.note ghi chú (không tham gia lần mới); o.gop nhóm "Đương sự từ vụ án …" trước Gửi đề nghị (câu 5 PA B); o.khoa ẩn 3 nút, chỉ còn dòng khóa (câu 6 PA B) */
+  return h(F, null, o.note ? h('p', { className: 'va5-note' }, h(T.Icon, { name: 'info' }), o.note) : null, ban.map(function (x) { return h(DtParty, Object.assign({ key: x.ten }, x)); }),
+    khac.length ? h('div', { className: 'vds-oh' }, h('b', null, 'Đương sự khác (' + khac.length + ')'), h('small', null, h(T.Icon, { name: 'lock' }), 'Một số thông tin được ẩn nhằm bảo vệ dữ liệu cá nhân.')) : null,
+    khac.length ? h('div', { className: 'vds-ds' }, khac.map(function (x) { return h(DtParty, Object.assign({ key: x.ten }, x)); })) : null,
+    o.gop ? h('div', { className: 'vds-oh va5-gop-h' }, h('b', null, 'Đương sự từ vụ án [Mã hồ sơ bị nhập] (' + VA_GOP_DS.length + ')'), h('small', null, 'Vụ án đã được nhập vào hồ sơ này ngày 18-11-2026.')) : null,
+    o.gop ? h('div', { className: 'vds-ds' }, VA_GOP_DS.map(function (x) { return h(DtParty, Object.assign({ key: x.ten }, x)); })) : null,
+    h('div', { className: 'vds-tt' }, h('b', null, 'Gửi đề nghị đến Tòa án')), o.khoa ? h('p', { className: 'va5-khoa' }, h(T.Icon, { name: 'lock' }), o.khoa + ': không gửi được đề nghị mới.') : h(VaActs)); /* v628: tiêu đề nhóm thay "Thao tác" (PA D); v634: bỏ dòng mô tả dưới tiêu đề */
+}
+/* v628 (27-11-2026): nút thao tác theo PA D (người dùng chọn sau demo de-xuat/demo-thao-tac-2026-11-27.*) – mỗi việc một thẻ: tên + mô tả ngắn, bên phải chữ "Lập đơn →".
+   Mô tả lấy theo phần giải thích loại yêu cầu của màn Đơn yêu cầu, đề nghị khác (DYC). */
+var VA_ACTS_MO = { 'Bổ sung đương sự': 'Đưa người liên quan chưa tham gia tố tụng vào vụ án', 'Đổi vai trò tố tụng': 'Khi vai trò tố tụng hiện tại của bạn chưa đúng', 'Đề nghị về chứng cứ, người tham gia tố tụng': 'Thu thập, xuất trình chứng cứ; triệu tập người làm chứng' };
 function VaActs() {
-  return h('div', { className: 'va-actl va-actl-the' }, VA_ACTS.map(function (x) { return h('button', { key: x[1], type: 'button', className: 'va-actl-it', 'data-pt-go': x[2] }, h('span', { className: 'va-actl-ic', 'aria-hidden': 'true' }, h(T.Icon, { name: x[0] })), h('span', { className: 'va-actl-tx' }, x[1]), h(T.Icon, { name: 'chevronRight' })); }));
+  return h('div', { className: 'va-actd' }, VA_ACTS.map(function (x) {
+    return h('button', { key: x[1], type: 'button', className: 'va-actd-it', 'aria-label': 'Lập đơn ' + x[1], 'data-pt-go': x[2] },
+      h('span', { className: 'va-actd-tx' }, h('b', null, x[1]), VA_ACTS_MO[x[1]] ? h('small', null, VA_ACTS_MO[x[1]]) : null),
+      h('span', { className: 'va-actd-go', 'aria-hidden': 'true' }, h(T.Icon, { name: 'plus' })) /* v633: chữ "Lập đơn →" thành biểu tượng (+) trong nền tròn nhạt (PA B) */); }));
 }
 
 
@@ -7289,7 +7371,7 @@ function VaDonThe5(d) {
   var tt = d.kenh === 'TRUC_TIEP';
   return h('li', { key: d.loai + d.ma, className: 'qd-c qc va5-don' },
     d.tt ? h('div', { className: 'qc-top' }, h(T.StatusBadge, { tone: d.tt[1], icon: false }, d.tt[0])) : null,
-    h('div', { className: 'qc-th' }, h('b', { className: 'qc-t' }, d.loai)),
+    h('div', { className: 'qc-th' }, h('b', { className: 'qc-t' }, d.loai)), d.tu ? h('span', { className: 'va5-tu' }, 'Từ vụ ' + d.tu) : null, /* v637 */
     vaDl([['Mã đơn', h('span', { className: 'va5-don-ma' }, h('span', { className: 'tp-num' }, d.ma), tt ? h('small', null, 'Mã đơn do Tòa án cấp') : null)],
       ['Người nộp', h(F, null, d.nguoi, d.ban ? h('span', { className: 'va4-chip va4-chip-ban' }, 'Bạn') : null)],
       ['Kênh nộp', h('span', { className: 'va5-kenh va5-kenh-' + (tt ? 'tt' : 'cong') }, VA_KENH[d.kenh])], ['Ngày nộp', d.ngay], ['Lần thụ lý', h('span', { className: 'tp-num' }, d.lan)]]),
@@ -7304,10 +7386,11 @@ function VaGnThe5(d) {
 function VaTabDon5(p) {
   var k = React.useState(p.kenh0 || ''), l = React.useState('');
   var ds = p.donRong ? [] : p.ycdl ? VA_DON5.concat([VA_YCDL5]) : VA_DON5;
+  if (p.donThem) ds = ds.concat(p.donThem); /* v637: vụ án được gộp – đơn của vụ bị nhập */
   var lans = ds.map(function (d) { return d.lan; }).filter(function (x, i, a) { return a.indexOf(x) === i; });
   var hien = ds.filter(function (d) { return (!k[0] || d.kenh === k[0]) && (!l[0] || d.lan === l[0]); });
   return h(F, null,
-    FCard('Đơn trong vụ án', h(F, null, P('Gồm đơn bạn nộp qua Cổng và đơn Tòa án tiếp nhận trực tiếp', 'ph-muted va5-sub'),
+    FCard('Đơn trong vụ án', h(F, null, /* v618: bỏ dòng mô tả "Gồm đơn bạn nộp qua Cổng…" */
       h('div', { className: 'va5-locs' },
         h(VaDonLoc, { title: 'Kênh nộp', v: k[0], onPick: k[1], items: [{ id: '', name: 'Tất cả kênh nộp' }, { id: 'CONG', name: 'Qua Cổng' }, { id: 'TRUC_TIEP', name: 'Nộp trực tiếp tại Tòa án' }] }),
         h(VaDonLoc, { title: 'Lần thụ lý', v: l[0], onPick: l[1], items: [{ id: '', name: 'Tất cả lần thụ lý' }].concat(lans.map(function (x) { return { id: x, name: x }; })) })),
@@ -7318,25 +7401,22 @@ function VaTabDon5(p) {
 
 /* 1.28 / 1.29: tab Các cấp xét xử – khối mỗi cấp đã có dữ liệu (đầu khối "{cấp} {số thụ lý}"), giai đoạn tố tụng, phiên, lý do mở giai đoạn, kết quả */
 function VaCap5(c) {
+  /* v637 (câu 3 PA A): nhãn trạng thái riêng một dòng dưới tên thẻ; dòng Mã vụ án trước Tòa án; bỏ dòng Kết quả – thay bằng khối bản án / quyết định có nhãn Bị kháng cáo / Bị kháng nghị / Bị hủy;
+     lần không tham gia: thẻ khóa; bước của Giám đốc thẩm, Sơ thẩm lần 2 là nhãn tạm */
   return FCard(h('span', { className: 'va5-cap-h' }, c.ten, h('span', { className: 'tp-num' }, c.so)), h(F, null,
-    RvKV(c.khoa ? [['Tòa án', c.toa], ['Số thụ lý', h('span', { className: 'tp-num' }, c.so)], ['Ngày thụ lý', c.ngay]]
-      : [['Tòa án', c.toa], ['Số thụ lý', h('span', { className: 'tp-num' }, c.so)], ['Ngày thụ lý', c.ngay], ['Thẩm phán', c.tp], ['Kết quả', c.kqT || '—']]),
+    c.st ? h('div', { className: 'va5-st' }, h(T.StatusBadge, { tone: c.st[1], icon: false }, c.st[0])) : null,
+    RvKV([['Mã vụ án', h('span', { className: 'tp-num' }, c.ma)], ['Tòa án', c.toa], ['Số thụ lý', h('span', { className: 'tp-num' }, c.so)], ['Ngày thụ lý', c.ngay]].concat(c.khoa ? [] : [['Thẩm phán', c.tp]])),
     c.khoa ? h('p', { className: 'va5-khoa' }, h(T.Icon, { name: 'lock' }), 'Bạn không tham gia lần thụ lý này, nên chỉ xem được tòa án, số và ngày thụ lý. Giai đoạn tố tụng, bản án và văn bản của lần thụ lý này không hiển thị.') : null,
-    !c.khoa && c.gd ? h('div', { className: 'va4-cap-gd va5-cap-gd' }, h('p', { className: 'va4-sub' }, 'Giai đoạn tố tụng'), h(VaGdStep, c.gd)) : null,
-    !c.khoa && c.phien ? h('p', { className: 'va5-cap-ph' }, h('span', null, c.phien[0]), h('span', { className: 'va5-ph va5-ph-' + c.phien[2] }, h('i', { 'aria-hidden': 'true' }), c.phien[1])) : null,
+    !c.khoa && c.gd ? h('div', { className: 'va4-cap-gd va5-cap-gd' }, h('p', { className: 'va4-sub' }, 'Giai đoạn tố tụng', c.tam ? h('span', { className: 'va5-tam' }, 'Nhãn bước tạm') : null), h(VaGdStep, Object.assign({ doc: true }, c.gd))) : null,
+    null, /* v636: bỏ dòng phiên (ngày giờ · hình thức · phòng · trạng thái) dưới Giai đoạn tố tụng */
     !c.khoa && c.lyDo ? h('p', { className: 'va4-cap-ld' }, h(T.Icon, { name: 'info' }), h('span', null, h('b', null, 'Lý do mở giai đoạn: '), c.lyDo)) : null,
-    !c.khoa && c.kq ? h('div', { className: 'va4-kq va5-kq' }, h('p', { className: 'va5-kq-h' }, h('b', null, c.kq.loai), ' ', h('span', { className: 'tp-num' }, c.kq.so), ' · Tuyên ngày ' + c.kq.ngay + ' ', h(T.StatusBadge, { tone: 'warning', icon: false }, c.kq.hl)),
-      h('p', null, c.kq.tomTat), h('button', { type: 'button', className: 'vk-link', 'data-pt-go': 'mailDetail', onClickCapture: vaMoVb('Bản án dân sự sơ thẩm', c.kq.so, c.kq.ngay) }, 'Xem văn bản →')) : null), true);
+    !c.khoa && c.kq ? h('div', { className: 'va4-kq va5-kq' }, h('p', { className: 'va5-kq-h' }, h('b', null, c.kq.loai), ' ', h('span', { className: 'tp-num' }, c.kq.so), ' · ' + (/Quyết định/.test(c.kq.loai) ? 'Ban hành' : 'Tuyên') + ' ngày ' + c.kq.ngay + ' ', c.kq.tag ? h(T.StatusBadge, { tone: c.kq.tag[1], icon: false }, c.kq.tag[0]) : null),
+      c.kq.ghi ? h('p', null, c.kq.ghi) : null,
+      h('button', { type: 'button', className: 'vk-link', 'data-pt-go': 'mailDetail', onClickCapture: vaMoVb(c.kq.loai === 'Bản án' ? 'Bản án dân sự ' + c.ten.split(' ·')[0].toLowerCase() : c.kq.loai, c.kq.so, c.kq.ngay) }, 'Xem văn bản →')) : null), true);
 }
+/* v637: mỗi lần thụ lý một thẻ, lần hiện tại ở đầu (vaTh) */
 function VaTabStages5(p, va) {
-  var toa = va.toa || COURT1;
-  if (p.judg === 'ba' || p.stages === 'kq') return h(F, null,
-    VaCap5({ ten: 'Sơ thẩm', so: '12/2026/TLST-DS', toa: toa, ngay: '15-10-2026', tp: 'Trần Văn Anh', kqT: 'Bản án [Số bản án]', gd: { steps: VA_GD.ST, cur: 6 }, phien: ['06-11-2026 14:00 · Trực tiếp · Phòng xử án số 1', 'Đã diễn ra', 'xong'],
-      kq: { loai: 'Bản án', so: '[Số bản án]', ngay: '20-10-2026', hl: 'Chưa có hiệu lực', tomTat: '[Tóm tắt kết quả]' } }),
-    VaCap5({ ten: 'Phúc thẩm', so: '[Số thụ lý phúc thẩm]', toa: 'Tòa án nhân dân thành phố Hà Nội', ngay: '[Ngày thụ lý]', tp: '[Thẩm phán]', gd: { steps: VA_GD.PT, cur: 1 }, lyDo: '[Lý do mở giai đoạn]' }));
-  var gd = vaGd(va) || { steps: VA_GD.ST, cur: 4 };
-  return h(F, null, VaCap5({ ten: vaCapCur(va), so: '12/2026/TLST-DS', toa: toa, ngay: va.thuLy, tp: 'Trần Văn Anh', gd: gd, phien: ['06-11-2026 14:00 · Trực tiếp · Phòng xử án số 1', 'Sắp diễn ra', 'sap'] }),
-    p.stages === 'khoa' ? VaCap5({ ten: 'Phúc thẩm', so: '[Số thụ lý phúc thẩm]', toa: 'Tòa án nhân dân thành phố Hà Nội', ngay: '[Ngày thụ lý]', khoa: true }) : null);
+  return h.apply(null, [F, null].concat(vaTh(p, va).caps.map(function (c, i) { return h(F, { key: i }, VaCap5(c)); })));
 }
 
 /* 1.30 / 1.31: tab Lịch phiên tòa – dùng lại thẻ "Buổi phải dự" của Lịch tố tụng (LcDuCard); không có nút Đề nghị hoãn phiên */
@@ -7438,18 +7518,25 @@ function VaTabHist5(p, va) {
 
 /* nội dung tab Chi tiết vụ án (v583) */
 function VaTab5(p, va, t) {
+  var d = vaTh(p, va); /* v637 */
   if (t === 'info') return VaTabInfo(p, va);
-  if (t === 'don') return h(VaTabDon5, p);
+  if (t === 'don') return h(VaTabDon5, d.gop ? Object.assign({}, p, { donThem: [VA_DON_GOP] }) : p);
   if (p.tabTai && VA_TT5[t]) return vaTabTt(t, p.tabTai);
   if (t === 'stages') return VaTabStages5(p, va);
-  if (t === 'hearings') return VaTabHear5(p);
-  if (t === 'docs') return VaTabDocs5(p);
-  if (t === 'evidence') return h(VaTabEvi5, p);
-  if (t === 'judgments') return VaTabJudg5(p);
-  return VaTabHist5(p, va);
+  if (t === 'hearings') return h(VaLanTab, { key: t, d: d, el: VaTabHear5(p) });
+  if (t === 'docs') return h(VaLanTab, { key: t, d: d, el: VaTabDocs5(p) });
+  if (t === 'evidence') return h(VaLanTab, { key: t, d: d, el: h(VaTabEvi5, p) });
+  if (t === 'judgments') return h(VaLanTab, { key: t, d: d, el: VaTabJudg5(p) }); /* v637 câu 1: tab Bản án, quyết định cũng có bộ lọc lần thụ lý */
+  return h(VaLanTab, { key: t, d: d, el: VaTabHist5(p, va) });
+}
+/* v632 (27/11/2026): 4 tab Lịch phiên tòa, Văn bản tống đạt, Tài liệu chứng cứ, Lịch sử vụ án có bộ lọc lần thụ lý (mặc định lần hiện tại), không nhãn trên từng mục */
+/* v637 (câu 1 PA A): mục lọc "mã · cấp", lần hiện tại thêm "(hiện tại)", không hiện lần thụ lý bạn không tham gia (vaTh) */
+function VaLanTab(o) {
+  var lan = o.d.lan, l = React.useState(lan[0] ? lan[0].id : '');
+  return h(F, null, h('div', { className: 'va5-locs va5-lan-locs' }, h(VaDonLoc, { title: 'Lần thụ lý', v: l[0], onPick: l[1], items: [{ id: '', name: 'Tất cả lần thụ lý' }].concat(lan) })), o.el);
 }
 /* 1.27: bảng "Chọn loại đơn cần tạo" – thêm miễn, giảm tạm ứng án phí (khi có thông báo nộp tiền), nhãn giai đoạn (GIAI_DOAN_MUC web), loại bị khóa mờ + lý do */
-var VA_TAO_GD = { rd1: 'Trước & sau thụ lý', bp1: 'Trước & sau thụ lý' };
+var VA_TAO_GD = { rd1: 'Trước và sau thụ lý', bp1: 'Trước và sau thụ lý' };
 function vaTaoG(p) {
   if (p.dmTao) return p.dmTao; /* v595 */
   var tt = p.taoTt || 'dgq', nhomKK = !p.vaiTro;
@@ -7471,7 +7558,13 @@ function vaGoiYs(ks) { return ks.map(function (k) { return VaGoiY(VA_GY[k]); });
    thanh tiến trình tố tụng dưới vạch như khối Việc cần làm; bỏ ô viết tắt loại án và "Xem chi tiết ›" (chạm cả thẻ để mở) */
 /* v587 (25/11/2026): thẻ vụ án theo ảnh người dùng – 5 dòng nhãn – giá trị không dấu hai chấm: Mã định danh, Ngày thụ lý, Tư cách, Cấp xét xử (chữ thường, cấp hiện tại), Tòa án */
 function VaCard(p) {
-  var v = p.v, rows = [['Mã định danh', h('span', { className: 'tp-num' }, vaMaDd(v))], ['Ngày thụ lý', h('span', { className: 'tp-num' }, v.thuLy)], ['Tư cách', v.vt], ['Cấp xét xử', vaCapCur(v)], ['Tòa án', v.toa]];
+  /* v632 (27/11/2026): dòng Thụ lý theo web "ngày · Số thụ lý: số" (chưa có số thì [Số thụ lý]); thẻ khóa khi bạn không tham gia lần thụ lý hiện tại: chỉ tên, tòa, thụ lý */
+  var v = p.v, tl = h('span', { className: 'tp-num' }, v.thuLy + ' · Số thụ lý: ' + (v.soTl || '[Số thụ lý]')), rows = [['Mã định danh', h('span', { className: 'tp-num' }, vaMaDd(v))], ['Thụ lý', tl], ['Tư cách', v.vt], ['Cấp xét xử', vaCapCur(v)], ['Tòa án', v.toa]];
+  if (v.khoaLanHt) return h('li', { className: 'qd-c qc va5-c va5-c-khoa', 'data-ma': v.ma },
+    h('button', { type: 'button', className: 'ph-mail2-hit', 'aria-label': 'Xem chi tiết vụ án ' + v.ma, 'data-pt-go': v.go, onClickCapture: function () { window.__vaSel = { ma: v.ma, ten: v.t }; } }),
+    h('div', { className: 'qc-th' }, h('b', { className: 'qc-t' }, v.t)),
+    h('dl', { className: 'qc-ben' }, [['Tòa án', v.toa], ['Thụ lý', tl]].map(function (r) { return h('div', { key: r[0] }, h('dt', null, r[0]), h('dd', null, r[1])); })),
+    h('p', { className: 'va5-khoa va5-khoa-the' }, h(T.Icon, { name: 'lock' }), 'Bạn không tham gia lần thụ lý này: chỉ xem được tòa, số và ngày thụ lý'));
   return h('li', { className: 'qd-c qc va5-c', 'data-ma': v.ma },
     h('button', { type: 'button', className: 'ph-mail2-hit', 'aria-label': 'Xem chi tiết vụ án ' + v.ma, 'data-pt-go': v.go, onClickCapture: function () { window.__vaSel = { ma: v.ma, ten: v.t }; } }),
     h('div', { className: 'qc-top va-mau-top' }, VaNhanTT(v), v.tinh ? VaNhanTinh(v) : null, h('span', { className: 'qc-sp' }), /* v596: đủ trạng thái + tình trạng, bộ màu */
@@ -7536,13 +7629,23 @@ function VaBangMau() {
    nút chữ "Xem tất cả" mở rộng tại chỗ, bấm lại "Thu gọn" (người dùng chọn PA B) */
 function vaViecKhoi(v, moi) { return h(F, { key: v[0] }, KhoiViec({ tone: 'warning', t: v[1], han: (moi ? 'Nhận [ngày nhận việc] · ' : '') + 'Hạn [hạn xử lý]', btns: [Btn(v[2], 'primary', { icon: v[3], 'data-pt-go': v[4] || undefined })] })); }
 /* v601: dùng chung cho màn gốc (p.els = khối việc đã dựng sẵn, phần tử đầu = mới nhất); tiêu đề + số đếm luôn hiện khi có việc, "Xem tất cả" chỉ khi > 1 việc */
+/* v627 (27-11-2026): Việc cần làm – thu gọn / mở rộng theo PA B (người dùng chọn sau demo de-xuat/demo-viec-can-lam-2026-11-27.*):
+   hiện đủ việc mới nhất; các việc còn lại gom thành ô viền nét đứt vàng "+n việc khác" + tên các việc, chạm để bung tại chỗ, cuối khối "Thu gọn". Bỏ nút "Xem tất cả" ở tiêu đề. */
+function vaViecTim(e) { if (!e || typeof e !== 'object') return null;
+  if (e.props && typeof e.props.className === 'string' && /(^| )kv( |$)/.test(e.props.className)) return e;
+  var c = e.props && e.props.children; if (!c) return null; c = [].concat(c);
+  for (var i = 0; i < c.length; i++) { var r = vaViecTim(c[i]); if (r) return r; } return null; }
+function vaViecTen(e) { var k = vaViecTim(e), c = k ? [].concat(k.props.children) : []; return c[0] && c[0].props ? c[0].props.children : ''; }
 function VaViecDs(p) {
-  var els = p.els || p.ds.map(function (v, i) { return vaViecKhoi(v, i === 0); }), n = els.length, mo = React.useState(false), m = mo[0];
+  var els = p.els || p.ds.map(function (v, i) { return vaViecKhoi(v, i === 0); }), n = els.length, mo = React.useState(false), m = mo[0], con = n - 1;
+  if (!n) return null;
+  var tg = function () { mo[1](!m); }, ds = function (a) { return a.map(function (e, i) { return h(F, { key: i }, e); }); };
   return h('div', { className: 'va4-acts dm-acts' },
-    n ? h('div', { className: 'dv-h' }, h('b', null, 'Việc cần làm'), h('span', { className: 'dv-dem' }, n), h('span', { className: 'qc-sp' }),
-      n > 1 ? h('button', { type: 'button', className: 'dv-link', 'aria-expanded': m, onClick: function () { mo[1](!m); } }, m ? 'Thu gọn' : 'Xem tất cả', h(T.Icon, { name: m ? 'chevronUp' : 'chevronDown' })) : null) : null,
-    (m ? els : els.slice(0, 1)).map(function (e, i) { return h(F, { key: i }, e); }),
-    KhungDong([{ icon: 'file', t: 'Xem đơn TN-20261020-0012', go: 'appDetail' }]));
+    h('div', { className: 'dv-h' }, h('b', null, 'Việc cần làm'), h('span', { className: 'dv-dem' }, n)),
+    els[0],
+    con < 1 ? null : m ? h(F, null, ds(els.slice(1)), h('button', { type: 'button', className: 'dv-thu', 'aria-expanded': true, onClick: tg }, 'Thu gọn', h(T.Icon, { name: 'chevronRight' })))
+      : h('button', { type: 'button', className: 'dv-them', 'aria-expanded': false, onClick: tg },
+        h('span', { className: 'dv-them-tx' }, h('b', null, '+' + con + ' việc khác'), h('small', null, els.slice(1).map(vaViecTen).filter(Boolean).join(' · '))), h(T.Icon, { name: 'chevronRight' })));
 }
 
 /* v602 (25/11/2026): việc cần làm tuân theo trạng thái + tình trạng vụ án và tư cách người xem – MATRAN_BIEUMAU_HANHDONG (LOAI_DOITUONG TGTTDS_xx, DM_DANHMUCCHUNG TUCACHTGTTDS).

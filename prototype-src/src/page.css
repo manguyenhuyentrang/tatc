@@ -3916,3 +3916,67 @@ button.tp-upload-add{border:0;cursor:pointer}.va4-ua-dang{background:var(--surfa
 
 /* v617: đầu màn Chi tiết vụ án – dòng mã định danh · loại án in đậm */
 .va4-head .va4-hd1 .va4-ma,.va4-head .va4-hd1 .va4-loai{font-weight:600}
+
+/* v621 (PA 2 kiểu 1): thẻ đương sự Chi tiết vụ án gọn – họ tên + "Bạn", tư cách chữ xám nhỏ dưới tên; chạm mở rộng tại chỗ */
+.dt-party.dpg{padding:0}
+.dpg-h{display:flex;align-items:center;gap:8px;width:100%;padding:12px 14px;border:0;background:none;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.dpg-h>.tp-ico{flex:none;width:18px;height:18px;color:var(--ink-subtle);transition:transform .15s}
+.dpg-mo .dpg-h>.tp-ico{transform:rotate(90deg)}
+.dpg-ten{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.dpg-tr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.dpg-tr b{font:600 15px/20px var(--font-sans);color:var(--ink)}
+.dpg-vt{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 13px/18px var(--font-sans);color:var(--ink-subtle)}
+.dpg-b{padding:12px 14px;border-top:1px solid var(--border)}
+.dpg-b .ct-dl{margin:0}
+
+/* v622 (PA C3): khối Các bên đương sự – thẻ Bạn viền trái đỏ; nhóm Đương sự khác (n) liền một khối; tiêu đề Thao tác */
+/* v623: bỏ vạch đỏ bên trái thẻ Bạn */
+.vds-oh{display:flex;flex-direction:column;gap:2px;margin:8px 0 0}
+.vds-oh b{font:600 14px/20px var(--font-sans);color:var(--ink)}
+.vds-oh small{display:flex;align-items:flex-start;gap:6px;margin-top:6px;padding:8px 10px;font:500 12px/16px var(--font-sans);color:var(--warning);background:var(--warning-tint);border:1px solid var(--warning-border);border-radius:var(--radius-md,8px)} /* v624: dòng khóa khung vàng (PA B) */
+.vds-oh .tp-ico{flex:none;width:14px;height:14px;margin-top:1px;color:var(--warning-dot)}
+.vds-ds{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface)}
+.vds-ds>.dpg{margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+.vds-ds>.dpg+.dpg{border-top:1px solid var(--border)!important}
+.vds-sl{margin:8px 0 0;font:600 14px/20px var(--font-sans);color:var(--ink)}
+.vds-oh + .vds-ds,.vds-sl + .va-actl{margin-top:-6px!important} /* v622: tiêu đề nhóm cách danh sách 8px */
+.dpg-h-tinh{cursor:default} /* v623: thẻ Bạn luôn mở */
+.dt-party.dpg-ban{box-shadow:none!important} /* v625: thẻ Bạn chỉ viền mảnh 1px như khối đương sự khác */
+/* v627: Việc cần làm PA B – ô "+n việc khác" viền nét đứt vàng, chạm bung tại chỗ; "Thu gọn" cuối khối */
+.dv-them{display:flex;align-items:center;gap:12px;width:100%;margin-top:8px;padding:10px 12px;border:1px dashed var(--warning-border);border-radius:var(--radius-lg);background:var(--surface);text-align:left;font:inherit;cursor:pointer}
+.dv-them-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.dv-them-tx b{font:600 14px/20px var(--font-sans);color:var(--warning)}
+.dv-them-tx small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:400 12px/16px var(--font-sans);color:var(--ink-subtle)}
+.dv-them>.tp-ico{flex:none;width:18px;height:18px;color:var(--warning);transform:rotate(90deg)}
+.dv-thu{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;min-height:44px;margin-top:4px;border:0;background:none;color:var(--ink-muted);font:500 14px/20px var(--font-sans);cursor:pointer}
+.dv-thu .tp-ico{width:16px;height:16px;transform:rotate(-90deg)}
+/* v628: khối Thao tác PA D – tiêu đề nhóm + thẻ có mô tả và chữ "Lập đơn →" */
+.vds-tt{display:flex;flex-direction:column;gap:2px;margin:8px 0 0}.vds-tt b{font:600 14px/20px var(--font-sans);color:var(--ink)}.vds-tt small{font:400 12px/16px var(--font-sans);color:var(--ink-subtle)}
+.va-actd{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+.va-actd-it{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);text-align:left;font:inherit;color:inherit;cursor:pointer}
+.va-actd-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.va-actd-tx b{font:600 14px/20px var(--font-sans);color:var(--ink)}.va-actd-tx small{font:400 12px/16px var(--font-sans);color:var(--ink-subtle)}
+.va-actd-go{flex:none;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--brand-tint);color:var(--brand-text)}.va-actd-go .tp-ico{width:18px;height:18px}
+
+/* v632: thẻ khóa danh sách vụ án; bộ lọc lần thụ lý ở 4 tab chi tiết */
+.va5-khoa-the{margin:8px 0 0}
+.va5-lan-locs{display:flex;margin:12px 16px 0}
+
+/* v635: Giai đoạn tố tụng dọc ở tab Các cấp xét xử */
+.va-gdv{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column}
+.va-gdv li{position:relative;display:flex;align-items:flex-start;gap:12px;min-height:40px}
+.va-gdv li:not(:last-child)::after{content:"";position:absolute;left:11px;top:26px;bottom:-2px;width:2px;background:var(--border)}
+.va-gdv li.va-gdv-done:not(:last-child)::after{background:var(--brand-800)}
+.va-gdv i{flex:none;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:24px;height:24px;box-sizing:border-box;border:2px solid var(--border);border-radius:50%;background:var(--surface);font:600 12px/16px var(--font-sans);font-style:normal;color:var(--ink-subtle)}
+.va-gdv i .tp-ico{width:12px;height:12px}
+.va-gdv-done i{border-color:var(--brand-800);background:var(--brand-800);color:var(--on-primary)}
+.va-gdv-cur i{border-color:var(--brand-800);color:var(--brand-800);box-shadow:0 0 0 4px var(--brand-tint)}
+.va-gdv span{flex:1;min-width:0;padding:2px 0 14px;font:400 14px/20px var(--font-sans);color:var(--ink-subtle)}
+.va-gdv-done span{color:var(--ink)}.va-gdv-cur span{font-weight:700;color:var(--ink)}
+
+/* v637: Chi tiết vụ án theo trang "Vụ án của tôi" bản 1.2 */
+.va5-ban{display:flex;align-items:center;gap:10px;margin:12px 16px 0;padding:8px 12px;border-radius:var(--radius-lg);border:1px solid var(--info-border,var(--border));background:var(--info-tint)}
+.va5-ban>.tp-ico{flex:none;width:18px;height:18px;color:var(--info)}.va5-ban b{font:500 13px/18px var(--font-sans);color:var(--ink)}
+.va5-ban-xam{background:var(--surface-sunken);border-color:var(--border)}.va5-ban-xam>.tp-ico{color:var(--ink-muted)}
+.va5-an{color:var(--ink-subtle);font-style:italic}
+.va5-note{display:flex;gap:8px;margin:0 0 10px;padding:10px 12px;border-radius:var(--radius-md,8px);background:var(--surface-sunken);font:400 12px/16px var(--font-sans);color:var(--ink-muted)}.va5-note .tp-ico{flex:none;width:16px;height:16px}
+.va5-tu{display:inline-flex;width:fit-content;margin:-2px 0 6px;padding:2px 8px;border-radius:var(--radius-pill);background:var(--warning-tint);color:var(--warning);font:500 11px/16px var(--font-sans)}
+.va5-st{margin:0 0 8px}.va5-gop-h{margin-top:16px}
+.va5-tam{margin-left:8px;padding:1px 6px;border-radius:var(--radius-pill);background:var(--warning-tint);color:var(--warning);font:500 10px/14px var(--font-sans)}

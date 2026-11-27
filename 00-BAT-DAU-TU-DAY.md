@@ -2,7 +2,7 @@
 
 Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp dự án từ **một tài khoản Claude khác**.
 
-- Bản prototype mới nhất: **v617** (26-11-2026) – xem mục "Cập nhật 26-11-2026" ngay dưới. (Số liệu v337 ở các mục sau là của lần xuất 12/11/2026.)
+- Bản prototype mới nhất: **v637** (26-11-2026) – xem mục "Cập nhật 26-11-2026" ngay dưới. (Số liệu v337 ở các mục sau là của lần xuất 12/11/2026.)
 - Ngày xuất: 11/11/2026 (bản đầu v307, v310); cập nhật lại ngày 12/11/2026 lên v337.
 - Từ v333 prototype có **2 luồng theo loại tài khoản**: chọn Cá nhân | Tổ chức ở màn Đăng nhập (mặc định Cá nhân; tải lại trang về Cá nhân). Tổ chức mẫu: "Công ty ABC", MST 0101234567, trụ sở Số 25 Láng Hạ, Phường Láng, Thành phố Hà Nội.
 - Vị trí trên máy: `E:\TATC\Mobile\Design_System`
@@ -12,9 +12,9 @@ Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp d�
 ## Cập nhật 26-11-2026 – đọc mục này trước (thay cho số liệu cũ ở các mục dưới)
 
 **Trạng thái hiện tại**
-- Prototype mới nhất: **v617** (26-11-2026) – `prototype/Prototype-TATC-v617.html`; trên claude.ai: https://claude.ai/artifact/PiFmwVA8Pbg2X9WMkswd7S (trang mới của tài khoản hiện tại, tạo 26-11-2026; v609 = Version 1, v610 = Version 2, v611 = Version 3, v612 = Version 4, v613 = Version 5, v614 = Version 6, v615 = Version 7, v616 = Version 8, v617 = Version 9). Trang của tài khoản khác: https://claude.ai/artifact/CKnVgGSByzDJD7vDSWCnDd (Version 596).
-- Git: https://github.com/manguyenhuyentrang/tatc nhánh `main`, commit mới nhất `4703211` (đã push, đến v609; v610–v617 chưa push). Chỉ push phần đã chốt: `prototype-src/src`, `prototype-src/dist`, `prototype-app/index.html`, `prototype/Prototype-TATC-vNNN.html`, 2 tài liệu design system, `skills/`. Không push `de-xuat/`, `ra-soat-ux/`, `prototype-src/backups/`, `prototype-src/shots/`; tệp ghi chú khác trong `tai-lieu/` hỏi trước.
-- Nhật ký từng phiên bản (đến v617): cuối `tai-lieu/design-system-chot-2026-10-30.md` và `tai-lieu/design-system-day-du.md`, dòng dạng `- vNNN (DD-MM-YYYY): …`, chèn ngay sau dòng phiên bản trước.
+- Prototype mới nhất: **v637** (27-11-2026) – `prototype/Prototype-TATC-v637.html`; trên claude.ai: https://claude.ai/artifact/PiFmwVA8Pbg2X9WMkswd7S (trang mới của tài khoản hiện tại, tạo 26-11-2026; v609 = Version 1, v610 = Version 2, v611 = Version 3, v612 = Version 4, v613 = Version 5, v614 = Version 6, v615 = Version 7, v616 = Version 8, v617 = Version 9, v618 = Version 10, v619 = Version 11, v620 = Version 12, v621 = Version 13, v622 = Version 14, v623 = Version 15, v624 = Version 16, v625 = Version 17, v626 = Version 18, v627 = Version 19, v628 = Version 20, v629 = Version 21, v630 = Version 22, v631 = Version 23, v632 = Version 24, v633 = Version 25, v634 = Version 26, v635 = Version 27, v636 = Version 28, v637 = Version 29). Trang của tài khoản khác: https://claude.ai/artifact/CKnVgGSByzDJD7vDSWCnDd (Version 596).
+- Git: https://github.com/manguyenhuyentrang/tatc nhánh `main`, commit mới nhất `8bcc33b` (đã push 27-11-2026, đến v617; v618–v637 chưa push). Chỉ push phần đã chốt: `prototype-src/src`, `prototype-src/dist`, `prototype-app/index.html`, `prototype/Prototype-TATC-vNNN.html`, 2 tài liệu design system, `skills/`. Không push `de-xuat/`, `ra-soat-ux/`, `prototype-src/backups/`, `prototype-src/shots/`; tệp ghi chú khác trong `tai-lieu/` hỏi trước.
+- Nhật ký từng phiên bản (đến v637): cuối `tai-lieu/design-system-chot-2026-10-30.md` và `tai-lieu/design-system-day-du.md`, dòng dạng `- vNNN (DD-MM-YYYY): …`, chèn ngay sau dòng phiên bản trước.
 - Skill: `skills/gen-ui-mobile/` (có `references/bo-mau-trang-thai.md` – bộ màu **Status-color**, 22 màu) và `skills/gen-ui-mobile.zip`.
 - Bộ nhớ Claude (quy tắc, quyết định của người dùng): bản sao ở `tai-lieu/ghi-nho-claude/` (đọc `MEMORY.md` trước). Ở tài khoản/phiên mới có thể nói "hãy ghi nhớ các tệp trong tai-lieu/ghi-nho-claude".
 - Demo đề xuất (không phải bản chốt): `de-xuat/` (mới nhất: `demo-dau-man-vu-an-pa3-2026-11-26.html`, `demo-dau-man-vu-an-2026-11-26.html` (+ ảnh .png cùng tên), `demo-thoat-soan-don-2026-11-25.html`, `demo-thoat-soan-don-khac-2026-11-25.html`, `demo-mau-don-va-da-nhap-2026-11-25.html`, `demo-status-color*.html`).
@@ -42,6 +42,26 @@ Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp d�
 - v615: thẻ đương sự theo kiểu khối Định danh (cột 30/5/65, chữ 14px, giá trị chữ thường); duyệt sau demo `de-xuat/demo-the-duong-su-2026-11-26.html`; áp mọi thẻ DtParty (vụ án, đơn, phá sản).
 - v616: kết quả test sheet 1 Vụ án chạy lại 26-11 (40 P, 2 F trên v615) – đã bổ sung cả 2 F sau demo `de-xuat/demo-vu-an-1-30-1-38-2026-11-26.html`: 1.30 dòng "Điểm cầu tham dự" trên thẻ phiên trực tuyến; 1.38 nhóm tài liệu kèm đơn BPKCTT (đơn phái sinh của chính người dùng).
 - v617: dòng mã định danh · loại án ở đầu màn in đậm (600).
+- v618 (27-11): tab Đơn trong vụ án bỏ dòng mô tả "Gồm đơn bạn nộp qua Cổng và đơn Tòa án tiếp nhận trực tiếp".
+- v619 (27-11): nhãn vai trò thẻ đương sự theo Status-color, nền đậm, PA D (Nguyên đơn Đỏ rượu st-26, Bị đơn Xanh thép st-16, Liên quan Ô liu st-5). Người dùng loại: nền đặc; màu nâu; demo `de-xuat/demo-vai-tro-*-2026-11-27.*`. **Đã hoàn tác ở v620.**
+- v620 (27-11): hoàn tác v619 – nhãn vai trò về như v618; bản dựng trùng v618.
+- v621 (27-11): thẻ đương sự Chi tiết vụ án gọn – họ tên + "Bạn", tư cách chữ xám dưới tên, chạm mở rộng tại chỗ (PA 2 kiểu 1; demo `de-xuat/demo-duong-su-gon-2026-11-27.*`).
+- v622 (27-11): khối Các bên đương sự PA C3 – thẻ Bạn viền trái đỏ ở đầu, nhóm "Đương sự khác (n)" + dòng khóa, tiêu đề "Thao tác" (demo `de-xuat/demo-khoi-duong-su-*-2026-11-27.*`).
+- v623 (27-11): bỏ vạch đỏ thẻ Bạn; thẻ Bạn luôn hiện đủ thông tin, không thu gọn.
+- v624 (27-11): dòng khóa bảo vệ dữ liệu cá nhân đổi sang khung vàng nhạt (PA B, demo `de-xuat/demo-dong-khoa-mau-2026-11-27.*`).
+- v625 (27-11): thẻ Bạn viền mảnh 1px như khối đương sự khác (bỏ bóng viền trong).
+- v626 (27-11): bỏ dòng "Xem đơn TN-…" dưới Việc cần làm ở Chi tiết vụ án.
+- v627 (27-11): Việc cần làm thu gọn theo PA B – ô "+n việc khác" nét đứt vàng, bung tại chỗ, "Thu gọn" cuối khối (demo `de-xuat/demo-viec-can-lam-2026-11-27.*`).
+- v628 (27-11): khối Thao tác PA D – tiêu đề "Gửi đề nghị đến Tòa án", thẻ có mô tả và chữ "Lập đơn →" (demo `de-xuat/demo-thao-tac-2026-11-27.*`).
+- v629 (27-11): bỏ thanh Cấp xét xử ở đầu Chi tiết vụ án (phá sản giữ nguyên).
+- v630 (27-11): Chi tiết vụ án – "&" thành "và" ở 2 tiêu đề khối; màn chọn loại đơn từ vụ án còn "&", chờ quyết định.
+- v631 (27-11): màn chọn loại đơn từ vụ án – "&" thành "và" ("Giao nộp và sao gửi…", "Trước và sau thụ lý").
+- v632 (27-11): Vụ án, vụ việc của tôi – Thụ lý "ngày · Số thụ lý", lọc cấp theo ảnh, lọc "Đã nhập vào vụ án khác", thẻ khóa, nhãn cấp GĐT/ST lần 2, tab "Bản án, quyết định", lọc lần thụ lý ở 4 tab.
+- v633 (27-11): khối Gửi đề nghị đến Tòa án – "Lập đơn →" thành biểu tượng (+) nền tròn nhạt.
+- v634 (27-11): khối Gửi đề nghị đến Tòa án – bỏ dòng mô tả dưới tiêu đề.
+- v635 (27-11): tab Các cấp xét xử – Giai đoạn tố tụng quay dọc timeline (đã qua chữ đen, chưa đến chữ xám).
+- v636 (27-11): tab Các cấp xét xử – bỏ dòng phiên dưới Giai đoạn tố tụng.
+- v637 (27-11): Chi tiết vụ án theo trang "Vụ án của tôi" bản 1.2 – 6 câu đã chốt (tab, Định danh, thẻ lần thụ lý, banner, nhóm đương sự vụ bị nhập, khóa nút).
 
 **Rà soát kết quả test sheet 1 Vụ án (26-11-2026)**: file ghi 21 F (chạy 24-11 trên v582). Đối chiếu lại trên v612: 17 case không còn lỗi (đã sửa ở v583 hoặc web đã đổi, vd 1.26 web thay khối "Đơn gốc" bằng bảng ngày 23/11). Còn 4 case, người dùng quyết định: 1.1 không bổ sung (Trang chủ không có thẻ "Vụ án của tôi"), 1.9 giữ đã bỏ nút sao chép mã, 1.18 không thêm "Về danh sách" ở màn lỗi (giữ quy tắc 21/11; đã demo), 1.30 áp ở v613. File Excel chưa được ghi lại kết quả (chờ người dùng cho phép).
 
@@ -52,7 +72,7 @@ Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp d�
 - `skills/gen-ui-mobile/SKILL.md` chưa ghi đường dẫn trang mới (người dùng chọn để nguyên).
 - Bản đăng có liên kết tải tệp không chạy trong trình xem claude.ai (có từ bản cũ, chưa sửa).
 
-**Không còn việc đang làm dở.** v610–v617 chưa push git (tệp đã sửa: `prototype-src/src`, `prototype-src/dist`, `prototype-app/index.html`, `prototype/Prototype-TATC-v610…v617.html`, 2 tài liệu design system, tệp này; mã demo mới ở `tools/kiem-tra/demo-mau/` chưa rõ có push – hỏi trước). Chưa push: các tệp ghi chú trong `tai-lieu/` (cau-tra-loi-*, ra-soat-*, de-xuat-*, demo-*) và thư mục `de-xuat/`, `ra-soat-ux/` – vẫn có trên máy.
+**Không còn việc đang làm dở.** v610–v617 đã push git (commit 8bcc33b, 27-11-2026) (tệp đã sửa: `prototype-src/src`, `prototype-src/dist`, `prototype-app/index.html`, `prototype/Prototype-TATC-v610…v617.html`, 2 tài liệu design system, tệp này; mã demo mới ở `tools/kiem-tra/demo-mau/` chưa rõ có push – hỏi trước). Chưa push: các tệp ghi chú trong `tai-lieu/` (cau-tra-loi-*, ra-soat-*, de-xuat-*, demo-*) và thư mục `de-xuat/`, `ra-soat-ux/` – vẫn có trên máy.
 
 ---
 

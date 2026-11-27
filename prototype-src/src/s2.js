@@ -580,8 +580,19 @@ function DtParty(p) {
   /* v612 (Chi tiết vụ án, p.vtNhan): tên + nhãn "Bạn" cùng hàng bên trái, vai trò thành nhãn kiểu "Bạn" bên phải */
   var dau = p.vtNhan ? h('div', { className: 'sk-ct-h dt-party-vt' }, h('b', null, p.ten, p.ban ? h(T.StatusBadge, { tone: 'info', icon: false }, 'Bạn') : null), h(T.StatusBadge, { tone: 'info', icon: false, title: p.vt }, p.vt))
     : h('div', { className: 'sk-ct-h' }, h('div', null, h('small', null, p.vt), h('b', null, p.ten)), p.ban ? h(T.StatusBadge, { tone: 'info', icon: false }, 'Bạn') : null);
-  return h('div', { className: 'sk-ct ctp dt-party' }, dau,
-    h('dl', { className: 'sk-dl ct-dl' }, full.map(function (r) { return h(F, { key: r[0] }, h('dt', null, r[0]), h('dd', null, vd(r[1]))); })));
+  var dl = h('dl', { className: 'sk-dl ct-dl' }, full.map(function (r) { return h(F, { key: r[0] }, h('dt', null, r[0]), h('dd', null, vd(r[1]))); }));
+  if (p.vtNhan) return h(DtPartyGon, { p: p, dl: dl }); /* v621 (27/11/2026, PA 2 kiểu 1): Chi tiết vụ án – thẻ gọn, chạm mở rộng tại chỗ */
+  return h('div', { className: 'sk-ct ctp dt-party' }, dau, dl);
+}
+/* v621: thẻ đương sự gọn – hàng 1 họ tên + "Bạn", hàng 2 tư cách chữ xám nhỏ; chạm mở/thu thông tin ngay dưới (mặc định thu, p.mo để mở sẵn) */
+function DtPartyGon(o) {
+  var p = o.p, mo = React.useState(!!p.mo);
+  var ten = h('span', { className: 'dpg-ten' }, h('span', { className: 'dpg-tr' }, h('b', null, p.ten), p.ban ? h(T.StatusBadge, { tone: 'info', icon: false }, 'Bạn') : null), h('small', { className: 'dpg-vt', title: p.vt }, p.vt));
+  /* v623: thẻ của bạn luôn hiện đủ thông tin, không thu gọn, không mũi tên */
+  if (p.ban) return h('div', { className: 'sk-ct ctp dt-party dpg dpg-ban dpg-mo' }, h('div', { className: 'dpg-h dpg-h-tinh' }, ten), h('div', { className: 'dpg-b' }, o.dl));
+  return h('div', { className: 'sk-ct ctp dt-party dpg' + (mo[0] ? ' dpg-mo' : '') },
+    h('button', { type: 'button', className: 'dpg-h', 'aria-expanded': mo[0], 'aria-label': (mo[0] ? 'Thu gọn thông tin ' : 'Xem thông tin ') + p.ten, onClick: function () { mo[1](!mo[0]); } }, ten, h(T.Icon, { name: 'chevronRight' })),
+    mo[0] ? h('div', { className: 'dpg-b' }, o.dl) : null);
 }
 /* nhóm đơn liên quan có thể tạo (theo web TaoDonLienQuan) */
 var DT_TAO = [
@@ -763,7 +774,7 @@ function DonChiTiet(p) {
 }
 
 /* ---------- Chi tiết vụ án (8 tab) ---------- */
-var VA_TABS = [{ key: 'info', label: 'Thông tin chung' }, { key: 'don', label: 'Đơn trong vụ án' }, { key: 'stages', label: 'Các cấp xét xử' }, { key: 'hearings', label: 'Lịch phiên tòa' }, { key: 'docs', label: 'Văn bản tống đạt' }, { key: 'evidence', label: 'Tài liệu, chứng cứ' }, { key: 'judgments', label: 'Bản án / Quyết định' }, { key: 'process', label: 'Lịch sử vụ án' }];
+var VA_TABS = [{ key: 'info', label: 'Thông tin chung' }, { key: 'don', label: 'Đơn trong vụ án' }, { key: 'stages', label: 'Các cấp xét xử' }, { key: 'judgments', label: 'Bản án, quyết định' }, { key: 'hearings', label: 'Lịch phiên tòa' }, { key: 'docs', label: 'Văn bản tống đạt' }, { key: 'evidence', label: 'Tài liệu, chứng cứ' }, { key: 'process', label: 'Lịch sử vụ án' }]; /* v637 câu 1 PA A: Bản án, quyết định ngay sau Các cấp xét xử */
 /* 03/11/2026 (v149): nhận p.top (banner tạm đình chỉ / GĐT, TT) – xem s5.js */
 /* v251 (04/11/2026): áp UI chi tiết đơn khởi kiện – tab không số, tên 16px, khối nhắc (p.top) trước tab, đơn dạng thẻ + nút ghim Tạo đơn liên quan (tab Đơn), văn bản kiểu Hộp thư, tài liệu dạng thẻ có xem + tải về, lịch sử nhóm theo ngày */
 /* v539 (đối chiếu web, người dùng duyệt 21–22/11): đầu màn 4C.1 (ô viết tắt, mã + sao chép chỉ dấu tích, loại án, nhãn trạng thái + tình trạng, Tư cách của bạn, Xem bản án / quyết định đình chỉ → tab Bản án / Quyết định), màn đang tải / lỗi;
@@ -781,7 +792,8 @@ function VuAnChiTiet(p) {
   var tabs = VA_TABS.filter(function (t) { return !(p.noJudg && t.key === 'judgments'); }).map(function (t) {
     return cham[t.key] ? { key: t.key, label: h(F, null, t.label, h('i', { className: 'va4-tdot', role: 'img', 'aria-label': 'Có mục mới' })) } : t;
   });
-  var pre = p.top || p.goiY ? h(F, null, p.top || null, p.goiY ? vaGoiYs(p.goiY) : null) : null;
+  var ban = vaThBan(vaTh(p, va)); /* v637 câu 4 PA B: banner một dòng trước thanh tab */
+  var pre = ban || p.top || p.goiY ? h(F, null, ban, p.top || null, p.goiY ? vaGoiYs(p.goiY) : null) : null;
   return h(VaDt, { tab: tb[0], setTab: tb[1], tabs: tabs,
     head: h(VaHead, { va: va, vaiTro: p.vaiTro, banAn: p.banAn, onBanAn: function () { moTab('judgments'); } }),
     pre: pre,
