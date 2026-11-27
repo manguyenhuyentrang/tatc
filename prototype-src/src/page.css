@@ -3884,3 +3884,35 @@ button.tp-upload-add{border:0;cursor:pointer}.va4-ua-dang{background:var(--surfa
 .qc .nh-c,.nh-c{pointer-events:auto!important;z-index:3}
 .nh-c *{pointer-events:none}
 .nh-c.nh-c-cuoi{margin:12px 0 0}
+
+/* v610 (26/11/2026, PA 3B): đầu màn Chi tiết vụ án – dòng mã · loại chữ thường xám; khối Tư cách + Lần thụ lý hiện tại */
+.va4-head .va4-hd1{gap:0}
+.va4-head .va4-hd1 .va4-ma,.va4-head .va4-hd1 .va4-loai{font:400 12px/16px var(--font-sans);color:var(--ink-subtle)}
+.va4-head .va4-hd1 .va4-loai{gap:0}
+.va4-head .va4-hd1 .va4-loai::before{content:" · ";white-space:pre;width:auto;height:auto;border-radius:0;background:none}
+.va4-tcl{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:12px;padding:8px 12px;border-radius:var(--radius-md);background:var(--surface-sunken);font:400 12px/16px var(--font-sans)} /* v611: giãn cách với thanh Cấp xét xử (12px → 24px) */
+.va4-tcl p{margin:0;display:flex;align-items:center;gap:8px;color:var(--ink-subtle)}
+.va4-tcl .tp-ico{width:16px;height:16px;flex:none;color:var(--ink-muted)}
+.va4-tcl b{font-weight:500;color:var(--ink)}
+
+/* v612: thẻ đương sự Chi tiết vụ án – tên + "Bạn" bên trái, vai trò thành nhãn bên phải (cắt "…" khi dài) */
+.dt-party-vt{align-items:center}
+.dt-party-vt>b{flex:1;min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dt-party-vt>.tp-badge{flex:0 1 auto;max-width:55%;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+
+/* v613 (1.30a): thẻ phiên – nhãn Mở lại sau tạm ngừng cạnh trạng thái; khối lịch sử đổi lịch */
+.lc-tags{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
+.lc-lsdl{margin-top:8px}
+
+/* v614: thanh Cấp xét xử Chi tiết vụ án – giãn rộng: cột 1fr 3fr 1fr để bước đầu, cuối sát mép hơn; đường nối tính lại theo độ rộng cột */
+.va4-head .tp-cprog{grid-auto-columns:unset;grid-template-columns:1fr 3fr 1fr}
+.va4-head .tp-cprog li:first-child::after{right:calc(-150% + 12px)}
+.va4-head .tp-cprog li:nth-child(2):not(:last-child)::after{right:calc(-16.6667% + 12px)}
+
+/* v615: thẻ đương sự (DtParty: Chi tiết vụ án, Chi tiết đơn, phá sản) theo khối Định danh & tình trạng vụ án – nhãn 30% · khe 5% · giá trị 65%, nhãn và giá trị 14px, giá trị chữ thường */
+.dt-party .ct-dl{grid-template-columns:30% 65%!important;column-gap:5%!important;row-gap:6px}
+.dt-party .ct-dl dt{font:400 14px/20px var(--font-sans)!important;color:var(--ink-subtle);overflow-wrap:anywhere}
+.dt-party .ct-dl dd{font:400 14px/20px var(--font-sans)!important;color:var(--ink);min-width:0}
+
+/* v617: đầu màn Chi tiết vụ án – dòng mã định danh · loại án in đậm */
+.va4-head .va4-hd1 .va4-ma,.va4-head .va4-hd1 .va4-loai{font-weight:600}

@@ -577,7 +577,10 @@ function DtParty(p) {
   var get = function (l) { var r = rows.filter(function (x) { return x[0] === l; })[0]; return r ? r[1] : null; };
   var full = std.map(function (l) { return [l, get(l)]; }).concat(rows.filter(function (x) { return std.indexOf(x[0]) < 0; }));
   /* v234: kiểu thẻ chứng thư – dòng vai trò nhỏ ở trên, tên đậm, nhãn "Bạn" bên phải; nhãn – giá trị thẳng cột, căn trái */
-  return h('div', { className: 'sk-ct ctp dt-party' }, h('div', { className: 'sk-ct-h' }, h('div', null, h('small', null, p.vt), h('b', null, p.ten)), p.ban ? h(T.StatusBadge, { tone: 'info', icon: false }, 'Bạn') : null),
+  /* v612 (Chi tiết vụ án, p.vtNhan): tên + nhãn "Bạn" cùng hàng bên trái, vai trò thành nhãn kiểu "Bạn" bên phải */
+  var dau = p.vtNhan ? h('div', { className: 'sk-ct-h dt-party-vt' }, h('b', null, p.ten, p.ban ? h(T.StatusBadge, { tone: 'info', icon: false }, 'Bạn') : null), h(T.StatusBadge, { tone: 'info', icon: false, title: p.vt }, p.vt))
+    : h('div', { className: 'sk-ct-h' }, h('div', null, h('small', null, p.vt), h('b', null, p.ten)), p.ban ? h(T.StatusBadge, { tone: 'info', icon: false }, 'Bạn') : null);
+  return h('div', { className: 'sk-ct ctp dt-party' }, dau,
     h('dl', { className: 'sk-dl ct-dl' }, full.map(function (r) { return h(F, { key: r[0] }, h('dt', null, r[0]), h('dd', null, vd(r[1]))); })));
 }
 /* nhóm đơn liên quan có thể tạo (theo web TaoDonLienQuan) */

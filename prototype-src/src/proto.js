@@ -940,6 +940,7 @@ function cmpThem(nhom, truoc, M, base) {
     caseDetailHearExpired: ['Chi tiết vụ án – phiên hết hạn xác nhận', va({ tab0: 'hearings', hear: 'expired' })],
     caseDetailHearPost: ['Chi tiết vụ án – phiên đã hoãn', va({ tab0: 'hearings', hear: 'post' })],
     caseDetailHearPaused: ['Chi tiết vụ án – phiên tạm dừng', va({ tab0: 'hearings', hear: 'paused' })],
+    caseDetailHearChange: ['Chi tiết vụ án – phiên đổi lịch, mở lại sau tạm ngừng', va({ tab0: 'hearings', hear: 'change' })], /* v613 (1.30a) */
     caseDetailDocs: ['Chi tiết vụ án – tab Văn bản tống đạt', va({ tab0: 'docs' })],
     caseDetailDocsKc: ['Chi tiết vụ án – Văn bản tống đạt, nút Kháng cáo', va({ ma: 'DS-2025-0098', banAn: 'ba', judg: 'ba', tab0: 'docs' })],
     caseDetailDocsEmpty: ['Chi tiết vụ án – Văn bản tống đạt rỗng', va({ tab0: 'docs', docs: 'empty' })],

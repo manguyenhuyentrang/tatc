@@ -2,7 +2,7 @@
 
 Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp dự án từ **một tài khoản Claude khác**.
 
-- Bản prototype mới nhất: **v609** (25-11-2026) – xem mục "Cập nhật 26-11-2026" ngay dưới. (Số liệu v337 ở các mục sau là của lần xuất 12/11/2026.)
+- Bản prototype mới nhất: **v617** (26-11-2026) – xem mục "Cập nhật 26-11-2026" ngay dưới. (Số liệu v337 ở các mục sau là của lần xuất 12/11/2026.)
 - Ngày xuất: 11/11/2026 (bản đầu v307, v310); cập nhật lại ngày 12/11/2026 lên v337.
 - Từ v333 prototype có **2 luồng theo loại tài khoản**: chọn Cá nhân | Tổ chức ở màn Đăng nhập (mặc định Cá nhân; tải lại trang về Cá nhân). Tổ chức mẫu: "Công ty ABC", MST 0101234567, trụ sở Số 25 Láng Hạ, Phường Láng, Thành phố Hà Nội.
 - Vị trí trên máy: `E:\TATC\Mobile\Design_System`
@@ -12,12 +12,12 @@ Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp d�
 ## Cập nhật 26-11-2026 – đọc mục này trước (thay cho số liệu cũ ở các mục dưới)
 
 **Trạng thái hiện tại**
-- Prototype mới nhất: **v609** (25-11-2026) – `prototype/Prototype-TATC-v609.html`; trên claude.ai: https://claude.ai/artifact/CKnVgGSByzDJD7vDSWCnDd (Version 596).
-- Git: https://github.com/manguyenhuyentrang/tatc nhánh `main`, commit mới nhất `4703211` (đã push). Chỉ push phần đã chốt: `prototype-src/src`, `prototype-src/dist`, `prototype-app/index.html`, `prototype/Prototype-TATC-vNNN.html`, 2 tài liệu design system, `skills/`. Không push `de-xuat/`, `ra-soat-ux/`, `prototype-src/backups/`, `prototype-src/shots/`; tệp ghi chú khác trong `tai-lieu/` hỏi trước.
-- Nhật ký từng phiên bản (đến v609): cuối `tai-lieu/design-system-chot-2026-10-30.md` và `tai-lieu/design-system-day-du.md`, dòng dạng `- vNNN (DD-MM-YYYY): …`, chèn ngay sau dòng phiên bản trước.
+- Prototype mới nhất: **v617** (26-11-2026) – `prototype/Prototype-TATC-v617.html`; trên claude.ai: https://claude.ai/artifact/PiFmwVA8Pbg2X9WMkswd7S (trang mới của tài khoản hiện tại, tạo 26-11-2026; v609 = Version 1, v610 = Version 2, v611 = Version 3, v612 = Version 4, v613 = Version 5, v614 = Version 6, v615 = Version 7, v616 = Version 8, v617 = Version 9). Trang của tài khoản khác: https://claude.ai/artifact/CKnVgGSByzDJD7vDSWCnDd (Version 596).
+- Git: https://github.com/manguyenhuyentrang/tatc nhánh `main`, commit mới nhất `4703211` (đã push, đến v609; v610–v617 chưa push). Chỉ push phần đã chốt: `prototype-src/src`, `prototype-src/dist`, `prototype-app/index.html`, `prototype/Prototype-TATC-vNNN.html`, 2 tài liệu design system, `skills/`. Không push `de-xuat/`, `ra-soat-ux/`, `prototype-src/backups/`, `prototype-src/shots/`; tệp ghi chú khác trong `tai-lieu/` hỏi trước.
+- Nhật ký từng phiên bản (đến v617): cuối `tai-lieu/design-system-chot-2026-10-30.md` và `tai-lieu/design-system-day-du.md`, dòng dạng `- vNNN (DD-MM-YYYY): …`, chèn ngay sau dòng phiên bản trước.
 - Skill: `skills/gen-ui-mobile/` (có `references/bo-mau-trang-thai.md` – bộ màu **Status-color**, 22 màu) và `skills/gen-ui-mobile.zip`.
 - Bộ nhớ Claude (quy tắc, quyết định của người dùng): bản sao ở `tai-lieu/ghi-nho-claude/` (đọc `MEMORY.md` trước). Ở tài khoản/phiên mới có thể nói "hãy ghi nhớ các tệp trong tai-lieu/ghi-nho-claude".
-- Demo đề xuất (không phải bản chốt): `de-xuat/` (mới nhất: `demo-thoat-soan-don-2026-11-25.html`, `demo-thoat-soan-don-khac-2026-11-25.html`, `demo-mau-don-va-da-nhap-2026-11-25.html`, `demo-status-color*.html`).
+- Demo đề xuất (không phải bản chốt): `de-xuat/` (mới nhất: `demo-dau-man-vu-an-pa3-2026-11-26.html`, `demo-dau-man-vu-an-2026-11-26.html` (+ ảnh .png cùng tên), `demo-thoat-soan-don-2026-11-25.html`, `demo-thoat-soan-don-khac-2026-11-25.html`, `demo-mau-don-va-da-nhap-2026-11-25.html`, `demo-status-color*.html`).
 
 **Quy trình hiện dùng mỗi lần sửa (thay mục 3B)**
 1. Sao lưu: chép cả `prototype-src/src` thành `prototype-src/backups/src-bak-YYYYMMDD-HHMMSS`, giữ 5 bản mới nhất.
@@ -25,15 +25,34 @@ Bộ thư mục này chứa đủ thiết kế mới nhất để làm tiếp d�
 3. Kiểm tra lỗi: `cd prototype-src/tools/kiem-tra && timeout 110 node cdpeval.js "file:///E:/TATC/Mobile/Design_System/prototype-src/dist/prototype-test.html?t=$(date +%s)" "$(cat chk_all.js)"` → `"nerr":14` là chuẩn (14 lỗi có sẵn dạng `cn:sh:`/`tc:sh:`). Luôn thêm `?t=…` để tránh bản cũ trong bộ nhớ đệm. cdpeval treo/không in gì = mã chèn lỗi cú pháp (kiểm bằng `node --check`).
 4. Chụp màn: `CDP_PORT=9444 timeout 150 node cdpshot2.js jobs.json thuMucAnh`, `jobs.json` = `[[tênẢnh, url, mãMàn, cuộn(0 | "end" | "css")], …]`.
 5. Chuyển màn trong cdpeval: `window.__ptGo('reset:home,<mã màn>')`; hoặc mở url `…#a%2Fb%2Fc` (ngăn màn).
-6. Lưu `prototype/Prototype-TATC-vNNN.html` (chép `dist/prototype-test.html`), chép `dist/app-index.html` → `prototype-app/index.html`, ghi nhật ký 2 tài liệu, đăng `dist/artifact.html` lên artifact trên (bị từ chối "Repeat the identical Artifact call" thì gọi lại 1 lần).
-7. Demo: chép `dist/prototype-test.html` sang `de-xuat/demo-…html`, chèn JS trước chuỗi `/* luật bấm: [màn`, thêm màn qua `SCR`/`BASE`/`GROUPS2.unshift`. Mẫu: `tools/kiem-tra/demo-mau/`.
+6. Lưu `prototype/Prototype-TATC-vNNN.html` (chép `dist/prototype-test.html`), chép `dist/app-index.html` → `prototype-app/index.html`, ghi nhật ký 2 tài liệu, đăng `dist/artifact.html` lên artifact trên (tài khoản hiện tại: PiFmwVA8Pbg2X9WMkswd7S; ở phiên mới phải `read` trang trước rồi publish kèm `url`) (bị từ chối "Repeat the identical Artifact call" thì gọi lại 1 lần).
+7. Demo: chép `dist/prototype-test.html` sang `de-xuat/demo-…html`, chèn JS trước chuỗi `/* luật bấm: [màn`, thêm màn qua `SCR`/`BASE`/`GROUPS2.unshift`. Mẫu: `tools/kiem-tra/demo-mau/` (mới: `demo_dau_man_va*.js` – ghi đè hàm `VaHead` để demo). Lưu ý đặt tên lớp CSS mới: grep trước để không trùng lớp đã có (v610 suýt trùng `.va4-tl`).
 
 **Việc đã chốt gần đây (v603–v609)**
 - v603 Chọn loại đơn PA A/A2/M1; NVTC 1.2, 1.17, 1.18, 1.24. v604–v605 Status-color cho trạng thái/tình trạng Vụ án và Đơn (bỏ hồng, tím; Đình chỉ, Tạm đình chỉ cùng st-1 nhãn đậm).
 - v606–v607 dòng "Đã nhập vào {mã}" vàng nhạt, cuối thẻ, chạm mở thẳng vụ án đích.
 - v608–v609 bấm ‹ ở màn soạn: hộp "Thoát khi chưa hoàn tất?" (có Lưu nháp: Lưu nháp và thoát / Thoát, không lưu / ✕; không Lưu nháp: Ở lại / Thoát, không lưu).
 
-**Không còn việc đang làm dở.** Chưa push: các tệp ghi chú trong `tai-lieu/` (cau-tra-loi-*, ra-soat-*, de-xuat-*, demo-*) và thư mục `de-xuat/`, `ra-soat-ux/` – vẫn có trên máy.
+**Việc đã chốt 26-11-2026 (v610–v617)** – chỉ màn Chi tiết vụ án, người dùng yêu cầu rõ
+- v610 đầu màn (PA 3B, chọn sau 2 vòng demo): bỏ ô chữ viết tắt lĩnh vực; dòng mã hồ sơ · loại vụ án chữ thường 12px xám như Chi tiết đơn; khối xám 2 dòng có biểu tượng: "Tư cách của bạn" (người) + mới thêm "Lần thụ lý hiện tại" (cán cân; theo web `src/screens/vu-an/chi-tiet.tsx`: `cacLanThuLy[0].maVuAn ?? maVuAn`, chỉ hiện khi có mã hồ sơ; prototype dùng `v.ma`). Nhãn tình trạng giữ chấm + chữ (người dùng "tạm bỏ qua"). Mã: `VaHead` (s5.js), lớp `.va4-tcl`.
+- v611 giãn khoảng cách khối xám – thanh Cấp xét xử 12px → 24px.
+- v612 khối Các bên đương sự: bỏ dòng đếm "1 người khởi kiện · …"; thẻ đương sự: tên + nhãn "Bạn" cùng hàng bên trái, vai trò thành nhãn cùng kiểu "Bạn" ở góc phải (dài thì cắt "…"). Chỉ áp Chi tiết vụ án (`DtParty` có `vtNhan`); Chi tiết đơn, phá sản giữ kiểu cũ – đang chờ người dùng trả lời có áp cho 2 màn này không.
+- v613 (case 1.30, sheet 1 `Mobile/TestCase_Mobile/TATC_Mobile_TC_VuAn.xlsx`): thẻ phiên trong tab Lịch phiên tòa – nhãn "Mở lại sau tạm ngừng" + "Lịch sử thay đổi lịch (n lần)" (màn mới `caseDetailHearChange`), nút "Chi tiết phiên", chữ theo web ("Chưa trả lời", "Đã xác nhận tham dự", "Hết hạn xác nhận.", "Vào phòng chờ trực tuyến", "Xem văn bản gốc"). Chỉ thẻ của tab (cờ `va5`); thẻ màn Lịch tố tụng giữ nguyên.
+- v614: thanh Cấp xét xử ở đầu màn giãn rộng cân đối (cột 1fr 3fr 1fr, chỉ `.va4-head`).
+- v615: thẻ đương sự theo kiểu khối Định danh (cột 30/5/65, chữ 14px, giá trị chữ thường); duyệt sau demo `de-xuat/demo-the-duong-su-2026-11-26.html`; áp mọi thẻ DtParty (vụ án, đơn, phá sản).
+- v616: kết quả test sheet 1 Vụ án chạy lại 26-11 (40 P, 2 F trên v615) – đã bổ sung cả 2 F sau demo `de-xuat/demo-vu-an-1-30-1-38-2026-11-26.html`: 1.30 dòng "Điểm cầu tham dự" trên thẻ phiên trực tuyến; 1.38 nhóm tài liệu kèm đơn BPKCTT (đơn phái sinh của chính người dùng).
+- v617: dòng mã định danh · loại án ở đầu màn in đậm (600).
+
+**Rà soát kết quả test sheet 1 Vụ án (26-11-2026)**: file ghi 21 F (chạy 24-11 trên v582). Đối chiếu lại trên v612: 17 case không còn lỗi (đã sửa ở v583 hoặc web đã đổi, vd 1.26 web thay khối "Đơn gốc" bằng bảng ngày 23/11). Còn 4 case, người dùng quyết định: 1.1 không bổ sung (Trang chủ không có thẻ "Vụ án của tôi"), 1.9 giữ đã bỏ nút sao chép mã, 1.18 không thêm "Về danh sách" ở màn lỗi (giữ quy tắc 21/11; đã demo), 1.30 áp ở v613. File Excel chưa được ghi lại kết quả (chờ người dùng cho phép).
+
+**Còn mở / ghi chú**
+- Chờ trả lời: áp đầu thẻ đương sự kiểu v612 (tên + "Bạn" trái, vai trò nhãn phải) cho Chi tiết đơn và phá sản? (phần dòng nhãn–giá trị đã đồng nhất ở v615)
+- Khác web, chưa sửa: web ghi "Vai trò của bạn", prototype ghi "Tư cách của bạn"; web có nút sao chép mã (prototype bỏ từ v583 theo duyệt cũ).
+- Lỗi có từ trước (đã có ở v611): luồng Tổ chức, thẻ "Hoàng Dương" ở Các bên đương sự Chi tiết vụ án không đổi thành "Công ty ABC".
+- `skills/gen-ui-mobile/SKILL.md` chưa ghi đường dẫn trang mới (người dùng chọn để nguyên).
+- Bản đăng có liên kết tải tệp không chạy trong trình xem claude.ai (có từ bản cũ, chưa sửa).
+
+**Không còn việc đang làm dở.** v610–v617 chưa push git (tệp đã sửa: `prototype-src/src`, `prototype-src/dist`, `prototype-app/index.html`, `prototype/Prototype-TATC-v610…v617.html`, 2 tài liệu design system, tệp này; mã demo mới ở `tools/kiem-tra/demo-mau/` chưa rõ có push – hỏi trước). Chưa push: các tệp ghi chú trong `tai-lieu/` (cau-tra-loi-*, ra-soat-*, de-xuat-*, demo-*) và thư mục `de-xuat/`, `ra-soat-ux/` – vẫn có trên máy.
 
 ---
 
